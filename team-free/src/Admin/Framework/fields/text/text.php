@@ -42,11 +42,15 @@ if ( ! class_exists( 'TEAMFW_Field_text' ) ) {
 		 */
 		public function render() {
 
-			$type = ( ! empty( $this->field['attributes']['type'] ) ) ? $this->field['attributes']['type'] : 'text';
+			$type      = ( ! empty( $this->field['attributes']['type'] ) ) ? $this->field['attributes']['type'] : 'text';
+			$text_type = isset( $this->field['chart'] ) ? true : false;
 
 			echo wp_kses_post( $this->field_before() );
-
+			if ( $text_type ) {
+				echo '<div class="sptp-chart-visual"><img src=' . esc_url( SPT_PLUGIN_ROOT ) . 'src/Admin/img/chart.png' . ' ></div>';
+			} else {
 			echo '<input type="' . esc_attr( $type ) . '" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . $this->field_attributes() . ' />'; // phpcs:ignore
+			}
 
 			echo wp_kses_post( $this->field_after() );
 

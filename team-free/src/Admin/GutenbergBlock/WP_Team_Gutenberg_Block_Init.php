@@ -57,6 +57,9 @@ if ( ! class_exists( 'WP_Team_Gutenberg_Block_Init' ) ) {
 		 * @return array
 		 */
 		public function sptf_post_list() {
+			if ( ! is_admin() ) {
+				return array();
+			}
 			$shortcodes = get_posts(
 				array(
 					'post_type'      => 'sptp_generator',

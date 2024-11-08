@@ -123,7 +123,7 @@ class Shortcode_Widget_Deprecated extends \Elementor\Widget_Base {
 				'type'            => \Elementor\Controls_Manager::DEPRECATED_NOTICE,
 				'widget'          => 'WP Team Deprecated',
 				'since'           => '2.2.5',
-				'last'            => '3.0.3',
+				'last'            => '3.0.4',
 				'plugin'          => 'WP Team',
 				'replacement'     => 'WP Team',
 				'content_classes' => 'sp-wp-team-elementor-widget-deprecated',

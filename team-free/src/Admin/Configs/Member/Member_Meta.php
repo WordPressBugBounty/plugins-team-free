@@ -197,6 +197,13 @@ class Member_Meta {
 						'title'      => __( 'Year of Experience', 'team-free' ),
 					),
 					array(
+						'id'         => 'sptp_special_tag',
+						'class'      => 'sptp_pro_only_field',
+						'attributes' => array( 'disabled' => 'disabled' ),
+						'type'       => 'text',
+						'title'      => __( 'Special Tag', 'team-free' ),
+					),
+					array(
 						'id'         => 'sptp_user_profile',
 						'attributes' => array( 'disabled' => 'disabled' ),
 						'type'       => 'select',

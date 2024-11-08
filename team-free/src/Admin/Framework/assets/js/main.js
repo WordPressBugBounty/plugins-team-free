@@ -2095,7 +2095,7 @@
 	$.fn.spf_siblings = function () {
 		return this.each(function () {
 			var $this = $(this),
-				$siblings = $this.find('.spf--sibling:not(.spf-pro-only)'),
+				$siblings = $this.find('.spf--sibling'),
 				multiple = $this.data('multiple') || false
 
 			$siblings.on('click', function () {

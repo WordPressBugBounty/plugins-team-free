@@ -42,7 +42,7 @@ class SPTP_SettingsStyle {
 					array(
 						'id'       => 'custom_css',
 						'type'     => 'code_editor',
-						'title'    => __( 'Custom CSS' ),
+						'title'    => __( 'Custom CSS', 'team-free' ),
 						'settings' => array(
 							'icon'  => 'fa fa-sliders',
 							'theme' => 'mbo',
@@ -52,7 +52,7 @@ class SPTP_SettingsStyle {
 					array(
 						'id'       => 'custom_js',
 						'type'     => 'code_editor',
-						'title'    => __( 'Custom JS' ),
+						'title'    => __( 'Custom JS', 'team-free' ),
 						'settings' => array(
 							'theme' => 'mbo',
 							'mode'  => 'javascript',

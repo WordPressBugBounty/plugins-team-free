@@ -72,6 +72,7 @@ class Generator {
 			array(
 				'title'     => __( 'Team Generator Layout ', 'team-free' ),
 				'post_type' => 'sptp_generator',
+				'class'     => 'sptp-generator-tabs',
 			)
 		);
 

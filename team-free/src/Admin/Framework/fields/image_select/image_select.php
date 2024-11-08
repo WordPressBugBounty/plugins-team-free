@@ -65,16 +65,17 @@ if ( ! class_exists( 'TEAMFW_Field_image_select' ) ) {
 
 				foreach ( $args['options'] as $key => $option ) {
 
-					$type     = ( $args['multiple'] ) ? 'checkbox' : 'radio';
-					$extra    = ( $args['multiple'] ) ? '[]' : '';
-					$active   = ( in_array( $key, $value, true ) ) ? ' spf--active' : '';
-					$checked  = ( in_array( $key, $value, true ) ) ? ' checked' : '';
-					$pro_only = ( isset( $option['pro_only'] ) && $option['pro_only'] ) ? ' spf-pro-only' : '';
+					$type          = ( $args['multiple'] ) ? 'checkbox' : 'radio';
+					$extra         = ( $args['multiple'] ) ? '[]' : '';
+					$active        = ( in_array( $key, $value, true ) ) ? ' spf--active' : '';
+					$checked       = ( in_array( $key, $value, true ) ) ? ' checked' : '';
+					$pro_only      = ( isset( $option['pro_only'] ) && $option['pro_only'] ) ? ' spf-pro-only' : '';
+					$disable_field = ( isset( $option['pro_only'] ) && $option['pro_only'] ) ? ' disabled' : '';
 
 					echo '<div class="spf--sibling spf--image' . esc_attr( $active . $pro_only ) . '" value="' . ( isset( $option['option_name'] ) ? esc_html( $option['option_name'] ) : '' ) . '">';
 					echo '<figure>';
 					echo '<img src="' . esc_url( $option['image'] ) . '" alt="img-' . esc_attr( $num++ ) . '" />';
-					  echo '<input type="' . esc_attr( $type ) . '" name="' . esc_attr( $this->field_name( $extra ) ) . '" value="' . esc_attr( $key ) . '"' . $this->field_attributes() . esc_attr( $checked ) . '/>'; // phpcs:ignore
+					  echo '<input ' . $disable_field . ' type="' . esc_attr( $type ) . '" name="' . esc_attr( $this->field_name( $extra ) ) . '" value="' . esc_attr( $key ) . '"' . $this->field_attributes() . esc_attr( $checked ) . '/>'; // phpcs:ignore
 					// ShapedPlugin.
 					if ( isset( $option['option_name'] ) && ! isset( $option['option_demo_url'] ) ) {
 						echo '<p>' . esc_html( $option['option_name'] ) . '</p>';

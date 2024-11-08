@@ -49,56 +49,62 @@ class SPTP_Layout {
 						'class'   => 'sptp-layout-preset layout_preset',
 						'title'   => __( 'Layout Preset', 'team-free' ),
 						'options' => array(
-							'carousel'        => array(
+							'carousel'           => array(
 								'image'           => SPT_PLUGIN_ROOT . 'src/Admin/img/layout-preset/carousel.svg',
 								'option_name'     => __( 'Carousel', 'team-free' ),
 								'option_demo_url' => 'https://getwpteam.com/carousel/',
 							),
-							'grid'            => array(
+							'grid'               => array(
 								'image'           => SPT_PLUGIN_ROOT . 'src/Admin/img/layout-preset/grid.svg',
 								'option_name'     => __( 'Grid', 'team-free' ),
 								'option_demo_url' => 'https://getwpteam.com/grid/',
 							),
-							'list'            => array(
+							'list'               => array(
 								'image'           => SPT_PLUGIN_ROOT . 'src/Admin/img/layout-preset/list.svg',
 								'option_name'     => __( 'List', 'team-free' ),
 								'option_demo_url' => 'https://getwpteam.com/list/',
 							),
-							'filter'          => array(
+							'filter'             => array(
 								'image'           => SPT_PLUGIN_ROOT . 'src/Admin/img/layout-preset/isotope.svg',
 								'option_name'     => __( 'Isotope', 'team-free' ),
 								'pro_only'        => true,
 								'option_demo_url' => 'https://getwpteam.com/isotope/',
 							),
-							'mosaic'          => array(
+							'mosaic'             => array(
 								'image'           => SPT_PLUGIN_ROOT . 'src/Admin/img/layout-preset/mosaic.svg',
 								'option_name'     => __( 'Mosaic', 'team-free' ),
 								'pro_only'        => true,
 								'option_demo_url' => 'https://getwpteam.com/mosaic/',
 							),
-							'inline'          => array(
+							'inline'             => array(
 								'image'           => SPT_PLUGIN_ROOT . 'src/Admin/img/layout-preset/inline.svg',
 								'option_name'     => __( 'Inline', 'team-free' ),
 								'pro_only'        => true,
 								'option_demo_url' => 'https://getwpteam.com/inline/',
 							),
-							'table'           => array(
+							'table'              => array(
 								'image'           => SPT_PLUGIN_ROOT . 'src/Admin/img/layout-preset/table.svg',
 								'option_name'     => __( 'Table', 'team-free' ),
 								'pro_only'        => true,
 								'option_demo_url' => 'https://getwpteam.com/table/',
 							),
-							'accordion'       => array(
+							'accordion'          => array(
 								'image'           => SPT_PLUGIN_ROOT . 'src/Admin/img/layout-preset/accordion.svg',
 								'option_name'     => __( 'Accordion', 'team-free' ),
 								'pro_only'        => true,
 								'option_demo_url' => 'https://getwpteam.com/accordion/',
 							),
-							'thumbnail-pager' => array(
+							'thumbnail-pager'    => array(
 								'image'           => SPT_PLUGIN_ROOT . 'src/Admin/img/layout-preset/thumbnail_pager.svg',
 								'option_name'     => __( 'Thumbs Pager', 'team-free' ),
 								'pro_only'        => true,
 								'option_demo_url' => 'https://getwpteam.com/thumbnails-pager/',
+							),
+							'organization-chart' => array(
+								'image'           => SPT_PLUGIN_ROOT . 'src/Admin/img/layout-preset/org_chart.svg',
+								'option_name'     => __( 'Org Chart', 'team-free' ),
+								'pro_only'        => true,
+								'option_demo_url' => 'https://getwpteam.com/organization-chart/',
 							),
 						),
 						'default' => 'carousel',
@@ -119,7 +125,7 @@ class SPTP_Layout {
 								'pro_only'    => true,
 							),
 							'ticker'            => array(
-								'image'       => SPT_PLUGIN_ROOT . 'src/Admin/img/layout-style/ticker.svg',
+								'image'       => SPT_PLUGIN_ROOT . 'src/Admin/img/layout-style/ticker-mode.svg',
 								'option_name' => __( 'Ticker', 'team-free' ),
 								'pro_only'    => true,
 							),
@@ -140,7 +146,7 @@ class SPTP_Layout {
 					array(
 						'id'         => 'layout_mode',
 						'type'       => 'image_select',
-						'class'      => 'sptp-layout-preset image hide-active-sign carousel_style',
+						'class'      => 'sptp-layout-preset image hide-active-sign carousel_style sptp-grid-style',
 						'title'      => __( 'Grid Style', 'team-free' ),
 						'inline'     => true,
 						'only_pro'   => true,
@@ -156,7 +162,7 @@ class SPTP_Layout {
 							),
 						),
 						'default'    => 'even',
-						'dependency' => array( 'layout_preset', '==', 'grid', true ),
+						'dependency' => array( 'layout_preset', 'any', 'grid,filter', true ),
 					),
 					array(
 						'id'         => 'style_member_content_position_list',
@@ -178,6 +184,39 @@ class SPTP_Layout {
 						'dependency' => array( 'layout_preset', '==', 'list', true ),
 					),
 					array(
+						'id'         => 'thumbnail_layout_style',
+						'type'       => 'image_select',
+						'class'      => 'sptp_custom_image_width-2  sptp-layout-preset hide-active-sign image',
+						'title'      => __( 'Thumbnails Pager Style', 'team-free' ),
+						'inline'     => true,
+						'options'    => array(
+							'right' => array(
+								'image'       => SPT_PLUGIN_ROOT . 'src/Admin/img/layout-style/thubmnails-pager/right.svg',
+								'option_name' => __( 'Right', 'team-free' ),
+								'pro_only'    => true,
+							),
+							'top'   => array(
+								'image'       => SPT_PLUGIN_ROOT . 'src/Admin/img/layout-style/thubmnails-pager/top.svg',
+								'option_name' => __( 'Top', 'team-free' ),
+								'pro_only'    => true,
+							),
+							'left'  => array(
+								'image'       => SPT_PLUGIN_ROOT . 'src/Admin/img/layout-style/thubmnails-pager/left.svg',
+								'option_name' => __( 'Left', 'team-free' ),
+								'pro_only'    => true,
+							),
+						),
+						'default'    => 'right',
+						'dependency' => array( 'layout_preset', '==', 'thumbnail-pager', true ),
+					),
+					array(
+						'id'         => 'sptp_chart',
+						'type'       => 'text',
+						'chart'      => true,
+						'only_pro'   => true,
+						'dependency' => array( 'layout_preset', '==', 'organization-chart', true ),
+					),
+					array(
 						'id'          => 'filter_members',
 						'class'       => 'sptp_filter_members',
 						'type'        => 'select',
@@ -190,6 +229,7 @@ class SPTP_Layout {
 							'exclude'  => __( 'Exclude (Pro)', 'team-free' ),
 						),
 						'default'     => array( 'newest' ),
+						'dependency'  => array( 'layout_preset', '!=', 'organization-chart', true ),
 					),
 					array(
 						'type'    => 'notice',

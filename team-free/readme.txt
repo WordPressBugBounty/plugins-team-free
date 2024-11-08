@@ -1,9 +1,9 @@
-=== WP Team – Responsive Team Members Showcase, Team Grid, Team Slider, and Staff List ===
+=== WP Team – Responsive Team Members Showcase, Team Grid, Team Slider, Organization Chart, and Staff List ===
 Contributors: shapedplugin, shamimmiashuhagh, rubel_miah, khalilu
-Tags: team, team members, team page, team showcase, team slider
+Tags: team, team members, organization chart, team showcase, team slider
 Requires at least: 4.7
-Tested up to: 6.6.1
-Stable tag: 3.0.3
+Tested up to: 6.7
+Stable tag: 3.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -272,6 +272,15 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 
 
 == Changelog ==
+
+= 3.0.4 - Nov 08, 2024 =
+* Improved: The plugin backend options are enhanced.
+* Improved: Remove unused code.
+* Fix: There is an extra space issue when selecting a team in the gutenberg block.
+* Fix: Some strings translation issue.
+* Updated: The language (.pot) file.
+* Removed: The shortcode list query was removed from the page where the team was not used.
+* Tested: WordPress 6.7 compatibility.
 
 = 3.0.3 - Aug 23, 2024 =
 * Fix: Some strings translation issue.
