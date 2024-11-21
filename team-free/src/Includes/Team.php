@@ -24,7 +24,7 @@ use ShapedPlugin\WPTeam\Admin\Team_Import_Export;
 use ShapedPlugin\WPTeam\Admin\WP_Team_Gutenberg_Block;
 use ShapedPlugin\WPTeam\Admin\HelpPage\Help;
 // use ShapedPlugin\WPTeam\Admin\Helper\Team_Premium;
-use ShapedPlugin\WPTeam\Admin\Helper\Review_Notice;
+use ShapedPlugin\WPTeam\Admin\Helper\Admin_Notices;
 use ShapedPlugin\WPTeam\Admin\Team_Element_Shortcode_Block;
 use ShapedPlugin\WPTeam\Admin\Team_Element_Shortcode_Block_Deprecated;
 
@@ -131,7 +131,6 @@ class Team {
 		$plugin_i18n = new WP_Team_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -146,7 +145,7 @@ class Team {
 		$plugin_admin = new Admin( SPT_PLUGIN_SLUG, SPT_PLUGIN_VERSION );
 		// Help Page.
 		Help::instance();
-		$review_notice = new Review_Notice( SPT_PLUGIN_SLUG, SPT_PLUGIN_VERSION );
+		$admin_notices = new Admin_Notices( SPT_PLUGIN_SLUG, SPT_PLUGIN_VERSION );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_print_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -174,8 +173,11 @@ class Team {
 		$this->loader->add_action( 'wp_ajax_SPT_import_shortcodes', $import_export, 'import_shortcodes' );
 
 		// Review notice for the plugin.
-		$this->loader->add_action( 'admin_notices', $review_notice, 'display_admin_notice' );
-		$this->loader->add_action( 'wp_ajax_sp-wpt-never-show-review-notice', $review_notice, 'dismiss_review_notice' );
+		$this->loader->add_action( 'admin_notices', $admin_notices, 'display_admin_review_notice' );
+		$this->loader->add_action( 'wp_ajax_sp-wpt-never-show-review-notice', $admin_notices, 'dismiss_review_notice' );
+		// Black friday offer banner for the plugin.
+		$this->loader->add_action( 'admin_notices', $admin_notices, 'display_admin_offer_banner' );
+		$this->loader->add_action( 'wp_ajax_sp_team-hide-offer-banner', $admin_notices, 'dismiss_offer_banner' );
 
 		// Gutenberg block.
 		if ( version_compare( $GLOBALS['wp_version'], '5.3', '>=' ) ) {

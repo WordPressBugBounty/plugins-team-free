@@ -154,7 +154,6 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 			add_action( 'wp_enqueue_scripts', array( 'ShapedPlugin\WPTeam\Admin\Framework\Classes\SPF_TEAM', 'add_typography_enqueue_styles' ), 80 );
 			add_action( 'wp_head', array( 'ShapedPlugin\WPTeam\Admin\Framework\Classes\SPF_TEAM', 'add_custom_css' ), 80 );
 			add_filter( 'admin_body_class', array( 'ShapedPlugin\WPTeam\Admin\Framework\Classes\SPF_TEAM', 'add_admin_body_class' ) );
-
 		}
 
 		/**

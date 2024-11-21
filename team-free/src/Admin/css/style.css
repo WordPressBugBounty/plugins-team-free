@@ -6426,14 +6426,17 @@ a.sptp-live-demo-icon:focus {
 #_sptp_generator_layout .spf-field-notice {
 	padding-top: 0;
 }
+
 .sptp-chart-visual {
 	max-width: 820px;
 	margin: auto;
 	opacity: .8;
 }
-.sptp-chart-visual img{
+
+.sptp-chart-visual img {
 	width: 100%;
 }
-.sptp-gutenberg-shortcode.editor-styles-wrapper:after{
+
+.sptp-gutenberg-shortcode.editor-styles-wrapper:after {
 	display: none;
 }

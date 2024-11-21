@@ -3,7 +3,7 @@ Contributors: shapedplugin, shamimmiashuhagh, rubel_miah, khalilu
 Tags: team, team members, organization chart, team showcase, team slider
 Requires at least: 4.7
 Tested up to: 6.7
-Stable tag: 3.0.4
+Stable tag: 3.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -272,6 +272,9 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 
 
 == Changelog ==
+
+= Version 3.0.5 - Nov 21, 2024 =
+* Fix: The plugin style issue for RTL sites.
 
 = 3.0.4 - Nov 08, 2024 =
 * Improved: The plugin backend options are enhanced.
