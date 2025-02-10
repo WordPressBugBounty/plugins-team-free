@@ -81,7 +81,7 @@ if ( ! class_exists( 'TEAMFW_Field_image_select' ) ) {
 						echo '<p>' . esc_html( $option['option_name'] ) . '</p>';
 					}
 					if ( isset( $option['option_demo_url'] ) ) {
-						echo '<p class="sptp-img-title">' . esc_html( $option['option_name'] ) . '<a href="' . esc_url( $option['option_demo_url'] ) . '" tooltip="Demo" class="sptp-live-demo-icon" target="_blank"><i class="spteam-icon-external_link"></i></a></p>';
+						echo '<p class="sptp-img-title">' . esc_html( $option['option_name'] ) . '<a href="' . esc_url( $option['option_demo_url'] ) . '" tooltip="Demo" class="sptp-live-demo-icon" target="_blank"><i class="sp-team-icon-external_link"></i></a></p>';
 					}
 					echo '</figure>';
 					echo '</div>';

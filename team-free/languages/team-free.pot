@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Team v3.0.4\n"
-"POT-Creation-Date: 2024-11-07 16:32+0600\n"
+"POT-Creation-Date: 2025-02-03 15:20+0600\n"
 "PO-Revision-Date: 2024-02-29 16:12+0600\n"
 "Last-Translator: \n"
 "Language-Team: ShapedPlugin <support@shapedplugin.com\n"
@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_x;_ex;_n;_nx;_n_noop;esc_html__;esc_html_e;"
 "esc_html_x;esc_attr__;esc_attr_e;esc_attr_x;number_format_i18n;date_i18n\n"
@@ -871,14 +871,14 @@ msgstr ""
 #: src/Admin/Configs/Generator/SPTP_Display.php:313
 #: src/Admin/Configs/Generator/SPTP_Display.php:1032
 #: src/Admin/Configs/Generator/SPTP_Modal.php:285
-#: src/Admin/Configs/Member/Member_Meta.php:148
+#: src/Admin/Configs/Member/Member_Meta.php:149
 #: src/Admin/Configs/Settings/SPTP_SinglePage.php:124
 msgid "Email Address"
 msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Display.php:324
 #: src/Admin/Configs/Generator/SPTP_Modal.php:295
-#: src/Admin/Configs/Member/Member_Meta.php:155
+#: src/Admin/Configs/Member/Member_Meta.php:156
 #: src/Admin/Configs/Settings/SPTP_SinglePage.php:135
 msgid "Mobile (personal)"
 msgstr ""
@@ -891,14 +891,14 @@ msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Display.php:346
 #: src/Admin/Configs/Generator/SPTP_Modal.php:315
-#: src/Admin/Configs/Member/Member_Meta.php:169
+#: src/Admin/Configs/Member/Member_Meta.php:170
 #: src/Admin/Configs/Settings/SPTP_SinglePage.php:157
 msgid "Location"
 msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Display.php:357
 #: src/Admin/Configs/Generator/SPTP_Modal.php:325
-#: src/Admin/Configs/Member/Member_Meta.php:176
+#: src/Admin/Configs/Member/Member_Meta.php:177
 #: src/Admin/Configs/Settings/SPTP_SinglePage.php:168
 msgid "Website"
 msgstr ""
@@ -2199,115 +2199,115 @@ msgstr ""
 msgid "Add Social"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:133
+#: src/Admin/Configs/Member/Member_Meta.php:134
 #, php-format
 msgid ""
 "To unlock the Member Information, Additional Custom Fields, Skills, and "
 "Photo Gallery, %1$sUpgrade to Pro!%2$s"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:141
+#: src/Admin/Configs/Member/Member_Meta.php:142
 msgid "MEMBER INFORMATION (PRO)"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:162
+#: src/Admin/Configs/Member/Member_Meta.php:163
 msgid "Telephone (office)"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:183
+#: src/Admin/Configs/Member/Member_Meta.php:184
 msgid "Custom Detail URL"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:190
+#: src/Admin/Configs/Member/Member_Meta.php:191
 msgid ""
 "Check to make the each member area clickable for the detailed profile. This "
 "skips member modal or a single page."
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:197
+#: src/Admin/Configs/Member/Member_Meta.php:198
 msgid "Year of Experience"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:204
+#: src/Admin/Configs/Member/Member_Meta.php:205
 msgid "Special Tag"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:210
+#: src/Admin/Configs/Member/Member_Meta.php:211
 msgid "User/Author Profile"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:211
+#: src/Admin/Configs/Member/Member_Meta.php:212
 msgid ""
 "If this member is associated with a account, select it here. Might be used "
 "to fetch latest published posts in the single member page."
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:218
+#: src/Admin/Configs/Member/Member_Meta.php:219
 msgid "ADDITIONAL CUSTOM FIELDS (PRO)"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:226
+#: src/Admin/Configs/Member/Member_Meta.php:227
 msgid "Add Field"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:236
+#: src/Admin/Configs/Member/Member_Meta.php:237
 msgid "Add Icon"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:244
+#: src/Admin/Configs/Member/Member_Meta.php:245
 msgid "Text (Pro)"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:245
+#: src/Admin/Configs/Member/Member_Meta.php:246
 msgid "Number (Pro)"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:246
+#: src/Admin/Configs/Member/Member_Meta.php:247
 msgid "Fax (Pro)"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:247
+#: src/Admin/Configs/Member/Member_Meta.php:248
 msgid "Email Address(Pro)"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:248
+#: src/Admin/Configs/Member/Member_Meta.php:249
 msgid "Link (Pro)"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:249
+#: src/Admin/Configs/Member/Member_Meta.php:250
 msgid "Date (Pro)"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:275
+#: src/Admin/Configs/Member/Member_Meta.php:276
 msgid "Skill Label"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:276
+#: src/Admin/Configs/Member/Member_Meta.php:277
 msgid "Add Skill"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:286
+#: src/Admin/Configs/Member/Member_Meta.php:287
 msgid "e.g. Python"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:311
-#: src/Admin/Configs/Member/Member_Meta.php:315
+#: src/Admin/Configs/Member/Member_Meta.php:312
+#: src/Admin/Configs/Member/Member_Meta.php:316
 msgid "Gallery Images"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:312
+#: src/Admin/Configs/Member/Member_Meta.php:313
 msgid "Add Image(s)"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:313
+#: src/Admin/Configs/Member/Member_Meta.php:314
 msgid "Edit Images"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:314
+#: src/Admin/Configs/Member/Member_Meta.php:315
 msgid "Remove Images"
 msgstr ""
 
-#: src/Admin/Configs/Member/Member_Meta.php:315
+#: src/Admin/Configs/Member/Member_Meta.php:316
 msgid ""
 "Gallery images for members will be displayed on a photo slideshow on a modal "
 "or single page. The second image of the gallery images will be used as flip "
@@ -2536,29 +2536,29 @@ msgstr ""
 msgid "WP Team Deprecated"
 msgstr ""
 
-#: src/Admin/Framework/Classes/SPF_TEAM.php:498
+#: src/Admin/Framework/Classes/SPF_TEAM.php:497
 msgid "Are you sure?"
 msgstr ""
 
-#: src/Admin/Framework/Classes/SPF_TEAM.php:500
+#: src/Admin/Framework/Classes/SPF_TEAM.php:499
 #, php-format
 msgid "Please enter %s or more characters"
 msgstr ""
 
-#: src/Admin/Framework/Classes/SPF_TEAM.php:501
+#: src/Admin/Framework/Classes/SPF_TEAM.php:500
 msgid "Searching..."
 msgstr ""
 
-#: src/Admin/Framework/Classes/SPF_TEAM.php:502
+#: src/Admin/Framework/Classes/SPF_TEAM.php:501
 msgid "No results found."
 msgstr ""
 
-#: src/Admin/Framework/Classes/SPF_TEAM.php:622
+#: src/Admin/Framework/Classes/SPF_TEAM.php:621
 msgid "Oops! Not allowed."
 msgstr ""
 
-#: src/Admin/Framework/Classes/SPF_TEAM.php:699
-#: src/Admin/Framework/Classes/SPF_TEAM.php:702
+#: src/Admin/Framework/Classes/SPF_TEAM.php:698
+#: src/Admin/Framework/Classes/SPF_TEAM.php:701
 msgid "Field not found!"
 msgstr ""
 
@@ -2611,7 +2611,7 @@ msgstr ""
 
 #: src/Admin/Framework/Classes/admin-options.class.php:714
 #: src/Admin/Framework/Classes/admin-options.class.php:835
-#: src/Admin/Framework/Classes/metabox-options.class.php:392
+#: src/Admin/Framework/Classes/metabox-options.class.php:386
 msgid "Reset"
 msgstr ""
 
@@ -2621,7 +2621,7 @@ msgid "Are you sure you want to reset all settings to default values?"
 msgstr ""
 
 #: src/Admin/Framework/Classes/admin-options.class.php:810
-#: src/Admin/Framework/Classes/metabox-options.class.php:371
+#: src/Admin/Framework/Classes/metabox-options.class.php:365
 #: src/Admin/Framework/fields/button_clean/button_clean.php:84
 #: src/Admin/Framework/fields/button_set/button_set.php:90
 #: src/Admin/Framework/fields/checkbox/checkbox.php:104
@@ -2650,11 +2650,11 @@ msgstr ""
 msgid "Set custom size"
 msgstr ""
 
-#: src/Admin/Framework/Classes/metabox-options.class.php:393
+#: src/Admin/Framework/Classes/metabox-options.class.php:387
 msgid "update post"
 msgstr ""
 
-#: src/Admin/Framework/Classes/metabox-options.class.php:393
+#: src/Admin/Framework/Classes/metabox-options.class.php:387
 msgid "Cancel"
 msgstr ""
 
@@ -3009,28 +3009,32 @@ msgstr ""
 msgid "Get Help"
 msgstr ""
 
-#: src/Admin/HelpPage/Help.php:241
+#: src/Admin/HelpPage/Help.php:244
 msgid "Activate"
 msgstr ""
 
-#: src/Admin/HelpPage/Help.php:248
+#: src/Admin/HelpPage/Help.php:251
 msgid "Install Now"
 msgstr ""
 
-#: src/Admin/HelpPage/Help.php:254
+#: src/Admin/HelpPage/Help.php:257
 msgid "More Details"
 msgstr ""
 
-#: src/Admin/HelpPage/Help.php:286
+#: src/Admin/HelpPage/Help.php:289
 msgid "Version:"
 msgstr ""
 
-#: src/Admin/HelpPage/Help.php:296
+#: src/Admin/HelpPage/Help.php:299
 msgid "+ Active Installations"
 msgstr ""
 
-#: src/Admin/HelpPage/Help.php:304
+#: src/Admin/HelpPage/Help.php:307
 msgid "Last Updated:"
+msgstr ""
+
+#: src/Admin/Helper/Admin_Notices.php:250
+msgid "Limited Time Offer, Upgrade Now!"
 msgstr ""
 
 #: src/Admin/Team_Import_Export.php:287
@@ -3049,7 +3053,7 @@ msgstr ""
 msgid "Team:"
 msgstr ""
 
-#: src/Frontend/Frontend.php:245
+#: src/Frontend/Frontend.php:250
 msgid " No result found "
 msgstr ""
 

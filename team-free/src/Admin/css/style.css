@@ -6436,7 +6436,3 @@ a.sptp-live-demo-icon:focus {
 .sptp-chart-visual img {
 	width: 100%;
 }
-
-.sptp-gutenberg-shortcode.editor-styles-wrapper:after {
-	display: none;
-}

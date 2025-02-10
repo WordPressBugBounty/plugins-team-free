@@ -178,6 +178,7 @@ class Frontend {
 		if ( $found_generator_id ) {
 			wp_enqueue_style( 'team-free-swiper' );
 			wp_enqueue_style( 'team-free-fontawesome' );
+			wp_enqueue_style( 'sptp-fontello-icon' );
 			wp_enqueue_style( SPT_PLUGIN_SLUG );
 			// Load dynamic style based on the existing shortcode ids in the current page.
 			$dynamic_style = self::load_dynamic_style( $found_generator_id );
@@ -192,6 +193,7 @@ class Frontend {
 		if ( is_object( $post ) && 'sptp_member' === $post->post_type ) {
 			$custom_style = trim( html_entity_decode( get_option( '_sptp_settings' )['custom_css'] ) );
 			wp_enqueue_style( 'team-free-fontawesome' );
+			wp_enqueue_style( 'sptp-fontello-icon' );
 			wp_enqueue_style( SPT_PLUGIN_SLUG );
 			wp_add_inline_style( SPT_PLUGIN_SLUG, $custom_style );
 		}
@@ -227,6 +229,9 @@ class Frontend {
 		}
 		wp_register_style( 'public-rtl', SPT_PLUGIN_ROOT . 'src/Frontend/css/public-rtl.min.css', array(), SPT_PLUGIN_VERSION, 'all' );
 		wp_register_style( SPT_PLUGIN_SLUG, SPT_PLUGIN_ROOT . 'src/Frontend/css/public.min.css', array(), SPT_PLUGIN_VERSION, 'all' );
+
+		// Register fontello icon css.
+		wp_register_style( 'sptp-fontello-icon', SPT_PLUGIN_ROOT . 'src/Admin/css/fontello.min.css', array(), SPT_PLUGIN_VERSION, 'all' );
 
 		/**
 		 * Register all the Scripts for the public-facing side of the site.

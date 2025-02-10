@@ -87,7 +87,11 @@ while ( have_posts() ) :
 								?>
 							<li>
 								<a class="<?php echo 'sptp-' . esc_html( $social['social_group'] ); ?>" href="<?php echo esc_html( $social_link ); ?>" target="_blank">
-								<i class="<?php echo 'fa fa-' . esc_html( $social['social_group'] ); ?>"></i>
+									<?php if ( preg_match( '/icon/', $social['social_group'] ) ) { ?>
+										<i class="spteam-icon <?php echo esc_attr( $social['social_group'] ); ?>"></i>
+									<?php } else { ?>
+										<i class="<?php echo 'fa fa-' . esc_attr( $social['social_group'] ); ?>"></i>
+									<?php } ?>
 								</a>
 							</li>
 								<?php

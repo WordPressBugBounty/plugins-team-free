@@ -36,7 +36,7 @@ if ( ! class_exists( 'WP_Team_Gutenberg_Block_Init' ) ) {
 		public function sptf_block_editor_assets() {
 			wp_enqueue_script(
 				'team-free-shortcode-block',
-				plugins_url( '/GutenbergBlock/build/index.js', dirname( __FILE__ ) ),
+				plugins_url( '/GutenbergBlock/build/index.js', __DIR__ ),
 				array( 'jquery' ),
 				SPT_PLUGIN_VERSION,
 				true
@@ -47,8 +47,8 @@ if ( ! class_exists( 'WP_Team_Gutenberg_Block_Init' ) ) {
 			 */
 			wp_enqueue_style( 'team-free-swiper' );
 			wp_enqueue_style( 'team-free-fontawesome' );
+			wp_enqueue_style( 'sptp-fontello-icon' );
 			wp_enqueue_style( SPT_PLUGIN_SLUG );
-
 		}
 
 		/**

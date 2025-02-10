@@ -98,6 +98,7 @@ class Member_Meta {
 								'options'     => array(
 									'facebook'    => 'Facebook',
 									'twitter'     => 'Twitter',
+									'sp-team-icon-x-twitter' => 'X (Twitter)',
 									'linkedin'    => 'LinkedIn',
 									'pinterest-p' => 'Pinterest',
 									'youtube'     => 'Youtube',

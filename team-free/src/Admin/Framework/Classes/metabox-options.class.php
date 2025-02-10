@@ -116,7 +116,6 @@ if ( ! class_exists( 'TEAMFW_Metabox' ) ) {
 
 			// wp enqueue for typography and output css.
 			parent::__construct();
-
 		}
 
 		/**
@@ -149,7 +148,6 @@ if ( ! class_exists( 'TEAMFW_Metabox' ) ) {
 			}
 
 			return $result;
-
 		}
 
 		/**
@@ -207,7 +205,6 @@ if ( ! class_exists( 'TEAMFW_Metabox' ) ) {
 			}
 
 			return $classes;
-
 		}
 
 		/**
@@ -220,7 +217,6 @@ if ( ! class_exists( 'TEAMFW_Metabox' ) ) {
 			if ( ! in_array( $post_type, $this->args['exclude_post_types'], true ) ) {
 				add_meta_box( $this->unique, $this->args['title'], array( &$this, 'add_meta_box_content' ), $this->post_type, $this->args['context'], $this->args['priority'], $this->args );
 			}
-
 		}
 
 		/**
@@ -235,7 +231,6 @@ if ( ! class_exists( 'TEAMFW_Metabox' ) ) {
 			$default = ( isset( $this->args['defaults'][ $field['id'] ] ) ) ? $this->args['defaults'][ $field['id'] ] : $default;
 
 			return $default;
-
 		}
 
 		/**
@@ -267,7 +262,6 @@ if ( ! class_exists( 'TEAMFW_Metabox' ) ) {
 			$value   = ( isset( $value ) ) ? $value : $default;
 
 			return $value;
-
 		}
 
 		/**
@@ -321,7 +315,7 @@ if ( ! class_exists( 'TEAMFW_Metabox' ) ) {
 					$menu_title = sanitize_title( $section['title'] );
 					echo '<li class="spf-menu-item-' . esc_attr( $menu_title ) . '"><a href="#" data-section="' . esc_attr( $this->unique . '_' . $tab_key ) . '">' . wp_kses_post( $tab_icon . $section['title'] . $tab_error ) . '</a></li>';
 
-					$tab_key++;
+					++$tab_key;
 
 				}
 
@@ -374,7 +368,7 @@ if ( ! class_exists( 'TEAMFW_Metabox' ) ) {
 
 				echo '</div>';
 
-				$section_key++;
+				++$section_key;
 
 			}
 
@@ -405,7 +399,6 @@ if ( ! class_exists( 'TEAMFW_Metabox' ) ) {
 			echo '</div>';
 
 			echo '</div>';
-
 		}
 
 		/**
@@ -433,7 +426,6 @@ if ( ! class_exists( 'TEAMFW_Metabox' ) ) {
 			}
 			// But guess what?  Sometimes transients are not in the DB, so we have to do this too.
 			wp_cache_flush();
-
 		}
 		/**
 		 * Save metabox.
@@ -464,7 +456,7 @@ if ( ! class_exists( 'TEAMFW_Metabox' ) ) {
 							$this->process_field( $field, $request, $count, $data, $errors );
 						}
 					}
-					$count++;
+					++$count;
 				}
 			}
 
@@ -499,7 +491,6 @@ if ( ! class_exists( 'TEAMFW_Metabox' ) ) {
 			do_action( "spf_{$this->unique}_saved", $data, $post_id, $this );
 
 			do_action( "spf_{$this->unique}_save_after", $data, $post_id, $this );
-
 		}
 
 		/**
@@ -535,7 +526,7 @@ if ( ! class_exists( 'TEAMFW_Metabox' ) ) {
 		 * @param array $errors  The errors array to be populated.
 		 */
 		public function process_single_field( $field, $request, $count, &$data, &$errors ) {
-			if ( ! empty( $field['id'] ) && ! ( isset( $field['only_pro'] ) ) ) {
+			if ( ! empty( $field['id'] ) && ! isset( $field['only_pro'] ) ) {
 				$field_id    = $field['id'];
 				$field_value = isset( $request[ $field_id ] ) ? $request[ $field_id ] : '';
 

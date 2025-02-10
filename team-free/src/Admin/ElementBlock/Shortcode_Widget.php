@@ -54,7 +54,7 @@ class Shortcode_Widget extends \Elementor\Widget_Base {
 	 * @return string Widget icon.
 	 */
 	public function get_icon() {
-		return 'spteam-icon-team-pro';
+		return 'sp-team-icon-team-pro';
 	}
 
 	/**

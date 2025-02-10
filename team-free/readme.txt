@@ -2,8 +2,8 @@
 Contributors: shapedplugin, shamimmiashuhagh, rubel_miah, khalilu
 Tags: team, team members, organization chart, team showcase, team slider
 Requires at least: 4.7
-Tested up to: 6.7
-Stable tag: 3.0.5
+Tested up to: 6.7.1
+Stable tag: 3.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -221,7 +221,7 @@ Thank you!
 
 * PHP 5.6 or later
 * MySQL 5.6 or later
-* WordPress 4.3 or later
+* WordPress 4.7 or later
 
 **This section describes how to install the plugin and get it working**
 
@@ -272,6 +272,12 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 
 
 == Changelog ==
+
+= Version 3.0.6 - Feb 10, 2025 =
+* Improved: The new Twitter icon has been added to the social media list.
+* Fix: The 404 issue for the recommended plugin's logo URL.
+* Updated: The language (.pot) file.
+* Tested: WordPress 6.7.1 compatibility.
 
 = Version 3.0.5 - Nov 21, 2024 =
 * Fix: The plugin style issue for RTL sites.

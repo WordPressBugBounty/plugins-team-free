@@ -27,8 +27,12 @@
 			}
 			?>
 		<li>
-			<a class="<?php echo 'sptp-' . esc_attr( $social['social_group'] ); ?>" href="<?php echo esc_url( $social_link ); ?>" target="_blank" <?php echo esc_attr( $no_follow_text ); ?>>
-				<i class="<?php echo 'fa fa-' . esc_attr( $social['social_group'] ); ?>"></i>
+			<a class="<?php echo 'sptp-' . esc_html( $social['social_group'] ); ?>" href="<?php echo esc_url( $social_link ); ?>" target="_blank" <?php echo esc_attr( $no_follow_text ); ?>>
+				<?php if ( preg_match( '/icon/', $social['social_group'] ) ) { ?>
+					<i class="spteam-icon <?php echo esc_attr( $social['social_group'] ); ?>"></i>
+				<?php } else { ?>
+					<i class="<?php echo 'fa fa-' . esc_attr( $social['social_group'] ); ?>"></i>
+				<?php } ?>
 			</a>
 		</li>
 			<?php
