@@ -2,8 +2,8 @@
 Contributors: shapedplugin, shamimmiashuhagh, rubel_miah, khalilu
 Tags: team, team members, organization chart, team showcase, team slider
 Requires at least: 4.7
-Tested up to: 6.7.1
-Stable tag: 3.0.6
+Tested up to: 6.8
+Stable tag: 3.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -254,24 +254,41 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 
 == Screenshots ==
 
-1. Carousel Layout
-2. Grid Layout
-3. List Layout
-4. General Settings
-5. Carousel Controls
-6. Display Options
-7. Image Settings
-8. Member Detail Settings
-9. Typography Settings
-10. Add New Member
-11. All Members
-12. Advanced Settings
-13. Custom CSS and JS
-14. Rename Menus
-15. Accessibility Settings
+1. Carousel
+2. Grid
+3. List
+4. Multicolumn List
+5. All Members
+6. Add New Member
+7. All Shortcodes
+8. General Settings
+9. Member Styles
+10. Control Member Info
+11. Member Info Styles
+12. Member Image Styles
+13. Carousel Basics
+14. Navigation
+15. Pagination
+16. Miscellaneous
+17. Detail Page Settings
+18. Typography
+19. Export
+20. Import
+21. Single Page
+22. Advanced
+23. Additional CSS
+24. Accessibility
 
 
 == Changelog ==
+
+= Version 3.0.7 - Apr 16, 2025 =
+* New: The Member Photo Shape (Rounded/Circle) option.
+* Fix: The Member Padding option did not work in the carousel layout.
+* Fix: The mismatched text domain issue.
+* Fix: The translation-related warning was found with WP 6.8.
+* Updated: The language (.pot) file.
+* Tested: WordPress 6.8 compatibility.
 
 = Version 3.0.6 - Feb 10, 2025 =
 * Improved: The new Twitter icon has been added to the social media list.

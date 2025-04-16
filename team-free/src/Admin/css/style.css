@@ -6436,3 +6436,7 @@ a.sptp-live-demo-icon:focus {
 .sptp-chart-visual img {
 	width: 100%;
 }
+
+.spf-field.spf-field-notice.skill-bar-notice {
+    padding-bottom: 0 !important;
+}

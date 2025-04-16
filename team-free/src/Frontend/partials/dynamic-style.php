@@ -163,6 +163,9 @@ $css = array(
 		'margin'  => (int) $margin_between_member / 2 . 'px ' . (int) $margin_between_member_left / 2 . 'px',
 		'padding' => $member_padding,
 	),
+	'#sptp-' . $generator_id . ' .swiper-slide .sptp-member' => array(
+		'padding' => $member_padding,
+	),
 	// Member Box-Shadow.
 	'#sptp-' . $generator_id . ' .sptp-list-item.sptp-member,#sptp-' . $generator_id . '.sptp-section .sptp-member' => array(
 		'box-shadow' => $box_shadow_css,

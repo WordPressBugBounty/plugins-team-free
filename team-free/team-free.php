@@ -13,7 +13,7 @@
  * Plugin Name:       WP Team
  * Plugin URI:        https://getwpteam.com/?ref=1
  * Description:       The most versatile and industry-leading WordPress team showcase plugin built to create and manage team members showcases with excellent design and multiple options.
- * Version:           3.0.6
+ * Version:           3.0.7
  * Author:            ShapedPlugin LLC
  * Author URI:        https://shapedplugin.com
  * License:           GPL-2.0+
@@ -36,7 +36,7 @@ define( 'SPT_PLUGIN_NAME', 'WP Team' );
 define( 'SPT_PLUGIN_SLUG', 'team-free' );
 define( 'SPT_PLUGIN_FILE', __FILE__ );
 define( 'SPT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
-define( 'SPT_PLUGIN_VERSION', '3.0.6' );
+define( 'SPT_PLUGIN_VERSION', '3.0.7' );
 define( 'SPT_PLUGIN_ROOT', plugin_dir_url( __FILE__ ) );
 define( 'SPT_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 

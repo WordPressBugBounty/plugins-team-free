@@ -247,7 +247,7 @@ class Admin_Notices {
 					</div>
 				<?php } ?>
 				<div class="sp_team-offer-additional-text">
-					<span class="sp_team-clock-icon">⏱</span><p><?php esc_html_e( 'Limited Time Offer, Upgrade Now!', 'wp-carousel-free' ); ?></p>
+					<span class="sp_team-clock-icon">⏱</span><p><?php esc_html_e( 'Limited Time Offer, Upgrade Now!', 'team-free' ); ?></p>
 				</div>
 				<?php if ( ! empty( $action_url ) ) { ?>
 					<div class="sp_team-banner-action-button">

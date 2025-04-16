@@ -1,0 +1,248 @@
+/* Review notice style */
+#sp-wpt-review-notice {
+  padding: 18px 15px 18px 0;
+  background-color: #fff;
+  border-radius: 5px;
+  margin: 20px 20px 0 0;
+  box-shadow: 0 0 20px 0 rgba(36, 39, 50, .08);
+  clear: both;
+}
+
+#sp-wpt-review-notice .sp-wpt-plugin-icon {
+  width: 125px;
+  float: left;
+  line-height: 90px;
+  text-align: center;
+  margin-left: 8px;
+}
+
+#sp-wpt-review-notice .sp-wpt-plugin-icon img {
+  max-width: 94px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+#sp-wpt-review-notice .sp-wpt-notice-text {
+  overflow: hidden;
+}
+
+#sp-wpt-review-notice .sp-wpt-notice-text h3 {
+  font-size: 24px;
+  margin: 0 0 5px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+#sp-wpt-review-notice .sp-wpt-notice-text p {
+  margin: 10px 0 10px 0;
+  font-size: 13px;
+}
+
+#sp-wpt-review-notice .sp-wpt-notice-text p.sp-wpt-review-actions {
+  margin: 10px 0 2px 0;
+}
+
+#sp-wpt-review-notice .sp-wpt-notice-text .sp-wpt-review-actions a {
+  text-decoration: none;
+  margin-right: 8px;
+  color: #63a37b;
+  display: inline-block;
+  position: relative;
+}
+
+#sp-wpt-review-notice .sp-wpt-notice-text .sp-wpt-review-actions a span {
+  padding-right: 2px;
+}
+
+#sp-wpt-review-notice .sp-wpt-notice-text .sp-wpt-review-actions a.button {
+  color: #fff;
+}
+
+body.rtl #sp-wpt-review-notice .sp-wpt-plugin-icon {
+  float: right;
+}
+
+#adminmenu #menu-posts-sptp_member li:nth-child(8) a,
+#adminmenu #menu-posts-sptp_member li:nth-child(8) a:hover {
+  color: #f9be48;
+}
+
+#adminmenu #menu-posts-sptp_member li a .sp-go-pro-icon {
+  background-image: url(../img/premium.svg);
+  width: 20px;
+  height: 20px;
+  display: block;
+  float: left;
+  margin-right: 1px;
+  margin-left: -2px;
+  margin-top: -2px;
+}
+
+.spwpteam-footer-text-star {
+  color: #dba617;
+}
+
+.rtl  #sp-wpt-review-notice {
+  margin: 20px 0 0 20px;
+  padding: 18px 0 18px 15px;
+}
+
+.rtl #sp-wpt-review-notice .sp-wpt-plugin-icon {
+  float: right;
+  margin: 0 0 0 8px;
+}
+
+/* Offer Banner Styles  */
+.sp_team-admin-offer-banner-section {
+  position: relative;
+  border-radius: 5px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 16px;
+  height: auto;
+  border-left: 0;
+  margin-top: 40px;
+  margin-right: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 5px 40px;
+  background: linear-gradient(90deg, #000717 0%, #002068 50.5%, #451223 100%);
+  clear: both;
+}
+
+.sp_team-admin-offer-banner-section .sp_team-offer-additional-text {
+  display: flex;
+  align-items: center;
+}
+
+.sp_team-admin-offer-banner-section span.sp_team-clock-icon {
+  font-size: 24px;
+  margin-right: 6px;
+}
+
+.sp_team-admin-offer-banner-section img.sp_team-plugin-logo,
+.sp_team-admin-offer-banner-section img.sp_team-offer-name,
+.sp_team-admin-offer-banner-section img.sp_team-offer-percentage {
+  max-width: 250px;
+}
+
+.sp_team-admin-offer-banner-section img.sp_team-plugin-logo {
+  width: 150px;
+}
+
+.sp_team-admin-offer-banner-section img.sp_team-offer-percentage {
+  width: 210px;
+  vertical-align: middle;
+}
+
+.sp_team-admin-offer-banner-section .sp_team-offer-additional-text p {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .5px;
+}
+
+.sp_team-admin-offer-banner-section a.sp_team-get-offer-button {
+  width: 100px;
+  display: inline-block;
+  font-size: 13px;
+  background: pink;
+  border-radius: 50px;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  padding: 12px 15px;
+  font-weight: 600;
+  transition: .8s ease;
+  background: linear-gradient(98.42deg, #A900BF 8.48%, #E100FF 80.32%);
+}
+
+.sp_team-admin-offer-banner-section a.sp_team-get-offer-button:hover {
+  background: linear-gradient(0deg, #A900BF 8.48%, #E100FF 80.32%);
+}
+
+.sp_team-admin-offer-banner-section .sp_team-close-offer-banner {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  top: 6px;
+  cursor: pointer;
+}
+
+.sp_team-admin-offer-banner-section i.sp_team-icon-banner-close {
+  transition: 0.15s ease;
+}
+
+.sp_team-admin-offer-banner-section i.sp_team-icon-banner-close:hover {
+  color: #df3939b5;
+}
+
+.sp_team-admin-offer-banner-section .sp_team-banner-action-button {
+  line-height: 22px;
+}
+
+/* Offer Banner Responsiveness */
+@media only screen and (max-width: 1360px) {
+  .sp_team-admin-offer-banner-section {
+      padding-bottom: 20px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .sp_team-admin-offer-banner-section {
+      padding-top: 20px;
+  }
+  #screen-meta-links + .sp_team-admin-offer-banner-section {
+      margin-top: 50px !important;
+  }
+}
+
+.sp_team-admin-offer-banner-section .sp_team-close-offer-banner {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  top: 4px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.sp_team-admin-offer-banner-section .sp_team-close-offer-banner:before,
+.sp_team-admin-offer-banner-section .sp_team-close-offer-banner:after {
+  content: '';
+  width: 16px;
+  height: 1.3px;
+  background: #ffffff;
+  top: 9px;
+  left: 3px;
+  display: block !important;
+  transform: rotate(45deg);
+  position: absolute;
+}
+
+.sp_team-admin-offer-banner-section .sp_team-close-offer-banner:after {
+  transform: rotate(135deg);
+}
+
+.sp_team-admin-offer-banner-section .sp_team-close-offer-banner:hover:before,
+.sp_team-admin-offer-banner-section .sp_team-close-offer-banner:hover:after {
+  background-color: #df3939b5;
+}
+
+/* RTL style for the offer banner. */
+.rtl .sp_team-admin-offer-banner-section {
+  margin: 40px 0 0 20px;
+}
+
+.rtl .sp_team-admin-offer-banner-section .sp_team-close-offer-banner {
+  right: auto;
+  left: 4px;
+}
+
+.rtl .sp_team-admin-offer-banner-section span.sp_team-clock-icon {
+  margin-left: 6px;
+  margin-right: 0;
+}

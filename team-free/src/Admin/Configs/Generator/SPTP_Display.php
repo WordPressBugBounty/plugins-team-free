@@ -175,7 +175,7 @@ class SPTP_Display {
 													'style' => 'solid',
 													'unit' => 'px',
 													'color' => '#ddd',
-													'hover_color' => '#444',
+													'hover_color' => '#ccc',
 												),
 											),
 											array(
@@ -540,6 +540,16 @@ class SPTP_Display {
 										'content' => __( 'Skill Progress Bars (Pro)', 'team-free' ),
 									),
 									array(
+										'type'    => 'notice',
+										'class'   => 'skill-bar-notice',
+										'content' => sprintf(
+											/* translators: 1: start link and bold tag, 2: close link and bold tag. */
+											__( 'Showcase expertise with professional skills bar that visually represents proficiency levels , %1$sDEMO%2$s', 'team-free' ),
+											'<a href="https://getwpteam.com/member-skill-bars-social-profiles/" target="_blank"><b>',
+											'</b></a>'
+										),
+									),
+									array(
 										'id'       => 'skill_settings',
 										'type'     => 'fieldset',
 										'title'    => __( 'Skill Bars Settings', 'team-free' ),
@@ -790,7 +800,7 @@ class SPTP_Display {
 											array(
 												'id'      => 'custom_image_height',
 												'type'    => 'spinner',
-												'title'   => __( 'Height*', 'wp' ),
+												'title'   => __( 'Height*', 'team-free' ),
 												'default' => 416,
 												'unit'    => 'px',
 												'max'     => 99999,
@@ -828,14 +838,12 @@ class SPTP_Display {
 												'option_name' => __( 'Square', 'team-free' ),
 											),
 											'sptp-rounded' => array(
-												'image'    => SPT_PLUGIN_ROOT . 'src/Admin/img/image-shape/rounded.svg',
+												'image' => SPT_PLUGIN_ROOT . 'src/Admin/img/image-shape/rounded.svg',
 												'option_name' => __( 'Rounded', 'team-free' ),
-												'pro_only' => true,
 											),
 											'sptp-circle'  => array(
-												'image'    => SPT_PLUGIN_ROOT . 'src/Admin/img/image-shape/circle.svg',
+												'image' => SPT_PLUGIN_ROOT . 'src/Admin/img/image-shape/circle.svg',
 												'option_name' => __( 'Circle', 'team-free' ),
-												'pro_only' => true,
 											),
 										),
 										'default'    => 'sptp-square',

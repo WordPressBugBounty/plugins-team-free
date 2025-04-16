@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Team v3.0.4\n"
-"POT-Creation-Date: 2025-02-03 15:20+0600\n"
+"Project-Id-Version: WP Team v3.0.7\n"
+"POT-Creation-Date: 2025-04-15 11:00+0600\n"
 "PO-Revision-Date: 2024-02-29 16:12+0600\n"
 "Last-Translator: \n"
 "Language-Team: ShapedPlugin <support@shapedplugin.com\n"
@@ -15,67 +15,47 @@ msgstr ""
 "esc_html_x;esc_attr__;esc_attr_e;esc_attr_x;number_format_i18n;date_i18n\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: src/Admin/Admin.php:141 src/Admin/Configs/Settings/SPTP_Rename.php:46
-msgid "Member"
-msgstr ""
-
-#: src/Admin/Admin.php:142 src/Admin/Configs/Settings/SPTP_Rename.php:52
-msgid "Members"
-msgstr ""
-
-#: src/Admin/Admin.php:143
-msgid "Group"
-msgstr ""
-
-#: src/Admin/Admin.php:144
-msgid "Groups"
-msgstr ""
-
-#: src/Admin/Admin.php:145 src/Admin/Configs/Settings/SPTP_Rename.php:58
-msgid "Teams"
-msgstr ""
-
-#: src/Admin/Admin.php:247 src/Admin/Admin.php:259
+#: src/Admin/Admin.php:257 src/Admin/Admin.php:269
 #, php-format
 msgid "All %s"
 msgstr ""
 
-#: src/Admin/Admin.php:251 src/Admin/Admin.php:253
+#: src/Admin/Admin.php:261 src/Admin/Admin.php:263
 #, php-format
 msgid "Add New %s"
 msgstr ""
 
-#: src/Admin/Admin.php:255
+#: src/Admin/Admin.php:265
 #, php-format
 msgid "Edit %s"
 msgstr ""
 
-#: src/Admin/Admin.php:257
+#: src/Admin/Admin.php:267
 #, php-format
 msgid "New %s"
 msgstr ""
 
-#: src/Admin/Admin.php:261
+#: src/Admin/Admin.php:271
 #, php-format
 msgid "View %s"
 msgstr ""
 
-#: src/Admin/Admin.php:263
+#: src/Admin/Admin.php:273
 #, php-format
 msgid "Search %s"
 msgstr ""
 
-#: src/Admin/Admin.php:265
+#: src/Admin/Admin.php:275
 #, php-format
 msgid "No %1$s %2$s Found"
 msgstr ""
 
-#: src/Admin/Admin.php:267
+#: src/Admin/Admin.php:277
 #, php-format
 msgid "No %1$s %2$s Found in Trash"
 msgstr ""
 
-#: src/Admin/Admin.php:269 src/Admin/ElementBlock/Shortcode_Widget.php:45
+#: src/Admin/Admin.php:279 src/Admin/ElementBlock/Shortcode_Widget.php:45
 #: src/Admin/GutenbergBlock/src/index.js:18
 #: src/Admin/GutenbergBlock/src/index.js:78
 #: src/Admin/GutenbergBlock/src/index.js:110 src/Admin/HelpPage/Help.php:109
@@ -83,106 +63,106 @@ msgstr ""
 msgid "WP Team"
 msgstr ""
 
-#: src/Admin/Admin.php:271
+#: src/Admin/Admin.php:281
 #, php-format
 msgid "%s Image"
 msgstr ""
 
-#: src/Admin/Admin.php:273
+#: src/Admin/Admin.php:283
 #, php-format
 msgid "Set %s image"
 msgstr ""
 
-#: src/Admin/Admin.php:275
+#: src/Admin/Admin.php:285
 #, php-format
 msgid "Remove %s image"
 msgstr ""
 
-#: src/Admin/Admin.php:330
+#: src/Admin/Admin.php:340
 msgid "All Teams"
 msgstr ""
 
-#: src/Admin/Admin.php:331
+#: src/Admin/Admin.php:341
 msgid "Team"
 msgstr ""
 
-#: src/Admin/Admin.php:332 src/Admin/Admin.php:333
+#: src/Admin/Admin.php:342 src/Admin/Admin.php:343
 msgid "Add New Team"
 msgstr ""
 
-#: src/Admin/Admin.php:334
+#: src/Admin/Admin.php:344
 msgid "Edit Team"
 msgstr ""
 
-#: src/Admin/Admin.php:335
+#: src/Admin/Admin.php:345
 msgid "New Generator"
 msgstr ""
 
-#: src/Admin/Admin.php:337
+#: src/Admin/Admin.php:347
 #, php-format
 msgid "Manage %s"
 msgstr ""
 
-#: src/Admin/Admin.php:338
+#: src/Admin/Admin.php:348
 msgid "View Generator"
 msgstr ""
 
-#: src/Admin/Admin.php:339
+#: src/Admin/Admin.php:349
 msgid "Search Generator"
 msgstr ""
 
-#: src/Admin/Admin.php:340
+#: src/Admin/Admin.php:350
 msgid "No Generator Found"
 msgstr ""
 
-#: src/Admin/Admin.php:341
+#: src/Admin/Admin.php:351
 msgid "No Generator Found in Trash"
 msgstr ""
 
-#: src/Admin/Admin.php:344
+#: src/Admin/Admin.php:354
 #, php-format
 msgid "%s Generator"
 msgstr ""
 
-#: src/Admin/Admin.php:379 src/Admin/Admin.php:432
+#: src/Admin/Admin.php:389 src/Admin/Admin.php:442
 #: src/Admin/Configs/Generator/SPTP_General.php:106
 msgid "Name"
 msgstr ""
 
-#: src/Admin/Admin.php:380 src/Admin/Configs/Generator/SPTP_Display.php:498
+#: src/Admin/Admin.php:390 src/Admin/Configs/Generator/SPTP_Display.php:498
 msgid "Position"
 msgstr ""
 
-#: src/Admin/Admin.php:381
+#: src/Admin/Admin.php:391
 msgid "Image"
 msgstr ""
 
-#: src/Admin/Admin.php:433
+#: src/Admin/Admin.php:443
 msgid "Shortcode"
 msgstr ""
 
-#: src/Admin/Admin.php:434
+#: src/Admin/Admin.php:444
 msgid "Layout"
 msgstr ""
 
-#: src/Admin/Admin.php:435 src/Admin/Configs/Generator/SPTP_General.php:108
+#: src/Admin/Admin.php:445 src/Admin/Configs/Generator/SPTP_General.php:108
 msgid "Date"
 msgstr ""
 
-#: src/Admin/Admin.php:527
+#: src/Admin/Admin.php:537
 msgid "Team Updated"
 msgstr ""
 
-#: src/Admin/Admin.php:528
+#: src/Admin/Admin.php:538
 msgid "Team Published"
 msgstr ""
 
-#: src/Admin/Admin.php:532
+#: src/Admin/Admin.php:542
 #, php-format
 msgid "Member Updated. %1$sView Member%2$s"
 msgstr ""
 
-#: src/Admin/Admin.php:539
+#: src/Admin/Admin.php:549
 #, php-format
 msgid "Member Published. %1$sView Member%2$s"
 msgstr ""
@@ -228,10 +208,10 @@ msgstr ""
 #: src/Admin/Configs/Generator/SPTP_Carousel.php:373
 #: src/Admin/Configs/Generator/SPTP_Carousel.php:384
 #: src/Admin/Configs/Generator/SPTP_Display.php:221
-#: src/Admin/Configs/Generator/SPTP_Display.php:813
-#: src/Admin/Configs/Generator/SPTP_Display.php:869
-#: src/Admin/Configs/Generator/SPTP_Display.php:881
-#: src/Admin/Configs/Generator/SPTP_Display.php:963
+#: src/Admin/Configs/Generator/SPTP_Display.php:823
+#: src/Admin/Configs/Generator/SPTP_Display.php:877
+#: src/Admin/Configs/Generator/SPTP_Display.php:889
+#: src/Admin/Configs/Generator/SPTP_Display.php:971
 #: src/Admin/Configs/Generator/SPTP_General.php:131
 #: src/Admin/Configs/Generator/SPTP_General.php:147
 #: src/Admin/Configs/Generator/SPTP_General.php:159
@@ -253,10 +233,10 @@ msgstr ""
 #: src/Admin/Configs/Generator/SPTP_Carousel.php:374
 #: src/Admin/Configs/Generator/SPTP_Carousel.php:385
 #: src/Admin/Configs/Generator/SPTP_Display.php:222
-#: src/Admin/Configs/Generator/SPTP_Display.php:814
-#: src/Admin/Configs/Generator/SPTP_Display.php:870
-#: src/Admin/Configs/Generator/SPTP_Display.php:882
-#: src/Admin/Configs/Generator/SPTP_Display.php:964
+#: src/Admin/Configs/Generator/SPTP_Display.php:824
+#: src/Admin/Configs/Generator/SPTP_Display.php:878
+#: src/Admin/Configs/Generator/SPTP_Display.php:890
+#: src/Admin/Configs/Generator/SPTP_Display.php:972
 #: src/Admin/Configs/Generator/SPTP_General.php:132
 #: src/Admin/Configs/Generator/SPTP_General.php:148
 #: src/Admin/Configs/Generator/SPTP_General.php:160
@@ -356,8 +336,8 @@ msgstr ""
 #: src/Admin/Configs/Generator/SPTP_Display.php:390
 #: src/Admin/Configs/Generator/SPTP_Display.php:399
 #: src/Admin/Configs/Generator/SPTP_Display.php:450
-#: src/Admin/Configs/Generator/SPTP_Display.php:668
-#: src/Admin/Configs/Generator/SPTP_Display.php:760
+#: src/Admin/Configs/Generator/SPTP_Display.php:678
+#: src/Admin/Configs/Generator/SPTP_Display.php:770
 #: src/Admin/Configs/Generator/SPTP_General.php:195
 #: src/Admin/Configs/Generator/SPTP_Modal.php:245
 #: src/Admin/Configs/Generator/SPTP_Modal.php:255
@@ -405,9 +385,9 @@ msgstr ""
 #: src/Admin/Configs/Generator/SPTP_Display.php:391
 #: src/Admin/Configs/Generator/SPTP_Display.php:400
 #: src/Admin/Configs/Generator/SPTP_Display.php:451
-#: src/Admin/Configs/Generator/SPTP_Display.php:629
-#: src/Admin/Configs/Generator/SPTP_Display.php:669
-#: src/Admin/Configs/Generator/SPTP_Display.php:761
+#: src/Admin/Configs/Generator/SPTP_Display.php:639
+#: src/Admin/Configs/Generator/SPTP_Display.php:679
+#: src/Admin/Configs/Generator/SPTP_Display.php:771
 #: src/Admin/Configs/Generator/SPTP_General.php:196
 #: src/Admin/Configs/Generator/SPTP_Modal.php:246
 #: src/Admin/Configs/Generator/SPTP_Modal.php:256
@@ -448,7 +428,7 @@ msgid "Navigation Position"
 msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Carousel.php:165
-#: src/Admin/Configs/Generator/SPTP_Display.php:706
+#: src/Admin/Configs/Generator/SPTP_Display.php:716
 msgid "Top Right"
 msgstr ""
 
@@ -457,12 +437,12 @@ msgid "Top Center"
 msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Carousel.php:167
-#: src/Admin/Configs/Generator/SPTP_Display.php:707
+#: src/Admin/Configs/Generator/SPTP_Display.php:717
 msgid "Top Left"
 msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Carousel.php:168
-#: src/Admin/Configs/Generator/SPTP_Display.php:709
+#: src/Admin/Configs/Generator/SPTP_Display.php:719
 msgid "Bottom Left"
 msgstr ""
 
@@ -471,7 +451,7 @@ msgid "Bottom Center"
 msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Carousel.php:170
-#: src/Admin/Configs/Generator/SPTP_Display.php:708
+#: src/Admin/Configs/Generator/SPTP_Display.php:718
 msgid "Bottom Right"
 msgstr ""
 
@@ -504,7 +484,7 @@ msgstr ""
 #: src/Admin/Configs/Generator/SPTP_Carousel.php:308
 #: src/Admin/Configs/Generator/SPTP_Carousel.php:311
 #: src/Admin/Configs/Generator/SPTP_Display.php:211
-#: src/Admin/Configs/Generator/SPTP_Display.php:1044
+#: src/Admin/Configs/Generator/SPTP_Display.php:1052
 #: src/Admin/Configs/Generator/SPTP_General.php:383
 #: src/Admin/Framework/fields/border/border.php:160
 msgid "Color"
@@ -515,15 +495,15 @@ msgid "Set color for the carousel navigation."
 msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Carousel.php:195
-#: src/Admin/Configs/Generator/SPTP_Display.php:1045
+#: src/Admin/Configs/Generator/SPTP_Display.php:1053
 #: src/Admin/Configs/Generator/SPTP_General.php:384
 msgid "Hover Color"
 msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Carousel.php:196
-#: src/Admin/Configs/Generator/SPTP_Display.php:610
-#: src/Admin/Configs/Generator/SPTP_Display.php:857
-#: src/Admin/Configs/Generator/SPTP_Display.php:1046
+#: src/Admin/Configs/Generator/SPTP_Display.php:620
+#: src/Admin/Configs/Generator/SPTP_Display.php:865
+#: src/Admin/Configs/Generator/SPTP_Display.php:1054
 #: src/Admin/Configs/Generator/SPTP_General.php:226
 #: src/Admin/Configs/Generator/SPTP_General.php:385
 msgid "Background"
@@ -536,8 +516,8 @@ msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Carousel.php:210
 #: src/Admin/Configs/Generator/SPTP_Display.php:170
-#: src/Admin/Configs/Generator/SPTP_Display.php:847
-#: src/Admin/Configs/Generator/SPTP_Display.php:1061
+#: src/Admin/Configs/Generator/SPTP_Display.php:855
+#: src/Admin/Configs/Generator/SPTP_Display.php:1069
 #: src/Admin/Configs/Generator/SPTP_General.php:242
 #: src/Admin/Configs/Generator/SPTP_General.php:399
 msgid "Border"
@@ -722,7 +702,7 @@ msgid "Select a position or layout for member content and image."
 msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Display.php:118
-#: src/Admin/Configs/Generator/SPTP_Display.php:1078
+#: src/Admin/Configs/Generator/SPTP_Display.php:1086
 msgid "Padding"
 msgstr ""
 
@@ -791,14 +771,14 @@ msgid "Choose background color type for the member."
 msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Display.php:199
-#: src/Admin/Configs/Generator/SPTP_Display.php:731
+#: src/Admin/Configs/Generator/SPTP_Display.php:741
 #: src/Admin/Framework/fields/border/border.php:84
 #: src/Admin/Framework/fields/typography/typography.php:282
 msgid "Solid"
 msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Display.php:201
-#: src/Admin/Configs/Generator/SPTP_Display.php:732
+#: src/Admin/Configs/Generator/SPTP_Display.php:742
 msgid "Gradient"
 msgstr ""
 
@@ -839,7 +819,7 @@ msgid ""
 msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Display.php:273
-#: src/Admin/Configs/Generator/SPTP_Display.php:758
+#: src/Admin/Configs/Generator/SPTP_Display.php:768
 #: src/Admin/Configs/Generator/SPTP_Modal.php:244
 #: src/Admin/Configs/Settings/SPTP_SinglePage.php:86
 msgid "Photo/Image"
@@ -869,7 +849,7 @@ msgid "Short Bio"
 msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Display.php:313
-#: src/Admin/Configs/Generator/SPTP_Display.php:1032
+#: src/Admin/Configs/Generator/SPTP_Display.php:1040
 #: src/Admin/Configs/Generator/SPTP_Modal.php:285
 #: src/Admin/Configs/Member/Member_Meta.php:149
 #: src/Admin/Configs/Settings/SPTP_SinglePage.php:124
@@ -1043,7 +1023,7 @@ msgid "Choose icon color type."
 msgstr ""
 
 #: src/Admin/Configs/Generator/SPTP_Display.php:526
-#: src/Admin/Configs/Generator/SPTP_Display.php:1108
+#: src/Admin/Configs/Generator/SPTP_Display.php:1116
 #: src/Admin/Configs/Generator/SPTP_General.php:278
 msgid "Margin"
 msgstr ""
@@ -1056,428 +1036,435 @@ msgstr ""
 msgid "Skill Progress Bars (Pro)"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:545
+#: src/Admin/Configs/Generator/SPTP_Display.php:547
+#, php-format
+msgid ""
+"Showcase expertise with professional skills bar that visually represents "
+"proficiency levels , %1$sDEMO%2$s"
+msgstr ""
+
+#: src/Admin/Configs/Generator/SPTP_Display.php:555
 msgid "Skill Bars Settings"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:553
+#: src/Admin/Configs/Generator/SPTP_Display.php:563
 msgid "Skill Bar Style"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:554
+#: src/Admin/Configs/Generator/SPTP_Display.php:564
 msgid "Choose a skill bar style."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:558
+#: src/Admin/Configs/Generator/SPTP_Display.php:568
 msgid "Style 1"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:562
+#: src/Admin/Configs/Generator/SPTP_Display.php:572
 msgid "style 2"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:566
+#: src/Admin/Configs/Generator/SPTP_Display.php:576
 msgid "Style 3(Animation)"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:576
+#: src/Admin/Configs/Generator/SPTP_Display.php:586
 msgid "Bar Height"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:577
+#: src/Admin/Configs/Generator/SPTP_Display.php:587
 msgid "Set height for the skill bar."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:594
+#: src/Admin/Configs/Generator/SPTP_Display.php:604
 msgid "Skill Bar Color Type"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:595
+#: src/Admin/Configs/Generator/SPTP_Display.php:605
 msgid "Set a color type for the skill bar."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:598
+#: src/Admin/Configs/Generator/SPTP_Display.php:608
 msgid "Global"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:599
+#: src/Admin/Configs/Generator/SPTP_Display.php:609
 msgid "Multiple Color"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:606
+#: src/Admin/Configs/Generator/SPTP_Display.php:616
 msgid "Progress Bar Color"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:609
+#: src/Admin/Configs/Generator/SPTP_Display.php:619
 msgid "Progress Bar"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:612
+#: src/Admin/Configs/Generator/SPTP_Display.php:622
 msgid "Set color for progress bar."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:623
+#: src/Admin/Configs/Generator/SPTP_Display.php:633
 msgid "Percentage Text"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:624
+#: src/Admin/Configs/Generator/SPTP_Display.php:634
 msgid "Set a percentage text visibility status for the skill bar."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:627
+#: src/Admin/Configs/Generator/SPTP_Display.php:637
 msgid "Always Visible"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:628
+#: src/Admin/Configs/Generator/SPTP_Display.php:638
 msgid "On hover"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:636
+#: src/Admin/Configs/Generator/SPTP_Display.php:646
 msgid "Percentage Text Color "
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:637
+#: src/Admin/Configs/Generator/SPTP_Display.php:647
 msgid "Set color for the skill percentage text."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:644
+#: src/Admin/Configs/Generator/SPTP_Display.php:654
 msgid "Tooltip Background Color "
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:645
+#: src/Admin/Configs/Generator/SPTP_Display.php:655
 msgid "Set background color for the tooltip."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:654
+#: src/Admin/Configs/Generator/SPTP_Display.php:664
 msgid "Member Special Tag (Pro)"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:659
+#: src/Admin/Configs/Generator/SPTP_Display.php:669
 msgid "Spacial Tag Settings"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:666
+#: src/Admin/Configs/Generator/SPTP_Display.php:676
 msgid "Spacial Tag"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:667
+#: src/Admin/Configs/Generator/SPTP_Display.php:677
 msgid "Show/Hide member spacial tag."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:678
+#: src/Admin/Configs/Generator/SPTP_Display.php:688
 msgid "Tag Style"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:679
+#: src/Admin/Configs/Generator/SPTP_Display.php:689
 msgid "Choose a member special tag style."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:684
+#: src/Admin/Configs/Generator/SPTP_Display.php:694
 msgid "Corner Ribbon"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:688
+#: src/Admin/Configs/Generator/SPTP_Display.php:698
 msgid "Top Ribbon"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:692
+#: src/Admin/Configs/Generator/SPTP_Display.php:702
 #: src/Admin/Configs/Generator/SPTP_General.php:175
 msgid "Button"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:703
+#: src/Admin/Configs/Generator/SPTP_Display.php:713
 msgid "Tag Position"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:704
+#: src/Admin/Configs/Generator/SPTP_Display.php:714
 msgid "set a member special tag position."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:719
+#: src/Admin/Configs/Generator/SPTP_Display.php:729
 msgid "Text Color "
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:720
+#: src/Admin/Configs/Generator/SPTP_Display.php:730
 msgid "Set color for text."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:727
+#: src/Admin/Configs/Generator/SPTP_Display.php:737
 msgid "Background Type"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:728
+#: src/Admin/Configs/Generator/SPTP_Display.php:738
 msgid "Set background color type."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:741
+#: src/Admin/Configs/Generator/SPTP_Display.php:751
 msgid "Color "
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:742
+#: src/Admin/Configs/Generator/SPTP_Display.php:752
 msgid "Set color for tag background."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:752
+#: src/Admin/Configs/Generator/SPTP_Display.php:762
 msgid "Member Image Styles"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:759
+#: src/Admin/Configs/Generator/SPTP_Display.php:769
 msgid "Show/Hide member photo or image."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:769
+#: src/Admin/Configs/Generator/SPTP_Display.php:779
 #: src/Admin/Configs/Generator/SPTP_Modal.php:199
 msgid "Dimensions"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:770
+#: src/Admin/Configs/Generator/SPTP_Display.php:780
 msgid "Sets the dimensions (width & height) for the member image."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:779
+#: src/Admin/Configs/Generator/SPTP_Display.php:789
 msgid "Custom Dimensions"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:785
+#: src/Admin/Configs/Generator/SPTP_Display.php:795
 msgid "Width*"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:793
+#: src/Admin/Configs/Generator/SPTP_Display.php:803
 msgid "Height*"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:801
+#: src/Admin/Configs/Generator/SPTP_Display.php:811
 msgid "Hard Crop"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:811
+#: src/Admin/Configs/Generator/SPTP_Display.php:821
 msgid "Load 2x Resolution Image in Retina Display"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:812
+#: src/Admin/Configs/Generator/SPTP_Display.php:822
 msgid "You should upload 2x sized images to show in retina display."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:823
+#: src/Admin/Configs/Generator/SPTP_Display.php:833
 msgid "Image Shape"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:824
+#: src/Admin/Configs/Generator/SPTP_Display.php:834
 msgid "Choose an image shape for member."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:828
+#: src/Admin/Configs/Generator/SPTP_Display.php:838
 msgid "Square"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:832
+#: src/Admin/Configs/Generator/SPTP_Display.php:842
 msgid "Rounded"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:837
+#: src/Admin/Configs/Generator/SPTP_Display.php:846
 msgid "Circle"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:848
+#: src/Admin/Configs/Generator/SPTP_Display.php:856
 msgid "Set border."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:858
+#: src/Admin/Configs/Generator/SPTP_Display.php:866
 msgid "Set background for member image."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:866
+#: src/Admin/Configs/Generator/SPTP_Display.php:874
 msgid "Image Flip"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:867
+#: src/Admin/Configs/Generator/SPTP_Display.php:875
 msgid "Enable/Disable Member photo/image flipping."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:868
+#: src/Admin/Configs/Generator/SPTP_Display.php:876
 msgid "The flipping image is the first image of the member photo gallery."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:879
+#: src/Admin/Configs/Generator/SPTP_Display.php:887
 msgid "Lazy Load"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:880
+#: src/Admin/Configs/Generator/SPTP_Display.php:888
 msgid "Enable/Disable lazy load for member images."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:891
+#: src/Admin/Configs/Generator/SPTP_Display.php:899
 msgid "Zoom"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:892
+#: src/Admin/Configs/Generator/SPTP_Display.php:900
 msgid "Select a zoom effect for image on hover."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:894
-#: src/Admin/Configs/Generator/SPTP_Display.php:908
+#: src/Admin/Configs/Generator/SPTP_Display.php:902
+#: src/Admin/Configs/Generator/SPTP_Display.php:916
 #: src/Admin/Framework/fields/typography/typography.php:244
 msgid "Normal"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:895
+#: src/Admin/Configs/Generator/SPTP_Display.php:903
 msgid "Zoom In"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:896
+#: src/Admin/Configs/Generator/SPTP_Display.php:904
 msgid "Zoom Out"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:905
+#: src/Admin/Configs/Generator/SPTP_Display.php:913
 msgid "Image Mode"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:906
+#: src/Admin/Configs/Generator/SPTP_Display.php:914
 msgid "Select a mode for the image."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:910
+#: src/Admin/Configs/Generator/SPTP_Display.php:918
 msgid "Grayscale"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:921
+#: src/Admin/Configs/Generator/SPTP_Display.php:929
 msgid "Grayscale on Hover"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:922
+#: src/Admin/Configs/Generator/SPTP_Display.php:930
 msgid "Check to grayscale logo image on hover (pro)."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:931
+#: src/Admin/Configs/Generator/SPTP_Display.php:939
 #, php-format
 msgid ""
 "To unleash your creativity with flexible member image styling options, "
 "%1$sUpgrade to Pro!%2$s"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:939
-#: src/Admin/Configs/Generator/SPTP_Display.php:961
+#: src/Admin/Configs/Generator/SPTP_Display.php:947
+#: src/Admin/Configs/Generator/SPTP_Display.php:969
 msgid "Join Team Button"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:946
+#: src/Admin/Configs/Generator/SPTP_Display.php:954
 #, php-format
 msgid ""
 "To add a \"Join Team\" button at the end of the members section with "
 "numerous options, %1$sUpgrade to Pro!%2$s"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:962
+#: src/Admin/Configs/Generator/SPTP_Display.php:970
 msgid "Enable/Disable join team button."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:968
+#: src/Admin/Configs/Generator/SPTP_Display.php:976
 msgid ""
 "The call to action will be displayed below the team members showcase. Use "
 "this functionality to invite people to join your team or to encourage them "
 "to contact you."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:973
+#: src/Admin/Configs/Generator/SPTP_Display.php:981
 msgid "Title"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:974
+#: src/Admin/Configs/Generator/SPTP_Display.php:982
 msgid "Set call to action button title."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:975
+#: src/Admin/Configs/Generator/SPTP_Display.php:983
 msgid "Join Our Team"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:982
+#: src/Admin/Configs/Generator/SPTP_Display.php:990
 msgid "Button Type"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:984
+#: src/Admin/Configs/Generator/SPTP_Display.php:992
 msgid "Select a button type for the call to action."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:988
+#: src/Admin/Configs/Generator/SPTP_Display.php:996
 msgid "Filled"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:992
+#: src/Admin/Configs/Generator/SPTP_Display.php:1000
 msgid "Outline"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1002
+#: src/Admin/Configs/Generator/SPTP_Display.php:1010
 msgid "Button Label"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1003
+#: src/Admin/Configs/Generator/SPTP_Display.php:1011
 msgid "Set button label."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1004
+#: src/Admin/Configs/Generator/SPTP_Display.php:1012
 msgid "See Job Openings"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1011
+#: src/Admin/Configs/Generator/SPTP_Display.php:1019
 msgid "Button Link Type"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1012
+#: src/Admin/Configs/Generator/SPTP_Display.php:1020
 msgid "Select a button link type for the call to action."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1014
+#: src/Admin/Configs/Generator/SPTP_Display.php:1022
 msgid "URL"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1015
+#: src/Admin/Configs/Generator/SPTP_Display.php:1023
 msgid "Email"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1024
+#: src/Admin/Configs/Generator/SPTP_Display.php:1032
 msgid "Link URL"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1025
+#: src/Admin/Configs/Generator/SPTP_Display.php:1033
 msgid "Set button link url."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1033
+#: src/Admin/Configs/Generator/SPTP_Display.php:1041
 msgid "Set button link email."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1041
+#: src/Admin/Configs/Generator/SPTP_Display.php:1049
 msgid "Button Color"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1042
+#: src/Admin/Configs/Generator/SPTP_Display.php:1050
 #: src/Admin/Configs/Generator/SPTP_General.php:221
 msgid "Set button color."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1047
+#: src/Admin/Configs/Generator/SPTP_Display.php:1055
 msgid "Hover BG"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1062
+#: src/Admin/Configs/Generator/SPTP_Display.php:1070
 msgid "Set border for the call to action button."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1080
+#: src/Admin/Configs/Generator/SPTP_Display.php:1088
 msgid "Set padding for the button."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1094
+#: src/Admin/Configs/Generator/SPTP_Display.php:1102
 #: src/Admin/Configs/Generator/SPTP_General.php:261
 #: src/Admin/Configs/Generator/SPTP_General.php:422
 msgid "Alignment"
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1095
+#: src/Admin/Configs/Generator/SPTP_Display.php:1103
 msgid "Set alignment for the call to action button."
 msgstr ""
 
-#: src/Admin/Configs/Generator/SPTP_Display.php:1110
+#: src/Admin/Configs/Generator/SPTP_Display.php:1118
 msgid "Set margin for the button."
 msgstr ""
 
@@ -2439,12 +2426,24 @@ msgstr ""
 msgid "Member singular name"
 msgstr ""
 
+#: src/Admin/Configs/Settings/SPTP_Rename.php:46
+msgid "Member"
+msgstr ""
+
 #: src/Admin/Configs/Settings/SPTP_Rename.php:51
 msgid "Member plural name"
 msgstr ""
 
+#: src/Admin/Configs/Settings/SPTP_Rename.php:52
+msgid "Members"
+msgstr ""
+
 #: src/Admin/Configs/Settings/SPTP_Rename.php:57
 msgid "Plural name"
+msgstr ""
+
+#: src/Admin/Configs/Settings/SPTP_Rename.php:58
+msgid "Teams"
 msgstr ""
 
 #: src/Admin/Configs/Settings/SPTP_SettingsStyle.php:39
@@ -3009,27 +3008,27 @@ msgstr ""
 msgid "Get Help"
 msgstr ""
 
-#: src/Admin/HelpPage/Help.php:244
+#: src/Admin/HelpPage/Help.php:233
 msgid "Activate"
 msgstr ""
 
-#: src/Admin/HelpPage/Help.php:251
+#: src/Admin/HelpPage/Help.php:240
 msgid "Install Now"
 msgstr ""
 
-#: src/Admin/HelpPage/Help.php:257
+#: src/Admin/HelpPage/Help.php:246
 msgid "More Details"
 msgstr ""
 
-#: src/Admin/HelpPage/Help.php:289
+#: src/Admin/HelpPage/Help.php:278
 msgid "Version:"
 msgstr ""
 
-#: src/Admin/HelpPage/Help.php:299
+#: src/Admin/HelpPage/Help.php:288
 msgid "+ Active Installations"
 msgstr ""
 
-#: src/Admin/HelpPage/Help.php:307
+#: src/Admin/HelpPage/Help.php:296
 msgid "Last Updated:"
 msgstr ""
 

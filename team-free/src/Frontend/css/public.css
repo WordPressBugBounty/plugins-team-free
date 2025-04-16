@@ -246,8 +246,12 @@
 	background-color: #55acee !important;
 }
 
+.sptp-member-social .sptp-sp-team-icon-x-twitter {
+	background-color: #000 !important;
+}
+
 .sptp-member-social .sptp-facebook {
-	background-color: #3b5999 !important;
+	background-color: #0765FF !important;
 }
 
 .sptp-member-social .sptp-instagram {
@@ -255,11 +259,11 @@
 }
 
 .sptp-member-social .sptp-pinterest-p {
-	background-color: #bd081c !important;
+	background-color: #E60022 !important;
 }
 
 .sptp-member-social .sptp-linkedin {
-	background-color: #0077b5 !important;
+	background-color: #0B65C2 !important;
 }
 
 .sptp-member-social .sptp-youtube {
@@ -279,7 +283,7 @@
 }
 
 .sptp-member-social .sptp-whatsapp {
-	background-color: #25d366 !important;
+	background-color: #0BC144 !important;
 }
 
 .sptp-member-social .sptp-soundcloud {

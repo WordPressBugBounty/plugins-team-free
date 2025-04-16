@@ -138,12 +138,25 @@ class Admin {
 		$this->min = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? '' : '.min';
 
 		$this->sptp_options              = get_option( '_sptp_settings' );
-		$this->sptp_member_singular_name = ( ! empty( $this->sptp_options['rename_member_singular'] ) ) ? $this->sptp_options['rename_member_singular'] : __( 'Member', 'team-free' );
-		$this->sptp_member_plural_name   = ( ! empty( $this->sptp_options['rename_member_plural'] ) ) ? $this->sptp_options['rename_member_plural'] : __( 'Members', 'team-free' );
-		$this->sptp_group_singular_name  = ( ! empty( $this->sptp_options['rename_group_singular'] ) ) ? $this->sptp_options['rename_group_singular'] : __( 'Group', 'team-free' );
-		$this->sptp_group_plural_name    = ( ! empty( $this->sptp_options['rename_group_plural'] ) ) ? $this->sptp_options['rename_group_plural'] : __( 'Groups', 'team-free' );
-		$this->sptp_team_name            = ( ! empty( $this->sptp_options['rename_team'] ) ) ? $this->sptp_options['rename_team'] : __( 'Teams', 'team-free' );
+		$this->sptp_member_singular_name = ( ! empty( $this->sptp_options['rename_member_singular'] ) ) ? $this->sptp_options['rename_member_singular'] : 'Member';
+		$this->sptp_member_plural_name   = ( ! empty( $this->sptp_options['rename_member_plural'] ) ) ? $this->sptp_options['rename_member_plural'] : 'Members';
+		$this->sptp_group_singular_name  = ( ! empty( $this->sptp_options['rename_group_singular'] ) ) ? $this->sptp_options['rename_group_singular'] : 'Department';
+		$this->sptp_group_plural_name    = ( ! empty( $this->sptp_options['rename_group_plural'] ) ) ? $this->sptp_options['rename_group_plural'] : 'Departments';
+		$this->sptp_team_name            = ( ! empty( $this->sptp_options['rename_team'] ) ) ? $this->sptp_options['rename_team'] : 'Teams';
+		add_action( 'after_setup_theme', array( $this, 'initialize_metabox_configs' ) );
+		// Database updater.
+		new DB_Updater();
+		new SPTP_Preview();
+	}
 
+	/**
+	 * Initialize the metabox configurations.
+	 *
+	 * This method sets up the configurations for the metaboxes used in the admin area.
+	 *
+	 * @return void
+	 */
+	public function initialize_metabox_configs() {
 		Member_Meta::metaboxes( 'sptp_member', '_sptp_add_member', $this->sptp_member_singular_name );
 		Tools::metaboxes( '_sptp_tools' );
 		Settings::metaboxes( '_sptp_settings' );
@@ -151,9 +164,6 @@ class Admin {
 		Generator::layout_metaboxes( '_sptp_generator_layout' );
 		Generator::metaboxes( '_sptp_generator' );
 		Generator::output_metaboxes( '_sptp_generator_output_sidebar' );
-		// Database updater.
-		new DB_Updater();
-		new SPTP_Preview();
 	}
 
 	/**
@@ -191,7 +201,7 @@ class Admin {
 		}
 
 		// Review notice style.
-		wp_enqueue_style( 'sptp-review-notice', SPT_PLUGIN_ROOT . 'src/Admin/css/review-notice' . $this->min . '.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'sptp-plugin-common-styles', SPT_PLUGIN_ROOT . 'src/Admin/css/common-styles' . $this->min . '.css', array(), $this->version, 'all' );
 	}
 
 	/**

@@ -73,8 +73,8 @@ if ( ! class_exists( 'TEAMFW_Field_box_shadow' ) ) {
 			);
 
 			$border_props = array(
-				'inset'  => esc_html__( 'Inset', 'spf' ),
-				'outset' => esc_html__( 'Outset', 'spf' ),
+				'inset'  => esc_html__( 'Inset', 'team-free' ),
+				'outset' => esc_html__( 'Outset', 'team-free' ),
 			);
 
 			$default_value = ( ! empty( $this->field['default'] ) ) ? wp_parse_args( $this->field['default'], $default_value ) : $default_value;
@@ -138,7 +138,6 @@ if ( ! class_exists( 'TEAMFW_Field_box_shadow' ) ) {
 			}
 
 			echo wp_kses_post( $this->field_after() );
-
 		}
 	}
 }

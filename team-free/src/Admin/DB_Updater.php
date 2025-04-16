@@ -40,6 +40,7 @@ class DB_Updater {
 		'2.2.13' => 'updates/update-2.2.13.php',
 		'2.2.15' => 'updates/update-2.2.15.php',
 		'3.0.0'  => 'updates/update-3.0.0.php',
+		'3.0.7'  => 'updates/update-3.0.7.php',
 	);
 
 	/**
@@ -116,7 +117,5 @@ class DB_Updater {
 		}
 
 		update_option( 'sp_wp_team_version', SPT_PLUGIN_VERSION );
-
 	}
-
 }

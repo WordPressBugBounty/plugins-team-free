@@ -81,14 +81,12 @@ if ( ! class_exists( 'TEAMFW_Field_button_clean' ) ) {
 
 				} else {
 
-					echo ! empty( $this->field['empty_message'] ) ? esc_attr( $this->field['empty_message'] ) : esc_html__( 'No data available.', 'spteam-freef' );
+					echo ! empty( $this->field['empty_message'] ) ? esc_attr( $this->field['empty_message'] ) : esc_html__( 'No data available.', 'team-free' );
 
 				}
 			}
 
 			echo wp_kses_post( $this->field_after() );
-
 		}
-
 	}
 }
