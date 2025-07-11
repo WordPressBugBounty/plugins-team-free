@@ -100,7 +100,7 @@ class Helper {
 			} else {
 				ob_start();
 				include self::sptp_locate_template( 'section-title.php' );
-				$main_section_title = apply_filters( 'spteam_section-title', ob_get_clean() );
+				$main_section_title = apply_filters( 'spteam_section_title', ob_get_clean() );
 				self::sptp_set_transient( $cache_key, $main_section_title );
 				echo wp_kses_post( $main_section_title );
 			}
@@ -356,7 +356,6 @@ class Helper {
 			'dl'         => array(),
 			'dt'         => array(),
 			'em'         => array(),
-			'p'          => array(),
 			'h1'         => array(),
 			'h2'         => array(),
 			'h3'         => array(),

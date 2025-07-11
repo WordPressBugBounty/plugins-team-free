@@ -83,7 +83,7 @@ if ( ! class_exists( 'TEAMFW_Field_typography' ) ) {
 					'margin_bottom'      => false,
 					'custom_style'       => false,
 					'compact'            => false,
-					'exclude'            => '',
+					'exclude'            => '', // phpcs:ignore
 					'unit'               => 'px',
 					'line_height_unit'   => '',
 					'preview_text'       => 'The quick brown fox jumps over the lazy dog',
@@ -178,7 +178,7 @@ if ( ! class_exists( 'TEAMFW_Field_typography' ) ) {
 				echo '<div class="spf--block spf--block-font-style hidden">';
 				echo '<div class="spf--title">' . esc_html__( 'Font Style', 'team-free' ) . '</div>';
 				echo '<select class="spf--font-style-select" data-placeholder="Default">';
-				echo '<option value="">' . ! $this->chosen ? esc_html__( 'Default', 'team-free' ) : '' . '</option>';
+				echo '<option value="">' . ( ! $this->chosen ? esc_html__( 'Default', 'team-free' ) : '' ) . '</option>';
 				if ( ! empty( $this->value['font-weight'] ) || ! empty( $this->value['font-style'] ) ) {
 					echo '<option value="' . esc_attr( strtolower( $this->value['font-weight'] . $this->value['font-style'] ) ) . '" selected></option>';
 				}
@@ -397,7 +397,6 @@ if ( ! class_exists( 'TEAMFW_Field_typography' ) ) {
 			echo '</div>';
 
 			echo wp_kses_post( $this->field_after() );
-
 		}
 
 		/**
@@ -434,7 +433,6 @@ if ( ! class_exists( 'TEAMFW_Field_typography' ) ) {
 			$output .= '</select>';
 
 			return $output;
-
 		}
 
 		/**
@@ -531,7 +529,6 @@ if ( ! class_exists( 'TEAMFW_Field_typography' ) ) {
 				);
 
 			}
-
 		}
 
 		/**
@@ -593,7 +590,6 @@ if ( ! class_exists( 'TEAMFW_Field_typography' ) ) {
 			}
 
 			return false;
-
 		}
 	}
 }

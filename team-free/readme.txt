@@ -2,8 +2,8 @@
 Contributors: shapedplugin, shamimmiashuhagh, rubel_miah, khalilu
 Tags: team, team members, organization chart, team showcase, team slider
 Requires at least: 4.7
-Tested up to: 6.8
-Stable tag: 3.0.7
+Tested up to: 6.8.1
+Stable tag: 3.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -281,6 +281,10 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 
 
 == Changelog ==
+
+= Version 3.0.8 - Jul 11, 2025 =
+* Fix: Some WPCS-related warnings.
+* Tested: WordPress 6.8.1 compatibility.
 
 = Version 3.0.7 - Apr 16, 2025 =
 * New: The Member Photo Shape (Rounded/Circle) option.

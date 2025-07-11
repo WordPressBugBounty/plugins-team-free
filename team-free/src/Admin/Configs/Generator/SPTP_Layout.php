@@ -226,7 +226,7 @@ class SPTP_Layout {
 							'newest'   => __( 'Newest', 'team-free' ),
 							'group'    => __( 'Groups (Pro)', 'team-free' ),
 							'specific' => __( 'Specific (Pro)', 'team-free' ),
-							'exclude'  => __( 'Exclude (Pro)', 'team-free' ),
+							'exclude'  => __( 'Exclude (Pro)', 'team-free' ), // phpcs:ignore
 						),
 						'default'     => array( 'newest' ),
 						'dependency'  => array( 'layout_preset', '!=', 'organization-chart', true ),
@@ -243,6 +243,5 @@ class SPTP_Layout {
 				),
 			)
 		);
-
 	}
 }

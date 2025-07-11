@@ -196,4 +196,3 @@ if ( 'carousel' === $layout_preset ) {
 	}
 }";
 }
-

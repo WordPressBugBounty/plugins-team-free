@@ -82,8 +82,6 @@ $border_around_member_color       = isset( $border_around_member['color'] ) ? $b
 $border_around_member_hover_color = isset( $border_around_member['hover_color'] ) ? $border_around_member['hover_color'] : 'transparent';
 $border_around_member_border      = $border_around_member_width . 'px ' . $border_around_member_style . ' ' . $border_around_member_color;
 
-// $border_radius_around_member      = isset( $settings['border_bg_around_member']['border_radius_around_member'] ) ? $settings['border_bg_around_member']['border_radius_around_member'] . 'px' : 0;
-
 $border_radius_around_member = isset( $settings['border_bg_around_member']['border_around_member_border_radius']['all'] ) ? $settings['border_bg_around_member']['border_around_member_border_radius']['all'] . $settings['border_bg_around_member']['border_around_member_border_radius']['unit'] : '0';
 
 $background_around_member = isset( $settings['border_bg_around_member']['bg_color_around_member'] ) ? $settings['border_bg_around_member']['bg_color_around_member'] : 'transparent';

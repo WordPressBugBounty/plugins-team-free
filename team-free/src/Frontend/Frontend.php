@@ -73,7 +73,6 @@ class Frontend {
 		add_filter( 'single_template', array( $this, 'get_custom_post_type_template' ) );
 		// Member single page css.
 		add_action( 'wp_head', array( $this, 'sp_team_free_single_css' ), 99 );
-
 	}
 
 
@@ -89,10 +88,8 @@ class Frontend {
 			if ( get_site_option( $option_key ) ) {
 				delete_site_option( $option_key );
 			}
-		} else {
-			if ( get_option( 'wp_team_page_id' . $post_ID ) ) {
+		} elseif ( get_option( 'wp_team_page_id' . $post_ID ) ) {
 				delete_option( 'wp_team_page_id' . $post_ID );
-			}
 		}
 	}
 
@@ -345,5 +342,4 @@ class Frontend {
 			}
 		}
 	}
-
 }
