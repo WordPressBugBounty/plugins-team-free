@@ -113,10 +113,7 @@ if ( ! class_exists( 'TEAMFW_Field_checkbox' ) ) {
 						echo '</label>';
 
 			}
-
 			echo wp_kses_post( $this->field_after() );
-
 		}
-
 	}
 }

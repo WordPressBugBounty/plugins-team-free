@@ -13,6 +13,10 @@
 
 namespace ShapedPlugin\WPTeam\Includes;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Loader class
  */

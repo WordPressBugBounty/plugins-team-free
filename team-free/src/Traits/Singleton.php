@@ -8,6 +8,9 @@
 
 namespace ShapedPlugin\WPTeam\Traits;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die;} // Cannot access directly.
+
 /**
  * Singleton trait
  */

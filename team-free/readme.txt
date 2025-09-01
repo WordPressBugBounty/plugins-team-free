@@ -1,39 +1,36 @@
-=== WP Team – Responsive Team Members Showcase, Team Grid, Team Slider, Organization Chart, and Staff List ===
+=== Responsive Team Members Showcase, Team Grid, Team Slider, and Staff List - SmartTeam (formerly WP Team) ===
 Contributors: shapedplugin, shamimmiashuhagh, rubel_miah, khalilu
-Tags: team, team members, organization chart, team showcase, team slider
-Requires at least: 4.7
-Tested up to: 6.8.1
-Stable tag: 3.0.8
+Tags: team, team members, team grid, team showcase, team slider
+Requires at least: 5.0
+Tested up to: 6.8
+Stable tag: 3.0.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The most versatile WordPress Team plugin to display unlimited teams in Carousel, Grid, or List layout easily. Customizable – No coding required!
+A WordPress plugin to display team members in Carousel, Grid, or List layouts. Customizable.
 
 == Description ==
 
 [youtube https://www.youtube.com/embed/videoseries?list=PLoUb-7uG-5jPvyBSiv3x5HNvGQ3hx08RU]
 
-[__Live Demo__](https://getwpteam.com/wp-team-lite-version-demo/) | [__Documentation__](https://docs.shapedplugin.com/docs/wp-team/introduction/) | [__Support__](https://shapedplugin.com/support/?user=lite) | [__Upgrade to Pro!__](https://getwpteam.com/pricing/?ref=1)
+[__Live Demo__](https://getwpteam.com/wp-team-lite-version-demo/) | [__Documentation__](https://getwpteam.com/docs/) | [__Support__](https://shapedplugin.com/create-new-ticket/)
+
+**SmartTeam** is a WordPress team showcase plugin for creating and managing team member displays. The plugin includes 3 layout presets and styling options to create team member sections on your WordPress site. The main purpose is to display team or staff members, but it can also be used for other content that requires an image and text.
+
+= Why use SmartTeam? =
+
+Displaying your team members helps visitors connect with the people behind your organization. SmartTeam allows you to create team member pages without coding knowledge. The plugin provides an intuitive interface for building team displays.
 
 
-**WP Team** is the most versatile and industry-leading WordPress team showcase plugin built to create and manage team members showcases with excellent design and multiple options.
+= Who is SmartTeam perfect for? =
 
-The plugin comes with **3 unique layouts presets** and some amazing styling options. You can easily create a great looking team members section on your WordPress site in a few minutes. The main purpose of the plugin is to display team or staff members, but it can be also used to display other kinds of content that require an image and text, so be creative!
-
-It's perfect to display and manage the members of your staff, team or working force.
-
-
-= Why WP Team is important? =
-
-Your visitors want to know the people who are at the heart of your company or organization because it matters. Show your amazing team members to your prospective people to grow trustworthiness between your business and customers. So take your team members page design to the next level easily.
-
-We believe that you shouldn’t be a programmer or hire a developer to create a nice team members page in your WordPress site. That’s why we built **the most ultimate WP Team members showcase plugin** that’s both EASY and POWERFUL. We can honestly say that this is the most smart plugin in the market of its kind.
-
-
-= WP Team 2.0.0 =
-
-**WP Team 2.0.0** has completely been rebuilt and this provides you now many improvements and new amazing features. Compatible with the new WordPress v.5.x (Gutenberg).
-
+* **Business Owners & Startups** – Showcase your staff, departments, and leadership team.
+* **Agencies & Freelancers** – Present your creative team or collaborators.
+* **Educational Institutions** – Display teachers, professors, faculty, or students.
+* **Medical & Corporate Websites** – Highlight doctors, lawyers, executives, and professionals.
+* **Non-profits & Organizations** – Introduce volunteers, board members, or community leaders.
+* **Event & Conference Websites** – Showcase speakers, mentors, or trainers.
+* **Online Communities & Clubs** – Present members, admins, or contributors.
 
 = Available Input Fields =
 
@@ -43,7 +40,7 @@ We believe that you shouldn’t be a programmer or hire a developer to create a 
 * Short bio
 * Social links (Facebook, Twitter...)
 
->You can easily show/hide and customize every field.
+>You can show/hide and customize every field.
 
 
 = Available Layout Presets =
@@ -56,14 +53,13 @@ We believe that you shouldn’t be a programmer or hire a developer to create a 
 = Key Features List =
 
 * Fully responsive and mobile-ready.
-* Slick, elegant, and fast.
-* **Create unlimited teams, members.**
-* **3 Unique layouts (Carousel, Grid, and List).**
+* Create unlimited teams and members.
+* 3 Layouts (Carousel, Grid, and List).
 * Shortcode Generator.
 * Multiple team shortcodes on one page.
-* Clean and intuitive settings panel-no coding required!
+* Settings panel - no coding required!
 * Control columns in different devices.
-* Control total members to display.
+* Control the total members to display.
 * Display random order members.
 * Margin or space between members.
 * Member border, radius, and background color.
@@ -71,148 +67,49 @@ We believe that you shouldn’t be a programmer or hire a developer to create a 
 * Social icon position, margin, and shapes.
 * Choose the image size from the available crop sizes.
 * Photo/Image border and background color.
-* Image zoom In/Out effect.
+* Image zoom in/out effect.
 * Detail page link (on/off).
 * Detail page fields control.
 * Unlimited color & styling.
-* 10+ Carousel controls:
-    **-AutoPlay**
-    **-AutoPlay speed**
-    **-Slide scrolling speed**
-    **-Slide to scroll**
-    **-Pause on hover**
-    **-Infinite loop slider**
-    **-Show/hide navigation**
-    **-Navigation color**
-    **-Show/hide pagination bullets**
-    **-Pagination color and active color**
-    **-Auto height etc.**
-* Highly customizable.
 * Order & order by.
-* Preloader on/off.
-* Touch enabled carousels.
-* RTL language support.
-* **WPML ready.**
-* Native WordPress widget.
-* Fully translatable (POT files included).
-* **Multisite supported.**
-* Accessibility for disabled people.
+* 15 Team carousel slider options.
+* Translation & RTL Ready.
+* Multisite supported.
 * Custom CSS options.
-* Cross-browser supported.
 * Compatible with any theme.
-* And many more options.
 
-
-= Multilingual Ready =
-
-* WPML
-* Polylang
-* Loco Translate
-* qTranslate-x
-* GTranslate
-* Google Language Translator
-* WPGlobus
-
-
-= Page Builders Ready =
-
-* Gutenberg
-* WPBakery
-* Elementor
-* Divi Builders
-* BeaverBuilder
-* SiteOrgin
-* Themify Builder
-* Fusion Builder
-* Genesis Framework
-
+The Pro version of [__SmartTeam__](https://getwpteam.com/) provides extra layouts, more styling controls, and extended customization options for building team member showcases with added flexibility.
 
 = Documentation =
 
-If you have any question about working with WP Team, you can take a look at online [__documentation__](https://docs.shapedplugin.com/docs/wp-team/introduction/).
+If you have any questions about working with SmartTeam, you can take a look at the online [__documentation__](https://getwpteam.com/docs/).
 
-
-= For Fast Support, and Bug Reporting =
-
-We are very responsive about support requests – so if you face a problem or find any bugs, post it in the [support](https://shapedplugin.com/support/?user=lite), and we will respond within 15 hours (except holidays).
-
->Ask us at either via our [Support](https://shapedplugin.com/support/?user=lite) or [WordPress.org](https://wordpress.org/support/plugin/team-free/)
-
+= For Support and Bug Reporting =
+If you encounter an issue or find any bugs, post it in the [support](https://shapedplugin.com/create-new-ticket/). You can also get support via [WordPress.org](https://wordpress.org/support/plugin/team-free/).
 
 = Author =
-
-Designed and Developed with Love by [__ShapedPlugin__](https://shapedplugin.com/)
+Designed and Developed by [__ShapedPlugin, LLC__](https://shapedplugin.com/)
 
 
 
 == Frequently Asked Questions ==
 
-=Is WP Team free?=
-Yes! WP Team is and always will be free.
+=Is SmartTeam free?=
+Yes! SmartTeam is free.
 
 =How can I showcase team members?=
-After activating the plugin, you will see “WP Team” in WordPress admin dashboard.
+After activating the plugin, you will see “SmartTeam” in the WordPress admin dashboard.
 
-Firstly, Go to “Add New Member” and add members as many as you want.
+Firstly, go to “Add New Member” and add as many members as you want.
 
-Secondly, Go to Team Generator > Add New and you will find couple of generator settings tabs.
+Secondly, go to Team Generator > Add New, and you will find a couple of generator settings tabs.
 
-You can customize the setting fields how you want & publish and you will see a generated shortcode in the bottom area.
+You can customize the setting fields as you like and publish, and you will see a generated shortcode in the bottom area.
 
-Finally, You can add your team in any page or post by shortcode or via the widget control panel or PHP function.
+Finally, you can add your team to any page or post by shortcode, via the widget control panel, or using a PHP function.
 
-
-=I’d like access to more features. How can I get them?=
-You can get access to more features when you purchase a license of the plugin. Purchasing a license of [WP Team Pro](https://getwpteam.com/pricing/?ref=1) gets you to access the full version of WP Team, automatic lifetime updates, and support.
-
-=What if I upgrade to premium version?=
-Your existing team members content will work with [premium version](https://getwpteam.com/pricing/?ref=1). So you won’t lose your developed contents.
-
-=Do I need to have coding skills to use WP Team?=
-No. You don’t need any coding skills. No more pain writing any shortcode attributes to display team in your site. With just a few clicks, you can amazingly create unlimited team members showcases.
-
-=Is WP Team responsive?=
-Yes, WP Team is fully responsive, mobile and touch-friendly.
-
-=Can I add Team anywhere on my website?=
-Yes, you can add team inside your blog posts, pages, widgets, and anywhere else on your WordPress site with a shortcode or PHP function.
-
-=How to show team into my homepage or header.php or PHP files?=
-&#60;?php echo do_shortcode('[wpteam id="x..."]'); ?&#62;
-
-=Can I have multiple team with the separate setting?=
-Yes. You can have an unlimited teams with each separate setting in the page, post, template, widget or anywhere you like.
-
-=Will WP Team work with my theme?=
-WP Team works with any WordPress theme if themes are developed according to WordPress standard.
-
-=How can I get support if the plugin is not working?=
-If you face any problem with our plugin or something is not working as it should, first follow the preliminary steps:
-
-Test the plugin with a WordPress default theme, to be sure that the error is not caused by the theme you are currently using.
-
-Deactivate all plugins you are using and check if the problem is still occurring.
-
-If none of the previously listed actions helps you solve the problem, then, submit a ticket in the forum and describe your problem accurately, specify WordPress and plugin versions you are using and any other information that might help us solve your problem as quickly as possible.
-
-Ask us at either via our Support or WordPress.org
-
-=Where can I report bugs?=
-If you find a bug, please report it in our active [support](https://shapedplugin.com/support/?user=lite). You will be replied once the issue is resolved.
-
-=Is WP Team Multilingual Ready?=
-Yes, WP Team is 100% translation ready and tested with WPML, Polylang, Loco Translate, qTranslate-x, GTranslate, Google Language Translator, WPGlobus etc.
-
-=Is WP Team ready with multisite?
-Yes, WP Team works perfectly with WordPress multi-site network.
-
-=How to use ‘WP Team’ in WordPress 5.0 Gutenberg Block Editor=
-Adding a team using the WordPress 5.0 Block Editor is pretty straight-forward. You can paste the generated shortcode into a ‘Paragraph Block’ or use the ‘Shortcode Block’. It works nicely as classic editor.
-
-=Do you like this plugin and want to encourage us for improvement?=
-Please give the plugin [5 stars rating](https://wordpress.org/support/plugin/team-free/reviews/?filter=5#new-post) and your precious appreciation will help us to make it much great in the future.
-
-Thank you!
+= How can I access more features? =
+A premium version with additional features is available. More information about [SmartTeam Pro](https://getwpteam.com/) can be found on our website.
 
 
 == Installation ==
@@ -221,15 +118,15 @@ Thank you!
 
 * PHP 5.6 or later
 * MySQL 5.6 or later
-* WordPress 4.7 or later
+* WordPress 5.0 or later
 
 **This section describes how to install the plugin and get it working**
 
 = AUTOMATIC INSTALLATION (EASIEST WAY) =
 
-To do an automatic install of WP Team, log in to your WordPress dashboard, navigate to the Plugins menu and click
+To do an automatic install of SmartTeam, log in to your WordPress dashboard, navigate to the Plugins menu, and click.
 Add New.
-In the search field type "WP Team" by ShapedPlugin. Once you have found it you can install it by simply clicking
+In the search field, type "SmartTeam" by ShapedPlugin. Once you have found it, you can install it by simply clicking.
 "Install Now" and then "Activate".
 
 = MANUAL INSTALLATION =
@@ -237,7 +134,7 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 **Uploading in WordPress Dashboard**
 
 * Download team-free.zip
-* Navigate to the ‘Add New’ in the plugins dashboard
+* Navigate to the ‘Add New’ in the plugin's dashboard
 * Navigate to the ‘Upload’ area
 * Select team-free.zip from your computer
 * Click ‘Install Now’
@@ -282,6 +179,17 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 
 == Changelog ==
 
+= Version 3.0.10 - Aug 29, 2025 =
+* Improved: Enhanced plugin security and data validation.
+* Improved: Custom CSS and JS option.
+
+= Version 3.0.9 - Aug 21, 2025 =
+* New: Filter Members: Exclude option.
+* New: The Carousel Navigation: Top-Left position.
+* New: The Carouse Pagination: Dynamic option.
+* Improved: Some plugin options are enhanced to make them more user-friendly.
+* Improved: Plugin security.
+
 = Version 3.0.8 - Jul 11, 2025 =
 * Fix: Some WPCS-related warnings.
 * Tested: WordPress 6.8.1 compatibility.
@@ -307,18 +215,18 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 * Improved: The plugin backend options are enhanced.
 * Improved: Remove unused code.
 * Fix: There is an extra space issue when selecting a team in the gutenberg block.
-* Fix: Some strings translation issue.
+* Fix: Some string translation issues.
 * Updated: The language (.pot) file.
 * Removed: The shortcode list query was removed from the page where the team was not used.
 * Tested: WordPress 6.7 compatibility.
 
 = 3.0.3 - Aug 23, 2024 =
-* Fix: Some strings translation issue.
+* Fix: Some string translation issues.
 * Updated: The language (.pot) file.
 * Tested: WordPress 6.6.1 compatibility.
 
 = 3.0.2 - Mar 27, 2024 =
-* Fix: The warning was found when the plugin was activated via the WP-Cli command.
+* Fix: The warning was found when the plugin was activated via the WP-CLI command.
 * Tested: WordPress 6.5 compatibility.
 
 = 3.0.1 - Mar 20, 2024 =
@@ -330,10 +238,10 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 * New: The Member Padding option.
 * New: The Box-Shadow of Member Card option.
 * New: The Carousel Navigation and Pagination’s Hide in Mobile options.
-* Improved: Plugin Backend and Frontend UI and UX improved and optimized hugely to make it more user-friendly.
+* Improved: Plugin Backend and Frontend UI and UX have been improved and optimized hugely to make it more user-friendly.
 * Improved: The 'Team Generator' menu is renamed to 'Manage Teams'.
 * Improved: The Member Style options are reorganized with Visual Interaction.
-* Improved: The Image Settings Tab is moved inside the Display Settings Tab.
+* Improved: The Image Settings Tab has been moved inside the Display Settings Tab.
 * Improved: The Options of Carousel Settings were reorganized by the Nested tab.
 * Improved: The Team Section Title option moved to the Display Options tab.
 * Improved: The Pagination options are moved to the bottom of the General Settings tab.
@@ -343,7 +251,7 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 * Improved: The Help Page has been redesigned to make it more user-friendly.
 * Updated: The Language (.pot) file.
 * Fix: Some strings were not translatable.
-* Fix Some WPCS-related warnings.
+* Fix: Some WPCS-related warnings.
 * Tested: WordPress 6.4.3 compatibility.
 
 = 2.2.19 - Nov 07, 2023 =
@@ -363,31 +271,31 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 = 2.2.16 - May 23, 2023 =
 * Improved: The import feature.
 * Fix: The Gutenberg Block preview shows only the preloader sometimes.
-* Fix: Social media links add http protocol before the email.
+* Fix: Social media links add the http protocol before the email.
 * Fix: The Warnings found on the page if the used shortcode gets deleted.
 
 = 2.2.15 - Mar 27, 2023 =
-* New: A hook 'sptp_member_name_tag_for_single_member_page' to modify the member's name tag on the single member page as per need.
+* New: A hook 'sptp_member_name_tag_for_single_member_page' to modify the member's name tag on the single member page as needed.
 * Improved: Moved the section title margin bottom option to the Typography Settings
 * Fix: The Elementor block icon gets modified by other plugin icons.
 
 = 2.2.14 - Feb 14, 2023 =
 * New: The Space between members option.
 * New: Some important social icons have been added to the social media option.
-* Fix: The grid layout has extra margin-left and margin right.
+* Fix: The grid layout has extra margin-left and margin-right.
 
 = 2.2.13 - Feb 06, 2023 =
-* Improved: The style of the single member page.
-* Improved: SVG preloading icon has been added as a pre-loader image.
+* Improved: The style of the single-member page.
+* Improved: SVG preloading icon has been added as a preloader image.
 * Fix: The deprecated warning of the single member page when the block theme is used.
 * Fix: The alignment of social icons does not work in the list layout.
 
 = 2.2.12 - Dec 21, 2022 =
 * Fix: Some minor style issues for the RTL site
-* Fix: The navigation style broken issue in the RTL site of elementor page.
-* Fix: Some social icon does not show in preview mode.
+* Fix: The navigation style issue in the RTL site of the Elementor page.
+* Fix: Some social icons do not show in preview mode.
 * Improved: Plugin security improved.
-* Removed: The section title default font-family to load current theme style.
+* Removed: The section title default font-family to load the current theme style.
 * Removed: The deprecated 'team-free' shortcode has been removed.
 * Tested: WordPress 6.1.1 compatibility.
 
@@ -398,10 +306,10 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 
 = 2.2.10 - Oct 03, 2022 =
 * Improved: The free mode feature of the carousel.
-* Fix: Large image overlaps the text on the single-member page in twenty twenty-two theme.
+* Fix: Large image overlaps the text on the single-member page in the Twenty Twenty-Two theme.
 
 = 2.2.9 - Aug 25, 2022 =
-* Fix: Few deprecated JS warnings in plugin settings page.
+* Fix: Few deprecated JS warnings in the plugin settings page.
 
 = 2.2.8 - Jul 16, 2022 =
 * Fix: CSS conflict with Beaver Builder.
@@ -411,8 +319,8 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 
 = 2.2.6 - May 17, 2022 =
 * Tested: WordPress 6.0 compatibility.
-* Fix: The option of background color for member image.
-* Fix: Deprecated warning of WP Team Gutenberg Block.
+* Fix: The option of background color for the member image.
+* Fix: Deprecated warning of the WP Team Gutenberg Block.
 * Fix: Some backend assets don't load properly when the hosting directory is different.
 * Updated: The Language (.pot) file.
 
@@ -422,7 +330,7 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 
 = 2.2.4 - Mar 10, 2022 =
 * New: Filter hook 'sp_wp_team_ui_permission' added for User role permission.
-* Fix: Compatibility issue for Gutenberg block with WP v4.9+ or less.
+* Fix: Compatibility issue for Gutenberg block with WP v4.9+ or earlier.
 * Fix: WordPress 5.9 Gutenberg block compatibility issue.
 * Fix: An undefined variable warning ($review) when Review Notice has been dismissed.
 * Fix: The margin between bullet points of the carousel is large on the Elementor edit page.
@@ -471,11 +379,11 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 
 = 2.1.1 - Jun 07, 2021 =
 * New: Export and Import option.
-* Fix: Order by date: ascending and descending do not work issue.
+* Fix: Order by date: ascending and descending do not work.
 * Fix: Social icon spacing issue.
 * Fix: Order by name doesn't work issue.
-* Improved: The plugin core styles and scripts conditionally loaded.
-* Improved: Few minor tweaking.
+* Improved: The plugin core styles and scripts are conditionally loaded.
+* Improved: A Few minor tweaks.
 * Improved: Settings page border color.
 
 = 2.1.0 - May 26, 2021 =
@@ -493,7 +401,7 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 = 2.0.12 - Apr 19, 2021 =
 * Fix: Premium page responsive issue.
 * Fix: Help Tooltip position and styling issue.
-* Improved: Dynamic version added in admin scrips & styles.
+* Improved: Dynamic version added in admin scripts & styles.
 
 = 2.0.11 - Mar 18, 2021 =
 * Fix: Shortcode field responsive issue.
@@ -502,7 +410,7 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 * Tested: WordPress 5.7 compatibility.
 
 = 2.0.10 - Feb 18, 2021 =
-* New: nofollow relation option for detail page link.
+* New: nofollow relation option for the detail page link.
 * New: Shortcode copy onClick.
 * Improved: Admin UI improved.
 
@@ -527,7 +435,7 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 * Fix: Word-break in short bio issue.
 
 = 2.0.4 - Jan 24, 2020 =
-* Fix: Top Navigation appears from bottom issue.
+* Fix: The Top Navigation appears from the bottom issue.
 * Fix: Navigation border hover color issue.
 
 = 2.0.3 - Jan 06, 2020 =
@@ -536,7 +444,7 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 * Fix: Member single page view issue.
 * Fix: Section title margin issue.
 * Fix: Margin between members issue on list view.
-* Fix: Image zoom in effects issue.
+* Fix: Image zoom-in effects issue.
 * Fix: Border radius issue.
 
 = 2.0.2 - Sep 27, 2019 =
@@ -566,7 +474,7 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 * New: Multisite supported.
 * New: Accessibility for disabled people.
 * New: Custom CSS options.
-* Fix: Other CSS tweakings.
+* Fix: Other CSS tweaks.
 
 = 1.0.5 =
 * Fix: Fatal error issue.
@@ -582,7 +490,7 @@ In the search field type "WP Team" by ShapedPlugin. Once you have found it you c
 
 = 1.0.1 =
 * Add shortcode generator.
-* Add infinite loop.
+* Add an infinite loop.
 * Auto Play on / off
 * Pagination on / off
 * Navigation on / off

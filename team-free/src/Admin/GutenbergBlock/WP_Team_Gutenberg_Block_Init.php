@@ -150,7 +150,6 @@ if ( ! class_exists( 'WP_Team_Gutenberg_Block_Init' ) ) {
 		 * @return string
 		 */
 		public function sp_team_free_render_shortcode( $attributes ) {
-
 			if ( is_null( $attributes['shortcode'] ) || '' === $attributes['shortcode'] ) {
 				return '<i></i>';
 			}

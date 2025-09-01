@@ -5,12 +5,16 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      2.0.0
- * @package   WP_Team
- * @subpackage Team/includes
+ * @package   Smart_Team
+ * @subpackage Smart_Team/includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
- * WP Team Deactivator class
+ * SmartTeam Deactivator class
  */
 class WP_Team_Deactivator {
 

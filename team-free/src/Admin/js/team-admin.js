@@ -4,7 +4,7 @@ $(".sptp-generator-tabs .spf-wrapper .spf-wrapper-preloader ").css(
 	"display",
 	"none"
 );
-  $('.sptp_filter_members').find("option:nth-of-type(2), option:nth-of-type(3), option:nth-of-type(4)").attr('disabled', 'disabled');
+  $('.sptp_filter_members').find("option:nth-of-type(3), option:nth-of-type(4)").attr('disabled', 'disabled');
 
  $(`.sptp_image_grayscale option,
     .sptp-inline-repeater-social option,
@@ -64,12 +64,6 @@ $(".sptp-generator-tabs .spf-wrapper .spf-wrapper-preloader ").css(
 			src = src.replace(result[1], str);
 			$(selector + ' .spf-fieldset img').attr('src', src);
 		}
-		if (type.includes(str)) {
-			$(selector + ' .spt-pro-notice').hide();
-		} else {
-			var noticeText = "This is a <a href='https://getwpteam.com/pricing/' target='_blank'>Pro Feature!</a>";
-			$(selector + ' .spt-pro-notice').html(noticeText).show();
-		}
 	}
 	$('.carousel_navigation_position').on('change', function () {
 		updateIconType(".carousel_navigation_position", /navigation-position\/(.+)\.svg/,'top-right');
@@ -101,58 +95,6 @@ $(".sptp-generator-tabs .spf-wrapper .spf-wrapper-preloader ").css(
 		event.stopPropagation();
 		// Add any additional code here if needed
 	});
-
-	function updateLayoutPresetData() {
-		// Get the value of the checked layout preset radio input
-		var selectedLayout = $('input[name="_sptp_generator_layout[layout_preset]"]:checked').val();
-
-		// Get the image source and extract the filename
-		var src = $('.sptp-grid-style .spf-fieldset img').attr('src');
-		var result = src.match(/layout-style\/(.+)\.svg/);
-
-		if (result && result[1]) {
-			var filename = result[1];
-			var even, masonry, title;
-
-			// Define the replacements based on the selected layout
-			switch (selectedLayout) {
-				case 'filter':
-					even = 'isotop_even';
-					masonry = 'isotope_masonry';
-					title = 'Isotope Style';
-					break;
-				case 'grid':
-					even = 'even';
-					masonry = 'masonry';
-					title = 'Grid Style';
-					break;
-				default:
-					even = 'even';
-					masonry = 'masonry';
-					title = 'Grid Style';
-			}
-
-			// Update the image sources and title
-			updateImageSrc('.sptp-grid-style .spf--image[value=Even] img', src.replace(filename, even));
-			updateImageSrc('.sptp-grid-style .spf--image[value=Masonry] img', src.replace(filename, masonry));
-			updateTitle('.sptp-grid-style .spf-title', `<h4>${title}</h4>`);
-		}
-	}
-	// Function to update the image source
-	function updateImageSrc(selector, src) {
-		$(selector).attr('src', src);
-	}
-	// Function to update the title content
-	function updateTitle(selector, content) {
-		$(selector).html(content);
-	}
-	// Attach event listener to layout preset radio inputs
-	$('input[name="_sptp_generator_layout[layout_preset]"]').on('change', updateLayoutPresetData);
-
-	if ($('input[name="_sptp_generator_layout[layout_preset]"]').length > 0) {
-		// Explicitly call updateLayoutPresetData on page load
-		updateLayoutPresetData();
-	}
 
   $(document).on("click", "#copy-shortcode, #copy-tag", function () {
     var $temp = $("<input>");

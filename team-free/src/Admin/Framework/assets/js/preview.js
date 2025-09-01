@@ -24,6 +24,7 @@ jQuery(document).ready(function ($) {
 				grabCursor: true,
 				pagination: {
 					el: "#" + sptpID + " .sptp-main-carousel .swiper-pagination",
+					dynamicBullets: 'dynamic' == sptpCarousel.pagination_type ? true : false,
 					clickable: true
 				},
 				navigation: {

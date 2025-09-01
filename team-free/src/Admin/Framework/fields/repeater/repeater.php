@@ -10,6 +10,7 @@
  */
 
 use ShapedPlugin\WPTeam\Admin\Framework\Classes\SPF_TEAM;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die; } // Cannot access directly.
 
@@ -108,7 +109,7 @@ if ( ! class_exists( 'TEAMFW_Field_repeater' ) ) {
 						echo '</div>';
 						echo '</div>';
 
-						$num++;
+						++$num;
 
 					}
 				}
@@ -122,7 +123,6 @@ if ( ! class_exists( 'TEAMFW_Field_repeater' ) ) {
 				echo wp_kses_post( $this->field_after() );
 
 			}
-
 		}
 
 		/**
@@ -135,8 +135,6 @@ if ( ! class_exists( 'TEAMFW_Field_repeater' ) ) {
 			if ( ! wp_script_is( 'jquery-ui-sortable' ) ) {
 				wp_enqueue_script( 'jquery-ui-sortable' );
 			}
-
 		}
-
 	}
 }

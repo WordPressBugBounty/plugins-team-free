@@ -270,7 +270,6 @@ class Member_Meta {
 					),
 					array(
 						'id'           => 'sptp_skills',
-						'class'        => 'sptp_pro_only_field',
 						'attributes'   => array( 'disabled' => 'disabled' ),
 						'type'         => 'repeater',
 						'title'        => __( 'Skill Label', 'team-free' ),

@@ -9,6 +9,10 @@
  * @since 2.1.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 $member_image_tag        = $link_detail ? 'a' : 'div';
 $single_page_link        = $link_detail ? ' href=' . $anchor_tag_param['href'] . '' : '';
 $single_page_link_target = $link_detail ? ' target=' . $new_page_target . ' ' : '';

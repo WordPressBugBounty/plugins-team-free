@@ -75,25 +75,21 @@ if ( ! class_exists( 'TEAMFW_Field_image_select' ) ) {
 					echo '<div class="spf--sibling spf--image' . esc_attr( $active . $pro_only ) . '" value="' . ( isset( $option['option_name'] ) ? esc_html( $option['option_name'] ) : '' ) . '">';
 					echo '<figure>';
 					echo '<img src="' . esc_url( $option['image'] ) . '" alt="img-' . esc_attr( $num++ ) . '" />';
-					  echo '<input ' . $disable_field . ' type="' . esc_attr( $type ) . '" name="' . esc_attr( $this->field_name( $extra ) ) . '" value="' . esc_attr( $key ) . '"' . $this->field_attributes() . esc_attr( $checked ) . '/>'; // phpcs:ignore
+						echo '<input ' . esc_attr( $disable_field ) . ' type="' . esc_attr( $type ) . '" name="' . esc_attr( $this->field_name( $extra ) ) . '" value="' . esc_attr( $key ) . '"' . wp_kses_post( $this->field_attributes() ) . esc_attr( $checked ) . '/>';
 					// ShapedPlugin.
 					if ( isset( $option['option_name'] ) && ! isset( $option['option_demo_url'] ) ) {
-						echo '<p>' . esc_html( $option['option_name'] ) . '</p>';
+						echo '<p class="sptp-img-title">' . esc_html( $option['option_name'] ) . '</p>';
 					}
 					if ( isset( $option['option_demo_url'] ) ) {
 						echo '<p class="sptp-img-title">' . esc_html( $option['option_name'] ) . '<a href="' . esc_url( $option['option_demo_url'] ) . '" tooltip="Demo" class="sptp-live-demo-icon" target="_blank"><i class="sp-team-icon-external_link"></i></a></p>';
 					}
 					echo '</figure>';
 					echo '</div>';
-
 				}
 
 				echo '</div>';
-
 			}
-
 			echo wp_kses_post( $this->field_after() );
-
 		}
 	}
 }

@@ -45,8 +45,6 @@ if ( ! class_exists( 'TEAMFW_Field_notice' ) ) {
 			$style = ( ! empty( $this->field['style'] ) ) ? $this->field['style'] : 'normal';
 
 			echo ( ! empty( $this->field['content'] ) ) ? '<div class="spf-notice spf-notice-' . esc_attr( $style ) . '">' . wp_kses_post( $this->field['content'] ) . '</div>' : '';
-
 		}
-
 	}
 }

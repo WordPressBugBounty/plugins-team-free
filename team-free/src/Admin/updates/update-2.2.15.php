@@ -1,4 +1,15 @@
 <?php
+/**
+ * Get database updated to 2.2.15
+ *
+ * @package team-free
+ * @subpackage team-free/src/Admin/update
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 update_option( 'sp_wp_team_version', '2.2.15' );
 update_option( 'sp_wp_team_db_version', '2.2.15' );
 

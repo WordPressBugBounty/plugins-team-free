@@ -1,4 +1,23 @@
 <?php
+/**
+ * Update version.
+ *
+ * @package team-free
+ * @subpackage team-free/src/Admin/update
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+/**
+ * Update version.
+ *
+ * @package WP_Team_free
+ * @subpackage team-free/src/Admin/update
+ */
+
+
 update_option( 'sp_wp_team_version', '2.2.13' );
 update_option( 'sp_wp_team_db_version', '2.2.13' );
 

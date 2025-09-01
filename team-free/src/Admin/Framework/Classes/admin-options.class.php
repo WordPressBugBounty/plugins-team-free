@@ -179,7 +179,6 @@ if ( ! class_exists( 'TEAMFW_Options' ) ) {
 
 			// wp enqeueu for typography and output css.
 			parent::__construct();
-
 		}
 
 		/**
@@ -211,7 +210,7 @@ if ( ! class_exists( 'TEAMFW_Options' ) ) {
 					$parents[ $section['parent'] ][] = $section;
 					unset( $sections[ $key ] );
 				}
-				$count++;
+				++$count;
 			}
 
 			foreach ( $sections as $key => $section ) {
@@ -220,7 +219,7 @@ if ( ! class_exists( 'TEAMFW_Options' ) ) {
 					$section['subs'] = wp_list_sort( $parents[ $section['id'] ], array( 'priority' => 'ASC' ), 'ASC', true );
 				}
 				$result[] = $section;
-				$count++;
+				++$count;
 			}
 
 			return wp_list_sort( $result, array( 'priority' => 'ASC' ), 'ASC', true );
@@ -312,7 +311,6 @@ if ( ! class_exists( 'TEAMFW_Options' ) ) {
 					}
 				}
 			}
-
 		}
 
 		/**
@@ -334,7 +332,6 @@ if ( ! class_exists( 'TEAMFW_Options' ) ) {
 					)
 				);
 			}
-
 		}
 
 		/**
@@ -349,7 +346,6 @@ if ( ! class_exists( 'TEAMFW_Options' ) ) {
 			$default = ( isset( $this->args['defaults'][ $field['id'] ] ) ) ? $this->args['defaults'][ $field['id'] ] : $default;
 
 			return $default;
-
 		}
 
 		/**
@@ -370,7 +366,104 @@ if ( ! class_exists( 'TEAMFW_Options' ) ) {
 			if ( $this->args['save_defaults'] && empty( $tmp_options ) ) {
 				$this->save_options( $this->options );
 			}
+		}
 
+		/**
+		 * Sanitize Team Free plugin options.
+		 *
+		 * @param array $options Raw options array.
+		 * @return array Sanitized options array.
+		 */
+		public function sanitize_options( $options ) {
+			if ( ! is_array( $options ) ) {
+				return array();
+			}
+
+			$sanitized = array();
+			// --- spf_transient ---
+			if ( isset( $options['spf_transient'] ) && is_array( $options['spf_transient'] ) ) {
+				$sanitized['spf_transient'] = array();
+				foreach ( $options['spf_transient'] as $key => $value ) {
+					$sanitized['spf_transient'][ $key ] = sanitize_text_field( $value );
+				}
+			}
+
+			// --- Nonce & Referer ---
+			$sanitized['spf_options_nonce_sptp_settings'] = isset( $options['spf_options_nonce_sptp_settings'] )
+				? sanitize_text_field( $options['spf_options_nonce_sptp_settings'] )
+				: '';
+
+			$sanitized['_wp_http_referer'] = isset( $options['_wp_http_referer'] )
+				? sanitize_text_field( $options['_wp_http_referer'] )
+				: '';
+
+			// --- _sptp_settings ---
+			if ( isset( $options['_sptp_settings'] ) && is_array( $options['_sptp_settings'] ) ) {
+				$sanitized['_sptp_settings'] = array();
+				foreach ( $options['_sptp_settings'] as $key => $value ) {
+
+					switch ( $key ) {
+						// Boolean-like values.
+						case 'pcp_delete_all_data':
+						case 'pcp_swiper_js':
+						case 'pcp_swiper_css':
+						case 'pcp_fontawesome_css':
+						case 'accessibility':
+							$sanitized['_sptp_settings'][ $key ] = (int) $value;
+							break;
+
+						// Nested carousel_accessibility.
+						case 'carousel_accessibility':
+							$sanitized['_sptp_settings']['carousel_accessibility'] = array();
+							if ( is_array( $value ) ) {
+								foreach ( $value as $sub_key => $sub_val ) {
+									// boolean fields.
+									if ( 'accessibility' === $sub_key ) {
+										$sanitized['_sptp_settings']['carousel_accessibility'][ $sub_key ] = (int) $sub_val;
+									} else {
+										// text fields.
+										$sanitized['_sptp_settings']['carousel_accessibility'][ $sub_key ] = sanitize_text_field( $sub_val );
+									}
+								}
+							}
+							break;
+
+						// Rename text fields.
+						case 'rename_member_singular':
+						case 'rename_member_plural':
+						case 'rename_team':
+						case 'last_slide_message':
+						case 'pagination_bullet_message':
+							$sanitized['_sptp_settings'][ $key ] = sanitize_text_field( $value );
+							break;
+
+						// Custom CSS / JS.
+						case 'custom_css':
+							$sanitized['_sptp_settings'][ $key ] = wp_strip_all_tags( $value );
+							break;
+						case 'custom_js':
+							$sanitized['_sptp_settings'][ $key ] = wp_kses_post( $value );
+							break;
+
+						// Nested arrays (like detail_page_fields).
+						default:
+							if ( is_array( $value ) ) {
+								$sanitized['_sptp_settings'][ $key ] = map_deep(
+									$value,
+									function ( $v ) {
+										return is_string( $v ) ? sanitize_text_field( $v ) : $v;
+									}
+								);
+							} else {
+								// Fallback scalar values.
+								$sanitized['_sptp_settings'][ $key ] = is_scalar( $value ) ? sanitize_text_field( $value ) : '';
+							}
+							break;
+					}
+				}
+			}
+
+			return $sanitized;
 		}
 
 		/**
@@ -380,132 +473,106 @@ if ( ! class_exists( 'TEAMFW_Options' ) ) {
 		 * @return bool
 		 */
 		public function set_options( $ajax = false ) {
+			// Retrieve nonce.
+			$nonce = '';
+			if ( $ajax && ! empty( $_POST['nonce'] ) ) {
+				// Nonce sent via AJAX request.
+				$nonce = sanitize_text_field( wp_unslash( $_POST['nonce'] ) );
+			} elseif ( ! empty( $_POST[ 'spf_options_nonce' . $this->unique ] ) ) {
+				// Nonce sent via standard form (with unique field key).
+				$nonce = sanitize_text_field( wp_unslash( $_POST[ 'spf_options_nonce' . $this->unique ] ) );
+			}
+
+			if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'spf_options_nonce' ) ) {
+				return false;
+			}
 
 			// XSS ok.
-			// No worries, This "POST" requests is sanitizing in the below foreach. see #L337 - #L341.
-			$response = ( $ajax && ! empty( $_POST['data'] ) ) ? json_decode( wp_unslash( trim( $_POST['data'] ) ), true ) : $_POST; // phpcs:ignore
+			// No worries, This "POST" requests is sanitizing in the below.
+			$response = ( $ajax && ! empty( $_POST['data'] ) ) ? json_decode( wp_unslash( trim( $_POST['data'] ) ), true ) :  wp_unslash( $_POST ); // phpcs:ignore 
+			$response = $this->sanitize_options( $response ); // Sanitize json response.
 
 			// Set variables.
-			$data      = array();
-			$noncekey  = 'spf_options_nonce' . $this->unique;
-			$nonce     = ( ! empty( $response[ $noncekey ] ) ) ? $response[ $noncekey ] : '';
-			$options   = ( ! empty( $response[ $this->unique ] ) ) ? $response[ $this->unique ] : array();
-			$transient = ( ! empty( $response['spf_transient'] ) ) ? $response['spf_transient'] : array();
+			$data       = array();
+			$options    = ( ! empty( $response[ $this->unique ] ) ) ? $response[ $this->unique ] : array();
+			$transient  = ( ! empty( $response['spf_transient'] ) ) ? $response['spf_transient'] : array();
+			$importing  = false;
+			$section_id = ( ! empty( $transient['section'] ) ) ? $transient['section'] : '';
 
-			if ( wp_verify_nonce( $nonce, 'spf_options_nonce' ) ) {
-
-				$importing  = false;
-				$section_id = ( ! empty( $transient['section'] ) ) ? $transient['section'] : '';
-
-				if ( ! $ajax && ! empty( $response['spf_import_data'] ) ) {
-
-					// XSS ok.
-					// No worries, This "POST" requests is sanitizing in the below foreach. see #L337 - #L341.
-					$import_data  = json_decode( wp_unslash( trim( $response['spf_import_data'] ) ), true );
-					$options      = ( is_array( $import_data ) && ! empty( $import_data ) ) ? $import_data : array();
-					$importing    = true;
-					$this->notice = esc_html__( 'Settings successfully imported.', 'team-free' );
-
+			if ( ! empty( $transient['reset'] ) ) {
+				foreach ( $this->pre_fields as $field ) {
+					if ( ! empty( $field['id'] ) ) {
+						$data[ $field['id'] ] = $this->get_default( $field );
+					}
 				}
+				$this->notice = esc_html__( 'Default settings restored.', 'team-free' );
 
-				if ( ! empty( $transient['reset'] ) ) {
+			} elseif ( ! empty( $transient['reset_section'] ) && ! empty( $section_id ) ) {
 
-					foreach ( $this->pre_fields as $field ) {
+				if ( ! empty( $this->pre_sections[ $section_id - 1 ]['fields'] ) ) {
+					foreach ( $this->pre_sections[ $section_id - 1 ]['fields'] as $field ) {
 						if ( ! empty( $field['id'] ) ) {
 							$data[ $field['id'] ] = $this->get_default( $field );
 						}
 					}
+				}
 
-					$this->notice = esc_html__( 'Default settings restored.', 'team-free' );
+				$data = wp_parse_args( $data, $this->options );
 
-				} elseif ( ! empty( $transient['reset_section'] ) && ! empty( $section_id ) ) {
+				$this->notice = esc_html__( 'Default settings restored.', 'team-free' );
 
-					if ( ! empty( $this->pre_sections[ $section_id - 1 ]['fields'] ) ) {
+			} else {
 
-						foreach ( $this->pre_sections[ $section_id - 1 ]['fields'] as $field ) {
-							if ( ! empty( $field['id'] ) ) {
-								$data[ $field['id'] ] = $this->get_default( $field );
-							}
+				// sanitize and validate.
+				foreach ( $this->pre_fields as $field ) {
+
+					if ( ! empty( $field['id'] ) ) {
+
+						$field_id    = $field['id'];
+						$field_value = isset( $options[ $field_id ] ) ? $options[ $field_id ] : '';
+
+						// Ajax and Importing doing wp_unslash already.
+						if ( ! $ajax && ! $importing ) {
+							$field_value = wp_unslash( $field_value );
 						}
-					}
 
-					$data = wp_parse_args( $data, $this->options );
-
-					$this->notice = esc_html__( 'Default settings restored.', 'team-free' );
-
-				} else {
-
-					// sanitize and validate.
-					foreach ( $this->pre_fields as $field ) {
-
-						if ( ! empty( $field['id'] ) ) {
-
-							$field_id    = $field['id'];
-							$field_value = isset( $options[ $field_id ] ) ? $options[ $field_id ] : '';
-
-							// Ajax and Importing doing wp_unslash already.
-							if ( ! $ajax && ! $importing ) {
-								$field_value = wp_unslash( $field_value );
-							}
-
-							// Sanitize "post" request of field.
-							if ( ! isset( $field['sanitize'] ) ) {
-
-								if ( is_array( $field_value ) ) {
-
-									$data[ $field_id ] = wp_kses_post_deep( $field_value );
-
-								} else {
-
-									$data[ $field_id ] = wp_kses_post( $field_value );
-
-								}
-							} elseif ( isset( $field['sanitize'] ) && is_callable( $field['sanitize'] ) ) {
-
-								$data[ $field_id ] = call_user_func( $field['sanitize'], $field_value );
-
+						// Sanitize "post" request of field.
+						if ( ! isset( $field['sanitize'] ) ) {
+							if ( is_array( $field_value ) ) {
+								$data[ $field_id ] = wp_kses_post_deep( $field_value );
 							} else {
-
-								$data[ $field_id ] = $field_value;
-
+								$data[ $field_id ] = wp_kses_post( $field_value );
 							}
+						} elseif ( isset( $field['sanitize'] ) && is_callable( $field['sanitize'] ) ) {
+							$data[ $field_id ] = call_user_func( $field['sanitize'], $field_value );
+						} else {
+							$data[ $field_id ] = wp_kses_post( $field_value );
+						}
 
-							// Validate "post" request of field.
-							if ( isset( $field['validate'] ) && is_callable( $field['validate'] ) ) {
+						// Validate "post" request of field.
+						if ( isset( $field['validate'] ) && is_callable( $field['validate'] ) ) {
 
-								$has_validated = call_user_func( $field['validate'], $field_value );
-
-								if ( ! empty( $has_validated ) ) {
-
-									$data[ $field_id ]         = ( isset( $this->options[ $field_id ] ) ) ? $this->options[ $field_id ] : '';
-									$this->errors[ $field_id ] = $has_validated;
-
-								}
+							$has_validated = call_user_func( $field['validate'], $field_value );
+							if ( ! empty( $has_validated ) ) {
+								$data[ $field_id ]         = ( isset( $this->options[ $field_id ] ) ) ? $this->options[ $field_id ] : '';
+								$this->errors[ $field_id ] = $has_validated;
 							}
 						}
 					}
 				}
-
-				$data = apply_filters( "spf_{$this->unique}_save", $data, $this );
-
-				do_action( "spf_{$this->unique}_save_before", $data, $this );
-
-				$this->options = $data;
-
-				$this->save_options( $data );
-
-				do_action( "spf_{$this->unique}_save_after", $data, $this );
-
-				if ( empty( $this->notice ) ) {
-					$this->notice = esc_html__( 'Settings saved.', 'team-free' );
-				}
-
-				return true;
-
 			}
 
-			return false;
+			$data = apply_filters( "spf_{$this->unique}_save", $data, $this );
+			do_action( "spf_{$this->unique}_save_before", $data, $this );
+			$this->options = $data;
+			$this->save_options( $data );
 
+			do_action( "spf_{$this->unique}_save_after", $data, $this );
+			if ( empty( $this->notice ) ) {
+				$this->notice = esc_html__( 'Settings saved.', 'team-free' );
+			}
+
+			return true;
 		}
 
 		/**
@@ -527,7 +594,6 @@ if ( ! class_exists( 'TEAMFW_Options' ) ) {
 			}
 
 			do_action( "spf_{$this->unique}_saved", $data, $this );
-
 		}
 
 		/**
@@ -552,7 +618,6 @@ if ( ! class_exists( 'TEAMFW_Options' ) ) {
 			}
 
 			return $this->options;
-
 		}
 
 		/**
@@ -596,7 +661,6 @@ if ( ! class_exists( 'TEAMFW_Options' ) ) {
 			}
 
 			add_action( 'load-' . $menu_page, array( &$this, 'add_page_on_load' ) );
-
 		}
 
 		/**
@@ -618,7 +682,6 @@ if ( ! class_exists( 'TEAMFW_Options' ) ) {
 					$screen->set_help_sidebar( $this->args['contextual_help_sidebar'] );
 				}
 			}
-
 		}
 
 		/**
@@ -853,7 +916,6 @@ if ( ! class_exists( 'TEAMFW_Options' ) ) {
 			echo '</div>';
 
 			do_action( 'spf_options_after' );
-
 		}
 	}
 }

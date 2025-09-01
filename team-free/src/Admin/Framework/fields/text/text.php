@@ -41,7 +41,6 @@ if ( ! class_exists( 'TEAMFW_Field_text' ) ) {
 		 * @return void
 		 */
 		public function render() {
-
 			$type      = ( ! empty( $this->field['attributes']['type'] ) ) ? $this->field['attributes']['type'] : 'text';
 			$text_type = isset( $this->field['chart'] ) ? true : false;
 
@@ -51,10 +50,7 @@ if ( ! class_exists( 'TEAMFW_Field_text' ) ) {
 			} else {
 			echo '<input type="' . esc_attr( $type ) . '" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . $this->field_attributes() . ' />'; // phpcs:ignore
 			}
-
 			echo wp_kses_post( $this->field_after() );
-
 		}
-
 	}
 }

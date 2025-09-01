@@ -28,6 +28,10 @@ use ShapedPlugin\WPTeam\Admin\Helper\Admin_Notices;
 use ShapedPlugin\WPTeam\Admin\Team_Element_Shortcode_Block;
 use ShapedPlugin\WPTeam\Admin\Team_Element_Shortcode_Block_Deprecated;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * The Main file class of the plugin.
  */
@@ -71,9 +75,7 @@ class Team {
 	 * @since    2.0.0
 	 */
 	public function __construct() {
-
 		$this->load_dependencies();
-		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 		$active_plugins = get_option( 'active_plugins' );
@@ -118,22 +120,6 @@ class Team {
 	}
 
 	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * Uses the WP_Team_i18n class in order to set the domain and to register the hook
-	 * with WordPress.
-	 *
-	 * @since    2.0.0
-	 * @access   private
-	 */
-	private function set_locale() {
-
-		$plugin_i18n = new WP_Team_i18n();
-
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-	}
-
-	/**
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
@@ -175,9 +161,6 @@ class Team {
 		// Review notice for the plugin.
 		$this->loader->add_action( 'admin_notices', $admin_notices, 'display_admin_review_notice' );
 		$this->loader->add_action( 'wp_ajax_sp-wpt-never-show-review-notice', $admin_notices, 'dismiss_review_notice' );
-		// Black friday offer banner for the plugin.
-		$this->loader->add_action( 'admin_notices', $admin_notices, 'display_admin_offer_banner' );
-		$this->loader->add_action( 'wp_ajax_sp_team-hide-offer-banner', $admin_notices, 'dismiss_offer_banner' );
 
 		// Gutenberg block.
 		if ( version_compare( $GLOBALS['wp_version'], '5.3', '>=' ) ) {

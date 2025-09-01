@@ -9,6 +9,10 @@
 
 namespace ShapedPlugin\WPTeam\Admin;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Team_Element_Shortcode_Block
  */
@@ -43,7 +47,6 @@ class Team_Element_Shortcode_Block {
 			self::$_instance = new self();
 		}
 		return self::$_instance;
-
 	}
 
 	/**
@@ -157,9 +160,7 @@ class Team_Element_Shortcode_Block {
 	public function init_widgets() {
 		// Register widget.
 		\Elementor\Plugin::instance()->widgets_manager->register( new ElementBlock\Shortcode_Widget() );
-
 	}
-
 }
 
 Team_Element_Shortcode_Block::instance();

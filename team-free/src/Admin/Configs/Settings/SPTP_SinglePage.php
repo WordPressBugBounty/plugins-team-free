@@ -46,15 +46,9 @@ class SPTP_SinglePage {
 						'title'    => __( 'Layout For Member Single Page', 'team-free' ),
 						'subtitle' => __( 'Choose a layout for member single page.', 'team-free' ),
 						'options'  => array(
-							'right_content'  => array(
+							'right_content' => array(
 								'image'       => SPT_PLUGIN_ROOT . 'src/Admin/img/single-right-content.svg',
 								'option_name' => __( 'Right Content', 'team-free' ),
-							),
-							'bottom_content' => array(
-								'image'       => SPT_PLUGIN_ROOT . 'src/Admin/img/single-bottom-content.svg',
-								'option_name' => __( 'Bottom Content', 'team-free' ),
-								'pro_only'    => true,
-
 							),
 						),
 						'only_pro' => true,
@@ -112,6 +106,15 @@ class SPTP_SinglePage {
 								'class'              => 'sptp_bio_switch',
 								'type'               => 'switcher',
 								'title'              => __( 'Short Bio', 'team-free' ),
+								'text_on'            => __( 'Show', 'team-free' ),
+								'text_off'           => __( 'Hide', 'team-free' ),
+								'text_width'         => 80,
+								'switcher_drag_icon' => true,
+							),
+							array(
+								'id'                 => 'social_switch',
+								'type'               => 'switcher',
+								'title'              => __( 'Social Profiles', 'team-free' ),
 								'text_on'            => __( 'Show', 'team-free' ),
 								'text_off'           => __( 'Hide', 'team-free' ),
 								'text_width'         => 80,
@@ -204,15 +207,6 @@ class SPTP_SinglePage {
 								'text_width'         => 80,
 								'switcher_drag_icon' => true,
 								'only_pro'           => true,
-							),
-							array(
-								'id'                 => 'social_switch',
-								'type'               => 'switcher',
-								'title'              => __( 'Social Profiles', 'team-free' ),
-								'text_on'            => __( 'Show', 'team-free' ),
-								'text_off'           => __( 'Hide', 'team-free' ),
-								'text_width'         => 80,
-								'switcher_drag_icon' => true,
 							),
 						),
 					),

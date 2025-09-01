@@ -106,14 +106,14 @@ class Help {
 	public function help_admin_menu() {
 		add_submenu_page(
 			'edit.php?post_type=sptp_member',
-			__( 'WP Team', 'team-free' ),
+			__( 'SmartTeam', 'team-free' ),
 			__( 'Recommended', 'team-free' ),
 			'manage_options',
 			'edit.php?post_type=sptp_member&page=team_help#recommended'
 		);
 		add_submenu_page(
 			'edit.php?post_type=sptp_member',
-			__( 'WP Team', 'team-free' ),
+			__( 'SmartTeam', 'team-free' ),
 			__( 'Lite vs Pro', 'team-free' ),
 			'manage_options',
 			'edit.php?post_type=sptp_member&page=team_help#lite-to-pro'
@@ -396,7 +396,7 @@ class Help {
 			<!-- Header section start -->
 			<section class="spwpteam__help header">
 				<div class="spwpteam-header-area-top">
-					<p>You’re currently using <b>WP Team Lite</b>. To access additional features, consider <a target="_blank" href="https://getwpteam.com/pricing/?ref=1" ><b>upgrading to Pro!</b></a> 🚀</p>
+					<p>You’re currently using <b>SmartTeam Lite</b>. To access additional features, consider <a target="_blank" href="https://getwpteam.com/pricing/?ref=1" ><b>upgrading to Pro!</b></a> 🚀</p>
 				</div>
 				<div class="spwpteam-header-area">
 					<div class="spwpteam-container">
@@ -429,13 +429,13 @@ class Help {
 				<div class="spwpteam-container">
 					<div class="spwpteam-start-page-wrap">
 						<div class="spwpteam-video-area">
-							<h2 class='spwpteam-section-title'>Welcome to WP Team!</h2>
-							<span class='spwpteam-normal-paragraph'>Thank you for installing WP Team! This video will help you get started with the plugin. Enjoy!</span>
+							<h2 class='spwpteam-section-title'>Welcome to SmartTeam!</h2>
+							<span class='spwpteam-normal-paragraph'>Thank you for installing SmartTeam! This video will help you get started with the plugin. Enjoy!</span>
 							<iframe width="724" height="405" src="https://www.youtube.com/embed/E1PwdV-czeU?si=35rPQTqFmEEbKrbn" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
 							<ul>
 								<li><a class='spwpteam-medium-btn' href="<?php echo esc_url( home_url( '/' ) . 'wp-admin/post-new.php?post_type=sptp_generator' ); ?>">Create a Team</a></li>
 								<li><a target="_blank" class='spwpteam-medium-btn' href="https://getwpteam.com/wp-team-lite-version-demo/">Live Demo</a></li>
-								<li><a target="_blank" class='spwpteam-medium-btn arrow-btn' href="https://getwpteam.com/">Explore WP Team <i class="spwpteam-icon-button-arrow-icon"></i></a></li>
+								<li><a target="_blank" class='spwpteam-medium-btn arrow-btn' href="https://getwpteam.com/">Explore SmartTeam <i class="spwpteam-icon-button-arrow-icon"></i></a></li>
 							</ul>
 						</div>
 						<div class="spwpteam-start-page-sidebar">
@@ -443,7 +443,7 @@ class Help {
 								<div class="spwpteam-info-box-title">
 									<h4><i class="spwpteam-icon-doc-icon"></i> Documentation</h4>
 								</div>
-								<span class='spwpteam-normal-paragraph'>Explore WP Team plugin capabilities in our enriched documentation.</span>
+								<span class='spwpteam-normal-paragraph'>Explore SmartTeam plugin capabilities in our enriched documentation.</span>
 								<a target="_blank" class='spwpteam-small-btn' href="https://getwpteam.com/docs/">Browse Now</a>
 							</div>
 							<div class="spwpteam-start-page-sidebar-info-box">
@@ -674,7 +674,7 @@ class Help {
 						</div>
 						<div class="spwpteam-upgrade-to-pro">
 							<h2 class='spwpteam-section-title'>Upgrade To PRO & Enjoy Advanced Features!</h2>
-							<span class='spwpteam-section-subtitle'>Already, <b>15,000+</b> people are using WP Team on their websites to create beautiful showcase, why won’t you!</span>
+							<span class='spwpteam-section-subtitle'>Already, <b>15,000+</b> people are using SmartTeam on their websites to create beautiful showcase, why won’t you!</span>
 							<div class="spwpteam-upgrade-to-pro-btn">
 								<div class="spwpteam-action-btn">
 									<a target="_blank" href="https://getwpteam.com/pricing/?ref=1" class='spwpteam-big-btn'>Upgrade to Pro Now!</a>
@@ -688,7 +688,7 @@ class Help {
 					<div class="spwpteam-testimonial">
 						<div class="spwpteam-testimonial-title-section">
 							<span class='spwpteam-testimonial-subtitle'>NO NEED TO TAKE OUR WORD FOR IT</span>
-							<h2 class="spwpteam-section-title">Our Users Love WP Team Pro!</h2>
+							<h2 class="spwpteam-section-title">Our Users Love SmartTeam Pro!</h2>
 						</div>
 						<div class="spwpteam-testimonial-wrap">
 							<div class="spwpteam-testimonial-area">
@@ -697,7 +697,7 @@ class Help {
 								</div>
 								<div class="spwpteam-testimonial-info">
 									<div class="spwpteam-img">
-										<img src="<?php echo esc_url( SPT_PLUGIN_ROOT . 'src/Admin/HelpPage/img/regina.png' ); ?>" alt="">
+										<img src="<?php echo esc_url( SPT_PLUGIN_ROOT . 'src/Admin/HelpPage/img/regina.png' ); ?>" alt="Regina Jungk">
 									</div>
 									<div class="spwpteam-info">
 										<h3>Regina Jungk</h3>
@@ -713,7 +713,7 @@ class Help {
 								</div>
 								<div class="spwpteam-testimonial-info">
 									<div class="spwpteam-img">
-										<img src="<?php echo esc_url( SPT_PLUGIN_ROOT . 'src/Admin/HelpPage/img/aaron.png' ); ?>" alt="">
+										<img src="<?php echo esc_url( SPT_PLUGIN_ROOT . 'src/Admin/HelpPage/img/aaron.png' ); ?>" alt="Aaron Brown">
 									</div>
 									<div class="spwpteam-info">
 										<h3>Aaron Brown</h3>
@@ -729,7 +729,7 @@ class Help {
 								</div>
 								<div class="spwpteam-testimonial-info">
 									<div class="spwpteam-img">
-										<img src="<?php echo esc_url( SPT_PLUGIN_ROOT . 'src/Admin/HelpPage/img/voo.png' ); ?>" alt="">
+										<img src="<?php echo esc_url( SPT_PLUGIN_ROOT . 'src/Admin/HelpPage/img/voo.png' ); ?>" alt="Voo Voo Internet Marketing">
 									</div>
 									<div class="spwpteam-info">
 										<h3>Voo Voo Internet Marketing</h3>
@@ -767,12 +767,12 @@ class Help {
 							<p>At <b>ShapedPlugin LLC</b>, we searched for the best way to display the team members who are at the heart of your company or organization. Unfortunately, we couldn't find a suitable plugin that met our needs. Therefore, we set a simple goal: to develop a powerful WordPress team showcase plugin that will allow you to highlight your team's talent and expertise!</p>
 							<p>We aim to provide the easiest and most convenient way to create unlimited, visually appealing team member showcases for your WordPress websites. Explore it now, and you will surely love the experience!</p>
 							<div class="spwpteam-about-btn">
-								<a target="_blank" href="https://getwpteam.com/" class='spwpteam-medium-btn'>Explore WP Team</a>
+								<a target="_blank" href="https://getwpteam.com/" class='spwpteam-medium-btn'>Explore SmartTeam</a>
 								<a target="_blank" href="https://shapedplugin.com/about-us/" class='spwpteam-medium-btn spwpteam-arrow-btn'>More About Us <i class="spwpteam-icon-button-arrow-icon"></i></a>
 							</div>
 						</div>
 						<div class="spwpteam-about-img">
-							<img src="https://shapedplugin.com/wp-content/uploads/2024/01/shapedplugin-team.jpg" alt="">
+							<img src="<?php echo esc_url( SPT_PLUGIN_ROOT . 'src/Admin/HelpPage/img/shapedplugin-team.jpg' ); ?>" alt="ShapedPlugin Team">
 							<span>Team ShapedPlugin LLC at WordCamp Sylhet</span>
 						</div>
 					</div>
@@ -803,7 +803,9 @@ class Help {
 							</a>
 							<a target="_blank" class="spwpteam-our-plugin-list-box" href="https://smartpostshow.com/?ref=1">
 								<i class="spwpteam-icon-button-arrow-icon"></i>
-								<img src="<?php echo esc_url( $plugin_icon['post-carousel'] ); ?>" alt="Smart Post Show">
+								<?php if ( ! empty( $plugin_icon['post-carousel'] ) ) { ?>
+									<img src="<?php echo esc_url( $plugin_icon['post-carousel'] ); ?>" alt="Smart Post Show">
+								<?php } ?>
 								<h4>Smart Post Show</h4>
 								<p>Filter and display posts (any post types), pages, taxonomy, custom taxonomy, and custom field, in beautiful layouts.</p>
 							</a>
@@ -845,8 +847,8 @@ class Help {
 							</a>
 							<a target="_blank" class="spwpteam-our-plugin-list-box" href="https://wptabs.com/?ref=1">
 								<i class="spwpteam-icon-button-arrow-icon"></i>
-								<img src="<?php echo esc_url( $plugin_icon['wp-expand-tabs-free'] ); ?>" alt="WP Tabs">
-								<h4>WP Tabs</h4>
+								<img src="<?php echo esc_url( $plugin_icon['wp-expand-tabs-free'] ); ?>" alt="SmartTabs">
+								<h4>SmartTabs</h4>
 								<p>Display tabbed content smartly & quickly on your WordPress site without coding skills.</p>
 							</a>
 							<a target="_blank" class="spwpteam-our-plugin-list-box" href="https://shapedplugin.com/quick-view-for-woocommerce/?ref=1">

@@ -44,25 +44,21 @@ if ( ! class_exists( 'TEAMFW_Field_tabbed' ) ) {
 		 * @return void
 		 */
 		public function render() {
-
 			$unallows = array( 'tabbed' );
 
 			echo wp_kses_post( $this->field_before() );
 
 			echo '<div class="spf-tabbed-nav">';
 			foreach ( $this->field['tabs'] as $key => $tab ) {
-
 				$tabbed_icon   = ( ! empty( $tab['icon'] ) ) ? $tab['icon'] : '';
 				$tabbed_active = ( empty( $key ) ) ? ' class="spf-tabbed-active"' : '';
 
-				echo '<a href="#"' . wp_kses_post( $tabbed_active ) . '>' . $tabbed_icon . wp_kses_post( $tab['title'] ) . '</a>';
-
+				echo '<a href="#"' . wp_kses_post( $tabbed_active ) . '>' . wp_kses_post( $tabbed_icon . $tab['title'] ) . '</a>';
 			}
 			echo '</div>';
 
 			echo '<div class="spf-tabbed-sections">';
 			foreach ( $this->field['tabs'] as $key => $tab ) {
-
 				$tabbed_hidden = ( ! empty( $key ) ) ? ' hidden' : '';
 				$tabbed_class  = ( ! empty( $tab['class'] ) ) ? ' ' . $tab['class'] : '';
 				echo '<div class="spf-tabbed-section' . esc_attr( $tabbed_hidden . $tabbed_class ) . '">';
@@ -76,17 +72,11 @@ if ( ! class_exists( 'TEAMFW_Field_tabbed' ) ) {
 					$unique_id     = ( ! empty( $this->unique ) ) ? $this->unique : '';
 
 					SPF_TEAM::field( $field, $field_value, $unique_id, 'field/tabbed' );
-
 				}
-
 				echo '</div>';
-
 			}
 			echo '</div>';
-
 			echo wp_kses_post( $this->field_after() );
-
 		}
-
 	}
 }

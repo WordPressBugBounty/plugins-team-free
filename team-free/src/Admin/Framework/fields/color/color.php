@@ -47,7 +47,6 @@ if ( ! class_exists( 'TEAMFW_Field_color' ) ) {
 			echo wp_kses_post( $this->field_before() );
 			echo '<input type="text" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '" class="spf-color"' . $default_attr . $this->field_attributes() . '/>'; // phpcs:ignore
 			echo wp_kses_post( $this->field_after() );
-
 		}
 	}
 }

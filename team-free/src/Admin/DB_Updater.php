@@ -107,11 +107,23 @@ class DB_Updater {
 			return;
 		}
 
+		$plugin_dir        = plugin_dir_path( __DIR__ );
 		$installed_version = get_option( 'sp_wp_team_version' );
 
 		foreach ( self::$updates as $version => $path ) {
 			if ( version_compare( $installed_version, $version, '<' ) ) {
-				include $path;
+				$allowed_paths = array(
+					'updates/update-2.0.5.php',
+					'updates/update-2.1.0.php',
+					'updates/update-2.2.6.php',
+					'updates/update-2.2.13.php',
+					'updates/update-2.2.15.php',
+					'updates/update-3.0.0.php',
+					'updates/update-3.0.7.php',
+				);
+				if ( in_array( $path, $allowed_paths ) && file_exists( $plugin_dir . 'Admin/' . $path ) ) {
+					require_once $plugin_dir . 'Admin/' . $path;
+				}
 				update_option( 'sp_wp_team_version', $version );
 			}
 		}

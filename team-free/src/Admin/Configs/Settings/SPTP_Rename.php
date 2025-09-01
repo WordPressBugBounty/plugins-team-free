@@ -60,6 +60,5 @@ class SPTP_Rename {
 				),
 			)
 		);
-
 	}
 }

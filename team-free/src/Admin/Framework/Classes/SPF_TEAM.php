@@ -134,7 +134,6 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 			}
 
 			return self::$instance;
-
 		}
 
 		/**
@@ -151,7 +150,6 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 			add_action( 'init', array( 'ShapedPlugin\WPTeam\Admin\Framework\Classes\SPF_TEAM', 'setup' ) );
 			add_action( 'switch_theme', array( 'ShapedPlugin\WPTeam\Admin\Framework\Classes\SPF_TEAM', 'setup' ) );
 			add_action( 'admin_enqueue_scripts', array( 'ShapedPlugin\WPTeam\Admin\Framework\Classes\SPF_TEAM', 'add_admin_enqueue_scripts' ) );
-			add_action( 'wp_enqueue_scripts', array( 'ShapedPlugin\WPTeam\Admin\Framework\Classes\SPF_TEAM', 'add_typography_enqueue_styles' ), 80 );
 			add_action( 'wp_head', array( 'ShapedPlugin\WPTeam\Admin\Framework\Classes\SPF_TEAM', 'add_custom_css' ), 80 );
 			add_filter( 'admin_body_class', array( 'ShapedPlugin\WPTeam\Admin\Framework\Classes\SPF_TEAM', 'add_admin_body_class' ) );
 		}
@@ -202,7 +200,6 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 			}
 
 			do_action( 'spf_loaded' );
-
 		}
 
 		/**
@@ -259,7 +256,6 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 
 			self::$dir = $dirname;
 			self::$url = $directory_uri . $foldername;
-
 		}
 
 		/**
@@ -303,7 +299,6 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 				return self::$dir . '/' . $file;
 
 			}
-
 		}
 
 		/**
@@ -381,7 +376,6 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 					'radio',
 					'repeater',
 					'select',
-					'license',
 					'shortcode',
 					'slider',
 					'spacing',
@@ -402,7 +396,6 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 					}
 				}
 			}
-
 		}
 
 		/**
@@ -434,7 +427,6 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 					}
 				}
 			}
-
 		}
 
 		/**
@@ -522,53 +514,6 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 			}
 
 			do_action( 'spf_enqueue' );
-
-		}
-
-		/**
-		 * Add typography enqueue styles to front page
-		 *
-		 * @return void
-		 */
-		public static function add_typography_enqueue_styles() {
-
-			if ( ! empty( self::$webfonts ) ) {
-
-				if ( ! empty( self::$webfonts['enqueue'] ) ) {
-
-					$query = array();
-					$fonts = array();
-
-					foreach ( self::$webfonts['enqueue'] as $family => $styles ) {
-						$fonts[] = $family . ( ( ! empty( $styles ) ) ? ':' . implode( ',', $styles ) : '' );
-					}
-
-					if ( ! empty( $fonts ) ) {
-						$query['family'] = implode( '%7C', $fonts );
-					}
-
-					if ( ! empty( self::$subsets ) ) {
-						$query['subset'] = implode( ',', self::$subsets );
-					}
-
-					$query['display'] = 'swap';
-				}
-
-				if ( ! empty( self::$webfonts['async'] ) ) {
-
-					$fonts = array();
-
-					foreach ( self::$webfonts['async'] as $family => $styles ) {
-						$fonts[] = $family . ( ( ! empty( $styles ) ) ? ':' . implode( ',', $styles ) : '' );
-					}
-
-					wp_enqueue_script( 'spf-google-web-fonts', esc_url( '//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js' ), array(), '1.0.0', null );
-
-					wp_localize_script( 'spf-google-web-fonts', 'WebFontConfig', array( 'google' => array( 'families' => $fonts ) ) );
-
-				}
-			}
-
 		}
 
 		/**
@@ -584,7 +529,6 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 			}
 
 			return $classes;
-
 		}
 
 		/**
@@ -597,7 +541,6 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 			if ( ! empty( self::$css ) ) {
 				echo '<style type="text/css">' . wp_strip_all_tags( self::$css ) . '</style>'; // phpcs:ignore
 			}
-
 		}
 
 		/**
@@ -704,9 +647,7 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 			echo ( ! empty( $field['title'] ) || ! empty( $field['fancy_title'] ) ) ? '</div>' : '';
 			echo '<div class="clear"></div>';
 			echo '</div>';
-
 		}
-
 	}
 
 }

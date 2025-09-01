@@ -6,6 +6,10 @@
  * @subpackage team-free/src/Admin/update
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 // Change slug for member post type.
 add_action( 'init', 'sptp_member_permalink_flush' );
 /**

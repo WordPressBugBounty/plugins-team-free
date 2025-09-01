@@ -10,6 +10,7 @@
  */
 
 use ShapedPlugin\WPTeam\Admin\Framework\Classes\SPF_TEAM;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die; } // Cannot access directly.
 
@@ -136,7 +137,7 @@ if ( ! class_exists( 'TEAMFW_Field_typography' ) ) {
 			if ( ! empty( $args['font_family'] ) ) {
 				echo '<div class="spf--block">';
 				echo '<div class="spf--title">' . esc_html__( 'Font Family', 'team-free' ) . '</div>';
-				echo $this->create_select( array( $this->value['font-family'] => $this->value['font-family'] ), 'font-family', esc_html__( 'Select a font', 'team-free' ) );
+				echo $this->create_select( array( $this->value['font-family'] => $this->value['font-family'] ), 'font-family', esc_html__( 'Select a font', 'team-free' ) ); // phpcs:ignore -- escaped by create_select.
 				echo '</div>';
 			}
 
@@ -145,7 +146,7 @@ if ( ! class_exists( 'TEAMFW_Field_typography' ) ) {
 			if ( ! empty( $args['backup_font_family'] ) ) {
 				echo '<div class="spf--block spf--block-backup-font-family hidden">';
 				echo '<div class="spf--title">' . esc_html__( 'Backup Font Family', 'team-free' ) . '</div>';
-				echo $this->create_select(
+				echo $this->create_select( // phpcs:ignore -- escaped by create_select.
 					apply_filters(
 						'spf_field_typography_backup_font_family',
 						array(
@@ -433,163 +434,6 @@ if ( ! class_exists( 'TEAMFW_Field_typography' ) ) {
 			$output .= '</select>';
 
 			return $output;
-		}
-
-		/**
-		 * Enqueue
-		 *
-		 * @return void
-		 */
-		public function enqueue() {
-
-			if ( ! wp_script_is( 'spf-webfontloader' ) ) {
-
-				SPF_TEAM::include_plugin_file( 'fields/typography/google-fonts.php' );
-
-				wp_enqueue_script( 'spf-webfontloader', 'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js', array( 'spf' ), '1.6.28', true );
-
-				$webfonts = array();
-
-				$customwebfonts = apply_filters( 'spf_field_typography_customwebfonts', array() );
-
-				if ( ! empty( $customwebfonts ) ) {
-					$webfonts['custom'] = array(
-						'label' => esc_html__( 'Custom Web Fonts', 'team-free' ),
-						'fonts' => $customwebfonts,
-					);
-				}
-
-				$webfonts['safe'] = array(
-					'label' => esc_html__( 'Safe Web Fonts', 'team-free' ),
-					'fonts' => apply_filters(
-						'spf_field_typography_safewebfonts',
-						array(
-							'Arial',
-							'Arial Black',
-							'Helvetica',
-							'Times New Roman',
-							'Courier New',
-							'Tahoma',
-							'Verdana',
-							'Impact',
-							'Trebuchet MS',
-							'Comic Sans MS',
-							'Lucida Console',
-							'Lucida Sans Unicode',
-							'Georgia, serif',
-							'Palatino Linotype',
-						)
-					),
-				);
-
-				$webfonts['google'] = array(
-					'label' => esc_html__( 'Google Web Fonts', 'team-free' ),
-					'fonts' => apply_filters(
-						'spf_field_typography_googlewebfonts',
-						spf_get_google_fonts()
-					),
-				);
-
-				$defaultstyles = apply_filters( 'spf_field_typography_defaultstyles', array( 'normal', 'italic', '700', '700italic' ) );
-
-				$googlestyles = apply_filters(
-					'spf_field_typography_googlestyles',
-					array(
-						'100'       => 'Thin 100',
-						'100italic' => 'Thin 100 Italic',
-						'200'       => 'Extra-Light 200',
-						'200italic' => 'Extra-Light 200 Italic',
-						'300'       => 'Light 300',
-						'300italic' => 'Light 300 Italic',
-						'normal'    => 'Normal 400',
-						'italic'    => 'Normal 400 Italic',
-						'500'       => 'Medium 500',
-						'500italic' => 'Medium 500 Italic',
-						'600'       => 'Semi-Bold 600',
-						'600italic' => 'Semi-Bold 600 Italic',
-						'700'       => 'Bold 700',
-						'700italic' => 'Bold 700 Italic',
-						'800'       => 'Extra-Bold 800',
-						'800italic' => 'Extra-Bold 800 Italic',
-						'900'       => 'Black 900',
-						'900italic' => 'Black 900 Italic',
-					)
-				);
-
-				$webfonts = apply_filters( 'spf_field_typography_webfonts', $webfonts );
-
-				wp_localize_script(
-					'team-free',
-					'spf_typography_json',
-					array(
-						'webfonts'      => $webfonts,
-						'defaultstyles' => $defaultstyles,
-						'googlestyles'  => $googlestyles,
-					)
-				);
-
-			}
-		}
-
-		/**
-		 * Enqueue google fonts
-		 *
-		 * @param string $method google fonts enqueue.
-		 * @return mixed
-		 */
-		public function enqueue_google_fonts( $method = 'enqueue' ) {
-
-			$is_google = false;
-
-			if ( ! empty( $this->value['type'] ) ) {
-				$is_google = ( 'google' === $this->value['type'] ) ? true : false;
-			} else {
-				SPF_TEAM::include_plugin_file( 'fields/typography/google-fonts.php' );
-				$is_google = ( array_key_exists( $this->value['font-family'], spf_get_google_fonts() ) ) ? true : false;
-			}
-
-			if ( $is_google ) {
-
-				// set style.
-				$font_family = ( ! empty( $this->value['font-family'] ) ) ? $this->value['font-family'] : '';
-				$font_weight = ( ! empty( $this->value['font-weight'] ) ) ? $this->value['font-weight'] : '';
-				$font_style  = ( ! empty( $this->value['font-style'] ) ) ? $this->value['font-style'] : '';
-
-				if ( $font_weight || $font_style ) {
-					$style = $font_weight . $font_style;
-					if ( ! empty( $style ) ) {
-						$style = ( 'normal' === $style ) ? '400' : $style;
-						SPF_TEAM::$webfonts[ $method ][ $font_family ][ $style ] = $style;
-					}
-				} else {
-					SPF_TEAM::$webfonts[ $method ][ $font_family ] = array();
-				}
-
-				// set extra styles.
-				if ( ! empty( $this->value['extra-styles'] ) ) {
-					foreach ( $this->value['extra-styles'] as $extra_style ) {
-						if ( ! empty( $extra_style ) ) {
-							$extra_style = ( 'normal' === $extra_style ) ? '400' : $extra_style;
-							SPF_TEAM::$webfonts[ $method ][ $font_family ][ $extra_style ] = $extra_style;
-						}
-					}
-				}
-
-				// set subsets.
-				if ( ! empty( $this->value['subset'] ) ) {
-					$this->value['subset'] = ( is_array( $this->value['subset'] ) ) ? $this->value['subset'] : array_filter( (array) $this->value['subset'] );
-					foreach ( $this->value['subset'] as $subset ) {
-						if ( ! empty( $subset ) ) {
-							SPF_TEAM::$subsets[ $subset ] = $subset;
-						}
-					}
-				}
-
-				return true;
-
-			}
-
-			return false;
 		}
 	}
 }

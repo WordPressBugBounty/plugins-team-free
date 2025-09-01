@@ -9,6 +9,10 @@
  * @since 2.1.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 ?>
 <div class="sptp-member-social <?php echo esc_attr( $social_icon_shape ); ?>">
 

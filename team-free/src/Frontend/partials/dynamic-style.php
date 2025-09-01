@@ -6,6 +6,9 @@
  * @since 2.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die;} // Cannot access directly.
+
 // Dynamic css.
 require 'dynamic-css-settings.php';
 $css_list          = array();

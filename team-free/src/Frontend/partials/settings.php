@@ -6,6 +6,9 @@
  * @since 2.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die;} // Cannot access directly.
+
 // Main settings.
 $sptp_settings            = get_option( '_sptp_settings' );
 $sptp_google_fonts        = isset( $sptp_settings['enqueue_google_font'] ) ? $sptp_settings['enqueue_google_font'] : true;
@@ -47,7 +50,7 @@ $preloader                = isset( $settings['preloader_switch'] ) ? $settings['
 // get members of this layout.
 $filter_members = isset( $layout['filter_members'] ) ? $layout['filter_members'] : 'newest';
 if ( ! empty( $filter_members ) ) {
-	$latest_posts         = get_posts(
+	$latest_posts = get_posts(
 		array(
 			'post_type'      => 'sptp_member',
 			'posts_per_page' => ( '' === $filter_member_number ) ? 10000 : $filter_member_number,
@@ -56,12 +59,20 @@ if ( ! empty( $filter_members ) ) {
 			'fields'         => 'ids',
 		)
 	);
-	$sptp_newest_arg      = array(
+
+	if ( 'exclude' === $filter_members && ! empty( $layout['filter_exclude'] ) ) {
+		$exclude_members = isset( $layout['filter_exclude'] ) ? $layout['filter_exclude'] : array();
+		// Remove excluded IDs from post__in before query.
+		$latest_posts = array_diff( $latest_posts, $exclude_members );
+	}
+
+	$sptp_newest_arg = array(
 		'post_type'      => 'sptp_member',
 		'posts_per_page' => ( '' === $filter_member_number ) ? 10000 : $filter_member_number,
 		'post__in'       => $latest_posts,
 		'orderby'        => 'post__in',
 	);
+
 	$filter_members_query = new WP_Query( $sptp_newest_arg );
 	$filter_members       = $filter_members_query->posts;
 }
@@ -79,10 +90,11 @@ $member_per_slide = isset( $settings['member_per_slide'] ) ? $settings['member_p
 
 $navigation_position = isset( $settings['carousel_navigation_position'] ) ? $settings['carousel_navigation_position'] : 'top-right';
 
-$loop         = ( isset( $settings['carousel_loop'] ) && $settings['carousel_loop'] ) ? 'true' : 'false';
-$auto_height  = ( isset( $settings['carousel_auto_height'] ) && $settings['carousel_auto_height'] ) ? 'true' : 'false';
-$lazy_load    = ( isset( $settings['carousel_lazy_load'] ) && $settings['carousel_lazy_load'] ) ? 'true' : 'false';
-$stop_onhover = ( isset( $settings['carousel_onhover'] ) && $settings['carousel_onhover'] ) ? 'true' : 'false';
+$loop                     = ( isset( $settings['carousel_loop'] ) && $settings['carousel_loop'] ) ? 'true' : 'false';
+$auto_height              = ( isset( $settings['carousel_auto_height'] ) && $settings['carousel_auto_height'] ) ? 'true' : 'false';
+$lazy_load                = ( isset( $settings['carousel_lazy_load'] ) && $settings['carousel_lazy_load'] ) ? 'true' : 'false';
+$stop_onhover             = ( isset( $settings['carousel_onhover'] ) && $settings['carousel_onhover'] ) ? 'true' : 'false';
+$carousel_pagination_type = isset( $settings['carousel_pagination_type'] ) ? $settings['carousel_pagination_type'] : 'bullets';
 
 // Miscellaneous.
 $touch_swipe        = isset( $settings['touch_swipe'] ) && $settings['touch_swipe'] ? 'true' : 'false';
@@ -98,7 +110,7 @@ $margin_between_member       = isset( $settings['style_margin_between_member']['
 $margin_between_member_left  = isset( $settings['style_margin_between_member']['left-right'] ) ? intval( $settings['style_margin_between_member']['left-right'] ) : 24;
 
 if ( 'list' === $layout_preset ) {
-	$position = isset( $layout['style_member_content_position_list'] ) ? $layout['style_member_content_position_list'] : '';
+	$position = 'left_img_right_content';
 } else {
 	$position = isset( $settings['style_member_content_position'] ) ? $settings['style_member_content_position'] : 'top_img_bottom_content';
 }

@@ -10,13 +10,13 @@ const { serverSideRender: ServerSideRender } = wp;
 const el = createElement;
 
 /**
- * Register: WP Team Free Gutenberg Block.
+ * Register: SmartTeam Free Gutenberg Block.
  */
 registerBlockType(
     'sp-team-pro/shortcode',
     {
-        title: __( 'WP Team', 'team-free'),
-        description: __( 'Use WP Team to insert a team in your page', 'team-free'),
+        title: __( 'SmartTeam', 'team-free'),
+        description: __( 'Use SmartTeam to insert a team in your page', 'team-free'),
 		icon: icons.teamFree,
 		category: 'common',
 		supports: {
@@ -75,7 +75,7 @@ registerBlockType(
 					  el('div', {className: 'components-placeholder components-placeholder is-large'}, 
 						el('div', {className: 'components-placeholder__label'}, 
 						  el('img', {className: 'block-editor-block-icon', src: escapeAttribute( TeamFreeGbScript.path + 'src/Admin/GutenbergBlock/assets/wp-team-block.svg' )}),
-						  escapeHTML( __('WP Team', 'team-free') )
+						  escapeHTML( __('SmartTeam', 'team-free') )
 						),
 						el('div', {className: 'components-placeholder__instructions'}, 
 						  escapeHTML( __("No team found. ", "team-free") ),
@@ -107,7 +107,7 @@ registerBlockType(
 							el('div', {className: 'components-placeholder components-placeholder is-large'}, 
 							el('div', {className: 'components-placeholder__label'},
 								el('img', { className: 'block-editor-block-icon', src: escapeAttribute( TeamFreeGbScript.path + 'src/Admin/GutenbergBlock/assets/wp-team-block.svg' )}),
-								escapeHTML( __("WP Team", "team-free") )
+								escapeHTML( __("SmartTeam", "team-free") )
 							),
 							el('div', {className: 'components-placeholder__instructions'}, escapeHTML( __("Select a Team", "team-free") ) ),
 							<DynamicShortcodeInput

@@ -10,6 +10,7 @@
  */
 
 use ShapedPlugin\WPTeam\Admin\Framework\Classes\SPF_TEAM;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die; } // Cannot access directly.
 
@@ -47,7 +48,6 @@ if ( ! class_exists( 'TEAMFW_Field_textarea' ) ) {
 			echo $this->shortcoder() ? wp_kses_post( $this->shortcoder() ) : '';
 			echo '<textarea name="' . esc_attr( $this->field_name() ) . '"' . $this->field_attributes() . '>' . $this->value . '</textarea>'; // phpcs:ignore
 			echo wp_kses_post( $this->field_after() );
-
 		}
 
 		/**
@@ -56,23 +56,17 @@ if ( ! class_exists( 'TEAMFW_Field_textarea' ) ) {
 		 * @return void
 		 */
 		public function shortcoder() {
-
 			if ( ! empty( $this->field['shortcoder'] ) ) {
-
 				$instances = ( is_array( $this->field['shortcoder'] ) ) ? $this->field['shortcoder'] : array_filter( (array) $this->field['shortcoder'] );
 
 				foreach ( $instances as $instance_key ) {
-
 					if ( isset( SPF_TEAM::$shortcode_instances[ $instance_key ] ) ) {
-
 						$button_title = SPF_TEAM::$shortcode_instances[ $instance_key ]['button_title'];
 
 						echo '<a href="#" class="button button-primary spf-shortcode-button" data-modal-id="' . esc_attr( $instance_key ) . '">' . wp_kses_post( $button_title ) . '</a>';
-
 					}
 				}
 			}
-
 		}
 	}
 }

@@ -118,9 +118,6 @@ if ( ! class_exists( 'TEAMFW_Field_column' ) ) {
 
 			echo '</div>';
 			echo wp_kses_post( $this->field_after() );
-
 		}
-
 	}
 }
-

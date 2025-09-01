@@ -93,8 +93,6 @@ if ( ! class_exists( 'TEAMFW_Field_button_set' ) ) {
 			}
 
 			echo wp_kses_post( $this->field_after() );
-
 		}
-
 	}
 }

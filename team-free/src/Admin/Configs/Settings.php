@@ -19,7 +19,6 @@ use ShapedPlugin\WPTeam\Admin\Configs\Settings\SPTP_Advance;
 use ShapedPlugin\WPTeam\Admin\Configs\Settings\SPTP_Rename;
 use ShapedPlugin\WPTeam\Admin\Configs\Settings\SPTP_SinglePage;
 use ShapedPlugin\WPTeam\Admin\Configs\Settings\SPTP_SettingsStyle;
-use ShapedPlugin\WPTeam\Admin\Configs\Settings\SPTP_License;
 if ( ! defined( 'ABSPATH' ) ) {
 	die; }
 
@@ -61,7 +60,5 @@ class Settings {
 		SPTP_Advance::section( $prefix );
 		SPTP_SettingsStyle::section( $prefix );
 		SPTP_Accessibility::section( $prefix );
-		SPTP_License::section( $prefix );
-
 	}
 }

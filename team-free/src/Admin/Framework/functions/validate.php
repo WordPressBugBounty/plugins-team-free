@@ -23,7 +23,6 @@ if ( ! function_exists( 'spf_validate_email' ) ) {
 		if ( ! filter_var( $value, FILTER_VALIDATE_EMAIL ) ) {
 			return esc_html__( 'Please enter a valid email address.', 'team-free' );
 		}
-
 	}
 }
 
@@ -39,7 +38,6 @@ if ( ! function_exists( 'spf_validate_numeric' ) ) {
 		if ( ! is_numeric( $value ) ) {
 			return esc_html__( 'Please enter a valid number.', 'team-free' );
 		}
-
 	}
 }
 
@@ -57,7 +55,6 @@ if ( ! function_exists( 'spf_validate_required' ) ) {
 		if ( empty( $value ) ) {
 			return esc_html__( 'This field is required.', 'team-free' );
 		}
-
 	}
 }
 
@@ -75,7 +72,5 @@ if ( ! function_exists( 'spf_validate_url' ) ) {
 		if ( ! filter_var( $value, FILTER_VALIDATE_URL ) ) {
 			return esc_html__( 'Please enter a valid URL.', 'team-free' );
 		}
-
 	}
 }
-

@@ -87,7 +87,6 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 			}
 
 			return $field_name . $nested_name;
-
 		}
 
 		/**
@@ -124,7 +123,6 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 			}
 
 			return $atts;
-
 		}
 
 		/**
@@ -149,7 +147,6 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 			$output .= ( ! empty( $this->field['_error'] ) ) ? '<div class="spf-error-text">' . $this->field['_error'] . '</div>' : '';
 
 			return $output;
-
 		}
 
 		/**
@@ -228,8 +225,8 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 					$sptp_get_specific = array(
 						'post_type' => 'sptp_generator',
 					);
-					$query_args       = array_merge( $query_args, $sptp_get_specific );
-					$all_posts        = get_posts( $query_args );
+					$query_args        = array_merge( $query_args, $sptp_get_specific );
+					$all_posts         = get_posts( $query_args );
 
 					if ( ! is_wp_error( $all_posts ) && ! empty( $all_posts ) ) {
 						foreach ( $all_posts as $post_obj ) {
@@ -242,8 +239,8 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 					$sptp_get_specific = array(
 						'post_type' => 'sptp_member',
 					);
-					$query_args       = array_merge( $query_args, $sptp_get_specific );
-					$all_posts        = get_posts( $query_args );
+					$query_args        = array_merge( $query_args, $sptp_get_specific );
+					$all_posts         = get_posts( $query_args );
 
 					if ( ! is_wp_error( $all_posts ) && ! empty( $all_posts ) ) {
 						foreach ( $all_posts as $post_obj ) {
@@ -308,11 +305,9 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 								'fields'  => array( 'display_name', 'ID' ),
 							)
 						);
-
 					} else {
 
 						$query = new WP_User_Query( array( 'fields' => array( 'display_name', 'ID' ) ) );
-
 					}
 
 					if ( ! is_wp_error( $query ) && ! empty( $query->get_results() ) ) {
@@ -392,7 +387,7 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 						}
 					}
 					$options['original'] = __( 'Original uploaded image', 'team-free' );
-					$options['custom']   = __( 'Set custom size', 'team-free' );
+					$options['custom']   = __( 'Set custom size (Pro)', 'team-free' );
 					break;
 
 				default:
@@ -426,7 +421,6 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 			}
 
 			return $options;
-
 		}
 
 		/**
@@ -537,8 +531,6 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 			}
 
 			return $options;
-
 		}
-
 	}
 }

@@ -9,6 +9,10 @@
  * @since 2.1.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use ShapedPlugin\WPTeam\Frontend\Helper;
 
 $image_alt                                   = get_post_meta( get_post_thumbnail_id( $member->ID ), '_wp_attachment_image_alt', true );

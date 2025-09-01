@@ -5,8 +5,8 @@
  * @link       https://shapedplugin.com/
  * @since      2.2.5
  *
- * @package    WP_Team
- * @subpackage WP_Team/Admin
+ * @package    Smart_Team
+ * @subpackage Smart_Team/Admin
  * @author     ShapedPlugin <support@shapedplugin.com>
  */
 
@@ -15,8 +15,11 @@ namespace ShapedPlugin\WPTeam\Admin\ElementBlock_Deprecated;
 use ShapedPlugin\WPTeam\Frontend\Helper;
 use ShapedPlugin\WPTeam\Frontend\Frontend;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die;} // Cannot access directly.
+
 /**
- * Elementor wp team shortcode Widget.
+ * Elementor SmartTeam shortcode Widget.
  *
  * @since 2.2.1
  */
@@ -42,7 +45,7 @@ class Shortcode_Widget_Deprecated extends \Elementor\Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'WP Team Deprecated', 'team-free' );
+		return esc_html__( 'SmartTeam Deprecated', 'team-free' );
 	}
 
 	/**
@@ -109,7 +112,7 @@ class Shortcode_Widget_Deprecated extends \Elementor\Widget_Base {
 		$this->add_control(
 			'sp_team_shortcode',
 			array(
-				'label'       => __( 'WP Team Shortcode(s)', 'team-free' ),
+				'label'       => esc_html__( 'SmartTeam Shortcode(s)', 'team-free' ),
 				'type'        => \Elementor\Controls_Manager::SELECT2,
 				'label_block' => true,
 				'default'     => '',
@@ -121,11 +124,11 @@ class Shortcode_Widget_Deprecated extends \Elementor\Widget_Base {
 			'deprecated_notice',
 			array(
 				'type'            => \Elementor\Controls_Manager::DEPRECATED_NOTICE,
-				'widget'          => 'WP Team Deprecated',
+				'widget'          => 'SmartTeam Deprecated',
 				'since'           => '2.2.5',
 				'last'            => '3.0.4',
-				'plugin'          => 'WP Team',
-				'replacement'     => 'WP Team',
+				'plugin'          => 'SmartTeam',
+				'replacement'     => 'SmartTeam',
 				'content_classes' => 'sp-wp-team-elementor-widget-deprecated',
 			)
 		);
@@ -134,7 +137,7 @@ class Shortcode_Widget_Deprecated extends \Elementor\Widget_Base {
 	}
 
 	/**
-	 * Render wp team shortcode widget output on the frontend.
+	 * Render SmartTeam shortcode widget output on the frontend.
 	 *
 	 * @since 2.2.1
 	 * @access protected
@@ -163,7 +166,6 @@ class Shortcode_Widget_Deprecated extends \Elementor\Widget_Base {
 
 			Helper::sptp_html_show( $generator_id, $layout, $settings, $main_section_title );
 			?>
-			<script src="<?php echo esc_url( SPT_PLUGIN_ROOT . 'src/Frontend/js/script.js' ); ?>" ></script>
 			<?php
 		} else {
 			echo do_shortcode( '[wpteam id="' . $generator_id . '"]' );

@@ -47,36 +47,39 @@ if ( ! class_exists( 'Team_Import_Export' ) ) {
 					foreach ( $shortcodes as $shortcode ) {
 						if ( 'all_members' !== $shortcode_ids ) {
 							$shortcode_export = array(
-								'title'       => $shortcode->post_title,
-								'original_id' => $shortcode->ID,
+								'title'       => sanitize_text_field( $shortcode->post_title ),
+								'original_id' => absint( $shortcode->ID ),
 								'meta'        => array(),
 							);
 						}
 						if ( 'all_members' === $shortcode_ids ) {
 							$terms            = get_the_terms( $shortcode->ID, 'sptp_group' );
 							$shortcode_export = array(
-								'title'       => $shortcode->post_title,
-								'original_id' => $shortcode->ID,
-								'content'     => $shortcode->post_content,
-								'image'       => get_the_post_thumbnail_url( $shortcode->ID, 'single-post-thumbnail' ),
+								'title'       => sanitize_text_field( $shortcode->post_title ),
+								'original_id' => absint( $shortcode->ID ),
+								'content'     => wp_kses_post( $shortcode->post_content ),
+								'image'       => esc_url_raw( get_the_post_thumbnail_url( $shortcode->ID, 'single-post-thumbnail' ) ),
 								'all_members' => 'all_members',
 								'meta'        => array(),
 							);
 						}
 
 						foreach ( get_post_meta( $shortcode->ID ) as $metakey => $value ) {
-							$shortcode_export['meta'][ $metakey ] = $value[0];
+							$meta_key                              = sanitize_key( $metakey );
+							$meta_value                            = is_serialized( $value[0] ) ? $value[0] : sanitize_text_field( $value[0] );
+							$shortcode_export['meta'][ $meta_key ] = $meta_value;
 						}
 						$export['shortcode'][] = $shortcode_export;
 						unset( $shortcode_export );
 					}
 					$export['metadata'] = array(
 						'version' => SPT_PLUGIN_VERSION,
-						'date'    => gmdate( 'Y/m/d' ),
+						'date'    => sanitize_text_field( gmdate( 'Y/m/d' ) ),
 					);
 				}
 				return $export;
 			}
+			return false;
 		}
 
 		/**
@@ -87,16 +90,31 @@ if ( ! class_exists( 'Team_Import_Export' ) ) {
 		public function export_shortcodes() {
 			$nonce = ( ! empty( $_POST['nonce'] ) ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 			if ( ! wp_verify_nonce( $nonce, 'spf_options_nonce' ) ) {
-				die();
+				wp_send_json_error( array( 'error' => esc_html__( 'Invalid nonce', 'team-free' ) ) );
 			}
-			$shortcode_ids = isset( $_POST['sptp_ids'] ) ? $_POST['sptp_ids'] : ''; // phpcs:ignore
+
+			$_capability = apply_filters( 'sp_team_import_export_capabilities', 'manage_options' );
+			if ( ! current_user_can( $_capability ) ) {
+				wp_send_json_error( array( 'error' => esc_html__( 'You do not have permission to export.', 'team-free' ) ) );
+			}
+
+			$shortcode_ids = isset( $_POST['sptp_ids'] ) ? wp_unslash( $_POST['sptp_ids'] ) : ''; // phpcs:ignore
 
 			$export = $this->export( $shortcode_ids );
 
 			if ( is_wp_error( $export ) ) {
 				wp_send_json_error(
 					array(
-						'message' => $export->get_error_message(),
+						'message' => esc_html( $export->get_error_message() ),
+					),
+					400
+				);
+			}
+
+			if ( false === $export ) {
+				wp_send_json_error(
+					array(
+						'message' => esc_html__( 'No data to export.', 'team-free' ),
 					),
 					400
 				);
@@ -131,7 +149,7 @@ if ( ! class_exists( 'Team_Import_Export' ) ) {
 				$page_title,
 				$post_type
 			);
-			$page = $wpdb->get_var( $sql );
+			$page = $wpdb->get_var( $sql ); // phpcs:ignore -- WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 			if ( $page ) {
 				return get_post( $page, $output );
 			}
@@ -156,7 +174,7 @@ if ( ! class_exists( 'Team_Import_Export' ) ) {
 				$attachment = $this->sp_team_get_page_by_title( $attachment_title, OBJECT, 'attachment' );
 
 				if ( ! empty( $attachment ) ) {
-					$attachment_id = $attachment->ID;
+					$attachment_id = absint( $attachment->ID );
 					return $attachment_id;
 				}
 			}
@@ -177,8 +195,8 @@ if ( ! class_exists( 'Team_Import_Export' ) ) {
 
 			$post_info = array(
 				'guid'           => $wp_upload_dir['url'] . '/' . $file_name,
-				'post_mime_type' => $file_type['type'],
-				'post_title'     => $attachment_title,
+				'post_mime_type' => sanitize_mime_type( $file_type['type'] ),
+				'post_title'     => sanitize_text_field( $attachment_title ),
 				'post_content'   => '',
 				'post_status'    => 'inherit',
 			);
@@ -196,7 +214,6 @@ if ( ! class_exists( 'Team_Import_Export' ) ) {
 			wp_update_attachment_metadata( $attach_id, $attach_data );
 
 			return $attach_id;
-
 		}
 
 		/**
@@ -217,20 +234,25 @@ if ( ! class_exists( 'Team_Import_Export' ) ) {
 				try {
 					$new_shortcode_id = wp_insert_post(
 						array(
-							'post_title'   => isset( $shortcode['title'] ) ? $shortcode['title'] : '',
-							'post_content' => isset( $shortcode['content'] ) ? $shortcode['content'] : '',
+							'post_title'   => isset( $shortcode['title'] ) ? sanitize_text_field( $shortcode['title'] ) : '',
+							'post_content' => isset( $shortcode['content'] ) ? wp_kses_post( $shortcode['content'] ) : '',
 							'post_status'  => 'publish',
 							'post_type'    => $sptp_post_type,
 						),
 						true
 					);
 					if ( isset( $shortcode['all_members'] ) ) {
-						$url = isset( $shortcode['image'] ) && ! empty( $shortcode['image'] ) ? $shortcode['image'] : '';
-						// Insert attachment id.
-						$thumb_id = $this->insert_attachment_from_url( $url, $new_shortcode_id );
+						// Sanitize URL safely.
+						$url = ! empty( $shortcode['image'] ) ? esc_url_raw( $shortcode['image'] ) : '';
 
-						if ( $thumb_id ) {
-							$shortcode['meta']['_thumbnail_id'] = $thumb_id;
+						if ( $url ) {
+							// Insert attachment ID from sanitized URL.
+							$thumb_id = $this->insert_attachment_from_url( $url, absint( $new_shortcode_id ) );
+
+							if ( $thumb_id ) {
+								// Always sanitize integer IDs.
+								$shortcode['meta']['_thumbnail_id'] = absint( $thumb_id );
+							}
 						}
 					}
 					if ( is_wp_error( $new_shortcode_id ) ) {
@@ -239,18 +261,21 @@ if ( ! class_exists( 'Team_Import_Export' ) ) {
 
 					if ( isset( $shortcode['meta'] ) && is_array( $shortcode['meta'] ) ) {
 						foreach ( $shortcode['meta'] as $key => $value ) {
-							update_post_meta(
-								$new_shortcode_id,
-								$key,
-								maybe_unserialize( str_replace( '{#ID#}', $new_shortcode_id, $value ) )
-							);
+							// meta key.
+							$meta_key = sanitize_key( $key );
+							// meta value.
+							$meta_value = maybe_unserialize( str_replace( '{#ID#}', $new_shortcode_id, $value ) );
+							// update post meta.
+							update_post_meta( $new_shortcode_id, $meta_key, $meta_value );
 						}
 					}
 				} catch ( \Exception $e ) {
 					array_push( $errors[ $index ], $e->getMessage() );
 
 					// If there was a failure somewhere, clean up.
-					wp_trash_post( $new_shortcode_id );
+					if ( $new_shortcode_id > 0 ) {
+						wp_trash_post( $new_shortcode_id );
+					}
 				}
 
 				// If no errors, remove the index.
@@ -274,28 +299,60 @@ if ( ! class_exists( 'Team_Import_Export' ) ) {
 		public function import_shortcodes() {
 			$nonce = ( ! empty( $_POST['nonce'] ) ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 			if ( ! wp_verify_nonce( $nonce, 'spf_options_nonce' ) ) {
-				die();
+				wp_send_json_error( array( 'error' => esc_html__( 'Invalid nonce', 'team-free' ) ) );
 			}
-			$data = isset( $_POST['shortcode'] ) ? wp_kses_data( wp_unslash( $_POST['shortcode'] ) ) : '';
 
-			$data       = json_decode( $data );
-			$data       = json_decode( $data, true );
-			$shortcodes = $data['shortcode'];
+			$_capability = apply_filters( 'sp_team_import_export_capabilities', 'manage_options' );
+			if ( ! current_user_can( $_capability ) ) {
+				wp_send_json_error( array( 'error' => esc_html__( 'You do not have permission to import.', 'team-free' ) ) );
+			}
+
+			// Get and validate input data.
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$data = isset( $_POST['shortcode'] ) ? wp_kses_post_deep( wp_unslash( $_POST['shortcode'] ) ) : '';
 			if ( ! $data ) {
+				wp_send_json_error( array( 'message' => esc_html__( 'Nothing to import.', 'team-free' ) ), 400 );
+			}
+
+			// Decode JSON with error checking.
+			$decoded_data = json_decode( $data, true );
+			if ( is_string( $decoded_data ) ) {
+				$decoded_data = json_decode( $decoded_data, true );
+			}
+
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
 				wp_send_json_error(
 					array(
-						'message' => __( 'Nothing to import.', 'team-free' ),
+						'message' => esc_html__( 'Invalid JSON data.', 'team-free' ),
 					),
 					400
 				);
 			}
 
+			// Validate expected structure.
+			if ( ! isset( $decoded_data['shortcode'] ) || ! is_array( $decoded_data['shortcode'] ) ) {
+				wp_send_json_error(
+					array(
+						'message' => esc_html__( 'Invalid shortcode data structure.', 'team-free' ),
+					),
+					400
+				);
+			}
+
+			$shortcodes = map_deep(
+				$decoded_data['shortcode'],
+				function ( $value ) {
+					return is_string( $value ) ? wp_kses_post( $value ) : $value;
+				}
+			);
+
+			// Import.
 			$status = $this->import( $shortcodes );
 
 			if ( is_wp_error( $status ) ) {
 				wp_send_json_error(
 					array(
-						'message' => $status->get_error_message(),
+						'message' => esc_html( $status->get_error_message() ),
 					),
 					400
 				);

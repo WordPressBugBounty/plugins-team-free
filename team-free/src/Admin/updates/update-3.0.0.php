@@ -1,4 +1,16 @@
 <?php
+
+/**
+ * Get database updated to 3.0.0
+ *
+ * @package team-free
+ * @subpackage team-free/src/Admin/update
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Update version.
  */
@@ -83,4 +95,3 @@ if ( count( $shortcode_ids ) > 0 ) {
 		update_option( '_sptp_settings', $sptp_settings );
 	}
 }
-

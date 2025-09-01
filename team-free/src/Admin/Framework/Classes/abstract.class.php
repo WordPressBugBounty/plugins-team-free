@@ -66,7 +66,6 @@ if ( ! class_exists( 'TEAMFW_Abstract' ) ) {
 			if ( ! empty( $this->args['output_css'] ) || ! empty( $this->args['enqueue_webfont'] ) ) {
 				add_action( 'wp_enqueue_scripts', array( &$this, 'collect_output_css_and_typography' ), 10 );
 			}
-
 		}
 
 		/**
@@ -138,7 +137,7 @@ if ( ! class_exists( 'TEAMFW_Abstract' ) ) {
 										$field_value = ( isset( $this->options[ $field_id ] ) ) ? $this->options[ $field_id ] : '';
 
 									}
-								} elseif ( $field_check && ( 'metabox' === $this->abstract && is_singular() || 'taxonomy' === $this->abstract && is_archive() ) ) {
+								} elseif ( $field_check && ( ( 'metabox' === $this->abstract && is_singular() ) || ( 'taxonomy' === $this->abstract && is_archive() ) ) ) {
 
 									if ( ! empty( $combine_field ) ) {
 
@@ -149,7 +148,6 @@ if ( ! class_exists( 'TEAMFW_Abstract' ) ) {
 
 										$meta_value  = $this->get_meta_value( $field );
 										$field_value = ( isset( $meta_value ) ) ? $meta_value : '';
-
 									}
 								}
 
@@ -161,7 +159,6 @@ if ( ! class_exists( 'TEAMFW_Abstract' ) ) {
 									$method = ( ! empty( $this->args['async_webfont'] ) ) ? 'async' : 'enqueue';
 
 									$instance->enqueue_google_fonts( $method );
-
 								}
 
 								// output css.
@@ -170,14 +167,11 @@ if ( ! class_exists( 'TEAMFW_Abstract' ) ) {
 								}
 
 								unset( $instance );
-
 							}
 						}
 					}
 				}
 			}
-
 		}
-
 	}
 }

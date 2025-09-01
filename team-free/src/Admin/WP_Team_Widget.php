@@ -11,6 +11,11 @@
 
 namespace ShapedPlugin\WPTeam\Admin;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+
 /**
  * Adds Foo_Widget widget.
  */
@@ -23,7 +28,7 @@ class WP_Team_Widget extends \WP_Widget {
 			'classname'   => 'wpteam_widget',
 			'description' => esc_html__( 'Create and display team', 'team-free' ),
 		);
-		parent::__construct( 'wpteam_widget', 'WP Team', $widget_ops );
+		parent::__construct( 'wpteam_widget', 'SmartTeam', $widget_ops );
 	}
 
 	/**
@@ -34,12 +39,15 @@ class WP_Team_Widget extends \WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		// outputs the content of the widget.
-		extract( $args, EXTR_SKIP ); // phpcs:ignore
+		$before_widget = isset( $args['before_widget'] ) ? $args['before_widget'] : '';
+		$after_widget  = isset( $args['after_widget'] ) ? $args['after_widget'] : '';
+		$before_title  = isset( $args['before_title'] ) ? $args['before_title'] : '';
+		$after_title   = isset( $args['after_title'] ) ? $args['after_title'] : '';
+
 		$title = empty( $instance['title'] ) ? ' ' : apply_filters( 'widget_title', $instance['title'] );
 		$team  = empty( $instance['team'] ) ? '' : $instance['team'];
 
-		echo ( isset( $before_widget ) ? wp_kses_post( $before_widget ) : '' );
-
+		echo wp_kses_post( $before_widget );
 		if ( ! empty( $title ) ) {
 			echo wp_kses_post( $before_title . $title . $after_title );
 		}
@@ -47,8 +55,7 @@ class WP_Team_Widget extends \WP_Widget {
 			$output = '[wpteam id="' . esc_attr( $team ) . '"]';
 			echo do_shortcode( $output );
 		}
-
-		echo ( isset( $after_widget ) ? wp_kses_post( $after_widget ) : '' );
+		echo wp_kses_post( $after_widget );
 	}
 
 	/**
@@ -68,7 +75,7 @@ class WP_Team_Widget extends \WP_Widget {
 		);
 		?>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'team-free' ); ?></label> 
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'team-free' ); ?></label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
 		</p>
 		<p>
@@ -102,5 +109,4 @@ class WP_Team_Widget extends \WP_Widget {
 		$instance['team']  = $new_instance['team'];
 		return $instance;
 	}
-
 }

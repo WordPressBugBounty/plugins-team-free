@@ -20,6 +20,11 @@ use ShapedPlugin\WPTeam\Admin\DB_Updater;
 use ShapedPlugin\WPTeam\Admin\Preview\SPTP_Preview;
 use ShapedPlugin\WPTeam\Traits\Singleton;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+
 /**
  * Admin class
  */
@@ -276,7 +281,7 @@ class Admin {
 				/* translators: %s is replaced with 'team name' */
 				'not_found_in_trash'    => wp_sprintf( esc_html__( 'No %1$s %2$s Found in Trash', 'team-free' ), $this->sptp_team_name, $this->sptp_member_singular_name ),
 				'parent_item_colon'     => null,
-				'menu_name'             => __( 'WP Team', 'team-free' ),
+				'menu_name'             => __( 'SmartTeam', 'team-free' ),
 				/* translators: %s is replaced with 'member singular name' */
 				'featured_image'        => wp_sprintf( esc_html__( '%s Image', 'team-free' ), $this->sptp_member_singular_name ),
 				/* translators: %s is replaced with 'member singular name' */
@@ -358,10 +363,8 @@ class Admin {
 			'sp_wp_team_post_type_args',
 			array(
 				'labels'              => $labels,
-				'has_archive'         => true,
 				'capability_type'     => 'post',
 				'supports'            => array( 'title' ),
-				'rewrite'             => array( 'slug' => 'generator' ),
 				'show_in_menu'        => 'edit.php?post_type=sptp_member',
 				'public'              => false,
 				'publicly_queryable'  => false,
@@ -378,7 +381,7 @@ class Admin {
 	}
 
 	/**
-	 * Rename member columns for WP Team plugin.
+	 * Rename member columns for SmartTeam plugin.
 	 *
 	 * @since    2.0.0
 	 * @param  mixed $columns columns of all member page.
@@ -393,7 +396,7 @@ class Admin {
 	}
 
 	/**
-	 * Get data in member columns for WP Team plugin.
+	 * Get data in member columns for SmartTeam plugin.
 	 *
 	 * @since    2.0.0
 	 * @param  mixed   $column columns of all member page.
@@ -431,7 +434,7 @@ class Admin {
 	}
 
 	/**
-	 * Rename columns in all team page for WP Team plugin.
+	 * Rename columns in all team page for SmartTeam plugin.
 	 *
 	 * @since    2.0.0
 	 * @param  mixed $columns columns of all team page.
@@ -505,8 +508,8 @@ class Admin {
 	public function sptp_review_text( $text ) {
 		$screen = get_current_screen();
 		if ( is_object( $screen ) && ( 'sptp_member' === $screen->post_type || 'sptp_generator' === $screen->post_type ) ) {
-			$url  = 'https://wordpress.org/support/plugin/team-free/reviews/?filter=5#new-post';
-			$text = sprintf( wp_kses_post( 'Enjoying <strong>WP Team?</strong> Please rate us <span class="spwpteam-footer-text-star">★★★★★</span> <a href="%s" target="_blank">WordPress.org</a>. Your positive feedback will help us grow more. Thank you! 😊', 'team-free' ), esc_url( $url ) );
+			$url  = 'https://wordpress.org/support/plugin/team-free/reviews/';
+			$text = sprintf( wp_kses_post( 'Enjoying <strong>SmartTeam?</strong> Please rate us <span class="spwpteam-footer-text-star">★★★★★</span> <a href="%s" target="_blank">WordPress.org</a>. Your positive feedback will help us grow more. Thank you! 😊', 'team-free' ), esc_url( $url ) );
 		}
 
 		return $text;
@@ -521,14 +524,14 @@ class Admin {
 	public function sptp_version_text( $text ) {
 		$screen = get_current_screen();
 		if ( is_object( $screen ) && 'sptp_member' === $screen->post_type ) {
-			$text = 'WP Team ' . $this->version;
+			$text = 'SmartTeam ' . $this->version;
 		}
 
 		return $text;
 	}
 
 	/**
-	 * Custom post type Save and update alert in Admin Dashboard created by WP Team
+	 * Custom post type Save and update alert in Admin Dashboard created by SmartTeam
 	 *
 	 * @param array $messages alert messages.
 	 */

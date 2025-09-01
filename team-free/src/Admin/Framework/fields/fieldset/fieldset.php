@@ -10,6 +10,7 @@
  */
 
 use ShapedPlugin\WPTeam\Admin\Framework\Classes\SPF_TEAM;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die; } // Cannot access directly.
 
@@ -55,14 +56,10 @@ if ( ! class_exists( 'TEAMFW_Field_fieldset' ) ) {
 				$unique_id     = ( ! empty( $this->unique ) ) ? $this->unique . '[' . $this->field['id'] . ']' : $this->field['id'];
 
 				SPF_TEAM::field( $field, $field_value, $unique_id, 'field/fieldset' );
-
 			}
 
 			echo '</div>';
-
 			echo wp_kses_post( $this->field_after() );
-
 		}
-
 	}
 }

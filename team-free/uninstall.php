@@ -21,7 +21,7 @@
  * @link       https://shapedplugin.com
  * @since      2.0.0
  *
- * @package    WP_Team
+ * @package    Smart_Team
  */
 
 // If uninstall not called from WordPress, then exit.
@@ -58,7 +58,7 @@ function sptp_delete_plugin_data() {
 	delete_post_meta_by_key( '_sptp_generator_layout' );
 }
 
-// Load WP Team Plugin file.
+// Load SmartTeam Plugin file.
 require plugin_dir_path( __FILE__ ) . '/team-free.php';
 $sptp_plugin_settings = get_option( '_sptp_settings' );
 $sptp_data_delete     = $sptp_plugin_settings['delete_on_remove'];

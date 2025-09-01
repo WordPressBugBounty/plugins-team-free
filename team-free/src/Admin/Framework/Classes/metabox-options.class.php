@@ -447,7 +447,8 @@ if ( ! class_exists( 'TEAMFW_Metabox' ) ) {
 
 			// XSS ok.
 			// No worries, This "POST" requests is sanitizing in the below foreach.
-			$request = ( ! empty( $_POST[ $this->unique ] ) ) ? $_POST[ $this->unique ] : array(); //phpcs:ignore
+			// @codingStandardsIgnoreLine
+			$request = ( ! empty( $_POST[ $this->unique ] ) ) ? wp_unslash( $_POST[ $this->unique ] ) : array();
 
 			if ( ! empty( $request ) ) {
 				foreach ( $this->sections as $section ) {

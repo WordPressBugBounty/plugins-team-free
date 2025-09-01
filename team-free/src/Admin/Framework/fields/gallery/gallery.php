@@ -52,9 +52,7 @@ if ( ! class_exists( 'TEAMFW_Field_gallery' ) ) {
 			);
 
 			$hidden = ( empty( $this->value ) ) ? ' hidden' : '';
-
 			echo wp_kses_post( $this->field_before() );
-
 			echo '<ul>';
 			if ( ! empty( $this->value ) ) {
 
@@ -74,8 +72,6 @@ if ( ! class_exists( 'TEAMFW_Field_gallery' ) ) {
 			echo '<input type="text" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . $this->field_attributes() . '/>'; // phpcs:ignore
 
 			echo wp_kses_post( $this->field_after() );
-
 		}
-
 	}
 }

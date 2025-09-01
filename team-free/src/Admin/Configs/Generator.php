@@ -57,7 +57,6 @@ class Generator {
 				),
 			)
 		);
-
 	}
 
 	/**
@@ -86,6 +85,7 @@ class Generator {
 	 * @return void
 	 */
 	public static function metaboxes( $prefix ) {
+
 		SPF_TEAM::createMetabox(
 			$prefix,
 			array(

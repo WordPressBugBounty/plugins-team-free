@@ -157,9 +157,7 @@ if ( ! class_exists( 'TEAMFW_Field_spacing' ) ) {
 			}
 
 			echo '</div>';
-
 			echo wp_kses_post( $this->field_after() );
-
 		}
 	}
 }

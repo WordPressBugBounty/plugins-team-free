@@ -45,7 +45,7 @@ class SPTP_SettingsStyle {
 						'title'    => __( 'Custom CSS', 'team-free' ),
 						'settings' => array(
 							'icon'  => 'fa fa-sliders',
-							'theme' => 'mbo',
+							'theme' => 'default',
 							'mode'  => 'css',
 						),
 					),
@@ -54,7 +54,7 @@ class SPTP_SettingsStyle {
 						'type'     => 'code_editor',
 						'title'    => __( 'Custom JS', 'team-free' ),
 						'settings' => array(
-							'theme' => 'mbo',
+							'theme' => 'default',
 							'mode'  => 'javascript',
 						),
 					),
@@ -62,6 +62,5 @@ class SPTP_SettingsStyle {
 				),
 			)
 		);
-
 	}
 }

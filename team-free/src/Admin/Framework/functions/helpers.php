@@ -20,9 +20,7 @@ if ( ! function_exists( 'spf_array_search' ) ) {
 	 * @return array
 	 */
 	function spf_array_search( $array, $key, $value ) {
-
 		$results = array();
-
 		if ( is_array( $array ) ) {
 			if ( isset( $array[ $key ] ) && $array[ $key ] === $value ) {
 				$results[] = $array;
@@ -34,7 +32,6 @@ if ( ! function_exists( 'spf_array_search' ) ) {
 		}
 
 		return $results;
-
 	}
 }
 
@@ -48,9 +45,6 @@ if ( ! function_exists( 'sptp_timeout' ) ) {
 	 * @return bool
 	 */
 	function sptp_timeout( $timenow, $starttime, $timeout = 30 ) {
-
 		return ( ( $timenow - $starttime ) < $timeout ) ? true : false;
 	}
 }
-
-

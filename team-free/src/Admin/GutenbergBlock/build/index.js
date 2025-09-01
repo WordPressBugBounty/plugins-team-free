@@ -1,1 +1,350 @@
-!function(){"use strict";var e=window.wp.escapeHtml,t=window.wp.element;const r=t.createElement,a={};a.teamFree=r("img",{src:(0,e.escapeAttribute)(TeamFreeGbScript.path+"src/Admin/GutenbergBlock/assets/wp-team-block.svg")});var s=a,c=window.wp.i18n;const o=t.createElement;var l=r=>{let{attributes:{shortcode:a},shortCodeList:s,shortcodeUpdate:l}=r;return(0,t.createElement)(t.Fragment,null,o("div",{className:"sptp-gutenberg-shortcode editor-styles-wrapper"},o("select",{className:"sptp-shortcode-selector",onChange:e=>l(e),value:(0,e.escapeAttribute)(a)},o("option",{value:(0,e.escapeAttribute)("0")},(0,e.escapeHTML)((0,c.__)("-- Select a Team --","wp-team"))),s.map((t=>{var r=t.title.length>30?t.title.substring(0,25)+".... #("+t.id+")":t.title+" #("+t.id+")";return o("option",{value:(0,e.escapeAttribute)(t.id.toString()),key:(0,e.escapeAttribute)(t.id.toString())},(0,e.escapeHTML)(r))})))))},n=window.wp.blockEditor,i=window.wp.blocks,p=window.wp.components;const{serverSideRender:m}=wp,d=t.createElement;(0,i.registerBlockType)("sp-team-pro/shortcode",{title:(0,c.__)("WP Team","team-free"),description:(0,c.__)("Use WP Team to insert a team in your page","team-free"),icon:s.teamFree,category:"common",supports:{html:!1},edit:r=>{const{attributes:a,setAttributes:s}=r;var o=TeamFreeGbScript.shortCodeList;let i=e=>{let t=!1,r=setInterval((function(){let a=jQuery("#sptp-"+e).parents().attr("id");document.getElementById(a)&&(jQuery.getScript(TeamFreeGbScript.loodScript),t=!0,a=""),t&&clearInterval(r),0==e&&clearInterval(r)}),100)},u=e=>{s({shortcode:e.target.value});let t=e.target.value;i(t)};if(jQuery(".sptp-section:not(.sptp-carousel-loaded)").length>0){let t=(0,e.escapeAttribute)(a.shortcode);i(t)}return a.preview?d("div",{},d("img",{src:(0,e.escapeAttribute)(TeamFreeGbScript.path+"src/Admin/GutenbergBlock/assets/wp-team-block-preview.svg")})):0===o.length?(0,t.createElement)(t.Fragment,null,d("div",{className:"components-placeholder components-placeholder is-large"},d("div",{className:"components-placeholder__label"},d("img",{className:"block-editor-block-icon",src:(0,e.escapeAttribute)(TeamFreeGbScript.path+"src/Admin/GutenbergBlock/assets/wp-team-block.svg")}),(0,e.escapeHTML)((0,c.__)("WP Team","team-free"))),d("div",{className:"components-placeholder__instructions"},(0,e.escapeHTML)((0,c.__)("No team found. ","team-free")),d("a",{href:(0,e.escapeAttribute)(TeamFreeGbScript.url)},(0,e.escapeHTML)((0,c.__)("Create a team now!","team-free")))))):a.shortcode&&0!=a.shortcode?(0,t.createElement)(t.Fragment,null,(0,t.createElement)(n.InspectorControls,null,(0,t.createElement)(p.PanelBody,{title:"Select a Team"},(0,t.createElement)(p.PanelRow,null,(0,t.createElement)(l,{attributes:a,shortCodeList:o,shortcodeUpdate:u})))),(0,t.createElement)(m,{block:"sp-team-pro/shortcode",attributes:a})):(0,t.createElement)(t.Fragment,null,(0,t.createElement)(n.InspectorControls,null,(0,t.createElement)(p.PanelBody,{title:"Select a Team"},(0,t.createElement)(p.PanelRow,null,(0,t.createElement)(l,{attributes:a,shortCodeList:o,shortcodeUpdate:u})))),d("div",{className:"components-placeholder components-placeholder is-large"},d("div",{className:"components-placeholder__label"},d("img",{className:"block-editor-block-icon",src:(0,e.escapeAttribute)(TeamFreeGbScript.path+"src/Admin/GutenbergBlock/assets/wp-team-block.svg")}),(0,e.escapeHTML)((0,c.__)("WP Team","team-free"))),d("div",{className:"components-placeholder__instructions"},(0,e.escapeHTML)((0,c.__)("Select a Team","team-free"))),(0,t.createElement)(l,{attributes:a,shortCodeList:o,shortcodeUpdate:u})))},save(){return null}})}();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/shortcode/blockIcon.js":
+/*!************************************!*\
+  !*** ./src/shortcode/blockIcon.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_escape_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/escape-html */ "@wordpress/escape-html");
+/* harmony import */ var _wordpress_escape_html__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+
+
+const el = _wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement;
+const icons = {};
+icons.teamFree = el('img', {
+  src: (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_0__.escapeAttribute)(TeamFreeGbScript.path + 'src/Admin/GutenbergBlock/assets/wp-team-block.svg')
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (icons);
+
+/***/ }),
+
+/***/ "./src/shortcode/dynamicShortcode.js":
+/*!*******************************************!*\
+  !*** ./src/shortcode/dynamicShortcode.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_escape_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/escape-html */ "@wordpress/escape-html");
+/* harmony import */ var _wordpress_escape_html__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
+/**
+* Shortcode select component.
+*/
+
+
+
+const el = _wordpress_element__WEBPACK_IMPORTED_MODULE_2__.createElement;
+const DynamicShortcodeInput = ({
+  attributes: {
+    shortcode
+  },
+  shortCodeList,
+  shortcodeUpdate
+}) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, el('div', {
+  className: 'sptp-gutenberg-shortcode editor-styles-wrapper'
+}, el('select', {
+  className: 'sptp-shortcode-selector',
+  onChange: e => shortcodeUpdate(e),
+  value: (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_0__.escapeAttribute)(shortcode)
+}, el('option', {
+  value: (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_0__.escapeAttribute)('0')
+}, (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_0__.escapeHTML)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('-- Select a Team --', 'wp-team'))), shortCodeList.map(shortcode => {
+  var title = shortcode.title.length > 30 ? shortcode.title.substring(0, 25) + '.... #(' + shortcode.id + ')' : shortcode.title + ' #(' + shortcode.id + ')';
+  return el('option', {
+    value: (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_0__.escapeAttribute)(shortcode.id.toString()),
+    key: (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_0__.escapeAttribute)(shortcode.id.toString())
+  }, (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_0__.escapeHTML)(title));
+}))));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DynamicShortcodeInput);
+
+/***/ }),
+
+/***/ "@wordpress/block-editor":
+/*!*************************************!*\
+  !*** external ["wp","blockEditor"] ***!
+  \*************************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["blockEditor"];
+
+/***/ }),
+
+/***/ "@wordpress/blocks":
+/*!********************************!*\
+  !*** external ["wp","blocks"] ***!
+  \********************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["blocks"];
+
+/***/ }),
+
+/***/ "@wordpress/components":
+/*!************************************!*\
+  !*** external ["wp","components"] ***!
+  \************************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["components"];
+
+/***/ }),
+
+/***/ "@wordpress/element":
+/*!*********************************!*\
+  !*** external ["wp","element"] ***!
+  \*********************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["element"];
+
+/***/ }),
+
+/***/ "@wordpress/escape-html":
+/*!************************************!*\
+  !*** external ["wp","escapeHtml"] ***!
+  \************************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["escapeHtml"];
+
+/***/ }),
+
+/***/ "@wordpress/i18n":
+/*!******************************!*\
+  !*** external ["wp","i18n"] ***!
+  \******************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["i18n"];
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
+(() => {
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _shortcode_blockIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shortcode/blockIcon */ "./src/shortcode/blockIcon.js");
+/* harmony import */ var _wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/escape-html */ "@wordpress/escape-html");
+/* harmony import */ var _wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _shortcode_dynamicShortcode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./shortcode/dynamicShortcode */ "./src/shortcode/dynamicShortcode.js");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__);
+
+
+
+
+
+
+
+
+const {
+  serverSideRender: ServerSideRender
+} = wp;
+const el = _wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement;
+
+/**
+ * Register: SmartTeam Free Gutenberg Block.
+ */
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__.registerBlockType)('sp-team-pro/shortcode', {
+  title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('SmartTeam', 'team-free'),
+  description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Use SmartTeam to insert a team in your page', 'team-free'),
+  icon: _shortcode_blockIcon__WEBPACK_IMPORTED_MODULE_0__["default"].teamFree,
+  category: 'common',
+  supports: {
+    html: false
+  },
+  edit: props => {
+    const {
+      attributes,
+      setAttributes
+    } = props;
+    var shortCodeList = TeamFreeGbScript.shortCodeList;
+    let scriptLoad = shortcodeId => {
+      let spspBlockLoaded = false;
+      let spspBlockLoadedInterval = setInterval(function () {
+        let uniqId = jQuery("#sptp-" + shortcodeId).parents().attr('id');
+        if (document.getElementById(uniqId)) {
+          //Actual functions goes here
+          jQuery.getScript(TeamFreeGbScript.loodScript);
+          spspBlockLoaded = true;
+          uniqId = '';
+        }
+        if (spspBlockLoaded) {
+          clearInterval(spspBlockLoadedInterval);
+        }
+        if (0 == shortcodeId) {
+          clearInterval(spspBlockLoadedInterval);
+        }
+      }, 100);
+    };
+    let updateShortcode = updateShortcode => {
+      setAttributes({
+        shortcode: updateShortcode.target.value
+      });
+    };
+    let shortcodeUpdate = e => {
+      updateShortcode(e);
+      let shortcodeId = e.target.value;
+      scriptLoad(shortcodeId);
+    };
+    if (jQuery('.sptp-section:not(.sptp-carousel-loaded)').length > 0) {
+      let shortcodeId = (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeAttribute)(attributes.shortcode);
+      scriptLoad(shortcodeId);
+    }
+    if (attributes.preview) {
+      return el('div', {}, el('img', {
+        src: (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeAttribute)(TeamFreeGbScript.path + 'src/Admin/GutenbergBlock/assets/wp-team-block-preview.svg')
+      }));
+    }
+    if (shortCodeList.length === 0) {
+      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.Fragment, null, el('div', {
+        className: 'components-placeholder components-placeholder is-large'
+      }, el('div', {
+        className: 'components-placeholder__label'
+      }, el('img', {
+        className: 'block-editor-block-icon',
+        src: (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeAttribute)(TeamFreeGbScript.path + 'src/Admin/GutenbergBlock/assets/wp-team-block.svg')
+      }), (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeHTML)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('SmartTeam', 'team-free'))), el('div', {
+        className: 'components-placeholder__instructions'
+      }, (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeHTML)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("No team found. ", "team-free")), el('a', {
+        href: (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeAttribute)(TeamFreeGbScript.url)
+      }, (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeHTML)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Create a team now!", "team-free"))))));
+    }
+    if (!attributes.shortcode || attributes.shortcode == 0) {
+      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelBody, {
+        title: "Select a Team"
+      }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement)(_shortcode_dynamicShortcode__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        attributes: attributes,
+        shortCodeList: shortCodeList,
+        shortcodeUpdate: shortcodeUpdate
+      })))), el('div', {
+        className: 'components-placeholder components-placeholder is-large'
+      }, el('div', {
+        className: 'components-placeholder__label'
+      }, el('img', {
+        className: 'block-editor-block-icon',
+        src: (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeAttribute)(TeamFreeGbScript.path + 'src/Admin/GutenbergBlock/assets/wp-team-block.svg')
+      }), (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeHTML)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("SmartTeam", "team-free"))), el('div', {
+        className: 'components-placeholder__instructions'
+      }, (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeHTML)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Select a Team", "team-free"))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement)(_shortcode_dynamicShortcode__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        attributes: attributes,
+        shortCodeList: shortCodeList,
+        shortcodeUpdate: shortcodeUpdate
+      })));
+    }
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelBody, {
+      title: "Select a Team"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement)(_shortcode_dynamicShortcode__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      attributes: attributes,
+      shortCodeList: shortCodeList,
+      shortcodeUpdate: shortcodeUpdate
+    })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement)(ServerSideRender, {
+      block: "sp-team-pro/shortcode",
+      attributes: attributes
+    }));
+  },
+  save() {
+    // Rendering in PHP
+    return null;
+  }
+});
+})();
+
+/******/ })()
+;
+//# sourceMappingURL=index.js.map

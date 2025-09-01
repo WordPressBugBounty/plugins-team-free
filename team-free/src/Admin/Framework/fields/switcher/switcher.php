@@ -41,7 +41,6 @@ if ( ! class_exists( 'TEAMFW_Field_switcher' ) ) {
 		 * @return void
 		 */
 		public function render() {
-
 			$active     = ( ! empty( $this->value ) ) ? ' spf--active' : '';
 			$text_on    = ( ! empty( $this->field['text_on'] ) ) ? $this->field['text_on'] : esc_html__( 'On', 'team-free' );
 			$text_off   = ( ! empty( $this->field['text_off'] ) ) ? $this->field['text_off'] : esc_html__( 'Off', 'team-free' );
@@ -53,14 +52,11 @@ if ( ! class_exists( 'TEAMFW_Field_switcher' ) ) {
 			echo '<span class="spf--on">' . esc_attr( $text_on ) . '</span>';
 			echo '<span class="spf--off">' . esc_attr( $text_off ) . '</span>';
 			echo '<span class="spf--ball"></span>';
-			echo '<input type="text" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . $this->field_attributes() . ' />'; // phpcs:ignore
+			echo '<input type="text" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . wp_kses_post( $this->field_attributes() ) . ' />';
 			echo '</div>';
-
 			echo ( ! empty( $this->field['label'] ) ) ? '<span class="spf--label">' . esc_attr( $this->field['label'] ) . '</span>' : '';
 
 			echo wp_kses_post( $this->field_after() );
-
 		}
-
 	}
 }

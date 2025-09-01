@@ -6,6 +6,9 @@
  * @since 2.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die;} // Cannot access directly.
+
 // Main settings.
 $sptp_settings   = get_option( '_sptp_settings' );
 $sptp_custom_css = isset( $sptp_settings['custom_css'] ) ? $sptp_settings['custom_css'] : '';
@@ -32,7 +35,7 @@ $margin_between_member      = isset( $settings['style_margin_between_member']['t
 $margin_between_member_left = isset( $settings['style_margin_between_member']['left-right'] ) ? intval( $settings['style_margin_between_member']['left-right'] ) : 24;
 
 if ( 'list' === $layout_preset ) {
-	$position = isset( $layout['style_member_content_position_list'] ) ? $layout['style_member_content_position_list'] : '';
+	$position = 'left_img_right_content';
 } else {
 	$position = isset( $settings['style_member_content_position'] ) ? $settings['style_member_content_position'] : 'top_img_bottom_content';
 }
@@ -118,15 +121,11 @@ $social_margin_css .= ( ! empty( $social_margin['left'] ) ) ? $social_margin['le
 $social_icon_shape        = isset( $social_settings['social_icon_shape'] ) ? $social_settings['social_icon_shape'] : '';
 $social_icon_custom_color = isset( $social_settings['social_icon_custom_color'] ) ? $social_settings['social_icon_custom_color'] : '';
 
-$social_icon_color       = ! empty( $social_icon_custom_color ) && isset( $social_settings['icon_color_group'] ) ? $social_settings['icon_color_group'] : '';
-$social_icon_main_color  = isset( $social_icon_color['icon_color'] ) ? $social_icon_color['icon_color'] : '';
-$social_icon_hover_color = isset( $social_icon_color['icon_hover_color'] ) ? $social_icon_color['icon_hover_color'] : '';
-
 $social_icon_bg_color       = ! empty( $social_icon_custom_color ) && isset( $social_settings['icon_bg_color_group'] ) ? $social_settings['icon_bg_color_group'] : '';
 $social_icon_bg_main_color  = isset( $social_icon_bg_color['icon_bg'] ) ? $social_icon_bg_color['icon_bg'] : '';
 $social_icon_bg_hover_color = isset( $social_icon_bg_color['icon_bg_hover'] ) ? $social_icon_bg_color['icon_bg_hover'] : '';
 
-$social_icon_border       = ! empty( $social_icon_custom_color ) && isset( $social_settings['icon_border'] ) ? $social_settings['icon_border'] : '';
+$social_icon_border       = isset( $social_settings['icon_border'] ) ? $social_settings['icon_border'] : '';
 $social_icon_border_main  = '';
 $social_icon_border_main .= ( ! empty( $social_icon_border['all'] ) ) ? $social_icon_border['all'] . 'px' : ' 0 ';
 $social_icon_border_main .= ( ! empty( $social_icon_border['style'] ) ) ? ' ' . $social_icon_border['style'] : '';

@@ -5,8 +5,8 @@
  * @link       https://shapedplugin.com/
  * @since      2.1.8
  *
- * @package    WP_Team
- * @subpackage WP_Team/Admin
+ * @package    Smart_Team
+ * @subpackage Smart_Team/Admin
  * @author     ShapedPlugin <support@shapedplugin.com>
  */
 
@@ -15,8 +15,11 @@ namespace ShapedPlugin\WPTeam\Admin\ElementBlock;
 use ShapedPlugin\WPTeam\Frontend\Helper;
 use ShapedPlugin\WPTeam\Frontend\Frontend;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die;} // Cannot access directly.
+
 /**
- * Elementor wp team shortcode Widget.
+ * Elementor SmartTeam shortcode Widget.
  *
  * @since 2.2.1
  */
@@ -42,7 +45,7 @@ class Shortcode_Widget extends \Elementor\Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'WP Team', 'team-free' );
+		return esc_html__( 'SmartTeam', 'team-free' );
 	}
 
 	/**
@@ -101,7 +104,7 @@ class Shortcode_Widget extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			array(
-				'label' => __( 'Content', 'team-free' ),
+				'label' => esc_html__( 'Content', 'team-free' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 			)
 		);
@@ -109,7 +112,7 @@ class Shortcode_Widget extends \Elementor\Widget_Base {
 		$this->add_control(
 			'sp_team_pro_shortcode',
 			array(
-				'label'       => __( 'WP Team Shortcode(s)', 'team-free' ),
+				'label'       => esc_html__( 'SmartTeam Shortcode(s)', 'team-free' ),
 				'type'        => \Elementor\Controls_Manager::SELECT2,
 				'label_block' => true,
 				'default'     => '',
@@ -121,7 +124,7 @@ class Shortcode_Widget extends \Elementor\Widget_Base {
 	}
 
 	/**
-	 * Render wp team shortcode widget output on the frontend.
+	 * Render SmartTeam shortcode widget output on the frontend.
 	 *
 	 * @since 2.2.1
 	 * @access protected
@@ -150,7 +153,6 @@ class Shortcode_Widget extends \Elementor\Widget_Base {
 
 			Helper::sptp_html_show( $generator_id, $layout, $settings, $main_section_title );
 			?>
-			<script src="<?php echo esc_url( SPT_PLUGIN_ROOT . 'src/Frontend/js/script.js' ); ?>" ></script>
 			<?php
 		} else {
 			echo do_shortcode( '[wpteam id="' . $generator_id . '"]' );

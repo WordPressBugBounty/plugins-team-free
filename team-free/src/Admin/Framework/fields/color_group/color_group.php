@@ -41,9 +41,7 @@ if ( ! class_exists( 'TEAMFW_Field_color_group' ) ) {
 		 * @return void
 		 */
 		public function render() {
-
 			$options = ( ! empty( $this->field['options'] ) ) ? $this->field['options'] : array();
-
 			echo wp_kses_post( $this->field_before() );
 
 			if ( ! empty( $options ) ) {
@@ -56,13 +54,9 @@ if ( ! class_exists( 'TEAMFW_Field_color_group' ) ) {
 					echo '<div class="spf--title">' . wp_kses_post( $option ) . '</div>';
 					echo '<input type="text" name="' . esc_attr( $this->field_name( '[' . $key . ']' ) ) . '" value="' . esc_attr( $color_value ) . '" class="spf-color"' . $default_attr . $this->field_attributes() . '/>'; // phpcs:ignore
 					echo '</div>';
-
 				}
 			}
-
 			echo wp_kses_post( $this->field_after() );
-
 		}
-
 	}
 }

@@ -44,6 +44,5 @@ if ( ! class_exists( 'TEAMFW_Field_preview' ) ) {
 		public function render() {
 			echo '<div class="sp__team-preview-box"><div id="sp__team-preview-box"></div></div>';
 		}
-
 	}
 }

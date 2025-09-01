@@ -508,55 +508,30 @@
 	//
 	$.fn.spf_field_code_editor = function () {
 		return this.each(function () {
-			if (typeof CodeMirror !== 'function') {
-				return
+			if (typeof wp === 'undefined' || typeof wp.codeEditor === 'undefined') {
+				return;
 			}
 
 			var $this = $(this),
 				$textarea = $this.find('textarea'),
-				$inited = $this.find('.CodeMirror'),
-				data_editor = $textarea.data('editor')
+				settings = $textarea.data('editor') || {};
 
-			if ($inited.length) {
-				$inited.remove()
-			}
+			// Merge with WP defaults
+			var editorSettings = wp.codeEditor.defaultSettings ? _.clone(wp.codeEditor.defaultSettings) : {};
+			editorSettings.codemirror = _.extend(
+				{},
+				editorSettings.codemirror,
+				settings
+			);
 
-			var interval = setInterval(function () {
-				if ($this.is(':visible')) {
-					var code_editor = CodeMirror.fromTextArea($textarea[0], data_editor)
-
-					// load code-mirror theme css.
-					if (
-						data_editor.theme !== 'default' &&
-						SPF.vars.code_themes.indexOf(data_editor.theme) === -1
-					) {
-						var $cssLink = $('<link>')
-
-						$('#spf-codemirror-css').after($cssLink)
-
-						$cssLink.attr({
-							rel: 'stylesheet',
-							id: 'spf-codemirror-' + data_editor.theme + '-css',
-							href:
-								data_editor.cdnURL + '/theme/' + data_editor.theme + '.min.css',
-							type: 'text/css',
-							media: 'all'
-						})
-
-						SPF.vars.code_themes.push(data_editor.theme)
-					}
-
-					CodeMirror.modeURL = data_editor.cdnURL + '/mode/%N/%N.min.js'
-					CodeMirror.autoLoadMode(code_editor, data_editor.mode)
-
-					code_editor.on('change', function (editor, event) {
-						$textarea.val(code_editor.getValue()).trigger('change')
-					})
-
-					clearInterval(interval)
-				}
-			})
-		})
+			// Initialize editor
+			var editor = wp.codeEditor.initialize($textarea[0], editorSettings);
+			//editor.codemirror.setOption('theme', 'monokai');
+			// Sync changes back to textarea
+			editor.codemirror.on('change', function () {
+				$textarea.val(editor.codemirror.getValue()).trigger('change');
+			});
+		});
 	}
 
 	//
@@ -1366,9 +1341,11 @@
 
 						window.wp.ajax
 							.post('spf_' + $panel.data('unique') + '_ajax_save', {
-								data: $('#spf-form').serializeJSONSPF()
+								data: $('#spf-form').serializeJSONSPF(),
+								nonce: $('#spf_options_nonce' + $panel.data('unique')).val(),
 							})
 							.done(function (response) {
+								
 								// clear errors
 								$('.spf-error').remove()
 
@@ -2095,7 +2072,7 @@
 	$.fn.spf_siblings = function () {
 		return this.each(function () {
 			var $this = $(this),
-				$siblings = $this.find('.spf--sibling'),
+				$siblings = $this.find('.spf--sibling:not(.spf-pro-only)'),
 				multiple = $this.data('multiple') || false
 
 			$siblings.on('click', function () {
@@ -2278,7 +2255,7 @@
 				$this.children('.spf-field-fieldset').spf_field_fieldset()
 				$this.children('.spf-field-group').spf_field_group()
 				$this.children('.spf-field-icon').spf_field_icon()
-			
+
 				$this.children('.spf-field-repeater').spf_field_repeater()
 				$this.children('.spf-field-slider').spf_field_slider()
 				$this.children('.spf-field-sortable').spf_field_sortable()
@@ -2425,7 +2402,7 @@
 		}
 		return true;
 	}
-	// Wp Team export.
+	// SmartTeam export.
 	var $export_type = $('.sptp_what_export').find('input:checked').val();
 	$('.sptp_what_export').on('change', function () {
 		$export_type = $(this).find('input:checked').val();
@@ -2485,7 +2462,7 @@
 			}
 		});
 	});
-	// Wp Team import.
+	// SmartTeam import.
 	$('.sptp_import button.import').on('click', function (event) {
 		var $this = $(this),
 			button_label = $(this).text();
@@ -2582,6 +2559,14 @@
 		})
 	});
 
+
+	// Get the select element
+	var spDisableProOption = $('.disable-pro-select-field');
+	// Add 'disabled' attribute to options containing '(Pro)'.
+	spDisableProOption.find('option:contains("(Pro)")').prop({
+		'disabled': true,
+		'pointer-events': 'none'
+	});
 
 	$(document).on('keyup change', '.sptp_member_page_team_settings #spf-form', function (e) {
 		e.preventDefault();

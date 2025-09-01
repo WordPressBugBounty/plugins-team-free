@@ -9,6 +9,10 @@
  * @since 2.1.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 ?>
 <h2 class="sptp-section-title">
 	<?php do_action( 'sp_team_before_section_title' ); ?>

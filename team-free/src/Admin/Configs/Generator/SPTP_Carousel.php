@@ -55,7 +55,6 @@ class SPTP_Carousel {
 										'text_on'    => __( 'Enabled', 'team-free' ),
 										'text_off'   => __( 'Disabled', 'team-free' ),
 										'text_width' => 95,
-										'dependency' => array( 'carousel_mode', '==', 'standard', true ),
 									),
 									array(
 										'id'         => 'carousel_autoplay_speed',
@@ -68,7 +67,7 @@ class SPTP_Carousel {
 										'min'        => 100,
 										'max'        => 50000,
 										'default'    => 5000,
-										'dependency' => array( 'carousel_mode|carousel_autoplay', '==|==', 'standard|true', true ),
+										'dependency' => array( 'carousel_autoplay', '==', 'true', true ),
 										'title_info' => '<div class="spf-info-label">' . __( 'AutoPlay Delay Time', 'team-free' ) . '</div><div class="spf-short-content">' . __( 'Set autoplay delay or interval time. The amount of time to delay between automatically cycling a member. e.g. 1000 milliseconds(ms) = 1 second.', 'team-free' ) . '</div>',
 
 									),
@@ -83,7 +82,6 @@ class SPTP_Carousel {
 										'min'        => 1,
 										'max'        => 20000,
 										'default'    => 600,
-										'dependency' => array( 'carousel_mode', '==', 'standard', true ),
 										'title_info' => '<div class="spf-info-label">' . __( 'Carousel Speed', 'team-free' ) . '</div><div class="spf-short-content">' . __( 'Set carousel scrolling speed. e.g. 1000 milliseconds(ms) = 1 second.', 'team-free' ) . '</div>',
 									),
 									array(
@@ -95,7 +93,7 @@ class SPTP_Carousel {
 										'text_off'   => __( 'Disabled', 'team-free' ),
 										'text_width' => 95,
 										'default'    => 'true',
-										'dependency' => array( 'carousel_mode|carousel_autoplay', '==|==', 'standard|true', true ),
+										'dependency' => array( 'carousel_autoplay', '==', 'true', true ),
 									),
 									array(
 										'id'         => 'carousel_loop',
@@ -106,7 +104,6 @@ class SPTP_Carousel {
 										'text_on'    => __( 'Enabled', 'team-free' ),
 										'text_off'   => __( 'Disabled', 'team-free' ),
 										'text_width' => 95,
-										'dependency' => array( 'carousel_mode', '==', 'standard', true ),
 									),
 									array(
 										'id'         => 'member_per_slide',
@@ -142,7 +139,7 @@ class SPTP_Carousel {
 												'text_off' => __( 'Hide', 'team-free' ),
 												'text_width' => 77,
 												'default'  => true,
-												'dependency' => array( 'layout_preset|carousel_mode', '==|!=', 'carousel|ticker', true ),
+												'dependency' => array( 'layout_preset', '==', 'carousel', true ),
 											),
 											array(
 												'id'      => 'nav_hide_on_mobile',
@@ -150,30 +147,30 @@ class SPTP_Carousel {
 												'class'   => 'sptp_hide_on_mobile',
 												'title'   => __( 'Hide on Mobile', 'team-free' ),
 												'default' => false,
-												'dependency' => array( 'layout_preset|carousel_mode|carousel_navigation', '==|!=|==', 'carousel|ticker|true', true ),
+												'dependency' => array( 'layout_preset|carousel_navigation', '==|==', 'carousel|true', true ),
 											),
 										),
 									),
 									array(
 										'id'         => 'carousel_navigation_position',
-										'class'      => 'carousel_navigation_position',
+										'class'      => 'carousel_navigation_position disable-pro-select-field',
 										'type'       => 'select',
 										'preview'    => true,
 										'only_pro'   => true,
 										'title'      => __( 'Navigation Position', 'team-free' ),
 										'options'    => array(
 											'top-right'    => __( 'Top Right', 'team-free' ),
-											'top-center'   => __( 'Top Center', 'team-free' ),
 											'top-left'     => __( 'Top Left', 'team-free' ),
-											'bottom-left'  => __( 'Bottom Left', 'team-free' ),
-											'bottom-center' => __( 'Bottom Center', 'team-free' ),
-											'bottom-right' => __( 'Bottom Right', 'team-free' ),
-											'vertically-center-outer' => __( 'Vertical Center Outer', 'team-free' ),
-											'vertically-center' => __( 'Vertical Center', 'team-free' ),
-											'vertically-center-inner' => __( 'Vertical Center Inner', 'team-free' ),
+											'top-center'   => __( 'Top Center (Pro)', 'team-free' ),
+											'bottom-left'  => __( 'Bottom Left (Pro)', 'team-free' ),
+											'bottom-center' => __( 'Bottom Center (Pro)', 'team-free' ),
+											'bottom-right' => __( 'Bottom Right (Pro)', 'team-free' ),
+											'vertically-center-outer' => __( 'Vertical Center Outer (Pro)', 'team-free' ),
+											'vertically-center' => __( 'Vertical Center (Pro)', 'team-free' ),
+											'vertically-center-inner' => __( 'Vertical Center Inner (Pro)', 'team-free' ),
 										),
 										'default'    => 'top-right',
-										'dependency' => array( 'layout_preset|carousel_mode|carousel_navigation', '==|!=|==', 'carousel|ticker|true', true ),
+										'dependency' => array( 'layout_preset|carousel_navigation', '==|==', 'carousel|true', true ),
 										'subtitle'   => __( 'Select a position for the navigation arrows.', 'team-free' ),
 									),
 									array(
@@ -183,7 +180,7 @@ class SPTP_Carousel {
 										'subtitle'   => __( 'Check to show navigation on hover in the carousel or slider area.', 'team-free' ),
 										'default'    => false,
 										'only_pro'   => true,
-										'dependency' => array( 'layout_preset|carousel_mode|carousel_navigation_position|carousel_navigation', '==|!=|any|==', 'carousel|ticker|vertically-center-outer,vertically-center-inner,vertically-center|true', true ),
+										'dependency' => array( 'layout_preset|carousel_navigation_position|carousel_navigation', '==|any|==', 'carousel|vertically-center-outer,vertically-center-inner,vertically-center|true', true ),
 									),
 									array(
 										'id'         => 'carousel_navigation_color',
@@ -202,7 +199,7 @@ class SPTP_Carousel {
 											'bg_color'    => 'transparent',
 											'bg_hover_color' => '#63a37b',
 										),
-										'dependency' => array( 'carousel_navigation|carousel_mode', '==|==', 'true|standard', true ),
+										'dependency' => array( 'carousel_navigation', '==', 'true', true ),
 									),
 									array(
 										'id'         => 'carousel_navigation_border',
@@ -217,7 +214,7 @@ class SPTP_Carousel {
 											'hover_color' => '#63a37b',
 											'unit'        => 'px',
 										),
-										'dependency' => array( 'carousel_navigation|carousel_mode', '==|==', 'true|standard', true ),
+										'dependency' => array( 'carousel_navigation', '==', 'true', true ),
 									),
 									array(
 										'type'    => 'notice',
@@ -249,7 +246,7 @@ class SPTP_Carousel {
 												'text_off' => __( 'Hide', 'team-free' ),
 												'text_width' => 77,
 												'default'  => true,
-												'dependency' => array( 'layout_preset|carousel_mode', '==|!=', 'carousel|ticker', true ),
+												'dependency' => array( 'layout_preset', '==', 'carousel', true ),
 											),
 											array(
 												'id'      => 'pagination_hide_on_mobile',
@@ -257,7 +254,7 @@ class SPTP_Carousel {
 												'class'   => 'sptp_hide_on_mobile',
 												'title'   => __( 'Hide on Mobile', 'team-free' ),
 												'default' => false,
-												'dependency' => array( 'layout_preset|carousel_mode|carousel_pagination', '==|!=|==', 'carousel|ticker|true', true ),
+												'dependency' => array( 'layout_preset|carousel_pagination', '==|==', 'carousel|true', true ),
 											),
 										),
 									),
@@ -267,16 +264,14 @@ class SPTP_Carousel {
 										'class'      => 'hide-active-sign',
 										'title'      => __( 'Pagination Style', 'team-free' ),
 										'subtitle'   => __( 'Select a style for pagination.', 'team-free' ),
-										'only_pro'   => true,
 										'options'    => array(
 											'bullets'   => array(
 												'image' => SPT_PLUGIN_ROOT . 'src/Admin/img/pagination-types/bullets.svg',
 												'option_name' => __( 'Bullets', 'team-free' ),
 											),
 											'dynamic'   => array(
-												'image'    => SPT_PLUGIN_ROOT . 'src/Admin/img/pagination-types/dynamic.svg',
+												'image' => SPT_PLUGIN_ROOT . 'src/Admin/img/pagination-types/dynamic.svg',
 												'option_name' => __( 'Dynamic', 'team-free' ),
-												'pro_only' => true,
 											),
 											'strokes'   => array(
 												'image'    => SPT_PLUGIN_ROOT . 'src/Admin/img/pagination-types/strokes.svg',
@@ -300,7 +295,7 @@ class SPTP_Carousel {
 											),
 										),
 										'default'    => 'bullets',
-										'dependency' => array( 'carousel_pagination|carousel_mode', '==|!=', 'true|ticker', true ),
+										'dependency' => array( 'carousel_pagination', '==', 'true', true ),
 									),
 									array(
 										'id'         => 'carousel_pagination_color',
@@ -315,7 +310,7 @@ class SPTP_Carousel {
 											'color'        => '#aaaaaa',
 											'active_color' => '#63a37b',
 										),
-										'dependency' => array( 'carousel_pagination|carousel_mode', '==|==', 'true|standard', true ),
+										'dependency' => array( 'carousel_pagination', '==', 'true', true ),
 									),
 									array(
 										'type'    => 'notice',
@@ -341,7 +336,6 @@ class SPTP_Carousel {
 										'text_off'   => __( 'Disabled', 'team-free' ),
 										'text_width' => 95,
 										'default'    => 'true',
-										'dependency' => array( 'carousel_mode', '==', 'standard', true ),
 									),
 									array(
 										'id'         => 'touch_swipe',
@@ -352,7 +346,6 @@ class SPTP_Carousel {
 										'text_off'   => __( 'Disabled', 'team-free' ),
 										'text_width' => 100,
 										'default'    => 'true',
-										'dependency' => array( 'carousel_mode', '==', 'standard', true ),
 									),
 									array(
 										'id'         => 'slider_draggable',
@@ -363,7 +356,6 @@ class SPTP_Carousel {
 										'text_off'   => __( 'Disabled', 'team-free' ),
 										'text_width' => 100,
 										'default'    => 'true',
-										'dependency' => array( 'carousel_mode', '==', 'standard', true ),
 									),
 									array(
 										'id'         => 'free_mode',
@@ -374,7 +366,6 @@ class SPTP_Carousel {
 										'text_off'   => __( 'Disabled', 'team-free' ),
 										'text_width' => 100,
 										'default'    => false,
-										'dependency' => array( 'carousel_mode', '==', 'standard', true ),
 									),
 									array(
 										'id'         => 'slider_mouse_wheel',
@@ -385,7 +376,6 @@ class SPTP_Carousel {
 										'text_off'   => __( 'Disabled', 'team-free' ),
 										'text_width' => 100,
 										'default'    => false,
-										'dependency' => array( 'carousel_mode', '==', 'standard', true ),
 									),
 								),
 							),

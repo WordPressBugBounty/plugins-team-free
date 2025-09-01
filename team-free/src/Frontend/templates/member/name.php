@@ -9,6 +9,10 @@
  * @since 2.1.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 $title_tag = apply_filters( 'sptp_member_name_tag', 'h2' );
 ?>
 <div class="sptp-member-name">

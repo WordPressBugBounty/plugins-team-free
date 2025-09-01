@@ -7,6 +7,10 @@
  * @since 2.1.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use ShapedPlugin\WPTeam\Frontend\Helper;
 
 $carousel_accessibility                           = isset( get_option( '_sptp_settings' )['carousel_accessibility'] ) ? get_option( '_sptp_settings' )['carousel_accessibility'] : '';
@@ -45,6 +49,7 @@ $carousel_accessibility_pagination_bullet_message = isset( $carousel_accessibili
 				"mobile_pSlide": <?php echo esc_html( $member_per_slide['mobile'] ); ?>
 			},
 			"stop_onhover": <?php echo esc_html( $stop_onhover ); ?>,
+			"pagination_type": "<?php echo esc_attr( $carousel_pagination_type ); ?>",
 			"mouse_wheel": <?php echo esc_html( $slider_mouse_wheel ); ?>,
 			"allowTouchMove": <?php echo esc_html( $touch_swipe ); ?>,
 			"simulateTouch": <?php echo esc_html( $slider_draggable ); ?>,

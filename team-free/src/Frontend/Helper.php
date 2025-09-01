@@ -12,6 +12,10 @@
 
 namespace ShapedPlugin\WPTeam\Frontend;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * The Helper class to manage all public facing stuffs.
  *

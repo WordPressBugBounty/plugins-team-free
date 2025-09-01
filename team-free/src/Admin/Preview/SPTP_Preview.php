@@ -14,6 +14,10 @@ namespace ShapedPlugin\WPTeam\Admin\Preview;
 use ShapedPlugin\WPTeam\Frontend\Helper;
 use ShapedPlugin\WPTeam\Frontend\Frontend;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * SPTP Preview class
  */
@@ -72,7 +76,7 @@ class SPTP_Preview {
 		$preview_section_title = $setting['post_title'];
 		// Dynamic style load.
 		$dynamic_style = Frontend::load_dynamic_style( $generator_ids, $layout, $settings );
-		echo '<style id="team_free_dynamic_css' . $generator_ids . '">' . $dynamic_style['dynamic_css'] . '</style>';//phpcs:ignore
+		echo '<style id="team_free_dynamic_css' . esc_attr( $generator_ids )  . '">' . $dynamic_style['dynamic_css'] . '</style>';//phpcs:ignore
 		Helper::sptp_html_show( $generator_ids, $layout, $settings, $preview_section_title, false );
 		die();
 	}

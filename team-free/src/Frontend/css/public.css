@@ -1023,3 +1023,14 @@
 .elementor-default .sp-team .swiper:not(.swiper-initialized) .swiper-wrapper {
     overflow: initial;
 }
+
+/* Navigation top-left */
+.sptp-main-carousel .sptp-button-next.top-left {
+	left: 45px;
+	right: auto;
+}
+
+.sptp-main-carousel .sptp-button-prev.top-left {
+	left: 3px;
+	right: auto;
+}

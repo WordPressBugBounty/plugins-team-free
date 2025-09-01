@@ -14,6 +14,11 @@ namespace ShapedPlugin\WPTeam\Frontend;
 
 use ShapedPlugin\WPTeam\Frontend\Helper;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+
 /**
  * Frontend class
  */
@@ -118,7 +123,11 @@ class Frontend {
 		if ( is_object( $post ) && 'sptp_member' === $post->post_type ) {
 			ob_start();
 			Helper::sp_team_free_single_css();
-			echo ob_get_clean();
+			$single_member_css = ob_get_clean();
+			if ( ! empty( $single_member_css ) ) {
+				// Only allow <style> tags.
+				echo wp_kses( $single_member_css, array( 'style' => array() ) );
+			}
 		}
 	}
 
@@ -154,7 +163,8 @@ class Frontend {
 			wp_enqueue_style( SPT_PLUGIN_SLUG );
 			// Dynamic style load.
 			$dynamic_style = self::load_dynamic_style( $generator_id, $layout, $settings );
-			echo '<style id="team_free_dynamic_css' . $generator_id . '">' . $dynamic_style['dynamic_css'] . '</style>';//phpcs:ignore
+			$dynamic_css   = wp_strip_all_tags( $dynamic_style['dynamic_css'] );
+			echo '<style id="team_free_dynamic_css' . $generator_id . '">' . $dynamic_css . '</style>';//phpcs:ignore
 		}
 		// Update options if the existing shortcode id option not found.
 		self::db_options_update( $generator_id, $get_page_data );
