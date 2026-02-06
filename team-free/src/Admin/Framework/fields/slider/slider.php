@@ -74,7 +74,6 @@ if ( ! class_exists( 'TEAMFW_Field_slider' ) ) {
 		 * @return void
 		 */
 		public function enqueue() {
-
 			if ( ! wp_script_is( 'jquery-ui-slider' ) ) {
 				wp_enqueue_script( 'jquery-ui-slider' );
 			}

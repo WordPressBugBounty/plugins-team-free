@@ -99,7 +99,6 @@ if ( ! class_exists( 'TEAMFW_Field_spacing' ) ) {
 				echo '</div>';
 
 			} elseif ( $args['gap_between'] ) {
-
 				foreach ( array( 'left-right', 'top-bottom' ) as $prop ) {
 
 					$placeholder = ( ! empty( $args['all_placeholder'] ) ) ? ' placeholder="' . esc_attr( $args['all_placeholder'] ) . '"' : '';
@@ -118,9 +117,7 @@ if ( ! class_exists( 'TEAMFW_Field_spacing' ) ) {
 					echo '</div>';
 				}
 			} else {
-
 				$properties = array();
-
 				foreach ( array( 'top', 'right', 'bottom', 'left' ) as $prop ) {
 					if ( ! empty( $args[ $prop ] ) ) {
 						$properties[] = $prop;
@@ -128,9 +125,7 @@ if ( ! class_exists( 'TEAMFW_Field_spacing' ) ) {
 				}
 
 				$properties = ( array( 'right', 'left' ) === $properties ) ? array_reverse( $properties ) : $properties;
-
 				foreach ( $properties as $property ) {
-
 					$placeholder = ( ! empty( $args[ $property . '_placeholder' ] ) ) ? ' placeholder="' . esc_attr( $args[ $property . '_placeholder' ] ) . '"' : '';
 
 					echo '<div class="spf--spacing-input">';

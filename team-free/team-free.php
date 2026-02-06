@@ -13,7 +13,7 @@
  * Plugin Name:       SmartTeam
  * Plugin URI:        https://getwpteam.com/?ref=1
  * Description:       SmartTeam (formerly WP Team) is a A WordPress plugin to display team members in Carousel, Grid, or List layouts. Customizable with multiple options.
- * Version:           3.0.10
+ * Version:           3.0.12
  * Author:            ShapedPlugin LLC
  * Author URI:        https://shapedplugin.com
  * License:           GPL-2.0+
@@ -36,7 +36,7 @@ define( 'SPT_PLUGIN_NAME', 'SmartTeam' );
 define( 'SPT_PLUGIN_SLUG', 'team-free' );
 define( 'SPT_PLUGIN_FILE', __FILE__ );
 define( 'SPT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
-define( 'SPT_PLUGIN_VERSION', '3.0.10' );
+define( 'SPT_PLUGIN_VERSION', '3.0.12' );
 define( 'SPT_PLUGIN_ROOT', plugin_dir_url( __FILE__ ) );
 define( 'SPT_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
@@ -77,6 +77,15 @@ register_deactivation_hook( __FILE__, 'deactivate_wp_team' );
 function run_wp_team() {
 	$plugin = new ShapedPlugin\WPTeam\Includes\Team();
 	$plugin->run();
+
+	if ( ! defined( 'SHAPEDPLIUGIN_OFFER_BANNER_LOADED' ) ) {
+		define( 'SHAPEDPLIUGIN_OFFER_BANNER_LOADED', true );
+
+		/**
+		 * The file is responsible for generating admin offer banner.
+		 */
+		ShapedPlugin\WPTeam\Admin\Helper\ShapedPlugin_Offer_Banner::instance();
+	}
 }
 
 // Don't run if the Premium version is active.

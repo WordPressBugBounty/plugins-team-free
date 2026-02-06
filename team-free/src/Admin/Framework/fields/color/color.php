@@ -21,7 +21,6 @@ if ( ! class_exists( 'TEAMFW_Field_color' ) ) {
 	 * @version 1.0.0
 	 */
 	class TEAMFW_Field_color extends TEAMFW_Fields {
-
 		/**
 		 * Field constructor.
 		 *
@@ -41,7 +40,6 @@ if ( ! class_exists( 'TEAMFW_Field_color' ) ) {
 		 * @return void
 		 */
 		public function render() {
-
 			$default_attr = ( ! empty( $this->field['default'] ) ) ? ' data-default-color="' . esc_attr( $this->field['default'] ) . '"' : '';
 
 			echo wp_kses_post( $this->field_before() );

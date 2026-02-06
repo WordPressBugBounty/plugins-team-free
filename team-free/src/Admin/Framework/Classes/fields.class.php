@@ -140,7 +140,6 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 		 * @return mixed
 		 */
 		public function field_after() {
-
 			$output  = ( ! empty( $this->field['after'] ) ) ? '<div class="spf-after-text">' . $this->field['after'] . '</div>' : '';
 			$output .= ( ! empty( $this->field['desc'] ) ) ? '<div class="clear"></div><div class="spf-desc-text">' . $this->field['desc'] . '</div>' : '';
 			$output .= ( ! empty( $this->field['help'] ) ) ? '<div class="spf-help"><span class="spf-help-text">' . $this->field['help'] . '</span><i class="fa fa-question-circle"></i></div>' : '';
@@ -159,7 +158,6 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 		 * @return array
 		 */
 		public static function field_data( $type = '', $term = false, $query_args = array() ) {
-
 			$options      = array();
 			$array_search = false;
 
@@ -359,7 +357,6 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 					}
 
 					$array_search = true;
-
 					break;
 
 				case 'location':
@@ -375,7 +372,6 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 					$array_search = true;
 
 					break;
-
 				case 'img_sizes':
 					global $_wp_additional_image_sizes;
 					$image_sizes = get_intermediate_image_sizes();
@@ -398,9 +394,7 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 							$options = call_user_func( $type, $term, $query_args );
 						}
 					}
-
 					break;
-
 			}
 
 			// Array search by "term".
@@ -432,17 +426,12 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 		 * @return statement
 		 */
 		public function field_wp_query_data_title( $type, $values ) {
-
 			$options = array();
-
 			if ( ! empty( $values ) && is_array( $values ) ) {
-
 				foreach ( $values as $value ) {
-
 					$options[ $value ] = ucfirst( $value );
 
 					switch ( $type ) {
-
 						case 'post':
 						case 'posts':
 						case 'page':
@@ -525,11 +514,9 @@ if ( ! class_exists( 'TEAMFW_Fields' ) ) {
 							}
 
 							break;
-
 					}
 				}
 			}
-
 			return $options;
 		}
 	}

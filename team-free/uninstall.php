@@ -56,6 +56,10 @@ function sptp_delete_plugin_data() {
 	delete_post_meta_by_key( '_sptp_add_member' );
 	delete_post_meta_by_key( '_sptp_generator' );
 	delete_post_meta_by_key( '_sptp_generator_layout' );
+
+	// Delete offer banner related option keys.
+	delete_option( 'shapedplugin_offer_banner_dismissed_black_friday_2025' );
+	delete_option( 'shapedplugin_offer_banner_dismissed_new_year_2026' );
 }
 
 // Load SmartTeam Plugin file.

@@ -10,7 +10,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-
 ?>
 <?php
 if ( function_exists( 'wp_is_block_theme' ) && wp_is_block_theme() ) {

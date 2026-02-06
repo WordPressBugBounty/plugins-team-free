@@ -103,7 +103,6 @@ if ( ! class_exists( 'TEAMFW_Field_select' ) ) {
 
 						$field_name = '_pseudo';
 						$field_attr = '';
-
 					}
 
 					// These attributes has been serialized above.
@@ -120,14 +119,12 @@ if ( ! class_exists( 'TEAMFW_Field_select' ) ) {
 					foreach ( $options as $option_key => $option ) {
 
 						if ( is_array( $option ) && ! empty( $option ) ) {
-
 							echo '<optgroup label="' . esc_attr( $option_key ) . '">';
 
 							foreach ( $option as $sub_key => $sub_value ) {
 								$selected = ( in_array( $sub_key, $this->value, true ) ) ? ' selected' : '';
 								echo '<option value="' . esc_attr( $sub_key ) . '" ' . esc_attr( $selected ) . '>' . esc_attr( $sub_value ) . '</option>';
 							}
-
 							echo '</optgroup>';
 
 						} else {
@@ -143,12 +140,9 @@ if ( ! class_exists( 'TEAMFW_Field_select' ) ) {
 					if ( isset( $args['preview'] ) && $args['preview'] ) {
 						echo '<img src="' . esc_url( SPF_TEAM::include_plugin_url( 'assets/image/navigation-position/' . $selected_value . '.svg' ) ) . '" class="icon_preview">';
 						echo '<div class="spt-pro-notice"></div>';
-
 					}
 				} else {
-
 					echo ! empty( $this->field['empty_message'] ) ? esc_attr( $this->field['empty_message'] ) : esc_html__( 'No data available.', 'team-free' );
-
 				}
 			}
 			echo wp_kses_post( $this->field_after() );
@@ -160,7 +154,6 @@ if ( ! class_exists( 'TEAMFW_Field_select' ) ) {
 		 * @return void
 		 */
 		public function enqueue() {
-
 			if ( ! wp_script_is( 'jquery-ui-sortable' ) ) {
 				wp_enqueue_script( 'jquery-ui-sortable' );
 			}

@@ -23,7 +23,6 @@ use ShapedPlugin\WPTeam\Includes\WP_Team_i18n;
 use ShapedPlugin\WPTeam\Admin\Team_Import_Export;
 use ShapedPlugin\WPTeam\Admin\WP_Team_Gutenberg_Block;
 use ShapedPlugin\WPTeam\Admin\HelpPage\Help;
-// use ShapedPlugin\WPTeam\Admin\Helper\Team_Premium;
 use ShapedPlugin\WPTeam\Admin\Helper\Admin_Notices;
 use ShapedPlugin\WPTeam\Admin\Team_Element_Shortcode_Block;
 use ShapedPlugin\WPTeam\Admin\Team_Element_Shortcode_Block_Deprecated;

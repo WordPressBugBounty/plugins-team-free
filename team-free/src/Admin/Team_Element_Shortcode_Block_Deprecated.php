@@ -27,7 +27,7 @@ class Team_Element_Shortcode_Block_Deprecated {
 	 *
 	 * @var Team_Element_Shortcode_Block_Deprecated The single instance of the class.
 	 */
-	private static $_instance = null;
+	private static $instance = null;
 
 	/**
 	 * Instance
@@ -43,10 +43,10 @@ class Team_Element_Shortcode_Block_Deprecated {
 	 */
 	public static function instance() {
 
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self();
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
 		}
-		return self::$_instance;
+		return self::$instance;
 	}
 
 	/**

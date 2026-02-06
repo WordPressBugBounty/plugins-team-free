@@ -5116,8 +5116,8 @@
 .spf-field-button_set .spf--button.spf-pro-only:after,
 .spf-field-image_select .spf--image.spf-pro-only:after {
 	position: absolute;
-	top: 3.5px;
-	right: 3.5px;
+	top: 3px;
+	right: 3px;
 	color: #5E6E7D;
 	background-color: #cbd6df;
 	font-weight: 600;

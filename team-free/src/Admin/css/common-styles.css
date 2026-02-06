@@ -82,7 +82,7 @@ body.rtl #sp-wpt-review-notice .sp-wpt-plugin-icon {
   color: #dba617;
 }
 
-.rtl  #sp-wpt-review-notice {
+.rtl #sp-wpt-review-notice {
   margin: 20px 0 0 20px;
   padding: 18px 0 18px 15px;
 }
@@ -90,4 +90,27 @@ body.rtl #sp-wpt-review-notice .sp-wpt-plugin-icon {
 .rtl #sp-wpt-review-notice .sp-wpt-plugin-icon {
   float: right;
   margin: 0 0 0 8px;
+}
+
+/* Admin offer banner */
+#shapedplugin-offer-banner {
+  padding: 0;
+  border: 0;
+  line-height: 0;
+  background: transparent;
+}
+
+#shapedplugin-offer-banner a:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+#shapedplugin-offer-banner .notice-dismiss:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+#shapedplugin-offer-banner button.shapedplugin-offer-banner-dismiss:before {
+  color: #fff;
+  font-size: 22px;
 }
