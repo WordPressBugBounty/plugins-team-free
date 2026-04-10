@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 /**
- * SmartTeam Activator class
+ * Smart Team Activator class
  */
 class WP_Team_Activator {
 	/**

@@ -160,6 +160,7 @@ class Frontend {
 		if ( ! is_array( $found_generator_id ) || ! $found_generator_id || ! in_array( $generator_id, $found_generator_id ) ) {
 			wp_enqueue_style( 'team-free-swiper' );
 			wp_enqueue_style( 'team-free-fontawesome' );
+			wp_enqueue_style( 'sptp-fontello-icon' );
 			wp_enqueue_style( SPT_PLUGIN_SLUG );
 			// Dynamic style load.
 			$dynamic_style = self::load_dynamic_style( $generator_id, $layout, $settings );

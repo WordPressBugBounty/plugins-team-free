@@ -238,11 +238,11 @@ const {
 const el = _wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement;
 
 /**
- * Register: SmartTeam Free Gutenberg Block.
+ * Register: Smart Team Free Gutenberg Block.
  */
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__.registerBlockType)('sp-team-pro/shortcode', {
-  title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('SmartTeam', 'team-free'),
-  description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Use SmartTeam to insert a team in your page', 'team-free'),
+  title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Smart Team', 'team-free'),
+  description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Use Smart Team to insert a team in your page', 'team-free'),
   icon: _shortcode_blockIcon__WEBPACK_IMPORTED_MODULE_0__["default"].teamFree,
   category: 'common',
   supports: {
@@ -299,7 +299,7 @@ const el = _wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement;
       }, el('img', {
         className: 'block-editor-block-icon',
         src: (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeAttribute)(TeamFreeGbScript.path + 'src/Admin/GutenbergBlock/assets/wp-team-block.svg')
-      }), (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeHTML)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('SmartTeam', 'team-free'))), el('div', {
+      }), (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeHTML)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Smart Team', 'team-free'))), el('div', {
         className: 'components-placeholder__instructions'
       }, (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeHTML)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("No team found. ", "team-free")), el('a', {
         href: (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeAttribute)(TeamFreeGbScript.url)
@@ -319,7 +319,7 @@ const el = _wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement;
       }, el('img', {
         className: 'block-editor-block-icon',
         src: (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeAttribute)(TeamFreeGbScript.path + 'src/Admin/GutenbergBlock/assets/wp-team-block.svg')
-      }), (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeHTML)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("SmartTeam", "team-free"))), el('div', {
+      }), (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeHTML)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Smart Team", "team-free"))), el('div', {
         className: 'components-placeholder__instructions'
       }, (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_1__.escapeHTML)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Select a Team", "team-free"))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.createElement)(_shortcode_dynamicShortcode__WEBPACK_IMPORTED_MODULE_2__["default"], {
         attributes: attributes,

@@ -2402,7 +2402,7 @@
 		}
 		return true;
 	}
-	// SmartTeam export.
+	// Smart Team export.
 	var $export_type = $('.sptp_what_export').find('input:checked').val();
 	$('.sptp_what_export').on('change', function () {
 		$export_type = $(this).find('input:checked').val();
@@ -2462,7 +2462,7 @@
 			}
 		});
 	});
-	// SmartTeam import.
+	// Smart Team import.
 	$('.sptp_import button.import').on('click', function (event) {
 		var $this = $(this),
 			button_label = $(this).text();

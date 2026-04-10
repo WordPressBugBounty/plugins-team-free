@@ -101,6 +101,34 @@
 	margin-right: 20px;
 }
 
+.spf-field select,
+td.shortcode.column-shortcode input,
+.spf-field input:not([type="checkbox"]):not([type="radio"]) {
+    min-height: 30px;
+    line-height: 2;
+}
+
+td.shortcode.column-shortcode input {
+	line-height: 1;
+}
+
+.spf-field input::-webkit-outer-spin-button,
+.spf-field input::-webkit-inner-spin-button {
+    height: 30px;
+    line-height: 2;
+}
+
+.spf-field-column input.spf-input-number,
+.sptp_responsive_columns input.spf-input-number {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.spf-field-slider input {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
 /**
  * 01. 01. Header
  */
@@ -5067,6 +5095,7 @@
 	background-color: #fff !important;
 	-webkit-box-shadow: inset 0 2px #4b8161;
 	box-shadow: inset 0 3px #4b8161;
+	border-radius: 0;
 }
 
 .spf-nav li[class^="spf-menu-item-"] .spf-active .spf-tab-icon {
@@ -6412,4 +6441,13 @@ a.sptp-live-demo-icon:focus {
 
 .spf-field.spf-field-notice.skill-bar-notice {
     padding-bottom: 0 !important;
+}
+
+.spf-field-radio input {
+    margin: 0 4px;
+}
+
+.spf-field input:focus, 
+.spf-field select:focus {
+    box-shadow: none;
 }

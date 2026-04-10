@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * SmartTeam Deactivator class
+ * Smart Team Deactivator class
  */
 class WP_Team_Deactivator {
 

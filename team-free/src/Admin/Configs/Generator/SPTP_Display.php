@@ -486,14 +486,13 @@ class SPTP_Display {
 													'center' => '<i class="fa fa-align-center" title="Center"></i>',
 													'right' => '<i class="fa fa-align-right" title="Right"></i>',
 												),
-												'title_info' => '<div class="spf-img-tag"><img src="' . SPT_PLUGIN_ROOT . 'src/Admin/img/visual/social_margin.svg" alt="' . __( 'Social Margin', 'team-free' ) . '"></div><div class="spf-info-label img">' . __( 'Social Margin', 'team-free' ) . '</div>',
-
 												'default'  => 'center',
 											),
 											array(
 												'id'       => 'social_margin',
 												'type'     => 'spacing',
 												'title'    => __( 'Margin', 'team-free' ),
+												'title_info' => '<div class="spf-img-tag"><img src="' . SPT_PLUGIN_ROOT . 'src/Admin/img/visual/social_margin.svg" alt="' . __( 'Social Margin', 'team-free' ) . '"></div><div class="spf-info-label img">' . __( 'Social Margin', 'team-free' ) . '</div>',
 												'subtitle' => __( 'Set margin for social profile.', 'team-free' ),
 												'units'    => array( 'px' ),
 												'default'  => array(

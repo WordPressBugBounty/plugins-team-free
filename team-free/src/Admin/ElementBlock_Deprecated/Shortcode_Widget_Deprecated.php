@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;} // Cannot access directly.
 
 /**
- * Elementor SmartTeam shortcode Widget.
+ * Elementor Smart Team shortcode Widget.
  *
  * @since 2.2.1
  */
@@ -45,7 +45,7 @@ class Shortcode_Widget_Deprecated extends \Elementor\Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'SmartTeam Deprecated', 'team-free' );
+		return esc_html__( 'Smart Team Deprecated', 'team-free' );
 	}
 
 	/**
@@ -112,7 +112,7 @@ class Shortcode_Widget_Deprecated extends \Elementor\Widget_Base {
 		$this->add_control(
 			'sp_team_shortcode',
 			array(
-				'label'       => esc_html__( 'SmartTeam Shortcode(s)', 'team-free' ),
+				'label'       => esc_html__( 'Smart Team Shortcode(s)', 'team-free' ),
 				'type'        => \Elementor\Controls_Manager::SELECT2,
 				'label_block' => true,
 				'default'     => '',
@@ -124,11 +124,11 @@ class Shortcode_Widget_Deprecated extends \Elementor\Widget_Base {
 			'deprecated_notice',
 			array(
 				'type'            => \Elementor\Controls_Manager::DEPRECATED_NOTICE,
-				'widget'          => 'SmartTeam Deprecated',
+				'widget'          => 'Smart Team Deprecated',
 				'since'           => '2.2.5',
 				'last'            => '3.0.4',
-				'plugin'          => 'SmartTeam',
-				'replacement'     => 'SmartTeam',
+				'plugin'          => 'Smart Team',
+				'replacement'     => 'Smart Team',
 				'content_classes' => 'sp-wp-team-elementor-widget-deprecated',
 			)
 		);
@@ -137,7 +137,7 @@ class Shortcode_Widget_Deprecated extends \Elementor\Widget_Base {
 	}
 
 	/**
-	 * Render SmartTeam shortcode widget output on the frontend.
+	 * Render Smart Team shortcode widget output on the frontend.
 	 *
 	 * @since 2.2.1
 	 * @access protected

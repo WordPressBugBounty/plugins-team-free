@@ -56,11 +56,11 @@ class Admin_Notices {
 		?>
 		<div id="sp-wpt-review-notice" class="sp-wpt-review-notice">
 			<div class="sp-wpt-plugin-icon">
-				<img src="<?php echo esc_attr( SPT_PLUGIN_ROOT . 'src/Admin/img/wpt-pro.svg' ); ?>" alt="SmartTeam">
+				<img src="<?php echo esc_attr( SPT_PLUGIN_ROOT . 'src/Admin/img/wpt-pro.svg' ); ?>" alt="Smart Team">
 			</div>
 			<div class="sp-wpt-notice-text">
-				<h3>Enjoying <strong>SmartTeam</strong>?</h3>
-				<p>We hope you had a wonderful experience using <strong>SmartTeam</strong>. Please take a moment to leave a review on <a href="https://wordpress.org/support/plugin/team-free/reviews/" target="_blank"><strong>WordPress.org</strong></a>.
+				<h3>Enjoying <strong>Smart Team</strong>?</h3>
+				<p>We hope you had a wonderful experience using <strong>Smart Team</strong>. Please take a moment to leave a review on <a href="https://wordpress.org/support/plugin/team-free/reviews/" target="_blank"><strong>WordPress.org</strong></a>.
 				Your positive review will help us improve. Thank you! 😊</p>
 
 				<p class="sp-wpt-review-actions">

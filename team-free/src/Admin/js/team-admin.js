@@ -1,19 +1,19 @@
 jQuery(document).ready(function ($) {
-$(".sptp-generator-tabs .spf-wrapper").css("visibility", "hidden");
-$(".sptp-generator-tabs .spf-wrapper .spf-wrapper-preloader ").css(
-	"display",
-	"none"
-);
+  $(".sptp-generator-tabs .spf-wrapper").css("visibility", "hidden");
+  $(".sptp-generator-tabs .spf-wrapper .spf-wrapper-preloader ").css(
+    "display",
+    "none"
+  );
   $('.sptp_filter_members').find("option:nth-of-type(3), option:nth-of-type(4)").attr('disabled', 'disabled');
 
- $(`.sptp_image_grayscale option,
+  $(`.sptp_image_grayscale option,
     .sptp-inline-repeater-social option,
-    .sptp-repeater-select option`).each(function( i, item ) {
-    const regex = new RegExp( 'Pro' );
-    if ( regex.test( item.innerText ) ) {
+    .sptp-repeater-select option`).each(function (i, item) {
+    const regex = new RegExp('Pro');
+    if (regex.test(item.innerText)) {
       $(item).attr('disabled', 'disabled');
     }
- })
+  })
 
   $('.spf--typography').find('.spf--font-family, .spf--font-style-select, .spf--font-size, .spf--line-height, .spf--text-align, .spf--text-transform, .spf--letter-spacing, .spf--margin-top').attr('disabled', 'disabled');
   $('.sptp_typography_pro').css('pointer-events', 'none');
@@ -27,9 +27,9 @@ $(".sptp-generator-tabs .spf-wrapper .spf-wrapper-preloader ").css(
     .find("input")
     .val();
   if (select_value_layout === "carousel") {
-	  $(".spf-nav-metabox li.spf-menu-item-carousel-settings").show();
+    $(".spf-nav-metabox li.spf-menu-item-carousel-settings").show();
   } else {
-	  $(".spf-nav-metabox li.spf-menu-item-carousel-settings").hide();
+    $(".spf-nav-metabox li.spf-menu-item-carousel-settings").hide();
   }
 
   $(document).on(
@@ -42,59 +42,59 @@ $(".sptp-generator-tabs .spf-wrapper .spf-wrapper-preloader ").css(
         .val();
 
       if (select_value !== "carousel") {
-		  $(".spf-nav-metabox li.spf-menu-item-carousel-settings").hide();
+        $(".spf-nav-metabox li.spf-menu-item-carousel-settings").hide();
         $(".spf-nav-metabox li.spf-menu-item-general-settings a").click();
       } else {
-		  $(".spf-nav-metabox li.spf-menu-item-carousel-settings").show();
+        $(".spf-nav-metabox li.spf-menu-item-carousel-settings").show();
       }
-		var membersPadding = (select_value === "list") ? '20' : '0';
-		// Update members padding
-		$('.members_padding .spf--input input[name="_sptp_generator[item_padding][right]"]').val(membersPadding);
+      var membersPadding = (select_value === "list") ? '20' : '0';
+      // Update members padding
+      $('.members_padding .spf--input input[name="_sptp_generator[item_padding][right]"]').val(membersPadding);
     }
   );
-	// Function to update icon type
-	function updateIconType(selector, regex, type) {
-		var str = "";
-		$(selector + ' option:selected').each(function () {
-			str = $(this).val();
-		});
-		var src = $(selector + ' .spf-fieldset img').attr('src');
-		var result = src.match(regex);
-		if (result && result[1]) {
-			src = src.replace(result[1], str);
-			$(selector + ' .spf-fieldset img').attr('src', src);
-		}
-	}
-	$('.carousel_navigation_position').on('change', function () {
-		updateIconType(".carousel_navigation_position", /navigation-position\/(.+)\.svg/,'top-right');
-	});
-	if ($('.carousel_navigation_position').length > 0) {
-		updateIconType(".carousel_navigation_position", /navigation-position\/(.+)\.svg/, 'top-right');
-	}
+  // Function to update icon type
+  function updateIconType(selector, regex, type) {
+    var str = "";
+    $(selector + ' option:selected').each(function () {
+      str = $(this).val();
+    });
+    var src = $(selector + ' .spf-fieldset img').attr('src');
+    var result = src.match(regex);
+    if (result && result[1]) {
+      src = src.replace(result[1], str);
+      $(selector + ' .spf-fieldset img').attr('src', src);
+    }
+  }
+  $('.carousel_navigation_position').on('change', function () {
+    updateIconType(".carousel_navigation_position", /navigation-position\/(.+)\.svg/, 'top-right');
+  });
+  if ($('.carousel_navigation_position').length > 0) {
+    updateIconType(".carousel_navigation_position", /navigation-position\/(.+)\.svg/, 'top-right');
+  }
 
   $(".sptp-generator-tabs .spf-wrapper").css("visibility", "visible");
   $(".sptp-generator-tabs .spf-wrapper li").css("opacity", 1);
 
 
-	// Get the last activated or selected layout.
-	var lastSelectedOption = $('input[name="_sptp_generator_layout[layout_preset]"]:checked').val();
-	$('input[name="_sptp_generator_layout[layout_preset]"]').on('change', function () {
-		if (!$(this).is(':disabled')) {
-			lastSelectedOption = $(this).val();
-		}
-	});
+  // Get the last activated or selected layout.
+  var lastSelectedOption = $('input[name="_sptp_generator_layout[layout_preset]"]:checked').val();
+  $('input[name="_sptp_generator_layout[layout_preset]"]').on('change', function () {
+    if (!$(this).is(':disabled')) {
+      lastSelectedOption = $(this).val();
+    }
+  });
 
-	// Revert the selection to the last valid activated option that was selected before if the disabled/pro option is chosen.
-	$('#publishing-action').on('click', '#publish', function (e) {
-		if ($('input[name="_sptp_generator_layout[layout_preset]"]:checked').is(':disabled')) {
-			$('input[name="_sptp_generator_layout[layout_preset]"][value="' + lastSelectedOption + '"]').prop('checked', true);
-		}
-	});
+  // Revert the selection to the last valid activated option that was selected before if the disabled/pro option is chosen.
+  $('#publishing-action').on('click', '#publish', function (e) {
+    if ($('input[name="_sptp_generator_layout[layout_preset]"]:checked').is(':disabled')) {
+      $('input[name="_sptp_generator_layout[layout_preset]"][value="' + lastSelectedOption + '"]').prop('checked', true);
+    }
+  });
 
-	$('.sptp-live-demo-icon').on('click', function (event) {
-		event.stopPropagation();
-		// Add any additional code here if needed
-	});
+  $('.sptp-live-demo-icon').on('click', function (event) {
+    event.stopPropagation();
+    // Add any additional code here if needed
+  });
 
   $(document).on("click", "#copy-shortcode, #copy-tag", function () {
     var $temp = $("<input>");
@@ -117,7 +117,7 @@ $(".sptp-generator-tabs .spf-wrapper .spf-wrapper-preloader ").css(
     $temp.remove();
   });
 
-  $('.sptp-shortcode-selectable, .post-type-sptp_generator .column-shortcode input').on('click',function (e) {
+  $('.sptp-shortcode-selectable, .post-type-sptp_generator .column-shortcode input').on('click', function (e) {
     e.preventDefault();
     /* Get the text field */
     var copyText = $(this);

@@ -114,3 +114,41 @@ body.rtl #sp-wpt-review-notice .sp-wpt-plugin-icon {
   color: #fff;
   font-size: 22px;
 }
+
+/* Upgrade to Pro button in the menu */
+#adminmenu #menu-posts-sptp_member li a.sptp-upgrade-btn-wrapper {
+    margin-top: -10px;
+}
+
+/* Base button */
+#adminmenu #menu-posts-sptp_member li a .sptp-upgrade-btn {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 136px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    background: #11B916;
+    color: #ffffff;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+/* Hover state */
+#adminmenu #menu-posts-sptp_member li a .sptp-upgrade-btn:hover {
+    background: #00aa08;
+}
+
+/* Icon (FIXED) */
+#adminmenu #menu-posts-sptp_member li a .sptp-upgrade-btn::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url("../img/premium-light.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}

@@ -7,7 +7,8 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	die;} // Cannot access directly.
+	exit; // Exit if accessed directly.
+}
 
 // Main settings.
 $sptp_settings   = get_option( '_sptp_settings' );

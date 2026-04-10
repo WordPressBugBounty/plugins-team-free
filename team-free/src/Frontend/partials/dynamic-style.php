@@ -7,7 +7,8 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	die;} // Cannot access directly.
+	exit; // Exit if accessed directly.
+}
 
 // Dynamic css.
 require 'dynamic-css-settings.php';

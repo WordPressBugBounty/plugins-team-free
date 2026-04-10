@@ -106,14 +106,14 @@ class Help {
 	public function help_admin_menu() {
 		add_submenu_page(
 			'edit.php?post_type=sptp_member',
-			__( 'SmartTeam', 'team-free' ),
+			__( 'Smart Team', 'team-free' ),
 			__( 'Recommended', 'team-free' ),
 			'manage_options',
 			'edit.php?post_type=sptp_member&page=team_help#recommended'
 		);
 		add_submenu_page(
 			'edit.php?post_type=sptp_member',
-			__( 'SmartTeam', 'team-free' ),
+			__( 'Smart Team', 'team-free' ),
 			__( 'Lite vs Pro', 'team-free' ),
 			'manage_options',
 			'edit.php?post_type=sptp_member&page=team_help#lite-to-pro'
@@ -128,6 +128,21 @@ class Help {
 				$this,
 				'help_page_callback',
 			)
+		);
+
+		// Upgrade to Pro (external redirect).
+		add_submenu_page(
+			'edit.php?post_type=sptp_member',
+			__( 'Upgrade to Pro', 'team-free' ),
+			'<a class="sptp-upgrade-btn-wrapper" href="https://getwpteam.com/pricing/?ref=1" target="_blank">
+        		<span class="sptp-upgrade-btn">
+					 Upgrade to Pro
+        		</span>
+    		</a>',
+			'manage_options',
+			'team_help', // Same slug as the Get Help page to hide it from the menu.
+			'__return_null',
+			99
 		);
 	}
 
@@ -396,7 +411,7 @@ class Help {
 			<!-- Header section start -->
 			<section class="spwpteam__help header">
 				<div class="spwpteam-header-area-top">
-					<p>You’re currently using <b>SmartTeam Lite</b>. To access additional features, consider <a target="_blank" href="https://getwpteam.com/pricing/?ref=1" ><b>upgrading to Pro!</b></a> 🚀</p>
+					<p>You’re currently using <b>Smart Team Lite</b>. To access additional features, consider <a target="_blank" href="https://getwpteam.com/pricing/?ref=1" ><b>upgrading to Pro!</b></a> 🚀</p>
 				</div>
 				<div class="spwpteam-header-area">
 					<div class="spwpteam-container">
@@ -429,13 +444,13 @@ class Help {
 				<div class="spwpteam-container">
 					<div class="spwpteam-start-page-wrap">
 						<div class="spwpteam-video-area">
-							<h2 class='spwpteam-section-title'>Welcome to SmartTeam!</h2>
-							<span class='spwpteam-normal-paragraph'>Thank you for installing SmartTeam! This video will help you get started with the plugin. Enjoy!</span>
+							<h2 class='spwpteam-section-title'>Welcome to Smart Team!</h2>
+							<span class='spwpteam-normal-paragraph'>Thank you for installing Smart Team! This video will help you get started with the plugin. Enjoy!</span>
 							<iframe width="724" height="405" src="https://www.youtube.com/embed/E1PwdV-czeU?si=35rPQTqFmEEbKrbn" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
 							<ul>
 								<li><a class='spwpteam-medium-btn' href="<?php echo esc_url( home_url( '/' ) . 'wp-admin/post-new.php?post_type=sptp_generator' ); ?>">Create a Team</a></li>
 								<li><a target="_blank" class='spwpteam-medium-btn' href="https://getwpteam.com/wp-team-lite-version-demo/">Live Demo</a></li>
-								<li><a target="_blank" class='spwpteam-medium-btn arrow-btn' href="https://getwpteam.com/">Explore SmartTeam <i class="spwpteam-icon-button-arrow-icon"></i></a></li>
+								<li><a target="_blank" class='spwpteam-medium-btn arrow-btn' href="https://getwpteam.com/">Explore Smart Team <i class="spwpteam-icon-button-arrow-icon"></i></a></li>
 							</ul>
 						</div>
 						<div class="spwpteam-start-page-sidebar">
@@ -443,7 +458,7 @@ class Help {
 								<div class="spwpteam-info-box-title">
 									<h4><i class="spwpteam-icon-doc-icon"></i> Documentation</h4>
 								</div>
-								<span class='spwpteam-normal-paragraph'>Explore SmartTeam plugin capabilities in our enriched documentation.</span>
+								<span class='spwpteam-normal-paragraph'>Explore Smart Team plugin capabilities in our enriched documentation.</span>
 								<a target="_blank" class='spwpteam-small-btn' href="https://getwpteam.com/docs/">Browse Now</a>
 							</div>
 							<div class="spwpteam-start-page-sidebar-info-box">
@@ -457,8 +472,8 @@ class Help {
 								<div class="spwpteam-info-box-title">
 									<h4><i class="spwpteam-icon-team-icon"></i> Join The Community</h4>
 								</div>
-								<span class='spwpteam-normal-paragraph'>Join the official ShapedPlugin Facebook group to share your experiences, thoughts, and ideas.</span>
-								<a target="_blank" class='spwpteam-small-btn' href="https://www.facebook.com/groups/ShapedPlugin/">Join Now</a>
+								<span class='spwpteam-normal-paragraph'>Join the official ShapedPlugin community to share your experiences, thoughts, and ideas.</span>
+								<a target="_blank" class='spwpteam-small-btn' href="https://community.shapedplugin.com/portal/">Join Now</a>
 							</div>
 						</div>
 					</div>
@@ -674,7 +689,7 @@ class Help {
 						</div>
 						<div class="spwpteam-upgrade-to-pro">
 							<h2 class='spwpteam-section-title'>Upgrade To PRO & Enjoy Advanced Features!</h2>
-							<span class='spwpteam-section-subtitle'>Already, <b>15,000+</b> people are using SmartTeam on their websites to create beautiful showcase, why won’t you!</span>
+							<span class='spwpteam-section-subtitle'>Already, <b>15,000+</b> people are using Smart Team on their websites to create beautiful showcase, why won’t you!</span>
 							<div class="spwpteam-upgrade-to-pro-btn">
 								<div class="spwpteam-action-btn">
 									<a target="_blank" href="https://getwpteam.com/pricing/?ref=1" class='spwpteam-big-btn'>Upgrade to Pro Now!</a>
@@ -688,7 +703,7 @@ class Help {
 					<div class="spwpteam-testimonial">
 						<div class="spwpteam-testimonial-title-section">
 							<span class='spwpteam-testimonial-subtitle'>NO NEED TO TAKE OUR WORD FOR IT</span>
-							<h2 class="spwpteam-section-title">Our Users Love SmartTeam Pro!</h2>
+							<h2 class="spwpteam-section-title">Our Users Love Smart Team Pro!</h2>
 						</div>
 						<div class="spwpteam-testimonial-wrap">
 							<div class="spwpteam-testimonial-area">
@@ -767,7 +782,7 @@ class Help {
 							<p>At <b>ShapedPlugin LLC</b>, we searched for the best way to display the team members who are at the heart of your company or organization. Unfortunately, we couldn't find a suitable plugin that met our needs. Therefore, we set a simple goal: to develop a powerful WordPress team showcase plugin that will allow you to highlight your team's talent and expertise!</p>
 							<p>We aim to provide the easiest and most convenient way to create unlimited, visually appealing team member showcases for your WordPress websites. Explore it now, and you will surely love the experience!</p>
 							<div class="spwpteam-about-btn">
-								<a target="_blank" href="https://getwpteam.com/" class='spwpteam-medium-btn'>Explore SmartTeam</a>
+								<a target="_blank" href="https://getwpteam.com/" class='spwpteam-medium-btn'>Explore Smart Team</a>
 								<a target="_blank" href="https://shapedplugin.com/about-us/" class='spwpteam-medium-btn spwpteam-arrow-btn'>More About Us <i class="spwpteam-icon-button-arrow-icon"></i></a>
 							</div>
 						</div>

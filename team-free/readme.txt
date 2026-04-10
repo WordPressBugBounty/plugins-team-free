@@ -1,9 +1,9 @@
-=== Responsive Team Members Showcase, Team Grid, Team Slider, and Staff List - SmartTeam (formerly WP Team) ===
+=== Responsive Team Members Showcase, Team Grid, Team Slider, and Staff List - Smart Team (formerly WP Team) ===
 Contributors: shapedplugin, shamimmiashuhagh, rubel_miah, khalilu
 Tags: team, team members, team grid, team showcase, team slider
 Requires at least: 5.0
-Tested up to: 6.9
-Stable tag: 3.0.12
+Tested up to: 7.0
+Stable tag: 3.0.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,14 +15,14 @@ A WordPress plugin to display team members in Carousel, Grid, or List layouts. C
 
 [__Live Demo__](https://getwpteam.com/wp-team-lite-version-demo/) | [__Documentation__](https://getwpteam.com/docs/) | [__Support__](https://shapedplugin.com/create-new-ticket/)
 
-**SmartTeam** is a WordPress team showcase plugin for creating and managing team member displays. The plugin includes 3 layout presets and styling options to create team member sections on your WordPress site. The main purpose is to display team or staff members, but it can also be used for other content that requires an image and text.
+**Smart Team** is a WordPress team showcase plugin for creating and managing team member displays. The plugin includes 3 layout presets and styling options to create team member sections on your WordPress site. The main purpose is to display team or staff members, but it can also be used for other content that requires an image and text.
 
-= Why use SmartTeam? =
+= Why use Smart Team? =
 
-Displaying your team members helps visitors connect with the people behind your organization. SmartTeam allows you to create team member pages without coding knowledge. The plugin provides an intuitive interface for building team displays.
+Displaying your team members helps visitors connect with the people behind your organization. Smart Team allows you to create team member pages without coding knowledge. The plugin provides an intuitive interface for building team displays.
 
 
-= Who is SmartTeam perfect for? =
+= Who is Smart Team perfect for? =
 
 * **Business Owners & Startups** – Showcase your staff, departments, and leadership team.
 * **Agencies & Freelancers** – Present your creative team or collaborators.
@@ -78,11 +78,11 @@ Displaying your team members helps visitors connect with the people behind your 
 * Custom CSS options.
 * Compatible with any theme.
 
-The Pro version of [__SmartTeam__](https://getwpteam.com/) provides extra layouts, more styling controls, and extended customization options for building team member showcases with added flexibility.
+The Pro version of [__Smart Team__](https://getwpteam.com/) provides extra layouts, more styling controls, and extended customization options for building team member showcases with added flexibility.
 
 = Documentation =
 
-If you have any questions about working with SmartTeam, you can take a look at the online [__documentation__](https://getwpteam.com/docs/).
+If you have any questions about working with Smart Team, you can take a look at the online [__documentation__](https://getwpteam.com/docs/).
 
 = For Support and Bug Reporting =
 If you encounter an issue or find any bugs, post it in the [support](https://shapedplugin.com/create-new-ticket/). You can also get support via [WordPress.org](https://wordpress.org/support/plugin/team-free/).
@@ -94,11 +94,11 @@ Designed and Developed by [__ShapedPlugin, LLC__](https://shapedplugin.com/)
 
 == Frequently Asked Questions ==
 
-=Is SmartTeam free?=
-Yes! SmartTeam is free.
+=Is Smart Team free?=
+Yes! Smart Team is free.
 
 =How can I showcase team members?=
-After activating the plugin, you will see “SmartTeam” in the WordPress admin dashboard.
+After activating the plugin, you will see “Smart Team” in the WordPress admin dashboard.
 
 Firstly, go to “Add New Member” and add as many members as you want.
 
@@ -109,7 +109,7 @@ You can customize the setting fields as you like and publish, and you will see a
 Finally, you can add your team to any page or post by shortcode, via the widget control panel, or using a PHP function.
 
 = How can I access more features? =
-A premium version with additional features is available. More information about [SmartTeam Pro](https://getwpteam.com/) can be found on our website.
+A premium version with additional features is available. More information about [Smart Team Pro](https://getwpteam.com/) can be found on our website.
 
 
 == Installation ==
@@ -124,9 +124,9 @@ A premium version with additional features is available. More information about 
 
 = AUTOMATIC INSTALLATION (EASIEST WAY) =
 
-To do an automatic install of SmartTeam, log in to your WordPress dashboard, navigate to the Plugins menu, and click.
+To do an automatic install of Smart Team, log in to your WordPress dashboard, navigate to the Plugins menu, and click.
 Add New.
-In the search field, type "SmartTeam" by ShapedPlugin. Once you have found it, you can install it by simply clicking.
+In the search field, type "Smart Team" by ShapedPlugin. Once you have found it, you can install it by simply clicking.
 "Install Now" and then "Activate".
 
 = MANUAL INSTALLATION =
@@ -178,6 +178,11 @@ In the search field, type "SmartTeam" by ShapedPlugin. Once you have found it, y
 
 
 == Changelog ==
+
+= Version 3.0.13 - Apr 10, 2026 =
+* Fix: Some CSS style issues found with WordPress 7.0.
+* Improved: The plugin security has been enhanced.
+* Tested: WordPress 7.0 compatibility.
 
 = Version 3.0.12 - Jan 12, 2026 =
 * Improved: Standardized singleton instance property naming.

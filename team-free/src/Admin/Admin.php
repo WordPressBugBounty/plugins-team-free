@@ -281,7 +281,7 @@ class Admin {
 				/* translators: %s is replaced with 'team name' */
 				'not_found_in_trash'    => wp_sprintf( esc_html__( 'No %1$s %2$s Found in Trash', 'team-free' ), $this->sptp_team_name, $this->sptp_member_singular_name ),
 				'parent_item_colon'     => null,
-				'menu_name'             => __( 'SmartTeam', 'team-free' ),
+				'menu_name'             => __( 'Smart Team', 'team-free' ),
 				/* translators: %s is replaced with 'member singular name' */
 				'featured_image'        => wp_sprintf( esc_html__( '%s Image', 'team-free' ), $this->sptp_member_singular_name ),
 				/* translators: %s is replaced with 'member singular name' */
@@ -381,7 +381,7 @@ class Admin {
 	}
 
 	/**
-	 * Rename member columns for SmartTeam plugin.
+	 * Rename member columns for Smart Team plugin.
 	 *
 	 * @since    2.0.0
 	 * @param  mixed $columns columns of all member page.
@@ -396,7 +396,7 @@ class Admin {
 	}
 
 	/**
-	 * Get data in member columns for SmartTeam plugin.
+	 * Get data in member columns for Smart Team plugin.
 	 *
 	 * @since    2.0.0
 	 * @param  mixed   $column columns of all member page.
@@ -434,7 +434,7 @@ class Admin {
 	}
 
 	/**
-	 * Rename columns in all team page for SmartTeam plugin.
+	 * Rename columns in all team page for Smart Team plugin.
 	 *
 	 * @since    2.0.0
 	 * @param  mixed $columns columns of all team page.
@@ -509,7 +509,7 @@ class Admin {
 		$screen = get_current_screen();
 		if ( is_object( $screen ) && ( 'sptp_member' === $screen->post_type || 'sptp_generator' === $screen->post_type ) ) {
 			$url  = 'https://wordpress.org/support/plugin/team-free/reviews/';
-			$text = sprintf( wp_kses_post( 'Enjoying <strong>SmartTeam?</strong> Please rate us <span class="spwpteam-footer-text-star">★★★★★</span> <a href="%s" target="_blank">WordPress.org</a>. Your positive feedback will help us grow more. Thank you! 😊', 'team-free' ), esc_url( $url ) );
+			$text = sprintf( wp_kses_post( 'Enjoying <strong>Smart Team?</strong> Please rate us <span class="spwpteam-footer-text-star">★★★★★</span> <a href="%s" target="_blank">WordPress.org</a>. Your positive feedback will help us grow more. Thank you! 😊', 'team-free' ), esc_url( $url ) );
 		}
 
 		return $text;
@@ -524,14 +524,14 @@ class Admin {
 	public function sptp_version_text( $text ) {
 		$screen = get_current_screen();
 		if ( is_object( $screen ) && 'sptp_member' === $screen->post_type ) {
-			$text = 'SmartTeam ' . $this->version;
+			$text = 'Smart Team ' . $this->version;
 		}
 
 		return $text;
 	}
 
 	/**
-	 * Custom post type Save and update alert in Admin Dashboard created by SmartTeam
+	 * Custom post type Save and update alert in Admin Dashboard created by Smart Team
 	 *
 	 * @param array $messages alert messages.
 	 */
