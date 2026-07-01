@@ -264,9 +264,12 @@ if ( ! class_exists( 'Team_Import_Export' ) ) {
 							// meta key.
 							$meta_key = sanitize_key( $key );
 							// meta value.
-							$meta_value = maybe_unserialize( str_replace( '{#ID#}', $new_shortcode_id, $value ) );
+							$value = str_replace( '{#ID#}', $new_shortcode_id, $value );
+							if ( is_serialized( $value ) ) {
+								$value = unserialize( $value, array( 'allowed_classes' => false ) ); // phpcs:ignore -- disallowed any classes.
+							}
 							// update post meta.
-							update_post_meta( $new_shortcode_id, $meta_key, $meta_value );
+							update_post_meta( $new_shortcode_id, $meta_key, $value );
 						}
 					}
 				} catch ( \Exception $e ) {

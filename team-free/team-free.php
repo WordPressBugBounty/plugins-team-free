@@ -13,7 +13,7 @@
  * Plugin Name:       Smart Team
  * Plugin URI:        https://getwpteam.com/?ref=1
  * Description:       Smart Team (formerly WP Team) is a A WordPress plugin to display team members in Carousel, Grid, or List layouts. Customizable with multiple options.
- * Version:           3.0.13
+ * Version:           3.0.14
  * Author:            ShapedPlugin LLC
  * Author URI:        https://shapedplugin.com
  * License:           GPL v2 or later
@@ -36,7 +36,7 @@ define( 'SPT_PLUGIN_NAME', 'SmartTeam' );
 define( 'SPT_PLUGIN_SLUG', 'team-free' );
 define( 'SPT_PLUGIN_FILE', __FILE__ );
 define( 'SPT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
-define( 'SPT_PLUGIN_VERSION', '3.0.13' );
+define( 'SPT_PLUGIN_VERSION', '3.0.14' );
 define( 'SPT_PLUGIN_ROOT', plugin_dir_url( __FILE__ ) );
 define( 'SPT_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 

@@ -154,7 +154,7 @@ class Help {
 	public function spwpteam_plugins_info_api_help_page() {
 		$plugins_arr = get_transient( 'spwpteam_plugins' );
 		if ( false === $plugins_arr ) {
-			$args    = (object) array(
+			$args = array(
 				'author'   => 'shapedplugin',
 				'per_page' => '120',
 				'page'     => '1',
@@ -172,34 +172,30 @@ class Help {
 					'icons',
 				),
 			);
-			$request = array(
-				'action'  => 'query_plugins',
-				'timeout' => 30,
-				'request' => serialize( $args ),
-			);
-			// https://codex.wordpress.org/WordPress.org_API.
-			$url      = 'http://api.wordpress.org/plugins/info/1.0/';
-			$response = wp_remote_post( $url, array( 'body' => $request ) );
 
-			if ( ! is_wp_error( $response ) ) {
+			if ( ! function_exists( 'plugins_api' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+			}
+
+			$plugin_info = plugins_api( 'query_plugins', $args );
+
+			if ( ! is_wp_error( $plugin_info ) ) {
 
 				$plugins_arr = array();
-				$plugins     = unserialize( $response['body'] );
-
-				if ( isset( $plugins->plugins ) && ( count( $plugins->plugins ) > 0 ) ) {
-					foreach ( $plugins->plugins as $pl ) {
-						if ( ! in_array( $pl->slug, self::$not_show_plugin_list, true ) ) {
+				if ( isset( $plugin_info->plugins ) && ( count( $plugin_info->plugins ) > 0 ) ) {
+					foreach ( $plugin_info->plugins as $pl ) {
+						if ( ! in_array( $pl['slug'], self::$not_show_plugin_list, true ) ) {
 							$plugins_arr[] = array(
-								'slug'              => $pl->slug,
-								'name'              => $pl->name,
-								'version'           => $pl->version,
-								'downloaded'        => $pl->downloaded,
-								'active_installs'   => $pl->active_installs,
-								'last_updated'      => strtotime( $pl->last_updated ),
-								'rating'            => $pl->rating,
-								'num_ratings'       => $pl->num_ratings,
-								'short_description' => $pl->short_description,
-								'icons'             => $pl->icons['2x'],
+								'slug'              => $pl['slug'],
+								'name'              => $pl['name'],
+								'version'           => $pl['version'],
+								'downloaded'        => $pl['downloaded'],
+								'active_installs'   => $pl['active_installs'],
+								'last_updated'      => strtotime( $pl['last_updated'] ),
+								'rating'            => $pl['rating'],
+								'num_ratings'       => $pl['num_ratings'],
+								'short_description' => $pl['short_description'],
+								'icons'             => $pl['icons']['2x'],
 							);
 						}
 					}
@@ -210,7 +206,8 @@ class Help {
 		}
 
 		if ( is_array( $plugins_arr ) && ( count( $plugins_arr ) > 0 ) ) {
-			array_multisort( array_column( $plugins_arr, 'active_installs' ), SORT_DESC, $plugins_arr );
+			$active_installs = array_column( $plugins_arr, 'active_installs' );
+			array_multisort( $active_installs, SORT_DESC, $plugins_arr );
 
 			foreach ( $plugins_arr as $plugin ) {
 				$plugin_slug = $plugin['slug'];
@@ -403,7 +400,7 @@ class Help {
 		}
 
 		if ( isset( $action, $plugin ) && ( 'deactivate' === $action ) && wp_verify_nonce( $_wpnonce, 'deactivate-plugin_' . $plugin ) ) {
-			deactivate_plugins( $plugin, '', false, true );
+			deactivate_plugins( $plugin, false, true );
 		}
 
 		?>
@@ -800,7 +797,8 @@ class Help {
 							$plugin_icon[ $plugin['slug'] ] = $plugin['icons'];
 						}
 					}
-					?>
+					if ( ! empty( $plugin_icon['wp-carousel-free'] ) ) :
+						?>
 					<div class="spwpteam-our-plugin-list">
 						<h3 class="spwpteam-section-title">Upgrade your Website with our High-quality Plugins!</h3>
 						<div class="spwpteam-our-plugin-list-wrap">
@@ -880,6 +878,7 @@ class Help {
 							</a>
 						</div>
 					</div>
+					<?php endif; ?>
 				</div>
 			</section>
 
