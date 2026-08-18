@@ -62,6 +62,9 @@ class SPTP_Preview {
 		if ( ! wp_verify_nonce( $nonce, 'spf_metabox_nonce' ) ) {
 			return;
 		}
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return;
+		}
 		$setting = array();
 		$data    = ! empty( $_POST['data'] ) ?
 			wp_unslash( $_POST['data'] ) // phpcs:ignore

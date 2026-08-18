@@ -115,6 +115,9 @@ class Admin_Notices {
 		if ( ! isset( $post_data['nonce'] ) || ! wp_verify_nonce( sanitize_key( $post_data['nonce'] ), 'sp_wpt_review_notice' ) ) {
 			return;
 		}
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
 
 		if ( ! $review ) {
 			$review = array();

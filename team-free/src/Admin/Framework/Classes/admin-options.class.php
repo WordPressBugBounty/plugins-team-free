@@ -483,7 +483,9 @@ if ( ! class_exists( 'TEAMFW_Options' ) ) {
 				$nonce = sanitize_text_field( wp_unslash( $_POST[ 'spf_options_nonce' . $this->unique ] ) );
 			}
 
-			if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'spf_options_nonce' ) ) {
+			$capability = apply_filters( 'sp_wp_team_ui_permission', 'manage_options' );
+
+			if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'spf_options_nonce' ) || ! current_user_can( $capability ) ) {
 				return false;
 			}
 

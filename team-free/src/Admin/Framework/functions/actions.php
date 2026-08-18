@@ -22,6 +22,11 @@ if ( ! function_exists( 'sptp_clean_transient' ) ) {
 		if ( ! wp_verify_nonce( $nonce, 'spf_options_nonce' ) ) {
 			wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid nonce verification.', 'team-free' ) ) );
 		}
+		$capability = apply_filters( 'sp_wp_team_ui_permission', 'manage_options' );
+
+		if ( ! current_user_can( $capability ) ) {
+			wp_send_json_error( array( 'error' => esc_html__( 'Error: You do not have permission to do that.', 'team-free' ) ) );
+		}
 		// Success.
 		global $wpdb;
 		$wp_sitemeta = $wpdb->prefix . 'sitemeta';

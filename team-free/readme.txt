@@ -2,8 +2,8 @@
 Contributors: shapedplugin, shamimmiashuhagh, rubel_miah, khalilu
 Tags: team, team members, team grid, team showcase, team slider
 Requires at least: 5.0
-Tested up to: 7.0
-Stable tag: 3.0.14
+Tested up to: 7.1
+Stable tag: 3.0.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -178,6 +178,12 @@ In the search field, type "Smart Team" by ShapedPlugin. Once you have found it, 
 
 
 == Changelog ==
+
+= Version 3.0.15 – Aug 18, 2026 =
+* Fixed: The Gutenberg block compatibility issue with WordPress 7.1 iframed editor.
+* Fixed: Security improvement by adding capability checks to admin action handlers.
+* Improved: Enhanced security for plugin activation, deactivation, and settings operations.
+* Tested: WordPress 7.1 compatibility.
 
 = Version 3.0.14 - Jul 01, 2026 =
 * Improved: Use the plugins_api for recommended plugins section. 

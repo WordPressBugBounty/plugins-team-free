@@ -4,7 +4,7 @@
   function SPTeamCarouselInit() {
     $(".sptp-page-loading-image").css("visibility", "visible");
     if ($(".sptp-carousel").length > 0 && $('.sptp-member').length) {
-      $(".sptp-carousel").each(function () {
+      $(".sptp-carousel").not(".sptp-carousel-loaded").each(function () {
         var sptpID = $(this)
           .closest(".sptp-section")
           .attr("id");
@@ -80,13 +80,22 @@
         }
 
         // Add a class for the Gutenberg Block.
-        $(".sptp-section:not(.sptp-carousel-loaded)").addClass("sptp-carousel-loaded");
+        $(this).closest(".sptp-section").addClass("sptp-carousel-loaded");
 
       });
     }
 
     $(".sptp-page-loading-image").css("visibility", "hidden");
   }
+
+  /**
+   * Expose the initializer globally.
+   *
+   * The block editor canvas is an iframe since WordPress 6.3, so the editor has
+   * to be able to run the initializer on the window that owns the markup instead
+   * of re-downloading this file into the wrong document.
+   */
+  window.SPTeamCarouselInit = SPTeamCarouselInit;
 
   // Initialize the carousel when the document is ready
   $(document).ready(function () {

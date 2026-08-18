@@ -154,6 +154,9 @@ class ShapedPlugin_Offer_Banner {
 	 */
 	public function dismiss_offer_banner() {
 		check_ajax_referer( 'smart_tabs_offer_dismiss', 'nonce' );
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'error' => esc_html__( 'Error: You do not have permission to do that.', 'team-free' ) ) );
+		}
 		$offer_id = isset( $_POST['offer_id'] ) ? sanitize_text_field( wp_unslash( $_POST['offer_id'] ) ) : '';
 
 		update_option( 'shapedplugin_offer_banner_dismissed_' . $offer_id, true );
