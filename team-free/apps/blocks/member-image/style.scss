@@ -1,0 +1,19 @@
+/**
+ * Member Image — base styles (editor + frontend).
+ *
+ * The photo box reuses the shared card avatar classes (globally bundled from
+ * apps/blocks/shared/style.scss, flat `.sp-smart-team-card__avatar*` classes)
+ * so the aspect-ratio + hover-effect modifiers and the photo clipping come for
+ * free. Only the card-layout bleed has to be neutralized here: inside a card the
+ * avatar stretches and pulls out over __content's 20px padding, which a
+ * standalone block must not do. All dynamic values (size, radius, filters,
+ * margin) come from the dynamic CSS twins.
+ */
+
+.sp-smart-team-member-image {
+	.sp-smart-team-card__avatar {
+		align-self: auto;
+		margin-left: 0;
+		margin-right: 0;
+	}
+}

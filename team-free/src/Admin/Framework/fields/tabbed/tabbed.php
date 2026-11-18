@@ -53,7 +53,7 @@ if ( ! class_exists( 'TEAMFW_Field_tabbed' ) ) {
 				$tabbed_icon   = ( ! empty( $tab['icon'] ) ) ? $tab['icon'] : '';
 				$tabbed_active = ( empty( $key ) ) ? ' class="spf-tabbed-active"' : '';
 
-				echo '<a href="#"' . wp_kses_post( $tabbed_active ) . '>' . wp_kses_post( $tabbed_icon . $tab['title'] ) . '</a>';
+				echo '<a href="#"' . wp_kses_post( $tabbed_active ) . '>' . wp_kses_post( $tabbed_icon ) . wp_kses_post( $tab['title'] ) . '</a>';
 			}
 			echo '</div>';
 

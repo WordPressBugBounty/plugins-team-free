@@ -1,0 +1,139 @@
+/* Carousel — editor-only chrome. */
+.sp-smart-team-carousel {
+	&__loading {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		padding: 40px 0;
+		color: #757575;
+	}
+}
+
+/* Arrow Style picker (Navigation Arrow → Settings). Rendered through the shared
+   Layouts component; these rules turn its tiles into testimonial-pro's
+   sp-real-nav-icon-picker look — a bordered 6-cell grid with the small arrow
+   glyphs at natural size and the selected cell filled brand green. */
+
+// Outer frame around the whole 6-column arrow grid (scoped to the nav picker
+// via :has so other Layouts grids are unaffected).
+.sp-smart-team-layouts.grid-6:has(.sp-smart-team-nav-icon-cell) {
+	border: 1px solid #ddd;
+	border-radius: 2px;
+	padding: 5px;
+}
+
+// The Layouts img wrapper is a flex row; let the arrow cell fill its column.
+.sp-smart-team-layout-card:has(.sp-smart-team-nav-icon-cell) .sp-smart-layout-img {
+	width: 100%;
+}
+
+// Each arrow cell: a bordered 32px box filling its column, centering its glyph.
+.sp-smart-team-nav-icon-cell {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 32px;
+	box-sizing: border-box;
+	border: 1px solid #e7e7e7;
+	border-radius: 2px;
+	color: #2f2f2f;
+	transition:
+		border-color 0.15s ease,
+		background-color 0.15s ease,
+		color 0.15s ease;
+}
+
+// Keep the fixed-size arrow glyphs at their natural size — override the
+// Layouts stretch (.sp-smart-layout-img svg { width: 100% }) with higher
+// specificity so a 24px icon doesn't fill the cell.
+.sp-smart-layout-img .sp-smart-team-nav-icon-cell svg {
+	width: auto;
+	height: auto;
+	max-width: 18px;
+	max-height: 18px;
+}
+
+// Hover + selected states. The Layouts card carries .active on the picked
+// value; fill it brand green with a white glyph (like the mock) — no checkmark
+// badge here since displayActive is off.
+.sp-smart-team-layout-card:hover .sp-smart-team-nav-icon-cell {
+	border-color: #2b5f47;
+}
+
+.sp-smart-team-layout-card.active .sp-smart-team-nav-icon-cell {
+	color: #fff;
+	border-color: #2b5f47;
+	background-color: #2b5f47;
+}
+
+/* Pagination Style dropdown (Pagination Dots → Settings) — the option list
+   inside the shared Popover (port of testimonial-pro's sp-real-select-dropdown).
+   The Popover trigger is the standard sliders icon; this styles the list. */
+.sp-smart-team-select-dropdown {
+	display: flex;
+	flex-direction: column;
+	max-height: 400px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	.sp-smart-team-select-dropdown-option {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 42px;
+		padding: 0 13px;
+		margin: 0;
+		cursor: pointer;
+		border-radius: 2px;
+		border-bottom: 1px solid #eef1f0;
+		flex-shrink: 0;
+
+		> span {
+			margin: 0;
+			font-size: 13px;
+			display: flex;
+			align-items: center;
+		}
+
+		&:hover {
+			background-color: #eaf0ed;
+		}
+
+		&.active,
+		&.active:hover {
+			background-color: #2b5f47;
+			color: #fff;
+
+			svg {
+				fill: #fff;
+			}
+		}
+	}
+}
+
+/* Pro rows (Figma node 744:26700): muted label with a green "(Pro)" tag; the
+   row is inert (wp-carousel-free's disabled select option) — no upgrade link. */
+.sp-smart-team-select-dropdown-option.is-pro {
+	color: #757575;
+	cursor: default;
+
+	.sp-smart-team-pro-tag {
+		margin-left: 4px;
+		color: #4ab866;
+	}
+
+	&:hover {
+		background-color: transparent;
+	}
+}
+
+/* The popover content box hugs the option list (no inner padding). */
+.sp-smart-team-popover__content-visible-content:has(.sp-smart-team-select-dropdown) {
+	padding: 0 !important;
+}

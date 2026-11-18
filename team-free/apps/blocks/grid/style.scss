@@ -1,0 +1,33 @@
+/**
+ * Grid — block layout styles.
+ *
+ * Only the grid track: the `__items` grid and the `__cell` per-card wrapper.
+ * All card styles live in
+ * ../shared/style.scss (the `.sp-smart-team-card` block).
+ */
+
+.sp-smart-team-grid {
+	&__items {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 24px;
+	}
+
+	// Grid cell around each card — a transparent pass-through.
+	&__cell {
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		min-width: 0;
+	}
+
+	&__cell > .sp-smart-team-card {
+		flex: 1 1 auto;
+	}
+
+	&__empty {
+		margin: 0;
+		text-align: center;
+		color: #757575;
+	}
+}

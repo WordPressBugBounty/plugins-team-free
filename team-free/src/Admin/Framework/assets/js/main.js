@@ -546,6 +546,49 @@
 	}
 
 	//
+	// Field: accordion
+	//
+	$.fn.spf_field_accordion = function () {
+		return this.each(function () {
+
+			var $titles = $(this).find('.spf-accordion-title');
+			var $first_title = $(this).parents('.post_content_sorter').find('.spf--sortable-item:nth-child(1) .spf-accordion-title');
+			var $content_area = $first_title.next();
+			$content_area.addClass('spf-accordion-open');
+			if (!$content_area.data('opened')) {
+				$content_area.spf_reload_script();
+				$content_area.data('opened', true);
+			}
+			$content_area.addClass('spf-accordion-open');
+
+			$titles.on('click', function () {
+
+				var $title = $(this),
+					$icon = $title.find('.spf-accordion-icon'),
+					$content = $title.next();
+
+				if ($icon.hasClass('fa-angle-right')) {
+					$icon.removeClass('fa-angle-right').addClass('fa-angle-down');
+					$title.toggleClass('expanded')
+				} else {
+					$icon.removeClass('fa-angle-down').addClass('fa-angle-right');
+					$title.toggleClass('expanded')
+				}
+
+				if (!$content.data('opened')) {
+
+					$content.spf_reload_script();
+					$content.data('opened', true);
+
+				}
+
+				$content.toggleClass('spf-accordion-open');
+
+			});
+		});
+	};
+
+	//
 	// Field: group
 	//
 	$.fn.spf_field_group = function () {
@@ -557,6 +600,7 @@
 				$hidden = $group.children('.spf-cloneable-hidden'),
 				$max = $group.children('.spf-cloneable-max'),
 				$min = $group.children('.spf-cloneable-min'),
+				unique_id = $wrapper.data('unique-id'),
 				field_id = $wrapper.data('field-id'),
 				is_number = Boolean(Number($wrapper.data('title-number'))),
 				max = parseInt($wrapper.data('max')),
@@ -595,15 +639,19 @@
 
 					if ($panel.length && !$panel.data('opened')) {
 						var $fields = $panel.children()
+
+						/**
+						 * Select value update.
+						 */
 						var $first = $fields
 							.first()
 							.find(':input')
 							.first()
-						var $title = $header.find('.spf-cloneable-value')
+						var $title = $header.find('.spf-cloneable-value');
 
 						$first.on('change keyup', function (event) {
-							$title.text($first.val())
-						})
+							$title.text($first.val());
+						});
 
 						$panel.spf_reload_script()
 						$panel.data('opened', true)
@@ -652,13 +700,15 @@
 				}
 
 				var $cloned_item = $hidden.spf_clone(true)
+				var new_field_id = unique_id + field_id + '[' + count + ']';
 
 				$cloned_item.removeClass('spf-cloneable-hidden')
 
 				$cloned_item.find(':input[name!="_pseudo"]').each(function () {
-					this.name = this.name
-						.replace('___', '')
-						.replace(field_id + '[0]', field_id + '[' + count + ']')
+					// this.name = this.name
+					// 	.replace('___', '')
+					// 	.replace(field_id + '[0]', field_id + '[' + count + ']')
+					this.name = new_field_id + this.name.replace((this.name.startsWith('_nonce') ? '_nonce' : unique_id), '');
 				})
 
 				$wrapper.append($cloned_item)
@@ -1035,7 +1085,10 @@
 				update: function (event, ui) {
 					// $sortable.spf_customizer_refresh()
 				}
-			})
+			});
+
+			// Disable sorting interaction
+			$sortable.sortable('disable');
 
 			$sortable.find('.spf-sortable-content').spf_reload_script()
 		})
@@ -1969,6 +2022,40 @@
 				var $hidden_select = $this.parent().find('.spf-hide-select')
 				var $hidden_value = $hidden_select.val() || []
 
+				/**
+				 * Free allows up to 3 new picks. A selection saved with more (in
+				 * Pro) is shown and kept as is — never trimmed on load, which would
+				 * save the trimmed list over Pro's on the next Update.
+				 */
+				let maxSelections = 3;
+				let messageShown = false;
+
+				// Max selection limit logic
+				$this.on('change.spfLimit', function (e, result) {
+					const selected = $this.val() || [];
+
+					if (selected.length > maxSelections) {
+						// Remove the newly selected one.
+						if (result && result.selected) {
+							const updated = selected.filter(function (val) {
+								return val !== result.selected;
+							});
+							$this.val(updated);
+							$this.trigger('chosen:updated');
+							$hidden_select.val(updated).trigger('change');
+						}
+
+						if (!messageShown) {
+							messageShown = true;
+							const $msg = $('<div class="spf-limit-msg" style="color:red;margin-top:5px;">To unlock unlimited selections and supercharge your workflow, <a href="https://getwpteam.com/pricing/?ref=1" target="_blank"><b>Upgrade to Pro.</b></a></div>');
+							$msg.insertAfter($this.next('.chosen-container')).fadeIn().delay(15000).fadeOut(function () {
+								$(this).remove();
+								messageShown = false;
+							});
+						}
+					}
+				}); // End of max selection limit logic.
+
 				$this.on('change', function (obj, result) {
 					if (result && result.selected) {
 						$hidden_select.append(
@@ -2253,6 +2340,7 @@
 				// Field plugins
 				$this.children('.spf-field-code_editor').spf_field_code_editor()
 				$this.children('.spf-field-fieldset').spf_field_fieldset()
+				$this.children('.spf-field-accordion').spf_field_accordion()
 				$this.children('.spf-field-group').spf_field_group()
 				$this.children('.spf-field-icon').spf_field_icon()
 
@@ -2576,6 +2664,97 @@
 	$('.sptp_member_page_team_settings .spf-save').on('click', function (e) {
 		e.preventDefault();
 		$(this).css({ "background-color": "#C5C5C6", "pointer-events": "none" }).val('Changes Saved');
-	})
+	});
 
-})(jQuery, window, document)
+	/**
+	 * Repeater Limit Enforcement.
+	 *
+	 * Free caps ADDING skills at 3; it never removes rows that already exist.
+	 * A member saved in Pro (no cap) keeps every skill: a row missing from the
+	 * form is not submitted, and the save would drop it from the database.
+	 */
+	const repeaterSkillWrapper = $('.spf-field-repeater.inline-repeater-skill');
+	const addSkillButton = repeaterSkillWrapper.find('.spf-repeater-add');
+	const maxSkillItems = 3;
+	// Labels: the translated "Add Skill" the PHP field rendered, and the localized upsell.
+	const addSkillLabel = addSkillButton.text();
+	const upgradeSkillLabel =
+		(window.spf_vars && spf_vars.i18n && spf_vars.i18n.skills_upgrade) || 'Upgrade to Pro for more skills';
+
+	function getVisibleRepeaterItems() {
+		return repeaterSkillWrapper
+		.find('.spf-repeater-wrapper .spf-repeater-item')
+		.filter(function () {
+			return !$(this).hasClass('spf-repeater-hidden');
+		});
+	}
+
+	function enforceLimit() {
+		const skillItems = getVisibleRepeaterItems();
+
+		// Show/hide "Add Skill" button — at or over the cap only adding is locked.
+		if (skillItems.length >= maxSkillItems) {
+			addSkillButton.text(upgradeSkillLabel);
+			addSkillButton.prop('disabled', true);
+			addSkillButton.css({
+				'opacity': '0.8',
+				'pointer-events': 'none',
+			});
+
+			// Disable duplicate icon.
+			$('.inline-repeater-skill .spf-repeater-helper-inner>i:nth-of-type(2)').css({
+				'opacity': '0.5',
+				'pointer-events': 'none',
+				'cursor': 'not-allowed'
+			});
+		} else {
+			addSkillButton.text(addSkillLabel);
+			addSkillButton.prop('disabled', false);
+			addSkillButton.css({
+				'opacity': '1',
+				'pointer-events': 'initial',
+			});
+
+			// Enable duplicate icon.
+			$('.inline-repeater-skill .spf-repeater-helper-inner>i:nth-of-type(2)').css({
+				'opacity': '1',
+				'pointer-events': 'initial',
+				'cursor': 'pointer'
+			});
+		}
+	}
+
+	enforceLimit();
+
+	// On add button click.
+	addSkillButton.on('click', function () {
+		setTimeout(enforceLimit, 100); // Wait for new DOM to render
+	});
+
+	// Re-check whenever a row is added, duplicated or removed. A delegated click
+	// handler cannot do this: the framework detaches the row (and the clicked
+	// button) first, so jQuery never matches the wrapper and the lock stuck.
+	const skillRows = repeaterSkillWrapper.find('.spf-repeater-wrapper').get(0);
+	if (skillRows && window.MutationObserver) {
+		new MutationObserver(enforceLimit).observe(skillRows, { childList: true });
+	}
+
+	// If your plugin triggers this custom event.
+	repeaterSkillWrapper.on('spf_repeater_updated', enforceLimit);
+
+	/**
+	 * Add member card padding and border value update on check..
+	 */
+	$('.sptp-make-member-card-style .spf-checkbox input[type="checkbox"]').on('change', function() {
+		if ($(this).is(':checked')) {
+			// Updated values.
+			$('.members_padding input[name^="_sptp_generator[item_padding]"]').val(10);
+			$('.sptp-member-border-around input[name="_sptp_generator[border_bg_around_member][border_around_member][all]"]').val(1);
+		} else {
+			// Initial values.
+			$('.members_padding input[name^="_sptp_generator[item_padding]"]').val(0);
+			$('.sptp-member-border-around input[name="_sptp_generator[border_bg_around_member][border_around_member][all]"]').val(0);
+		}
+	});
+
+})(jQuery, window, document);

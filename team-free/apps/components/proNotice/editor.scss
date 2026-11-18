@@ -1,0 +1,109 @@
+// Pro upsell card — the Inspector notice shipped in WP Carousel Free
+// (blocks/components/pro/editor.scss, "Inspector notice").
+$pro-notice-border: #dcefe4;
+$pro-notice-gradient-start: #eaf8f0;
+$pro-notice-gradient-mid: #f7fcf9;
+$pro-notice-text: #1e1e1e;
+$pro-notice-muted: #50575e;
+$pro-notice-marker: #7cc9a0;
+$pro-notice-btn-border: #bfe3cd;
+$pro-notice-btn-text: #1a7f45;
+$pro-notice-accent: #1e9e5a;
+$pro-notice-btn-hover-bg: #f1faf4;
+$pro-notice-btn-hover-text: #146c3a;
+
+.sp-smart-team-pro-notice {
+	margin-top: 22px;
+	padding: 16px;
+	border: 1px solid $pro-notice-border;
+	border-radius: 6px;
+	background: linear-gradient(
+		225deg,
+		$pro-notice-gradient-start 0%,
+		$pro-notice-gradient-mid 50%,
+		#fff 100%
+	);
+
+	&--panel {
+		margin-top: 0;
+	}
+
+	&__title {
+		margin: 0 0 6px;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.4;
+		// Fill each line; core may set balance/pretty on headings and paragraphs.
+		text-wrap: wrap;
+		color: $pro-notice-text;
+	}
+
+	&__subtitle {
+		margin: 0 0 12px;
+		font-size: 13px;
+		line-height: 1.5;
+		color: $pro-notice-muted;
+		text-wrap: wrap;
+	}
+
+	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		// The 14px gap below sits on the button: the shared list reset
+		// (apps/blocks/shared/style.scss) forces `margin: 0 !important` on every
+		// `ul[class*='sp-smart-team-']`.
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		li {
+			text-wrap: wrap;
+			display: flex;
+			align-items: baseline;
+			gap: 8px;
+			margin: 0;
+			font-size: 13px;
+			line-height: 1.5;
+			color: $pro-notice-text;
+		}
+	}
+
+	&__marker {
+		flex: 0 0 auto;
+		font-size: 11px;
+		color: $pro-notice-marker;
+	}
+
+	&__button {
+		display: inline-flex;
+		align-items: center;
+		height: 36px;
+		margin-top: 14px;
+		padding: 0 14px;
+		border: 1px solid $pro-notice-btn-border;
+		border-radius: 4px;
+		background: #fff;
+		color: $pro-notice-btn-text;
+		font-size: 13px;
+		font-weight: 500;
+		text-decoration: none;
+		transition:
+			border-color 0.15s ease,
+			background 0.15s ease,
+			color 0.15s ease;
+
+		&:hover,
+		&:focus {
+			border-color: $pro-notice-accent;
+			background: $pro-notice-btn-hover-bg;
+			color: $pro-notice-btn-hover-text;
+			box-shadow: none;
+		}
+
+		&:focus-visible {
+			outline: 2px solid $pro-notice-accent;
+			outline-offset: 1px;
+		}
+	}
+}

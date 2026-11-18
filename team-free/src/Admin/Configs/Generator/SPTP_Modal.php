@@ -32,7 +32,7 @@ class SPTP_Modal {
 	 * @param string $prefix _sptp_generator.
 	 */
 	public static function section( $prefix ) {
-		$single_page_link = admin_url( 'edit.php?post_type=sptp_member&page=team_settings#tab=single-page' );
+		$single_page_link = admin_url( 'edit.php?post_type=sptp_member&page=sptp_dashboard#templates' );
 		SPF_TEAM::createSection(
 			$prefix,
 			array(
@@ -55,6 +55,20 @@ class SPTP_Modal {
 						'type'       => 'fieldset',
 						'dependency' => array( 'link_detail', '==', 'true' ),
 						'fields'     => array(
+							array(
+								'id'       => 'page_link_type',
+								'class'    => 'sptp_page_link_type',
+								'type'     => 'button_set',
+								'title'    => __( 'Detail Page Link Type', 'team-free' ),
+								'subtitle' => __( 'Choose member detail page type.', 'team-free' ),
+								'options'  => array(
+									'new_page' => __( 'Single Page', 'team-free' ),
+									'modal'    => __( 'Modal', 'team-free' ),
+									'drawer'   => __( 'Drawer', 'team-free' ),
+								),
+								'default'  => 'new_page',
+								'inline'   => true,
+							),
 							array(
 								'id'         => 'page_link_open',
 								'type'       => 'radio',
@@ -89,20 +103,6 @@ class SPTP_Modal {
 									'<a href="https://getwpteam.com/pricing/?ref=1" target="_blank"><b>',
 									'</b></a>',
 								),
-							),
-							array(
-								'id'       => 'page_link_type',
-								'class'    => 'sptp_page_link_type',
-								'type'     => 'button_set',
-								'title'    => __( 'Detail Page Link Type', 'team-free' ),
-								'subtitle' => __( 'Choose member detail page type.', 'team-free' ),
-								'options'  => array(
-									'new_page' => __( 'Single Page', 'team-free' ),
-									'modal'    => __( 'Modal', 'team-free' ),
-									'drawer'   => __( 'Drawer', 'team-free' ),
-								),
-								'default'  => 'new_page',
-								'inline'   => true,
 							),
 							array(
 								'id'         => 'modal_type',

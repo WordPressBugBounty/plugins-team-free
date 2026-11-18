@@ -1,0 +1,68 @@
+.sp-smart-team-css-code-editor {
+	.sp-smart-team-css-code-editor__textarea,
+	.CodeMirror {
+		border: 1px solid #d1d5db; // gray-300
+		border-radius: 2px;
+		font-family: Consolas, Monaco, monospace;
+		font-size: 13px;
+		line-height: 1.5;
+	}
+
+	.CodeMirror {
+		height: auto;
+	}
+
+	.CodeMirror-scroll {
+		min-height: 120px;
+	}
+}
+
+.sp-smart-team-advanced-custom-css {
+	margin-top: 16px;
+
+	.sp-smart-team-advanced-custom-css__modal-button {
+		margin-top: 8px;
+	}
+}
+
+// Brand-color secondary chrome for "Edit in Modal" / "Close".
+.sp-smart-team-advanced-custom-css__modal-button.components-button.is-secondary,
+.sp-smart-team-custom-css-modal .components-button.is-secondary {
+	color: var(--sp-smart-team-primary-2-800);
+	box-shadow: none;
+	border: 1px solid var(--sp-smart-team-primary-2-800);
+
+	&:hover:not(:disabled),
+	&:focus:not(:disabled) {
+		color: var(--sp-smart-team-primary-2-900);
+		background: var(--sp-smart-team-primary-2-50);
+		box-shadow: none;
+	}
+}
+
+.sp-smart-team-custom-css-modal {
+	.components-modal__content {
+		min-width: min(720px, 90vw);
+	}
+
+	.sp-smart-team-css-code-editor {
+		margin-bottom: 16px;
+	}
+}
+
+// Opt-in resizing through the browser's native grip: the fallback textarea keeps
+// its own; CodeMirror's wrapper (overflow: hidden from core) qualifies too.
+.sp-smart-team-css-code-editor--resizable {
+	.sp-smart-team-css-code-editor__textarea,
+	.CodeMirror {
+		resize: vertical;
+		min-height: 70px;
+		max-height: 1000px;
+	}
+
+	// The 120px floor above suits auto-height editors only; with a dragged-down
+	// height it leaves empty scrollable space under the last line.
+	.CodeMirror-scroll {
+		min-height: 0;
+	}
+}

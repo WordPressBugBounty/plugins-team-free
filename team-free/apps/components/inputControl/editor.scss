@@ -1,0 +1,191 @@
+.sp-smart-team-pro-tab-panel {
+	.sp-smart-team-input-control .sp-smart-team-spacing-part-1 {
+		.sp-smart-team-header-input-control {
+			&.d-flex {
+				display: flex;
+				justify-content: space-between;
+
+				.sp-smart-team-component-title {
+					margin-bottom: 0;
+				}
+
+				.sp-smart-team-header-control-left {
+					display: flex;
+					width: 60%;
+				}
+
+				.sp-smart-team-header-control-right {
+					width: 30%;
+
+					.components-input-control__container {
+						input[type="number"] {
+							text-align: center;
+						}
+					}
+				}
+			}
+
+			&.d-block {
+				.sp-smart-team-header-control-left {
+					width: 100%;
+					// margin-bottom: 5px;
+				}
+
+				.sp-smart-team-header-control-right .components-base-control {
+					width: 100%;
+				}
+			}
+
+			.components-input-control__backdrop {
+				border-color: #ddd;
+			}
+		}
+		.sp-smart-team-component-title{
+			margin-bottom: 8px;
+		}
+	}
+}
+
+.sp-smart-team-pro-tab-panel input:not(#sp-smart-team-spacing-bottom, #sp-smart-team-spacing-top, #sp-smart-team-spacing-right, #sp-smart-team-spacing-left)::-webkit-inner-spin-button {
+	min-height: 30px;
+	margin-right: -7px;
+	cursor: pointer;
+}
+
+.sp-smart-team-header-control-left {
+	display: flex;
+	align-items: center;
+}
+
+.sp-smart-team-tab-panel {
+	input::-webkit-inner-spin-button {
+		min-height: 32px;
+		margin-right: 0px;
+		cursor: pointer;
+	}
+}
+
+.sp-smart-team-input-control {
+	input::-webkit-inner-spin-button {
+		min-height: 33px;
+		margin-right: -10px;
+		cursor: pointer;
+	}
+}
+
+.sp-smart-team-header-input-control.d-flex .components-input-base {
+	input {
+		min-height: 32px !important;
+		height: 32px !important;
+		width: 74px;
+	}
+
+	input::-webkit-inner-spin-button {
+		margin-right: -12px !important;
+	}
+}
+
+/* Inline layout: label on the left, input on the right. Unscoped because the
+   original .d-flex rule lives under .sp-smart-team-pro-tab-panel, which the
+   block inspector panels are not rendered inside. */
+.sp-smart-team-input-control {
+	// Brand the WP focus ring instead of the default blue.
+	--wp-admin-theme-color: #2b5f47;
+	--wp-admin-theme-color-darker-10: #234e3a;
+	--wp-admin-theme-color-darker-20: #1c3d2d;
+
+	// Match the light border used by the select field.
+	.components-input-control__backdrop {
+		border-color: #d7dade !important;
+	}
+
+	.sp-smart-team-header-input-control.d-flex {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.sp-smart-team-component-title {
+			margin-bottom: 0;
+		}
+
+		.sp-smart-team-header-control-left {
+			display: flex;
+			width: 50%;
+		}
+
+		.sp-smart-team-header-control-right {
+			width: 50%;
+
+			.components-base-control,
+			.components-input-control,
+			.components-input-base {
+				width: 100%;
+			}
+
+			input[type='number'] {
+				text-align: center;
+			}
+		}
+	}
+}
+
+/* Stacked layout: make the input span the full panel width. Unscoped because
+   the original .d-block rule lives under .sp-smart-team-pro-tab-panel, which
+   the block inspector panels are not rendered inside. */
+.sp-smart-team-input-control .sp-smart-team-header-input-control.d-block {
+	.sp-smart-team-header-control-left {
+		width: 100%;
+		margin-bottom: 8px;
+	}
+
+	.sp-smart-team-header-control-right {
+		width: 100%;
+
+		.components-base-control,
+		.components-input-control,
+		.components-input-base {
+			width: 100%;
+		}
+	}
+}
+
+/* Stepper variant (Figma): the label keeps the row, the control shrinks to a
+   compact box hugging the right edge — value centered, custom up/down spin
+   buttons on a light strip inside the border. */
+.sp-smart-team-input-control--stepper .sp-smart-team-header-input-control.d-flex {
+	.sp-smart-team-header-control-left {
+		width: auto;
+		flex: 1;
+	}
+
+	.sp-smart-team-header-control-right {
+		width: auto;
+
+		.components-base-control,
+		.components-input-control,
+		.components-input-base {
+			width: auto;
+		}
+
+		input[type='number'] {
+			width: 36px;
+			min-height: 30px !important;
+			height: 30px !important;
+			text-align: center;
+
+			/* The custom spin buttons replace the native webkit spinner. */
+			&::-webkit-inner-spin-button {
+				display: none;
+			}
+		}
+
+		/* The stacked up/down chevrons — the mock's light gray strip. */
+		.components-input-control__suffix {
+			background: #f0f0f0;
+
+			svg {
+				fill: #1e1e1e;
+			}
+		}
+	}
+}

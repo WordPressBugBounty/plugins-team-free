@@ -29,10 +29,10 @@ registerBlockType(
         // Block API v3 marks the block as compatible with the iframed editor
         // canvas, which WordPress 7.1 uses for every editor.
         apiVersion: 3,
-        title: __( 'Smart Team', 'team-free'),
-        description: __( 'Use Smart Team to insert a team in your page', 'team-free'),
+        title: __( 'Classic Shortcode', 'team-free'),
+        description: __( 'Use Classic Shortcode to insert a team in your page', 'team-free'),
 		icon: icons.teamFree,
-		category: 'common',
+		category: 'sptp',
 		supports: {
 			html: false,
 		},

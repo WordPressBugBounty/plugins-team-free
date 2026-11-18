@@ -1,0 +1,6146 @@
+$sptp-primary: #2b5f47; // base green (Figma: Primary/Baes Color)
+$sptp-tab-active: #167496; // Figma 2511:26103 resolves Primary/Baes Color here
+$sptp-image-select-active: #1a74e4; // classic .spf-field-image_select active mark
+$sptp-license-icon-color: #1e67d8; // matches testimonial-pro's --sp-real-primary-color
+$sptp-primary-dark: #20432f; // Figma: Primary/Primary-900
+$sptp-primary-100: #b7dbce; // light green tint (Figma: Primary/Primary-100)
+$sptp-border: #ddd;
+$sptp-bg: #f6f7f7;
+$sptp-light-gray: #f7f7f7;
+$sptp-text: #2f2f2f;
+$sptp-title: #1d2327;
+$sptp-title-dark: #1e1e1e; // Figma: Gutenberg/Gray 900
+$sptp-neutral-800: #4e4f52; // Figma: Neutral/800
+$sptp-neutral-900: #2c2d2f; // Figma: Neutral/900
+$sptp-primary-50: #e1f1ec; // Figma: Primary/Primary-50 — upcoming wizard step
+$sptp-primary-400: #4c9c7e; // Figma: Primary/Primary-400 — brand gradient end stop
+$sptp-wizard-bg: #f3f8f5; // Figma 594:21405 — the setup wizard surface
+$sptp-text-soft: #3c434a;
+$sptp-muted: #757575;
+$sptp-muted-border: #949494;
+$sptp-blue: #2271b1;
+$sptp-secondary: #1a74e4; // Figma: Other Colors/Secondary Color
+$sptp-secondary-dark: #145cb8; // hover for the secondary button
+$sptp-divider: #f0f0f0; // Figma: Gray/Gray 100 — settings row separator
+$sptp-checkbox: #3b5bfe; // accent for checkboxes/focus rings (matches Real Testimonials)
+$sptp-checkbox-border: #d1d5db; // unchecked checkbox border (matches Real Testimonials)
+$sptp-danger: #ed6f6f; // Figma: the Reset Changes outline
+$sptp-code-bg: #2f2f2f; // Figma: Gutenberg/Gray 800 — the code editor surface
+$sptp-code-text: #e6e6e6;
+$sptp-maxw: 1400px; // shared content width — the top bar and the body align to this
+$sptp-gutter: 48px;
+
+/* Break the dashboard out of the default wp-admin content padding so the top bar
+   is full-bleed, matching the design. */
+.sptp-admin-dashboard-wrapper {
+	margin: 0 0 0 -20px;
+	background: $sptp-bg;
+	color: $sptp-text;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	/* Override wp-admin's global `a:focus` (common.css) — it repaints every link
+	   we style as a button after a click: its own text colour, a blue box-shadow
+	   ring that reads as a changed border, and `border-radius: 2px`. Same
+	   override testimonial-pro carries. `:focus-visible` below puts a ring back
+	   for keyboard users only, so a mouse click never triggers it. */
+	.wp-person a:focus .gravatar,
+	a:focus,
+	a:focus .media-icon img,
+	a:focus .plugin-icon {
+		box-shadow: none;
+		outline: none;
+	}
+
+	a:focus-visible {
+		outline: 2px solid $sptp-primary;
+		outline-offset: 2px;
+	}
+}
+
+.sptp-dashboard {
+	/* At least the window, or wp-admin's side menu when that is taller — see
+	   hooks/useAdminMenuHeight.js. */
+	min-height: max(calc(100vh - 32px), var(--sptp-admin-menu-height, 0px));
+	display: flex;
+	flex-direction: column;
+}
+
+/* ---------- Top bar () ----------
+   One 64px white bar: brand on the left, page nav in the middle, Help Center on
+   the right — the layout testimonial-pro's dashboard header uses. The Figma's
+   green "You're on Lite" offer strip has no place in the Pro plugin. */
+.sptp-topbar {
+	background: #fff;
+	border-bottom: 1px solid $sptp-border;
+
+	&__inner {
+		max-width: $sptp-maxw;
+		width: 100%;
+		margin: 0 auto;
+		padding: 0 $sptp-gutter;
+		height: 64px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+	}
+
+	/* Equal flanks (basis 0, equal grow) keep the nav centred while there is
+	   room, and never shrink below their own content — so on a laptop, inside
+	   wp-admin's sidebar, the space goes to the nav instead of a fixed 200px
+	   flank sitting half empty beside Get Help. */
+	&__brand,
+	&__support {
+		flex: 1 1 0;
+		min-width: max-content;
+		display: flex;
+		align-items: center;
+	}
+
+	&__brand {
+		gap: 10px;
+	}
+
+	&__support {
+		justify-content: flex-end;
+		/* Positioning context for the Get Help dropdown. The trigger's vertical
+		   padding bridges the gap to the panel so the hover doesn't lapse. */
+		position: relative;
+		/* Only the trigger and the menu hold the hover, not the flank's empty
+		   width beside it. */
+		pointer-events: none;
+
+		> * {
+			pointer-events: auto;
+		}
+	}
+
+	&__logo {
+		height: 24px;
+		flex-shrink: 0;
+		display: block;
+	}
+
+	// White Label logo — recommended 200×50, so cap the height and keep the ratio.
+	&__logo--custom {
+		width: auto;
+		max-width: 200px;
+		height: 32px;
+		object-fit: contain;
+	}
+
+	&__version {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		height: 24px;
+		padding: 0 10px;
+		background: transparent;
+		border: 1px solid $sptp-border;
+		border-radius: 17px;
+		color: $sptp-text;
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1;
+		cursor: pointer;
+		transition: background 0.15s ease, border-color 0.15s ease;
+
+		&:hover,
+		&:focus {
+			background: $sptp-light-gray;
+			border-color: $sptp-muted-border;
+			color: $sptp-text;
+		}
+
+		&:focus-visible {
+			outline: 2px solid $sptp-primary;
+			outline-offset: 1px;
+		}
+
+		.sptp-topbar__version-icon {
+			width: 12px;
+			height: 12px;
+		}
+	}
+
+	&__nav {
+		position: relative;
+		flex: 0 1 auto;
+		min-width: 0;
+		align-self: stretch;
+		display: flex;
+		/* Narrow screens scroll the nav rather than wrapping it — the bar is a
+		   fixed 64px tall. */
+		overflow-x: auto;
+		scrollbar-width: none;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+
+		/* Auto margins centre the list but collapse to 0 once it overflows, so
+		   the first item stays reachable — `justify-content: center` on a
+		   scroller pushes it past the left edge where it can't be scrolled to. */
+		ul {
+			display: flex;
+			align-items: center;
+			gap: 24px;
+			margin: 0 auto;
+		}
+
+		li {
+			margin: 0;
+		}
+
+		button {
+			display: flex;
+			align-items: center;
+			height: 64px;
+			padding: 0;
+			background: none;
+			border: none;
+			color: $sptp-text;
+			font-size: 16px;
+			font-weight: 500;
+			line-height: normal;
+			white-space: nowrap;
+			cursor: pointer;
+			position: relative;
+
+			&:hover,
+			&.is-active {
+				color: $sptp-primary;
+			}
+		}
+	}
+
+	/* Optional leading glyph on a nav item (Our Plugins). */
+	&__nav-icon {
+		display: inline-flex;
+		margin-right: 6px;
+
+		svg {
+			display: block;
+		}
+	}
+
+	/* Vertical divider before a nav item (Lite vs Pro), centred in the 24px gap. */
+	&__nav-item--separated {
+		position: relative;
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: -12px;
+			width: 1px;
+			height: 20px;
+			background: $sptp-border;
+			transform: translateY(-50%);
+		}
+	}
+
+	/* "NEW!" tag on a nav item — port of testimonial-pro's `sp-real-nav-badge`. */
+	&__badge {
+		position: absolute;
+		top: 11px;
+		right: 0;
+		background-color: transparent;
+		color: #f18200;
+		font-size: 10px;
+		font-weight: 500;
+		padding: 0;
+		border-radius: 0;
+		white-space: nowrap;
+		line-height: normal;
+		text-transform: uppercase;
+	}
+
+	/* Sliding underline under the active item — measured in Header.jsx, the same
+	   approach as testimonial-pro's nav indicator. */
+	&__indicator {
+		position: absolute;
+		bottom: 0;
+		height: 2px;
+		background: $sptp-primary;
+		border-radius: 2px 2px 0 0;
+		transition: left 0.25s ease, width 0.25s ease;
+		pointer-events: none;
+	}
+
+	&__help {
+		display: inline-flex;
+		margin: 0;
+		border: 0;
+		background: none;
+		font-family: inherit;
+		cursor: pointer;
+		align-items: center;
+		gap: 6px;
+		padding: 20px 0;
+		color: $sptp-text;
+		font-size: 14px;
+		font-weight: 600;
+		white-space: nowrap;
+
+		.sptp-topbar__help-icon {
+			width: 15px;
+			height: 15px;
+			color: $sptp-primary;
+		}
+
+		&:hover {
+			color: $sptp-primary;
+		}
+	}
+
+	/* Get Help dropdown — a port of testimonial-pro's `.sp-real-help-drop-down`.
+	   Hover-only and CSS-driven, so the markup stays a plain list with no open
+	   state to track. The panel hangs off the right edge of `__support`, which
+	   sits inside the max-width container, so it never clips the viewport. */
+	&__help-menu {
+		position: absolute;
+		top: calc(100% - 4px);
+		right: 0;
+		z-index: 10;
+		width: max-content;
+		display: flex;
+		flex-direction: column;
+		padding: 10px;
+		border-radius: 4px;
+		background: #fff;
+		box-shadow: 0 2px 15px 0 rgba(17, 17, 17, 0.15);
+		text-align: left;
+		visibility: hidden;
+		opacity: 0;
+		transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+	}
+
+	&__support:hover &__help-menu,
+	&__support:focus-within &__help-menu {
+		visibility: visible;
+		opacity: 1;
+	}
+
+	&__help-item {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		width: 100%;
+		position: relative;
+		padding: 10px;
+		border: 0;
+		border-radius: 5px;
+		background: transparent;
+		color: $sptp-neutral-800;
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 1.4;
+		text-align: left;
+		cursor: pointer;
+		transition: background 0.3s, color 0.3s;
+
+		svg {
+			flex-shrink: 0;
+		}
+
+		/* wp-admin's `a:focus, a:active` (common.css) repaints any link it can
+		   reach in its own blue — specific enough (0,1,1) to outrank the class
+		   above, so clicking a row flashed it blue. Must stay ahead of the
+		   hover rule, which is equally specific and has to win. */
+		&:link,
+		&:visited,
+		&:focus,
+		&:active {
+			color: $sptp-neutral-800;
+		}
+
+		&:hover {
+			background: $sptp-bg;
+			color: $sptp-primary;
+
+			.sptp-topbar__help-arrow svg {
+				left: 0;
+				top: 40%;
+				opacity: 1;
+			}
+		}
+	}
+
+	/* The arrow only appears on hover, sliding up-right into place. */
+	&__help-arrow {
+		width: 16px;
+		height: 18px;
+		margin-left: auto;
+		position: relative;
+		scale: 0.8;
+
+		svg {
+			position: absolute;
+			top: 80%;
+			left: -10px;
+			transform: translate(-50%, -50%) rotate(-10deg);
+			transition: all 0.5s;
+			opacity: 0;
+		}
+	}
+}
+
+@media (max-width: 1400px) {
+	.sptp-topbar__inner {
+		gap: 16px;
+		padding: 0 24px;
+	}
+
+	.sptp-topbar__nav ul {
+		gap: 16px;
+	}
+
+	.sptp-topbar__nav button {
+		font-size: 15px;
+	}
+}
+
+@media (max-width: 1200px) {
+	.sptp-topbar__inner {
+		gap: 12px;
+	}
+
+	.sptp-topbar__nav ul {
+		gap: 16px;
+	}
+
+	.sptp-topbar__nav button {
+		font-size: 14px;
+	}
+}
+
+@media (max-width: 782px) {
+	.sptp-topbar__nav ul {
+		gap: 12px;
+	}
+}
+
+/* ---------- Body ---------- */
+.sptp-dashboard-body {
+	flex: 1;
+	width: 100%;
+	max-width: $sptp-maxw;
+	margin: 0 auto;
+	padding: 48px $sptp-gutter 60px;
+}
+
+.sptp-loading {
+	display: flex;
+	justify-content: center;
+	padding: 80px 0;
+}
+
+/* ---------- Getting Started (Claude Design "Team Dashboard") ---------- */
+.sptp-gs {
+	max-width: 1340px;
+	margin: 0 auto;
+
+	&__hero {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: clamp(24px, 3vw, 40px);
+		padding: clamp(24px, 3vw, 36px) clamp(20px, 3vw, 40px);
+		background: #fff;
+		border: 1px solid #e5e5e7;
+		border-radius: 10px;
+	}
+
+	&__intro {
+		flex: 999 1 520px;
+		min-width: 0;
+	}
+
+	&__media {
+		flex: 1 1 300px;
+		max-width: 380px;
+
+		.sptp-video {
+			border: 1px solid #e8f3ec;
+		}
+
+		.sptp-video__play {
+			width: 64px;
+			height: 64px;
+
+			svg {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+
+	&__greeting {
+		margin: 0 0 6px;
+		font-size: 16px;
+		font-weight: 500;
+		color: #646970;
+	}
+
+	&__title {
+		margin: 0 0 12px;
+		font-size: 22px;
+		font-weight: 700;
+		line-height: 1.3;
+		color: $sptp-title;
+	}
+
+	&__subtitle {
+		margin: 0 0 26px;
+		font-size: 16px;
+		line-height: 1.5;
+		color: #50575e;
+	}
+
+	&__buttons {
+		display: flex;
+		gap: 18px;
+		align-items: center;
+		flex-wrap: wrap;
+
+		.sptp-btn {
+			height: 46px;
+			padding: 0 20px;
+			font-size: 15px;
+			white-space: nowrap;
+			transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease,
+				transform 0.25s ease, box-shadow 0.25s ease;
+
+			&:hover {
+				transform: translateY(-2px);
+			}
+		}
+
+		.sptp-btn--primary:hover {
+			background: #1b3e2e;
+			border-color: #1b3e2e;
+			box-shadow: 0 8px 20px rgba(43, 95, 71, 0.28);
+		}
+
+		.sptp-btn--secondary:hover {
+			background: color-mix(in srgb, #{$sptp-primary} 6%, #fff);
+			border-color: #234f3b;
+			color: #234f3b;
+			box-shadow: 0 6px 16px rgba(43, 95, 71, 0.14);
+		}
+
+		.sptp-btn--tinted,
+		.sptp-btn--tinted:focus,
+		.sptp-btn--tinted:visited {
+			background: color-mix(in srgb, #{$sptp-primary} 8%, #fff);
+		}
+
+		.sptp-btn--tinted:hover {
+			background: color-mix(in srgb, #{$sptp-primary} 14%, #fff);
+			box-shadow: 0 6px 16px rgba(43, 95, 71, 0.18);
+		}
+	}
+
+	@media (max-width: 782px) {
+		&__media {
+			max-width: none;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		&__buttons .sptp-btn,
+		&__buttons .sptp-btn:hover {
+			transition: none;
+			transform: none;
+		}
+	}
+}
+
+/* ---------- Video ---------- */
+.sptp-video {
+	position: relative;
+	display: block;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	border-radius: 8px;
+	overflow: hidden;
+	background-color: $sptp-primary-dark;
+	background-size: cover;
+	background-position: center;
+
+	&__overlay {
+		position: absolute;
+		inset: 0;
+		background: rgba(43, 95, 71, 0.25);
+	}
+
+	&__play {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 112px;
+		height: 112px;
+		transition: transform 0.15s ease;
+
+		// Pulse travelling outward from the SVG's own baked-in halo circle
+		// (r=46 of a 112 box, i.e. ~82% of this span).
+		&::after {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 82%;
+			height: 82%;
+			border-radius: 50%;
+			background: #fff;
+			transform: translate(-50%, -50%) scale(1);
+			opacity: 0.3;
+			z-index: -1;
+			animation: sptp-video-pulse 2.4s ease-out infinite;
+		}
+	}
+
+	&:hover &__play {
+		transform: translate(-50%, -50%) scale(1.05);
+	}
+}
+
+.sptp-video-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	background: rgba(0, 0, 0, 0.8);
+
+	&__content {
+		position: relative;
+		width: 100%;
+		max-width: 900px;
+		background: #fff;
+		border-radius: 12px;
+		overflow: hidden;
+	}
+
+	&__close {
+		position: absolute;
+		top: 12px;
+		right: 12px;
+		z-index: 2;
+		width: 36px;
+		height: 36px;
+		border: 0;
+		border-radius: 50%;
+		background: rgba(0, 0, 0, 0.6);
+		color: #fff;
+		font-size: 24px;
+		line-height: 1;
+		cursor: pointer;
+	}
+
+	&__video {
+		aspect-ratio: 16 / 9;
+
+		iframe {
+			display: block;
+			width: 100%;
+			height: 100%;
+			border: 0;
+		}
+	}
+}
+
+@keyframes sptp-video-pulse {
+	0% {
+		transform: translate(-50%, -50%) scale(1);
+		opacity: 0.3;
+	}
+
+	100% {
+		transform: translate(-50%, -50%) scale(1.45);
+		opacity: 0;
+	}
+}
+
+// Only the static halo baked into the SVG stays; drop the travelling pulse.
+@media (prefers-reduced-motion: reduce) {
+	.sptp-video__play::after {
+		animation: none;
+	}
+}
+
+/* ---------- Buttons ---------- */
+.sptp-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border-radius: 4px;
+	font-weight: 600;
+	cursor: pointer;
+	text-decoration: none;
+	line-height: 20px;
+	transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease,
+		transform 0.25s ease, box-shadow 0.25s ease;
+
+	&:hover {
+		transform: translateY(-2px);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		&,
+		&:hover {
+			transition: none;
+			transform: none;
+		}
+	}
+
+	&--primary {
+		background: $sptp-primary;
+		color: #fff;
+		padding: 17px 24px;
+		font-size: 16px;
+		border: 1px solid $sptp-primary;
+
+		// Declared BEFORE :hover so hovering a focused button still shows hover.
+		&:focus,
+		&:active,
+		&:visited {
+			background: $sptp-primary;
+			border-color: $sptp-primary;
+			color: #fff;
+		}
+
+		&:hover {
+			background: $sptp-primary-dark;
+			border-color: $sptp-primary-dark;
+			color: #fff;
+			box-shadow: 0 8px 20px rgba(43, 95, 71, 0.28);
+		}
+	}
+
+	&--outline {
+		background: #fff;
+		color: $sptp-muted;
+		border: 1px solid $sptp-muted-border;
+		padding: 17px 24px;
+		font-size: 16px;
+
+		&:focus,
+		&:active,
+		&:visited {
+			background: #fff;
+			color: $sptp-muted;
+			border-color: $sptp-muted-border;
+		}
+
+		&:hover {
+			color: $sptp-primary;
+			border-color: $sptp-primary;
+			box-shadow: 0 6px 16px rgba(43, 95, 71, 0.14);
+		}
+	}
+
+	&--secondary {
+		background: #fff;
+		color: $sptp-primary;
+		border: 1px solid $sptp-primary;
+		padding: 17px 24px;
+		font-size: 16px;
+
+		&:focus,
+		&:active,
+		&:visited {
+			background: #fff;
+			color: $sptp-primary;
+			border-color: $sptp-primary;
+		}
+
+		&:hover {
+			background: $sptp-primary;
+			border-color: $sptp-primary;
+			color: #fff;
+			box-shadow: 0 6px 16px rgba(43, 95, 71, 0.14);
+		}
+	}
+
+	// Keeps its resting look on hover.
+	&--secondary#{&}--static:hover {
+		transform: none;
+		box-shadow: none;
+		background: #fff;
+		border-color: $sptp-primary;
+		color: $sptp-primary;
+	}
+
+	&--secondary#{&}--tinted {
+		&,
+		&:focus,
+		&:active,
+		&:visited,
+		&:hover {
+			background: $sptp-primary-50;
+		}
+	}
+
+	&--icon .dashicons {
+		font-size: 18px;
+		width: 18px;
+		height: 18px;
+	}
+}
+
+.sptp-gs__buttons-icon {
+	flex-shrink: 0;
+}
+
+/* ---------- Footer ---------- */
+.sptp-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+	width: 100%;
+	max-width: $sptp-maxw;
+	margin: 0 auto;
+	padding: 24px $sptp-gutter 32px;
+
+	&__made,
+	&__social,
+	&__rate {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 14px;
+		font-weight: 500;
+		color: #6e6a69;
+	}
+
+	a {
+		color: $sptp-blue;
+		font-weight: 500;
+	}
+
+	&__heart {
+		color: #e25563;
+		font-size: 16px;
+		width: 16px;
+		height: 16px;
+	}
+
+	&__social a {
+		color: $sptp-muted;
+		display: inline-flex;
+
+		.dashicons {
+			font-size: 18px;
+			width: 18px;
+			height: 18px;
+		}
+	}
+
+	&__stars {
+		display: inline-flex;
+		color: #f0a020;
+
+		.dashicons {
+			font-size: 16px;
+			width: 16px;
+			height: 16px;
+		}
+	}
+}
+
+/* ---------- Blocks page (Figma 785:12812) ---------- */
+.sptp-block-section {
+	margin-bottom: 40px;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	&__head {
+		margin-bottom: 24px;
+	}
+
+	&__title {
+		margin: 0 0 8px;
+		font-size: 24px;
+		font-weight: 500;
+		line-height: normal;
+		color: $sptp-title-dark;
+	}
+
+	&__desc {
+		margin: 0;
+		font-size: 14px;
+		color: $sptp-muted;
+	}
+}
+
+.sptp-block-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 24px;
+
+	@media (max-width: 1200px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media (max-width: 782px) {
+		grid-template-columns: 1fr;
+	}
+}
+
+.sptp-block-card {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	background: #fff;
+	border: 1px solid $sptp-border;
+	border-radius: 12px;
+	padding: 18px;
+	overflow: hidden;
+
+	&__main {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		flex: 1;
+		min-width: 0;
+	}
+
+	&__icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 48px;
+		height: 48px;
+		border: 1px solid $sptp-primary-100;
+		border-radius: 6px;
+
+		svg {
+			width: 28px;
+			height: 28px;
+		}
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		min-width: 0;
+	}
+
+	&__title {
+		margin: 0;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 20px;
+		color: $sptp-title-dark;
+		text-transform: capitalize;
+	}
+
+	&__links {
+		display: flex;
+		gap: 8px;
+
+		a {
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+			font-size: 11px;
+			line-height: 20px;
+			color: $sptp-muted;
+			text-transform: capitalize;
+
+			&:hover {
+				color: $sptp-primary;
+			}
+		}
+	}
+
+	/* The Pro badge pinned to the corner — same as wp-carousel's block card. */
+	&__pro {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+	}
+
+	&.is-pro {
+		background: #fbfbfc;
+
+		.sptp-switch {
+			opacity: 0.6;
+		}
+	}
+}
+
+/* Visibility switch — 36×18, 12px knob (Figma "Toggle"). */
+.sptp-switch {
+	position: relative;
+	display: block;
+	flex-shrink: 0;
+	width: 36px;
+	height: 18px;
+	padding: 0;
+	border: 1px solid #bbb;
+	border-radius: 999px;
+	background: #bbb;
+	cursor: pointer;
+	transition: background 0.15s ease, border-color 0.15s ease;
+
+	&.is-on {
+		background: $sptp-primary;
+		border-color: $sptp-primary;
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+	}
+
+	&:focus-visible {
+		outline: 2px solid $sptp-secondary;
+		outline-offset: 2px;
+	}
+
+	&__knob {
+		position: absolute;
+		top: 2px;
+		left: 2px;
+		width: 12px;
+		height: 12px;
+		border-radius: 50%;
+		background: #fff;
+		transition: transform 0.15s ease;
+	}
+
+	&.is-on &__knob {
+		transform: translateX(18px);
+	}
+}
+
+/* Crown + PRO pill (Figma "Free or Pro bages"). */
+.sptp-pro-badge {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	padding: 3px;
+	border: 0.8px solid #93dcac;
+	border-radius: 9999px;
+	background: #effff5;
+	color: #4ab866;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1;
+	white-space: nowrap;
+	overflow: hidden;
+	transition: padding 0.3s ease;
+
+	svg {
+		flex-shrink: 0;
+	}
+
+	/* Crown only until the card is hovered — wp-carousel-free's reveal. */
+	&__label {
+		max-width: 0;
+		opacity: 0;
+		overflow: hidden;
+		transition:
+			max-width 0.3s ease,
+			margin 0.3s ease,
+			opacity 0.3s ease;
+	}
+}
+
+.sptp-block-card,
+.sptp-module-card,
+.sptp-wizard-module {
+	&:hover,
+	&:focus-within {
+		.sptp-pro-badge {
+			padding-right: 4px;
+		}
+
+		.sptp-pro-badge__label {
+			max-width: 40px;
+			margin-left: 3px;
+			opacity: 1;
+		}
+	}
+}
+
+/* ---------- Modules page (Figma 785:12881) ---------- */
+.sptp-modules-page {
+	display: flex;
+	flex-direction: column;
+	gap: 48px;
+}
+
+.sptp-page-section {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+
+	&__head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+	}
+
+	&__title {
+		margin: 0 0 8px;
+		font-size: 24px;
+		font-weight: 500;
+		line-height: normal;
+		color: $sptp-title-dark;
+	}
+
+	&__desc {
+		margin: 0;
+		font-size: 14px;
+		line-height: 20px;
+		color: $sptp-neutral-800;
+	}
+}
+
+.sptp-btn-upgrade {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 15px 24px;
+	border-radius: 4px;
+	background: #02b472;
+	color: #fff;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 20px;
+	white-space: nowrap;
+	transition: background 0.15s ease;
+
+	&:hover,
+	&:focus {
+		background: #019c63;
+		color: #fff;
+	}
+}
+
+.sptp-module-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 24px;
+	/* Stretch, so every card in a row is as tall as the tallest one. */
+	align-items: stretch;
+
+	@media (max-width: 1200px) {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	@media (max-width: 782px) {
+		grid-template-columns: 1fr;
+	}
+}
+
+.sptp-module-card {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	background: #fff;
+	border: 1px solid $sptp-border;
+	border-radius: 12px;
+	padding: 24px;
+
+	&__top {
+		display: flex;
+		align-items: flex-start;
+		gap: 16px;
+	}
+
+	/* The gradient tile and its corner radius are baked into the exported SVG. */
+	&__icon {
+		display: block;
+		flex-shrink: 0;
+		width: 44px;
+		height: 44px;
+
+		img {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	&__body {
+		flex: 1;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	&__head {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		height: 20px;
+	}
+
+	&__title {
+		flex: 1;
+		min-width: 0;
+		margin: 0;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 20px;
+		color: $sptp-title-dark;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	&__desc {
+		margin: 0;
+		font-size: 14px;
+		line-height: 20px;
+		color: $sptp-muted;
+	}
+
+	/* Chips sit under the text column, 60px in (44px icon + 16px gap), pinned to
+	   the card bottom so rows of unequal text still line up. */
+	&__foot {
+		margin-top: auto;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		padding-left: 60px;
+	}
+}
+
+.sptp-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 5px 9px;
+	border: 1px solid #ecedf0;
+	border-radius: 4px;
+	background: #fbfcff;
+	font-size: 11px;
+	font-weight: 500;
+	line-height: 16px;
+	color: $sptp-muted;
+
+	&:hover {
+		color: $sptp-primary;
+		border-color: $sptp-primary-100;
+	}
+
+	svg {
+		display: block;
+		flex-shrink: 0;
+	}
+}
+
+/* ---------- Changelog drawer ----------
+   Portaled to <body>, so it inherits nothing from .sptp-admin-dashboard-wrapper
+   and has to carry its own box-sizing / typography. */
+.sptp-changelog {
+	position: fixed;
+	inset: 0;
+	z-index: 100100; // above wp-admin's admin bar (99999)
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	&__backdrop {
+		position: absolute;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.5);
+		opacity: 0;
+		// MUI's Drawer easing, so this matches the sibling plugins' feel.
+		transition: opacity 0.3s cubic-bezier(0, 0, 0.2, 1);
+	}
+
+	&__panel {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 100%;
+		width: 480px;
+		max-width: 100%;
+		display: flex;
+		flex-direction: column;
+		background: #fff;
+		box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+		transform: translateX(100%);
+		transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+		color: $sptp-text;
+		font-size: 14px;
+		line-height: 1.6;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	&.is-open {
+		.sptp-changelog__backdrop {
+			opacity: 1;
+		}
+
+		.sptp-changelog__panel {
+			transform: translateX(0);
+		}
+	}
+
+	&__header {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 20px;
+		border-bottom: 1px solid $sptp-border;
+	}
+
+	&__title {
+		margin: 0;
+		font-size: 18px;
+		font-weight: 600;
+		color: $sptp-title;
+	}
+
+	&__subtitle {
+		margin: 4px 0 0;
+		font-size: 13px;
+		color: $sptp-primary;
+		font-weight: 500;
+	}
+
+	&__close {
+		flex-shrink: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		padding: 0;
+		background: transparent;
+		border: none;
+		border-radius: 4px;
+		color: $sptp-muted;
+		cursor: pointer;
+
+		&:hover,
+		&:focus {
+			background: $sptp-light-gray;
+			color: $sptp-title;
+		}
+	}
+
+	&__body {
+		flex: 1;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		padding: 20px;
+	}
+
+	&__state {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		min-height: 160px;
+		color: $sptp-muted;
+		text-align: center;
+	}
+
+	&__retry {
+		padding: 6px 14px;
+		background: $sptp-primary;
+		border: none;
+		border-radius: 3px;
+		color: #fff;
+		font-size: 13px;
+		cursor: pointer;
+
+		&:hover {
+			background: $sptp-primary-dark;
+		}
+	}
+
+	/* Remote markup — style the tags the store returns. */
+	&__content {
+		word-wrap: break-word;
+
+		h1,
+		h2,
+		h3,
+		h4 {
+			margin: 24px 0 8px;
+			font-size: 15px;
+			font-weight: 600;
+			color: $sptp-title;
+
+			&:first-child {
+				margin-top: 0;
+			}
+		}
+
+		p {
+			margin: 0 0 12px;
+		}
+
+		ul,
+		ol {
+			margin: 0 0 16px;
+			padding-left: 20px;
+			list-style: disc;
+		}
+
+		li {
+			margin-bottom: 6px;
+		}
+
+		a {
+			color: $sptp-blue;
+		}
+
+		code {
+			padding: 2px 5px;
+			background: $sptp-light-gray;
+			border-radius: 3px;
+			font-size: 13px;
+		}
+
+		hr {
+			margin: 20px 0;
+			border: none;
+			border-top: 1px solid $sptp-border;
+		}
+	}
+}
+
+@media (max-width: 600px) {
+	.sptp-changelog__panel {
+		width: 100%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sptp-changelog__backdrop,
+	.sptp-changelog__panel {
+		transition: none;
+	}
+}
+
+/* ---------- Saved templates ---------- */
+.sptp-saved-templates {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	width: 100%;
+
+	// Holds roughly the height of the settled page, so the first response grows
+	// into the space instead of the layout jumping through three states.
+	&__pending {
+		display: flex;
+		align-items: flex-start;
+		justify-content: center;
+		min-height: 640px;
+		padding-top: 120px;
+		box-sizing: border-box;
+	}
+
+	&__container {
+		background: #fff;
+		border: 1px solid $sptp-border;
+		border-radius: 6px;
+		padding: 32px;
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		width: 100%;
+
+		// Empty state holds nothing but the table, whose own card supplies the
+		// frame — keeping this one would box the table inside a second border.
+		&--bare {
+			background: transparent;
+			border: 0;
+			border-radius: 0;
+			gap: 0;
+			padding: 0;
+		}
+	}
+}
+
+.sptp-saved-template-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 16px;
+
+	&__left {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		flex-wrap: wrap;
+	}
+}
+
+.sptp-saved-template-header__left .sptp-saved-template-select {
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+	box-sizing: border-box;
+	height: 36px;
+	min-height: 36px;
+	line-height: 34px;
+	margin: 0;
+	min-width: 136px;
+
+	&:focus {
+		outline: none;
+		box-shadow: none;
+		border-color: $sptp-primary;
+	}
+}
+
+.sptp-saved-template-apply {
+	align-items: center;
+	background: #fff;
+	border: 1px solid $sptp-primary;
+	border-radius: 3px;
+	box-sizing: border-box;
+	color: $sptp-primary;
+	cursor: pointer;
+	display: inline-flex;
+	font-size: 14px;
+	font-weight: 500;
+	height: 36px;
+	line-height: 20px;
+	margin: 0;
+	padding: 0 16px;
+	transition: all 0.3s ease-in-out;
+
+	&:hover:not( :disabled ) {
+		background: $sptp-primary;
+		color: #fff;
+	}
+
+	&:disabled {
+		border-color: $sptp-border;
+		color: $sptp-muted;
+		cursor: not-allowed;
+	}
+}
+
+/* wp-admin's `input[type="text"]` rule (0,1,1) outranks a bare class. */
+input[type='text'].sptp-saved-template-search {
+	background: #fff;
+	border: 1px solid $sptp-border;
+	border-radius: 4px;
+	box-sizing: border-box;
+	height: 36px;
+	min-height: 36px;
+	line-height: 34px;
+	margin: 0;
+	padding: 0 6px 0 16px;
+	width: 260px;
+	max-width: 100%;
+
+	&:focus {
+		outline: none;
+		box-shadow: none;
+		border-color: $sptp-primary;
+	}
+}
+
+.sptp-saved-template-add-new {
+	padding: 10px 24px 10px 20px;
+	border-radius: 4px;
+	background: $sptp-primary;
+	color: #fff;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 28px;
+	transition: background-color 0.3s ease-in-out;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	svg {
+		flex-shrink: 0;
+	}
+
+	&:hover,
+	&:focus {
+		background: $sptp-primary-dark;
+		color: #fff;
+	}
+}
+
+.sptp-saved-template-table {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	border-radius: 8px;
+	border: 1px solid $sptp-border;
+	background: #fff;
+	overflow: auto;
+	width: 100%;
+
+	&__head,
+	&__body {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+
+		tr {
+			display: flex;
+			align-items: center;
+			width: 100%;
+			min-width: 800px;
+			padding: 0 24px;
+		}
+	}
+
+	&__head tr {
+		background: #f6f7f8;
+		height: 56px;
+		border-bottom: 1px solid $sptp-border;
+
+		th {
+			color: $sptp-text;
+			font-size: 14px;
+			font-weight: 600;
+			line-height: 20px;
+			text-align: left;
+		}
+	}
+
+	&__body {
+		tr {
+			height: 64px;
+			border-bottom: 1px solid #f0f0f0;
+
+			&:last-child {
+				border-bottom: none;
+			}
+
+			&:nth-of-type(even) {
+				background: #fafafa;
+			}
+		}
+
+		td {
+			color: $sptp-text;
+			font-size: 14px;
+			line-height: 20px;
+		}
+	}
+}
+
+.sptp-saved-template-col {
+	&-checkBox input {
+		margin: 0 16px 0 0;
+		width: 16px;
+		height: 16px;
+		cursor: pointer;
+	}
+
+	&-title {
+		flex: 1;
+		min-width: 200px;
+
+		a {
+			color: $sptp-primary;
+			font-weight: 500;
+
+			&:hover {
+				color: $sptp-primary-dark;
+			}
+		}
+	}
+
+	&-block {
+		width: 180px;
+		flex-shrink: 0;
+	}
+
+	&-shortcode {
+		width: 340px;
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+
+	&-date {
+		width: 200px;
+		flex-shrink: 0;
+		text-transform: capitalize;
+	}
+
+	&-action {
+		width: 120px;
+		flex-shrink: 0;
+	}
+}
+
+.sptp-block-badge {
+	display: inline-block;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.4;
+	color: $sptp-muted;
+}
+
+.sptp-saved-template-shortcode {
+	border-radius: 3px;
+	border: 1px solid #e6e5e5;
+	background: #fafafa;
+	padding: 6px 16px;
+	cursor: pointer;
+	transition: background 0.3s ease;
+	font-size: 13px;
+	font-family: monospace;
+	color: $sptp-text;
+
+	&:hover {
+		background: #f0efef;
+	}
+}
+
+/* The copy glyph only appears on row hover — the "Copied!" chip replaces it. */
+.sptp-saved-template-copy-icon {
+	background: transparent;
+	border: none;
+	padding: 0;
+	display: inline-flex;
+	color: $sptp-muted;
+	cursor: pointer;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+.sptp-saved-template-table__body tr:hover .sptp-saved-template-copy-icon,
+.sptp-saved-template-copy-icon:focus-visible {
+	opacity: 1;
+}
+
+.sptp-saved-template-copied {
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+	padding: 4px 8px;
+	color: #317d46;
+	background: rgba(61, 158, 86, 0.1);
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 20px;
+	border-radius: 4px;
+}
+
+.sptp-saved-template-status {
+	font-weight: 500;
+	color: $sptp-primary;
+}
+
+.sptp-saved-template-actions {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+
+	.sptp-saved-template-action {
+		background: transparent;
+		border: none;
+		padding: 0;
+		display: inline-flex;
+		align-items: center;
+		color: $sptp-muted;
+		cursor: pointer;
+		transition: color 0.2s ease;
+
+		&:hover {
+			color: $sptp-primary;
+		}
+
+		&--delete:hover {
+			color: #b32d2e;
+		}
+	}
+}
+
+/* The empty / loading cell fills the fixed-height row it sits in — the row is a
+   flex container, so centering happens on the cell itself. */
+.sptp-saved-template-empty {
+	width: 100%;
+	min-height: 64px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: $sptp-muted;
+}
+
+// Nested under the body so the row's zebra/height rules don't win on specificity.
+.sptp-saved-template-table__body {
+	tr.sptp-saved-template-empty-row {
+		height: auto;
+		padding: 0;
+		background: transparent;
+	}
+
+	.sptp-saved-template-empty-row .sptp-saved-template-empty {
+		flex-direction: column;
+		gap: 12px;
+		min-height: 322px;
+		padding: 60px 24px;
+		box-sizing: border-box;
+
+		&__message {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 4px;
+		}
+
+		&__text {
+			color: #2c2d2f;
+			font-size: 16px;
+			line-height: 32px;
+			margin: 0;
+			text-align: center;
+		}
+
+		&__cta {
+			display: inline-flex;
+			align-items: center;
+			gap: 2px;
+			color: #387e61;
+			font-size: 16px;
+			font-weight: 600;
+			line-height: 20px;
+			text-decoration: none;
+
+			svg {
+				flex-shrink: 0;
+			}
+
+			&:hover,
+			&:focus {
+				color: $sptp-primary-dark;
+			}
+		}
+	}
+}
+
+.sptp-saved-template-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.sptp-saved-template-count {
+	font-size: 14px;
+	color: $sptp-muted;
+}
+
+.sptp-saved-template-pagination {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.sptp-pagination-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	background: transparent;
+	border: 1px solid $sptp-muted;
+	border-radius: 4px;
+	color: $sptp-text;
+	cursor: pointer;
+	transition: all 0.2s ease;
+
+	&:hover:not( .is-disabled ) {
+		background: $sptp-primary;
+		border-color: $sptp-primary;
+		color: #fff;
+	}
+
+	&.is-active {
+		background: $sptp-primary;
+		border-color: $sptp-primary;
+		color: #fff;
+	}
+
+	&.is-disabled {
+		border-color: $sptp-border;
+		color: $sptp-border;
+		cursor: not-allowed;
+	}
+}
+
+/* ---------- Saved templates promo ---------- */
+.sptp-saved-template-promo {
+	background-color: #fff;
+	background-image: linear-gradient(
+		68.3deg,
+		rgba(0, 0, 0, 0) 45.03%,
+		rgba(99, 173, 146, 0.2) 99.07%
+	);
+	border: 1px solid $sptp-border;
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	gap: 24px;
+	padding: 20px 32px;
+
+	&__text {
+		flex: 1 0 0;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 20px;
+	}
+
+	&__title {
+		color: #1e1e1e;
+		font-size: 24px;
+		font-weight: 700;
+		line-height: normal;
+		margin: 0;
+	}
+
+	&__desc {
+		color: #4e4f52;
+		font-size: 14px;
+		line-height: 1.6;
+		margin: 0;
+		max-width: 537px;
+	}
+
+	&__cta {
+		background: $sptp-primary;
+		border-radius: 4px;
+		color: #fff;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		height: 46px;
+		box-sizing: border-box;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 20px;
+		padding: 12px 18px;
+		transition: background 0.3s ease-in-out;
+		white-space: nowrap;
+
+		svg {
+			flex-shrink: 0;
+		}
+
+		&:hover,
+		&:focus {
+			background: $sptp-primary-dark;
+			color: #fff;
+		}
+	}
+
+	&__media {
+		flex-shrink: 0;
+		width: 435px;
+		height: 244px;
+		overflow: hidden;
+
+		img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+}
+
+@media (max-width: 960px) {
+	.sptp-saved-template-promo {
+		padding: 24px;
+
+		// The artwork would crowd the copy at this width, so it drops out.
+		&__media {
+			display: none;
+		}
+	}
+}
+
+
+/* Inside the narrower Settings panel two cards per row read better (the
+   Integrations grid). Declared after the base grid so it wins at equal weight. */
+.sptp-module-grid--two {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+
+	@media (max-width: 1440px) {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ---------- Settings page ---------- */
+.sptp-settings {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+
+	&__body {
+		display: flex;
+		align-items: flex-start;
+		gap: 32px;
+	}
+
+	/* Side menu */
+	&__menu {
+		flex: 0 0 248px;
+		width: 248px;
+		padding: 16px;
+		background: #fff;
+		border: 1px solid $sptp-border;
+		border-radius: 12px;
+
+		ul {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		li {
+			margin: 0;
+		}
+	}
+
+	&__tab {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+		width: 100%;
+		padding: 10px 8px 10px 20px;
+		background: none;
+		border: 1px solid transparent;
+		border-radius: 6px;
+		color: $sptp-text;
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 20px;
+		text-align: left;
+		cursor: pointer;
+
+		&:hover {
+			background: $sptp-light-gray;
+		}
+
+		&.is-active {
+			background: none;
+			border-color: $sptp-primary;
+			color: $sptp-primary;
+		}
+	}
+
+	&__tab-label {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+
+	&__tab-icon,
+	&__tab-arrow {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__tab-icon {
+		width: 16px;
+		height: 16px;
+	}
+
+	&__tab-arrow {
+		width: 20px;
+		height: 20px;
+	}
+
+	/* Content panel */
+	&__panel {
+		display: flex;
+		flex: 1;
+		min-width: 0;
+		min-height: 530px;
+		align-items: center;
+		justify-content: center;
+		padding: 32px;
+		overflow: hidden;
+		background: #fff;
+		border: 1px solid $sptp-border;
+		border-radius: 12px;
+	}
+
+	/* Panels that render a full form/grid instead of a centred message. */
+	&__panel--flow {
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: flex-start;
+		overflow: visible;
+	}
+
+	&__placeholder {
+		text-align: center;
+
+		h2 {
+			margin: 0 0 8px;
+			color: $sptp-title-dark;
+			font-size: 24px;
+			font-weight: 500;
+			line-height: 32px;
+		}
+
+		p {
+			margin: 0;
+			color: $sptp-muted;
+			font-size: 14px;
+			line-height: 20px;
+		}
+	}
+
+	&__menu-classic {
+		.sptp-settings__tab,
+		.sptp-settings__tab:visited,
+		.sptp-settings__tab:focus {
+			color: $sptp-text;
+			text-decoration: none;
+		}
+
+		.sptp-settings__tab:hover {
+			color: $sptp-primary;
+		}
+	}
+
+	&__classic-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding-bottom: 2px;
+		border-bottom: 1px solid $sptp-secondary;
+		color: $sptp-secondary;
+		font-size: 16px;
+		line-height: 1.2;
+
+		&:hover,
+		&:focus,
+		&:active,
+		&:visited {
+			color: $sptp-secondary;
+		}
+	}
+
+	&__classic-link-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 12px;
+		height: 12px;
+	}
+}
+
+/* Integrations panel (Settings > Integrations) */
+.sptp-integrations {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+
+	&__header {
+		h2 {
+			margin: 0 0 8px;
+			color: $sptp-title-dark;
+			font-size: 20px;
+			font-weight: 500;
+			line-height: 28px;
+		}
+
+		p {
+			margin: 0;
+			color: $sptp-muted;
+			font-size: 14px;
+			line-height: 20px;
+		}
+	}
+}
+
+/* Shared Settings panel body — Performance (Figma 1304:31005) and Advanced
+   Controls (Figma 1292:28512) both render through it. */
+.sptp-settings-panel {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 24px;
+
+	&__rows {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+.sptp-settings-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 32px;
+	padding: 20px 0;
+
+	&:first-child {
+		padding-top: 0;
+	}
+
+	&:last-child {
+		padding-bottom: 0;
+	}
+
+	& + & {
+		border-top: 1px solid $sptp-divider;
+	}
+
+	&__text {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		min-width: 0;
+		max-width: 640px;
+		word-break: break-word;
+	}
+
+	&__label {
+		color: $sptp-text;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 20px;
+	}
+
+	&__help {
+		color: $sptp-muted;
+		font-size: 13px;
+		line-height: 20px;
+	}
+
+	/* Contribute row — the WP Carousel look: a narrow wrapped description,
+	   14px body copy and a 16px native-size checkbox. */
+	&--contribute {
+		.sptp-settings-row__text {
+			max-width: 480px;
+		}
+
+		.sptp-settings-row__label {
+			font-size: 15px;
+		}
+
+		.sptp-settings-row__help {
+			color: #3c434a;
+			font-size: 14px;
+			line-height: 1.5;
+		}
+
+		input[type='checkbox'].sptp-settings-row__checkbox {
+			width: 16px;
+			height: 16px;
+			min-width: 16px;
+			border-radius: 3px;
+
+			&:checked::after {
+				top: 1px;
+				left: 4px;
+				width: 4px;
+				height: 8px;
+			}
+		}
+	}
+
+	&__help-link {
+		padding: 0;
+		background: none;
+		border: 0;
+		font: inherit;
+		font-weight: 500;
+		color: #2271b1;
+		text-decoration: underline;
+		cursor: pointer;
+
+		&:hover,
+		&:focus-visible {
+			color: #135e96;
+		}
+	}
+
+	&__control {
+		display: flex;
+		flex: 0 0 auto;
+		align-items: center;
+	}
+
+	/* wp-admin styles `select` by element, so keep the element in the selector. */
+	select#{&}__select {
+		/* Figma node 1825:47815 — a fixed 360×38 field, not a fluid one. */
+		width: 360px;
+		max-width: 100%;
+		min-height: 38px;
+		margin: 0;
+		padding: 8px 32px 8px 12px;
+		background-color: #fff;
+		border: 1px solid $sptp-border;
+		border-radius: 4px;
+		box-shadow: none;
+		color: $sptp-text;
+		font-size: 12px;
+		line-height: 1.6;
+
+		&:focus {
+			border-color: $sptp-checkbox;
+			box-shadow: 0 0 0 3px rgba(59, 91, 254, 0.2);
+			outline: none;
+		}
+	}
+
+	/* wp-admin styles `input[type="checkbox"]` by element (0,0,1 + its own
+	   ::before tick), so the element is in the selector and the tick redrawn.
+	   Geometry and colors mirror Real Testimonials' `.sp-real-settings-checkbox`
+	   so the two plugins' settings screens read as one family. */
+	input[type='checkbox']#{&}__checkbox {
+		appearance: none;
+		-webkit-appearance: none;
+		position: relative;
+		flex-shrink: 0;
+		width: 20px;
+		height: 20px;
+		min-width: 20px;
+		margin: 0;
+		padding: 0;
+		background-color: #fff;
+		border: 1px solid $sptp-checkbox-border;
+		border-radius: 4px;
+		box-shadow: none;
+		cursor: pointer;
+		transition: all 0.15s ease;
+
+		&::before {
+			content: none;
+		}
+
+		&:hover {
+			border-color: $sptp-checkbox;
+		}
+
+		&:checked {
+			background-color: $sptp-checkbox;
+			border-color: $sptp-checkbox;
+
+			&::after {
+				content: '';
+				position: absolute;
+				top: 2px;
+				left: 6px;
+				width: 5px;
+				height: 10px;
+				border: solid #fff;
+				border-width: 0 2px 2px 0;
+				transform: rotate(45deg);
+			}
+		}
+
+		&:focus,
+		&:focus-visible {
+			box-shadow: 0 0 0 3px rgba(59, 91, 254, 0.2);
+			outline: none;
+		}
+	}
+
+	&__number {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+
+		/* wp-admin's `input[type="number"]` rule outranks a bare class. */
+		input[type='number'] {
+			width: 90px;
+			min-height: 36px;
+			margin: 0;
+			padding: 0 12px;
+			background: #fff;
+			border: 1px solid $sptp-border;
+			border-radius: 4px;
+			box-shadow: none;
+			color: $sptp-text;
+			font-size: 13px;
+
+			&:focus {
+				border-color: $sptp-checkbox;
+				box-shadow: 0 0 0 3px rgba(59, 91, 254, 0.2);
+				outline: none;
+			}
+		}
+	}
+
+	&__unit {
+		color: $sptp-muted;
+		font-size: 13px;
+		font-weight: 500;
+	}
+
+	&__button {
+		padding: 8px 12px;
+		background: $sptp-blue;
+		border: none;
+		border-radius: 4px;
+		color: #fff;
+		font-size: 11px;
+		font-weight: 500;
+		line-height: 16px;
+		text-transform: capitalize;
+		white-space: nowrap;
+		cursor: pointer;
+
+		&:hover {
+			background: #1b5c8f;
+		}
+
+		&:disabled {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
+	}
+}
+
+/* Settings → Tools (Figma 1292:28681) — the classic Export / Import screens as
+   one page: a 280px label column beside the controls, split by a 1px rule. */
+.sptp-tools {
+	&__row {
+		display: flex;
+		gap: 32px;
+		align-items: flex-start;
+	}
+
+	&__label {
+		flex: 0 0 280px;
+		width: 280px;
+		margin: 0;
+		color: #000;
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 1.6;
+	}
+
+	&__control {
+		flex: 1 1 auto;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 24px;
+	}
+
+	&__group {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		width: 100%;
+	}
+
+	&__sublabel {
+		margin: 0;
+		color: $sptp-text;
+		font-size: 13px;
+		font-weight: 500;
+		line-height: 20px;
+	}
+
+	&__radios {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	&__radio {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		color: $sptp-text;
+		font-size: 13px;
+		line-height: 20px;
+		cursor: pointer;
+
+		/* wp-admin styles `input[type="radio"]` by element (and draws its own dot
+		   with ::before), so the element stays in the selector and the dot is
+		   redrawn here. */
+		input[type='radio'] {
+			appearance: none;
+			-webkit-appearance: none;
+			position: relative;
+			flex-shrink: 0;
+			width: 16px;
+			height: 16px;
+			min-width: 16px;
+			margin: 0;
+			padding: 0;
+			background: #fff;
+			border: 1px solid $sptp-muted-border;
+			border-radius: 50%;
+			cursor: pointer;
+
+			&::before {
+				content: none;
+			}
+
+			&:checked {
+				background: $sptp-primary;
+				border-color: $sptp-primary;
+
+				&::after {
+					content: '';
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					width: 8px;
+					height: 8px;
+					background: #fff;
+					border-radius: 50%;
+					transform: translate(-50%, -50%);
+				}
+			}
+
+			&:focus-visible {
+				outline: 2px solid $sptp-primary;
+				outline-offset: 2px;
+			}
+		}
+	}
+
+	/* The team picker is the shared react-select `MultipleSelect` — the same
+	   component Real Testimonials' Tools page uses. Its own stylesheet targets
+	   the block editor, so the dashboard sets the width and the brand focus
+	   colour the editor supplies through a CSS variable. */
+	&__teams {
+		--sp-smart-team-primary-2-600: #{$sptp-primary};
+
+		.sp-smart-team-multi-select {
+			width: 360px;
+			max-width: 100%;
+			margin: 0;
+		}
+
+		.sp-smart-team-component-title {
+			margin: 0 0 12px;
+			color: $sptp-text;
+			font-size: 13px;
+			font-weight: 500;
+			line-height: 20px;
+		}
+
+		.sp-smart-team-select__control {
+			min-height: 38px;
+			border-color: $sptp-border;
+			border-radius: 4px;
+		}
+	}
+
+	&__empty {
+		margin: 0;
+		color: $sptp-muted;
+		font-size: 13px;
+		line-height: 20px;
+	}
+
+	&__file {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+
+		/* The native control is replaced by the label button next to it, but it
+		   must stay focusable — hence clipped, not `display: none`. */
+		input[type='file'] {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			margin: -1px;
+			padding: 0;
+			overflow: hidden;
+			clip: rect(0 0 0 0);
+			white-space: nowrap;
+			border: 0;
+		}
+	}
+
+	&__file-button {
+		padding: 10px;
+		background: $sptp-divider;
+		border: 1px solid $sptp-text;
+		border-radius: 4px;
+		color: $sptp-text;
+		font-size: 13px;
+		font-weight: 500;
+		line-height: 13px;
+		cursor: pointer;
+
+		&:hover {
+			background: #e6e6e6;
+		}
+	}
+
+	&__file-name {
+		color: $sptp-muted;
+		font-size: 13px;
+		line-height: 20px;
+		word-break: break-all;
+	}
+
+	&__button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 105px;
+		min-height: 44px;
+		padding: 12px 16px;
+		background: $sptp-secondary;
+		border: 1px solid $sptp-secondary;
+		border-radius: 4px;
+		color: #fff;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 20px;
+		text-transform: capitalize;
+		cursor: pointer;
+
+		&:hover:not(:disabled) {
+			background: $sptp-secondary-dark;
+			border-color: $sptp-secondary-dark;
+		}
+
+		&:disabled {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
+
+		/* Core's spinner is a dark gif; invert it for the blue button. */
+		.sptp-tools__spinner {
+			float: none;
+			margin: 0;
+			filter: brightness(0) invert(1);
+		}
+	}
+
+	&__divider {
+		height: 1px;
+		width: 100%;
+		background: $sptp-divider;
+	}
+}
+
+/* Settings → Additional CSS & JS. The editor chrome itself comes from the shared
+   `cssCodeEditor` component's own stylesheet. */
+.sptp-custom-code {
+	/* Figma 1292:28862 — a 280px label column beside the editor, 32px apart. */
+	&__field {
+		display: flex;
+		gap: 32px;
+		align-items: flex-start;
+	}
+
+	&__label {
+		flex: 0 0 280px;
+		width: 280px;
+		margin: 0;
+		color: #000;
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 1.6;
+	}
+
+	&__editor {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	/* The design's editors are a dark surface. WP core ships CodeMirror without
+	   any theme CSS (the classic screen pulled 'mbo' off a CDN), so the palette
+	   below — One Dark's — is applied to core's default theme classes, and to the
+	   plain textarea the fallback renders when highlighting is off. */
+	.sp-smart-team-css-code-editor__textarea,
+	.CodeMirror {
+		background: $sptp-code-bg;
+		border: none;
+		border-radius: 4px;
+		color: $sptp-code-text;
+	}
+
+	.sp-smart-team-css-code-editor__textarea {
+		padding: 12px;
+	}
+
+	.CodeMirror-gutters {
+		background: $sptp-code-bg;
+		border-right: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.CodeMirror-linenumber {
+		color: rgba(255, 255, 255, 0.35);
+	}
+
+	.CodeMirror-cursor {
+		border-left-color: #fff;
+	}
+
+	.CodeMirror-selected,
+	.CodeMirror-focused .CodeMirror-selected {
+		background: rgba(255, 255, 255, 0.18);
+	}
+
+	.CodeMirror-activeline-background {
+		background: rgba(255, 255, 255, 0.05);
+	}
+
+	.CodeMirror-matchingbracket {
+		color: #fff;
+		border-bottom: 1px solid #fff;
+	}
+
+	.cm-comment {
+		color: #7f848e;
+		font-style: italic;
+	}
+
+	.cm-keyword,
+	.cm-builtin {
+		color: #c678dd;
+	}
+
+	.cm-atom,
+	.cm-number,
+	.cm-attribute,
+	.cm-qualifier {
+		color: #d19a66;
+	}
+
+	.cm-def,
+	.cm-property {
+		color: #61afef;
+	}
+
+	.cm-variable,
+	.cm-variable-2,
+	.cm-variable-3 {
+		color: $sptp-code-text;
+	}
+
+	.cm-string,
+	.cm-string-2 {
+		color: #98c379;
+	}
+
+	.cm-tag,
+	.cm-error {
+		color: #e06c75;
+	}
+
+	.cm-operator,
+	.cm-meta {
+		color: #56b6c2;
+	}
+}
+
+.sptp-save-bar {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 10px;
+	/* The Figma sits the bar at the card's bottom edge, not under the last row. */
+	margin-top: auto;
+	padding-top: 9px;
+
+	button {
+		padding: 12px 16px;
+		border-radius: 4px;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 20px;
+		text-transform: capitalize;
+		cursor: pointer;
+
+		&:disabled {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
+	}
+
+	&__save {
+		background: $sptp-secondary;
+		border: 1px solid $sptp-secondary;
+		color: #fff;
+
+		&:hover:not(:disabled) {
+			background: $sptp-secondary-dark;
+			border-color: $sptp-secondary-dark;
+		}
+	}
+
+	&__reset {
+		background: #fff;
+		border: 1px solid $sptp-danger;
+		color: $sptp-danger;
+
+		&:hover:not(:disabled) {
+			background: #fef2f2;
+		}
+	}
+}
+
+
+@media (max-width: 782px) {
+	.sptp-settings__body {
+		flex-direction: column;
+	}
+
+	.sptp-settings__menu {
+		flex: 1 1 auto;
+		width: 100%;
+	}
+
+	.sptp-settings-row {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 12px;
+	}
+}
+
+/* ---------- Lite vs Pro page (port of wp-carousel-free's) ---------- */
+.sptp-lite-vs-pro {
+	display: flex;
+	flex-direction: column;
+	gap: 48px;
+
+	&__card {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		padding: 32px;
+		background: #fff;
+		border: 1px solid $sptp-border;
+		border-radius: 12px;
+		overflow: hidden;
+	}
+
+	&__title {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+		padding: 32px;
+		background: $sptp-primary-50;
+		border-radius: 6px;
+
+		h2 {
+			margin: 0;
+			font-size: 22px;
+			font-weight: 600;
+			line-height: 28px;
+			color: $sptp-title-dark;
+		}
+
+		p {
+			margin: 6px 0 0;
+			font-size: 16px;
+			line-height: 22px;
+			color: $sptp-title-dark;
+		}
+	}
+
+	&__table {
+		border: 1px solid $sptp-primary-100;
+		border-radius: 6px;
+		overflow: hidden;
+	}
+
+	&__row {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 180px 180px;
+		align-items: center;
+		min-height: 60px;
+		padding-left: 32px;
+		background: #fff;
+		color: $sptp-text;
+
+		&:nth-child(even) {
+			background: $sptp-light-gray;
+		}
+
+		&--head {
+			min-height: 68px;
+			background: $sptp-primary;
+			font-size: 16px;
+			font-weight: 600;
+			text-transform: uppercase;
+			color: #fff;
+
+			&:nth-child(even) {
+				background: $sptp-primary;
+			}
+
+			.sptp-lite-vs-pro__feature,
+			.sptp-lite-vs-pro__col {
+				font-size: 16px;
+				font-weight: 600;
+				border-left: none;
+			}
+		}
+	}
+
+	&__feature {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 6px;
+		padding: 12px 16px 12px 0;
+		font-size: 16px;
+		line-height: 1.6;
+	}
+
+	&__col {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		align-self: stretch;
+		padding: 0 8px;
+		font-size: 18px;
+		font-weight: 600;
+		text-align: center;
+		border-left: 1px solid #e6e6e6;
+	}
+
+	&__badge {
+		display: inline-flex;
+		align-items: center;
+		padding: 3px 8px;
+		border-radius: 10px;
+		font-size: 10px;
+		font-weight: 500;
+		line-height: 1.6;
+		text-transform: uppercase;
+		white-space: nowrap;
+		color: #fff;
+
+		&--new {
+			background: #00ba37;
+		}
+
+		&--hot {
+			background: #cc1818;
+		}
+	}
+
+	&__cta {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 24px;
+		max-width: 754px;
+		margin: 0 auto;
+		padding: 0 0 16px;
+		text-align: center;
+
+		h2 {
+			margin: 0;
+			font-size: 28px;
+			font-weight: 600;
+			line-height: 34px;
+			color: $sptp-text;
+		}
+
+		p {
+			margin: 0;
+			font-size: 16px;
+			line-height: 22px;
+			color: $sptp-text-soft;
+		}
+	}
+
+	&__cta-buttons {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 12px;
+	}
+
+	@media (max-width: 782px) {
+		&__card {
+			padding: 16px;
+		}
+
+		&__title {
+			flex-direction: column;
+			align-items: flex-start;
+			padding: 20px;
+		}
+
+		&__row {
+			grid-template-columns: minmax(0, 1fr) 64px 64px;
+			padding-left: 16px;
+		}
+
+		&__col {
+			font-size: 14px;
+		}
+	}
+}
+
+/* Lite vs Pro testimonials — port of wp-carousel-free's (Figma 4835-9204). */
+.sptp-testimonials {
+	display: flex;
+	flex-direction: column;
+	gap: 34px;
+	padding-top: 20px;
+
+	&__header {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 16px;
+		text-align: center;
+
+		h2 {
+			margin: 0;
+			font-size: 28px;
+			font-weight: 600;
+			line-height: 34px;
+			color: $sptp-text;
+		}
+	}
+
+	&__ratings {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 16px;
+	}
+
+	&__rating {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+
+		strong {
+			font-size: 16px;
+			font-weight: 600;
+			line-height: 1.4;
+			color: #444c50;
+		}
+
+		> span:not(.sptp-testimonials__stars) {
+			font-size: 14px;
+			font-weight: 500;
+			line-height: 1.4;
+			color: #575f62;
+		}
+
+		> img {
+			display: block;
+			flex-shrink: 0;
+		}
+	}
+
+	&__stars--wordpress {
+		display: block;
+		flex-shrink: 0;
+		width: 79.4px;
+		height: 15px;
+
+		&.is-large {
+			width: 85.4px;
+			height: 16.2px;
+		}
+	}
+
+	&__stars--trustpilot {
+		display: inline-flex;
+		align-items: center;
+		gap: 2px;
+		flex-shrink: 0;
+	}
+
+	&__star {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 14px;
+		height: 14px;
+		padding: 1.5px;
+		background: #00b57a;
+		box-sizing: border-box;
+
+		img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+	}
+
+	&__row {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 24px;
+		align-items: start;
+	}
+
+	&__card {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 20px;
+		padding: 32px;
+		background: #fff;
+		border: 1px solid #ddd;
+		border-radius: 16px;
+
+		p {
+			margin: 0;
+			font-size: 15px;
+			line-height: 1.6;
+			color: #1e1e1e;
+		}
+	}
+
+	&__reviewer {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	&__avatar {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 60px;
+		height: 60px;
+		border-radius: 99px;
+		background: #eef1ff;
+		font-size: 20px;
+		font-weight: 600;
+		color: #3b4bdb;
+	}
+
+	&__photo {
+		display: block;
+		width: 100%;
+		height: 100%;
+		border-radius: 99px;
+		object-fit: cover;
+	}
+
+	&__source {
+		position: absolute;
+		right: -2px;
+		bottom: -2px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 24px;
+		height: 24px;
+		padding: 4px;
+		background: #fff;
+		border-radius: 9999px;
+		box-sizing: border-box;
+
+		img {
+			display: block;
+			width: 16px;
+			height: 16px;
+		}
+	}
+
+	&__reviewer-info {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		min-width: 0;
+
+		strong {
+			font-size: 16px;
+			font-weight: 500;
+			line-height: 1.4;
+			color: #1e1e1e;
+			overflow-wrap: anywhere;
+		}
+
+		span {
+			font-size: 14px;
+			line-height: 1.4;
+			color: #757575;
+		}
+	}
+
+	@media (max-width: 1100px) {
+		&__row {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	@media (max-width: 782px) {
+		&__header h2 {
+			font-size: 22px;
+			line-height: 28px;
+		}
+
+		&__card {
+			padding: 20px;
+		}
+	}
+}
+/* ---------- About page ---------- */
+
+.sptp-about {
+	display: flex;
+	flex-direction: column;
+	gap: 60px;
+}
+
+.sptp-about-hero {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 48px;
+	align-items: center;
+	background: #fff;
+	border: 1px solid $sptp-border;
+	border-radius: 12px;
+	padding: 32px;
+
+	@media (max-width: 1100px) {
+		grid-template-columns: 1fr;
+	}
+
+	&__text {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		padding-top: 10px;
+	}
+
+	&__title {
+		margin: 0;
+		font-size: 28px;
+		font-weight: 600;
+		line-height: 32px;
+		color: $sptp-title-dark;
+		word-break: break-word;
+	}
+
+	&__desc {
+		display: flex;
+		flex-direction: column;
+		gap: 26px;
+
+		p {
+			margin: 0;
+			font-size: 15px;
+			line-height: 26px;
+			color: $sptp-text;
+		}
+
+		strong {
+			font-weight: 700;
+		}
+	}
+
+	&__buttons {
+		display: flex;
+		gap: 16px;
+		flex-wrap: wrap;
+		margin-top: 8px;
+	}
+
+	&__btn {
+		padding: 12px 16px;
+		font-size: 14px;
+		text-transform: capitalize;
+		white-space: nowrap;
+
+		&.sptp-btn--outline {
+			padding-left: 20px;
+		}
+	}
+
+	&__btn-icon {
+		flex-shrink: 0;
+	}
+
+	&__media {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+	}
+
+	&__image {
+		width: 100%;
+		aspect-ratio: 600 / 400;
+		object-fit: cover;
+		border-radius: 8px;
+		display: block;
+	}
+
+	&__caption {
+		margin: 0;
+		font-style: italic;
+		font-size: 14px;
+		line-height: 20px;
+		color: $sptp-text-soft;
+		text-align: center;
+	}
+}
+
+/* About page: ShapedPlugin product link cards (WP Carousel's About Us grid). */
+.sptp-about-plugins {
+	&__header {
+		margin-bottom: 40px;
+		text-align: center;
+	}
+
+	&__title {
+		margin: 0 0 10px;
+		font-size: 24px;
+		font-weight: 500;
+		line-height: 1.4;
+		color: $sptp-title-dark;
+	}
+
+	&__subtitle {
+		margin: 0;
+		font-size: 14px;
+		line-height: 20px;
+		color: $sptp-neutral-800;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 24px;
+
+		@media (max-width: 1100px) {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		@media (max-width: 782px) {
+			grid-template-columns: 1fr;
+		}
+	}
+}
+
+.sptp-about-plugin {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	padding: 24px;
+	background: #fff;
+	border: 1px solid $sptp-border;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	text-decoration: none;
+	transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+	&:hover,
+	&:focus-visible {
+		border-color: $sptp-primary;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	}
+
+	&__icon {
+		width: 48px;
+		height: 48px;
+		margin-bottom: 16px;
+		border-radius: 4px;
+	}
+
+	&__name {
+		margin: 0 0 8px;
+		padding-right: 40px;
+		font-size: 20px;
+		font-weight: 600;
+		line-height: 1.3;
+		color: $sptp-title-dark;
+	}
+
+	&__desc {
+		margin: 0;
+		font-size: 14px;
+		line-height: 1.5;
+		color: $sptp-neutral-800;
+	}
+
+	&__arrow {
+		position: absolute;
+		top: 24px;
+		right: 24px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 32px;
+		border: 1px solid rgba($sptp-primary, 0.3);
+		border-radius: 50%;
+		color: $sptp-primary;
+		opacity: 0;
+		transition: opacity 0.2s ease;
+	}
+
+	&:hover &__arrow,
+	&:focus-visible &__arrow {
+		opacity: 1;
+	}
+}
+
+/* ---------- Our Plugins page: more free plugins (Figma 839:70839) ---------- */
+.sptp-our-plugins {
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+
+	&__title {
+		margin: 0;
+		font-size: 24px;
+		font-weight: 500;
+		line-height: 1.4;
+		text-align: left;
+		color: $sptp-title-dark;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 24px;
+
+		@media (max-width: 1100px) {
+			grid-template-columns: 1fr;
+		}
+	}
+}
+
+.sptp-plugin-card--install {
+	display: flex;
+	flex-direction: column;
+	background: #fff;
+	border: 1px solid $sptp-border;
+	border-radius: 6px;
+	overflow: hidden;
+
+	.sptp-plugin-card__top {
+		display: grid;
+		grid-template-columns: 128px minmax(0, 1fr) auto;
+		gap: 20px;
+		padding: 20px;
+		flex: 1;
+
+		@media (max-width: 600px) {
+			grid-template-columns: 64px minmax(0, 1fr);
+		}
+	}
+
+	.sptp-plugin-card__icon {
+		width: 128px;
+		height: 128px;
+		border-radius: 6px;
+		object-fit: cover;
+
+		@media (max-width: 600px) {
+			width: 64px;
+			height: 64px;
+		}
+	}
+
+	.sptp-plugin-card__name {
+		margin: 0 0 8px;
+		font-size: 18px;
+		font-weight: 600;
+		line-height: 1.4;
+
+		a {
+			color: $sptp-blue;
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	.sptp-plugin-card__desc {
+		margin: 0;
+		font-size: 13px;
+		line-height: 1.5;
+		color: $sptp-text-soft;
+	}
+
+	.sptp-plugin-card__actions {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 8px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		@media (max-width: 600px) {
+			grid-column: 1 / -1;
+			flex-direction: row;
+			align-items: center;
+		}
+	}
+
+	.sptp-plugin-action {
+		display: inline-block;
+		padding: 0 10px;
+		min-height: 30px;
+		line-height: 28px;
+		font-size: 13px;
+		border: 1px solid $sptp-blue;
+		border-radius: 3px;
+		background: #f6f7f7;
+		color: $sptp-blue;
+		text-decoration: none;
+		white-space: nowrap;
+
+		&:hover {
+			background: #f0f0f1;
+			border-color: #0a4b78;
+			color: #0a4b78;
+		}
+
+		&--primary {
+			background: $sptp-blue;
+			color: #fff;
+
+			&:hover {
+				background: #135e96;
+				border-color: #135e96;
+				color: #fff;
+			}
+		}
+
+		&--active {
+			border-color: #dcdcde;
+			background: #f6f7f7;
+			color: #a7aaad;
+			cursor: default;
+		}
+	}
+
+	.sptp-plugin-card__details {
+		font-size: 13px;
+		color: $sptp-blue;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.sptp-plugin-card__bottom {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 10px 20px;
+		padding: 12px 20px;
+		background: #f6f7f7;
+		border-top: 1px solid $sptp-border;
+		font-size: 13px;
+		color: $sptp-text-soft;
+	}
+
+	.sptp-plugin-card__rating {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
+
+	.sptp-plugin-stars {
+		display: inline-flex;
+
+		.dashicons {
+			width: 20px;
+			height: 20px;
+			font-size: 20px;
+			color: #dba617;
+		}
+	}
+
+	.sptp-plugin-card__meta--end {
+		text-align: right;
+	}
+}
+
+/* ---------- Single Page ----------
+   The Template Type row, then — for Classic — the classic Settings → Single
+   Page fields in the classic screen's own design. The `.sptp-classic-*` rules
+   restate the framework's (`src/Admin/css/style.css`: `.spf-field`,
+   `.spf-field-image_select`, `.spf-field-switcher`, `.sptp_style_generator_list`,
+   `.sptp_member_meta_info_pro`) so the fields look as they did there. */
+.sptp-single-page {
+	overflow: hidden;
+	background: #fff;
+	border: 1px solid $sptp-border;
+	border-radius: 12px;
+
+	&__head {
+		display: flex;
+		align-items: flex-start;
+		gap: 32px;
+		padding: 32px;
+	}
+
+	&__text {
+		flex: 0 1 387px;
+		min-width: 0;
+
+		h2 {
+			margin: 0 0 8px;
+			padding: 0;
+			color: $sptp-title-dark;
+			font-size: 24px;
+			font-weight: 500;
+			line-height: normal;
+		}
+
+		p {
+			margin: 0;
+			color: $sptp-muted;
+			font-size: 14px;
+			line-height: 20px;
+		}
+	}
+
+	&__source {
+		display: flex;
+		flex: 0 0 240px;
+		flex-direction: column;
+		gap: 8px;
+		width: 240px;
+	}
+
+	select.sptp-single-page__select {
+		width: 100%;
+		max-width: 100%;
+		min-height: 38px;
+		margin: 0;
+		padding: 8px 32px 8px 12px;
+		background-color: #fff;
+		border: 1px solid $sptp-border;
+		border-radius: 4px;
+		box-shadow: none;
+		color: $sptp-text;
+		font-size: 13px;
+		line-height: 1.6;
+
+		&:focus {
+			border-color: $sptp-checkbox;
+			box-shadow: 0 0 0 3px rgba(59, 91, 254, 0.2);
+			outline: none;
+		}
+	}
+
+	&__link {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		color: $sptp-secondary;
+		font-size: 13px;
+		line-height: 15px;
+		text-decoration: none;
+
+		&:hover,
+		&:focus {
+			color: $sptp-secondary-dark;
+		}
+	}
+
+	&__link-icon {
+		display: flex;
+		width: 11px;
+		height: 11px;
+	}
+
+	&__note {
+		margin: 0;
+		color: $sptp-muted;
+		font-size: 13px;
+		line-height: 18px;
+	}
+
+	/* Amber only when the selected type doesn't match the active theme. */
+	&__notice {
+		margin: 0 32px 32px;
+		padding: 12px 16px;
+		border-left: 4px solid $sptp-secondary;
+		background: #f0f6fc;
+		color: $sptp-text;
+		font-size: 13px;
+		line-height: 20px;
+
+		&.is-warning {
+			border-left-color: #dba617;
+			background: #fcf9e8;
+		}
+	}
+
+	.sptp-save-bar {
+		flex: 0 0 auto;
+		margin-top: 0;
+		margin-left: auto;
+		padding-top: 0;
+	}
+}
+
+.sptp-classic-fields {
+	border-top: 1px solid #eee;
+	color: #444;
+	font-size: 13px;
+}
+
+/* `.spf-field`: 20% title, the rest for the control. */
+.sptp-classic-field {
+	display: flex;
+	gap: 20px;
+	padding: 30px;
+
+	& + & {
+		border-top: 1px solid #eee;
+	}
+
+	&__title {
+		flex: 0 0 20%;
+
+		h4 {
+			margin: 0;
+			color: #23282d;
+			font-size: 14px;
+			font-weight: 600;
+			line-height: 1.4;
+		}
+	}
+
+	&__subtitle {
+		margin-top: 6px;
+		color: #999;
+		font-weight: 400;
+	}
+
+	&__fieldset {
+		flex: 1;
+		min-width: 0;
+	}
+
+	&__desc {
+		margin: 6px 0 0;
+		font-style: italic;
+
+		a {
+			font-weight: 700;
+		}
+	}
+}
+
+/* The Template One–Six picker: one tile per layout, Pro's last and dimmed. */
+.sptp-classic-images {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+/* `.spf-field-image_select` + `.sptp_single_page_view`. */
+.sptp-classic-image {
+	display: inline-block;
+	padding: 0;
+	background: none;
+	border: 0;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+
+	/* A Pro template, as in the classic screen: the preview and title dimmed and
+	   a small "PRO" chip on the preview's top-right corner (no "(Pro)" in the label). */
+	&.is-pro {
+		cursor: default;
+
+		img,
+		p {
+			opacity: 0.5;
+		}
+
+		figure::after {
+			content: 'PRO';
+			position: absolute;
+			top: 3.5px;
+			right: 3.5px;
+			padding: 0 4px;
+			color: #5e6e7d;
+			background-color: #cbd6df;
+			border-top-right-radius: 1px;
+			border-bottom-left-radius: 2px;
+			font-size: 8px;
+			font-weight: 600;
+			line-height: 11px;
+			text-align: center;
+		}
+	}
+
+	figure {
+		position: relative;
+		display: inline-block;
+		margin: 0;
+		background-color: #fff;
+		border: 2px solid transparent;
+		vertical-align: bottom;
+	}
+
+	img {
+		width: 100px;
+		max-width: 100%;
+		height: auto;
+		vertical-align: top;
+	}
+
+	&.is-active img {
+		border-color: $sptp-image-select-active;
+		border-radius: 3px;
+		outline: 2px solid $sptp-image-select-active;
+		outline-offset: -2px;
+	}
+
+	/* The framework draws a Font Awesome check; a CSS tick needs no icon font. */
+	&.is-active figure::before {
+		content: '';
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		width: 12px;
+		height: 12px;
+		background: $sptp-image-select-active
+			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 6.2l2 2 4-4.4' fill='none' stroke='%23fff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+			center / 12px no-repeat;
+		border-radius: 50%;
+	}
+
+	p {
+		margin: 5px 0 0;
+		font-weight: 500;
+		text-align: center;
+	}
+}
+
+/* `.sptp_style_generator_list`: one bordered row per switch, 550px wide. */
+.sptp-classic-details {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	max-width: 550px;
+}
+
+/* A `member_fields` group: its title above its switch rows. */
+.sptp-classic-group {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	&__title {
+		margin: 10px 0 0;
+		color: #23282d;
+		font-size: 13px;
+		font-weight: 600;
+	}
+}
+
+.sptp-classic-detail {
+	display: flex;
+	align-items: center;
+	border: 1px solid #dedede;
+	border-radius: 4px;
+
+	&__helper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		align-self: stretch;
+		width: 32px;
+		padding: 15px 9px;
+		background-color: #f7f7f7;
+		border-right: 1px solid #eee;
+		border-radius: 4px 0 0 4px;
+		box-sizing: border-box;
+
+		img {
+			width: 14px;
+			height: 14px;
+		}
+	}
+
+	&__label {
+		flex: 1;
+		margin: 0 0 0 12px;
+		color: #23282d;
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.sptp-classic-switcher {
+		margin: 15px 20px;
+	}
+
+	&.is-pro &__label {
+		opacity: 0.5;
+	}
+}
+
+/* `.spf-field-switcher`, `text_width` 80. */
+.sptp-classic-switcher {
+	position: relative;
+	flex: 0 0 auto;
+	width: 80px;
+	height: 26px;
+	padding: 0;
+	overflow: hidden;
+	background-color: #ff4e4f;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	user-select: none;
+
+	&__ball {
+		position: absolute;
+		top: 4px;
+		left: 4px;
+		width: 24px;
+		height: 18px;
+		background-color: #fff;
+		border-radius: 4px;
+		box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+		transition: all 0.1s;
+	}
+
+	&__on,
+	&__off {
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+		padding-right: 28px;
+		color: #fff;
+		font-size: 11px;
+		font-weight: 500;
+		line-height: 26px;
+		text-align: center;
+		text-transform: uppercase;
+		opacity: 0;
+		transition: all 0.1s;
+	}
+
+	&__off {
+		padding-right: 0;
+		padding-left: 28px;
+		opacity: 1;
+	}
+
+	&.is-active {
+		background: #4fb845;
+
+		.sptp-classic-switcher__on {
+			opacity: 1;
+		}
+
+		.sptp-classic-switcher__off {
+			opacity: 0;
+		}
+
+		.sptp-classic-switcher__ball {
+			left: 100%;
+			margin-left: -28px;
+		}
+	}
+
+	/* `.sptp_member_meta_info_pro`: grey, faded, "PRO" on the ball. */
+	&.is-pro {
+		background-color: #99aab2;
+		opacity: 0.5;
+		cursor: default;
+
+		.sptp-classic-switcher__ball::after {
+			content: 'PRO';
+			position: absolute;
+			inset: 0;
+			color: #5e6e7d;
+			font-size: 8px;
+			font-weight: 600;
+			line-height: 18px;
+			text-align: center;
+		}
+	}
+}
+
+/* ---------- Setup wizard (Figma 594:21405) ----------
+   The wizard replaces the dashboard shell rather than sitting inside it: a
+   full-bleed #f3f8f5 surface with one 1140px column — stepper, card, nav. */
+.sptp-dashboard--wizard {
+	display: block;
+}
+
+.sptp-wizard {
+	background: $sptp-wizard-bg;
+	min-height: max(calc(100vh - 32px), var(--sptp-admin-menu-height, 0px));
+
+	/* The cap is the CONTENT width (Figma's 1140px card), so the page gutter
+	   rides on top of it rather than eating into the card. */
+	&__inner {
+		max-width: 1140px + $sptp-gutter * 2;
+		margin: 0 auto;
+		padding: 80px $sptp-gutter;
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+	}
+
+	&__card {
+		background: #fff;
+		border-radius: 12px;
+		padding: 48px;
+		box-shadow:
+			0 16px 32px -4px rgba(12, 12, 13, 0.05),
+			0 4px 4px -4px rgba(12, 12, 13, 0.02);
+	}
+
+	&__nav {
+		display: flex;
+		justify-content: flex-end;
+		gap: 12px;
+		padding-top: 8px;
+	}
+}
+
+/* ---------- Wizard stepper (Figma 594:21434) ---------- */
+.sptp-wizard-stepper {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 28px;
+
+	&__item {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	/* The connector is a child of the step but spaced as a sibling in Figma:
+	   28px from the label, of which 12px already comes from the item gap. */
+	&__arrow {
+		flex: none;
+		margin-left: 16px;
+	}
+
+	&__num {
+		flex: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		border: 1.5px solid transparent;
+		border-radius: 999px;
+		background: $sptp-primary-50;
+		color: $sptp-title-dark;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 1.6;
+		transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+		&.is-active {
+			background: #fff;
+			border-color: $sptp-primary;
+			color: $sptp-primary;
+		}
+
+		&.is-complete {
+			background: $sptp-primary;
+			border-color: $sptp-primary;
+			color: #fff;
+		}
+	}
+
+	&__label {
+		color: $sptp-title-dark;
+		font-size: 20px;
+		font-weight: 600;
+		line-height: 1.3;
+		white-space: nowrap;
+	}
+}
+
+/* ---------- Wizard nav buttons (Figma 594:21698) ---------- */
+.sptp-wizard-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 2px;
+	height: 48px;
+	padding: 8px 20px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 1.6;
+	cursor: pointer;
+	transition: background 0.15s ease, border-color 0.15s ease;
+
+	&--ghost {
+		background: transparent;
+		border-color: $sptp-border;
+		color: $sptp-text;
+		padding-left: 16px;
+
+		&:hover {
+			border-color: $sptp-muted-border;
+		}
+	}
+
+	&--primary {
+		background: $sptp-secondary;
+		border-color: $sptp-secondary;
+		color: #fff;
+		padding-right: 16px;
+
+		&:hover {
+			background: $sptp-secondary-dark;
+			border-color: $sptp-secondary-dark;
+		}
+	}
+
+	&[disabled] {
+		opacity: 0.7;
+		cursor: default;
+	}
+
+	.components-spinner {
+		margin: 0 4px 0 0;
+		fill: currentColor;
+	}
+}
+
+.sptp-wizard-nav__chevron {
+	flex: none;
+	width: 17px;
+	height: 17px;
+
+	/* Figma rotates one "angle-up" glyph rather than shipping two variants. */
+	&--next {
+		transform: rotate(90deg);
+	}
+
+	&--prev {
+		transform: rotate(-90deg);
+	}
+}
+
+/* ---------- Wizard: Welcome step (Figma 594:21579) ---------- */
+.sptp-wizard-welcome {
+	display: flex;
+	gap: 24px;
+
+	&__text,
+	&__video {
+		flex: 1 1 0;
+		min-width: 0;
+	}
+
+	&__text {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 20px;
+		padding: 24px 0;
+	}
+
+	&__title {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	&__headings {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+
+	&__greeting {
+		margin: 0;
+		color: $sptp-neutral-900;
+		font-size: 16px;
+		font-weight: 500;
+		line-height: 1.3;
+	}
+
+	&__heading {
+		margin: 0;
+		padding: 0;
+		color: $sptp-neutral-900;
+		font-size: 28px;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	&__brand {
+		background: linear-gradient(
+			90deg,
+			$sptp-primary 31.7%,
+			$sptp-primary-400 74.5%
+		);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+	}
+
+	&__lead {
+		margin: 0;
+		color: $sptp-neutral-800;
+		font-size: 14px;
+		line-height: 1.6;
+
+		strong {
+			font-weight: 600;
+		}
+	}
+
+	&__features {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	&__feature-row {
+		display: flex;
+		gap: 16px;
+	}
+
+	&__feature-list {
+		flex: 1 1 0;
+		min-width: 0;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	&__video {
+		display: flex;
+		align-items: center;
+	}
+
+	/* Figma's video panel is 510×410 with a 10px radius and a neutral scrim —
+	   the dashboard's own 16/9 green-tinted treatment does not apply here. */
+	.sptp-video {
+		aspect-ratio: 510 / 410;
+		border-radius: 10px;
+
+		&__overlay {
+			background: rgba(0, 0, 0, 0.25);
+		}
+
+		/* The shared play glyph draws a 60px-wide white disc inside a 112px
+		   box, so the box is sized up to land the disc at Figma's 60px. */
+		&__play {
+			width: 93px;
+			height: 93px;
+
+			svg {
+				width: 100%;
+				height: 100%;
+			}
+
+			circle[opacity] {
+				display: none;
+			}
+
+			path {
+				fill: #004dbe;
+			}
+		}
+	}
+}
+
+.sptp-wizard-feature {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: $sptp-neutral-900;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 1.6;
+
+	&__icon {
+		flex: none;
+		color: $sptp-license-icon-color;
+	}
+}
+
+/* ---------- Wizard: a step with a centred heading over its own content ---------- */
+.sptp-wizard-step {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+
+	&__head {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		text-align: center;
+	}
+
+	&__title {
+		margin: 0;
+		padding: 0;
+		color: $sptp-title-dark;
+		font-size: 24px;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	&__desc {
+		margin: 0;
+		color: $sptp-neutral-800;
+		font-size: 14px;
+		line-height: 1.6;
+	}
+
+	/* The shared block sections space themselves for the dashboard page, which
+	   ends on a section; inside the card the last one must not add a tail. */
+	&__body .sptp-block-section:last-child {
+		margin-bottom: 0;
+	}
+}
+
+/* Wizard Modules step (Figma 902:6717): compact cards — icon, title, switch or PRO. */
+.sptp-wizard-modules {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 24px;
+	align-items: start;
+
+	@media (max-width: 1100px) {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	@media (max-width: 782px) {
+		grid-template-columns: 1fr;
+	}
+}
+
+.sptp-wizard-module {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 18px;
+	background: #fff;
+	border: 1px solid $sptp-border;
+	border-radius: 12px;
+
+	&__icon {
+		display: block;
+		flex: none;
+		width: 44px;
+		height: 44px;
+	}
+
+	&__title {
+		flex: 1;
+		min-width: 0;
+		margin: 0;
+		color: $sptp-title-dark;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 20px;
+		word-break: break-word;
+	}
+}
+
+/* ---------- Wizard Finish step (Figma 602:14358) ----------
+   Two stacked regions: the congratulations block with its two CTAs, and the
+   patterns promo card whose collage is absolutely placed from the design. */
+.sptp-wizard-finish {
+	display: flex;
+	flex-direction: column;
+	gap: 36px;
+
+	&__intro {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 24px;
+		text-align: center;
+	}
+
+	/* The lettering is three overlaid exports sharing one artboard. */
+	&__congrats {
+		position: relative;
+		flex: none;
+		width: 243.38px;
+		height: 127.89px;
+
+		img {
+			position: absolute;
+			display: block;
+			width: auto;
+			height: auto;
+			max-width: none;
+		}
+	}
+
+	&__text {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		max-width: 636px;
+	}
+
+	&__title {
+		margin: 0;
+		padding: 0;
+		color: $sptp-neutral-900;
+		font-size: 24px;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	&__lead {
+		margin: 0;
+		color: $sptp-text;
+		font-size: 14px;
+		line-height: 1.6;
+
+		strong {
+			font-weight: 700;
+		}
+	}
+
+	&__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 24px;
+	}
+
+	/* Swapped in for the secondary CTA while consent saves. */
+	&__saving {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		padding: 17px 24px;
+		color: $sptp-primary;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 20px;
+
+		.components-spinner {
+			margin: 0;
+			fill: currentColor;
+		}
+	}
+
+	&__cta {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 17px 24px;
+		border: 1px solid transparent;
+		border-radius: 4px;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 20px;
+		text-decoration: none;
+		text-transform: capitalize;
+		cursor: pointer;
+		transition: background 0.15s ease, border-color 0.15s ease;
+
+		&:focus {
+			box-shadow: none;
+			outline: none;
+		}
+
+		&[aria-disabled='true'] {
+			opacity: 0.7;
+			pointer-events: none;
+		}
+
+		&--primary {
+			background: $sptp-primary;
+			border-color: $sptp-primary;
+			color: #fff;
+
+			&:hover,
+			&:focus {
+				background: $sptp-primary-dark;
+				border-color: $sptp-primary-dark;
+				color: #fff;
+			}
+		}
+
+		&--secondary {
+			background: $sptp-primary-50;
+			border-color: $sptp-primary-100;
+			color: $sptp-primary;
+
+			&:hover,
+			&:focus {
+				background: #d2eae2;
+				color: $sptp-primary;
+			}
+		}
+	}
+
+	&__promo {
+		display: flex;
+		flex-direction: column;
+		gap: 28px;
+	}
+
+	/* 1044px is the card's content width at the design's 1140px column, so the
+	   collage lands as drawn there and clips — rather than reflows — below it. */
+	&__patterns {
+		position: relative;
+		height: 280px;
+		background: $sptp-primary-50;
+		border: 1px solid $sptp-primary-100;
+		border-radius: 8px;
+		overflow: hidden;
+	}
+
+	&__tile {
+		position: absolute;
+		overflow: hidden;
+		box-shadow: 2px 3px 8px 0 rgba(0, 0, 0, 0.08);
+
+		/* Default: the export fills its tile. Tiles that carry a `crop` frame a
+		   larger source, and override these via inline width/height/left/top. */
+		img {
+			position: absolute;
+			display: block;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			max-width: none;
+			object-fit: cover;
+			pointer-events: none;
+		}
+	}
+
+	&__patterns-body {
+		position: absolute;
+		top: 77px;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 24px;
+		width: 394px;
+		max-width: 100%;
+		text-align: center;
+	}
+
+	&__patterns-title {
+		margin: 0;
+		color: $sptp-neutral-900;
+		font-size: 20px;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	&__patterns-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		height: 48px;
+		padding: 8px 20px;
+		background: transparent;
+		border: 1px solid $sptp-primary-100;
+		border-radius: 4px;
+		color: $sptp-primary;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 1.6;
+		text-decoration: none;
+		transition: background 0.15s ease;
+
+		&:hover,
+		&:focus {
+			background: #fff;
+			color: $sptp-primary;
+			box-shadow: none;
+		}
+	}
+
+	&__consent {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		justify-content: center;
+		gap: 8px;
+		color: $sptp-text;
+		font-size: 14px;
+		line-height: 1.6;
+		text-align: left;
+	}
+
+	/* Sentence + link flow as one run of text beside the checkbox. */
+	&__consent-text {
+		max-width: 640px;
+	}
+
+	&__consent-link {
+		padding: 0;
+		background: none;
+		border: 0;
+		color: inherit;
+		font-family: inherit;
+		font-size: inherit;
+		font-weight: 600;
+		line-height: inherit;
+		text-decoration: underline;
+		cursor: pointer;
+
+		&:hover,
+		&:focus {
+			color: $sptp-primary;
+		}
+	}
+
+	/* wp-admin styles `input[type="checkbox"]` by element, so the element is in
+	   the selector and its ::before tick is redrawn — same approach as
+	   `.sptp-settings-row__checkbox`, at the design's 16px. */
+	input[type='checkbox']#{&}__consent-input {
+		margin-right: 4px;
+		appearance: none;
+		-webkit-appearance: none;
+		position: relative;
+		flex-shrink: 0;
+		width: 16px;
+		height: 16px;
+		min-width: 16px;
+		margin: 4px 0 0;
+		padding: 0;
+		background-color: #fff;
+		border: 1px solid $sptp-checkbox-border;
+		border-radius: 3px;
+		box-shadow: none;
+		cursor: pointer;
+		transition: all 0.15s ease;
+
+		&::before {
+			content: none;
+		}
+
+		&:hover {
+			border-color: $sptp-primary;
+		}
+
+		&:checked {
+			background-color: $sptp-primary;
+			border-color: $sptp-primary;
+
+			&::after {
+				content: '';
+				position: absolute;
+				top: 1px;
+				left: 5px;
+				width: 4px;
+				height: 8px;
+				border: solid #fff;
+				border-width: 0 2px 2px 0;
+				transform: rotate(45deg);
+			}
+		}
+
+		&:focus,
+		&:focus-visible {
+			box-shadow: 0 0 0 3px rgba(43, 95, 71, 0.2);
+			outline: none;
+		}
+	}
+}
+
+/* ---------- Finish step: the "What We Collect?" modal ----------
+   Twin of Real Testimonials' `.sp-real-setup-page-modal`, on this plugin's
+   tokens — the two plugins show the same disclosure in the same shape. */
+.sptp-wizard-collect-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 16px;
+	background: rgba(0, 0, 0, 0.35);
+}
+
+.sptp-wizard-collect-modal {
+	width: 558px;
+	max-width: 100%;
+	max-height: calc(100vh - 32px);
+	overflow-y: auto;
+	padding: 32px;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 16px 32px -4px rgba(12, 12, 13, 0.1);
+
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+	}
+
+	&__title {
+		margin: 0;
+		padding: 0;
+		color: $sptp-text;
+		font-size: 18px;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	&__close {
+		display: flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		width: 24px;
+		height: 24px;
+		padding: 0;
+		border: 0;
+		border-radius: 2px;
+		background: none;
+		color: $sptp-text;
+		cursor: pointer;
+		transition: color 0.15s ease;
+
+		svg {
+			width: 16px;
+			height: 16px;
+			fill: currentColor;
+		}
+
+		&:hover {
+			color: $sptp-primary;
+		}
+
+		&:focus-visible {
+			outline: 2px solid $sptp-primary;
+			outline-offset: 2px;
+		}
+	}
+
+	hr {
+		margin: 16px 0;
+		border: 0;
+		border-top: 1px solid #ecedf0;
+	}
+
+	&__text {
+		margin: 0 0 12px;
+		color: $sptp-neutral-800;
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 1.6;
+	}
+
+	&__list {
+		margin: 0 0 12px;
+
+		li {
+			margin: 0 0 0 18px;
+			list-style: disc;
+		}
+	}
+
+	a {
+		display: inline-flex;
+		align-items: center;
+		color: inherit;
+		text-decoration: underline dotted;
+
+		svg {
+			width: 14px;
+			height: 14px;
+		}
+	}
+}
+
+/* ---------- Wizard: steps awaiting phase 2 ---------- */
+.sptp-wizard-placeholder {
+	min-height: 410px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	text-align: center;
+
+	&__title {
+		margin: 0;
+		padding: 0;
+		color: $sptp-neutral-900;
+		font-size: 28px;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	&__text {
+		margin: 0;
+		color: $sptp-neutral-800;
+		font-size: 14px;
+		line-height: 1.6;
+	}
+}
+
+@media (max-width: 1200px) {
+	/* Below the design's 1140px column the collage would slide under the promo
+	   card's centred copy, so it steps aside and the card sizes to its text. */
+	.sptp-wizard-finish__tile {
+		display: none;
+	}
+
+	.sptp-wizard-finish__patterns {
+		height: auto;
+		padding: 48px 24px;
+	}
+
+	.sptp-wizard-finish__patterns-body {
+		position: static;
+		transform: none;
+		margin: 0 auto;
+	}
+
+	.sptp-wizard__inner {
+		padding: 48px 24px;
+	}
+
+	.sptp-wizard__card {
+		padding: 32px;
+	}
+
+	.sptp-wizard-welcome {
+		flex-direction: column;
+	}
+
+	.sptp-wizard-welcome__text {
+		padding: 0;
+	}
+
+	.sptp-wizard-stepper {
+		gap: 20px;
+
+		&__label {
+			font-size: 16px;
+		}
+
+		&__arrow {
+			margin-left: 8px;
+		}
+	}
+}
+
+@media (max-width: 782px) {
+	.sptp-wizard-welcome__feature-row {
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.sptp-wizard-stepper__arrow {
+		display: none;
+	}
+
+	.sptp-wizard__nav {
+		justify-content: stretch;
+
+		.sptp-wizard-btn {
+			flex: 1 1 0;
+		}
+	}
+}
+
+
+/* Settings → AI Configuration: provider cards and the selected provider's form (port of testimonial-pro's AI Settings v2). */
+.sptp-ai-config {
+	--sptp-ai-text: #1e1e1e;
+	--sptp-ai-muted: #757575;
+	--sptp-ai-border: #dcdcde;
+	--sptp-ai-accent: #16a34a;
+	--sptp-ai-accent-strong: #15803d;
+	--sptp-ai-accent-soft: #f0fdf4;
+	--sptp-ai-accent-border: #86efac;
+	--sptp-ai-success-soft: #dcfce7;
+	--sptp-ai-danger: #b91c1c;
+	--sptp-ai-link: #{$sptp-secondary};
+	gap: 16px;
+	color: var(--sptp-ai-text);
+
+	&__notice {
+		padding: 12px 16px;
+		border-left: 4px solid #dba617;
+		background: #fcf9e8;
+		color: $sptp-text;
+		font-size: 13px;
+		line-height: 20px;
+	}
+
+	&__head {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 12px;
+	}
+
+	&__heading {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	&__title {
+		margin: 0;
+		color: var(--sptp-ai-text);
+		font-size: 15px;
+		font-weight: 600;
+		line-height: 1.4;
+	}
+
+	&__desc,
+	&__count {
+		margin: 0;
+		color: var(--sptp-ai-muted);
+		font-size: 13px;
+		line-height: 1.5;
+	}
+
+	&__count {
+		flex-shrink: 0;
+	}
+
+	&__providers {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+		gap: 12px;
+	}
+
+	&__provider {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 12px;
+		min-height: 104px;
+		padding: 16px;
+		border: 1px solid var(--sptp-ai-border);
+		border-radius: 8px;
+		background: #fff;
+		color: var(--sptp-ai-text);
+		font-family: inherit;
+		text-align: left;
+		cursor: pointer;
+		transition: border-color 0.2s ease, background-color 0.2s ease;
+
+		&:hover:not(.is-active) {
+			border-color: #b4b9be;
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--sptp-ai-accent);
+			outline-offset: 2px;
+		}
+
+		&.is-active {
+			border-color: var(--sptp-ai-accent-border);
+			background: var(--sptp-ai-accent-soft);
+		}
+	}
+
+	&__provider-icon {
+		display: flex;
+
+		svg {
+			width: 40px;
+			height: 40px;
+		}
+	}
+
+	&__provider-label {
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	&__provider-status,
+	&__key-status {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+
+		&::before {
+			content: "";
+			flex-shrink: 0;
+			width: 6px;
+			height: 6px;
+			border-radius: 50%;
+			background: #a7aaad;
+		}
+	}
+
+	&__provider-status {
+		margin-top: -8px;
+		color: var(--sptp-ai-muted);
+		font-size: 13px;
+		line-height: 1.3;
+
+		&.is-connected {
+			color: $sptp-text-soft;
+
+			&::before {
+				background: var(--sptp-ai-accent);
+			}
+		}
+
+		&.is-invalid {
+			color: var(--sptp-ai-danger);
+
+			&::before {
+				background: currentColor;
+			}
+		}
+	}
+
+	&__provider-badge {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		padding: 3px 8px;
+		border-radius: 999px;
+		background: var(--sptp-ai-accent-strong);
+		color: #fff;
+		font-size: 11px;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	&__backup-hint {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		margin: 0;
+		color: #50575e;
+		font-size: 13px;
+		line-height: 1.5;
+
+		svg {
+			flex-shrink: 0;
+			color: var(--sptp-ai-muted);
+		}
+	}
+
+	&__form {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		margin-top: 8px;
+
+		.sptp-save-bar {
+			margin-top: 8px;
+		}
+	}
+
+	&__connector {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 12px 12px 12px 16px;
+		border: 1px solid #d6e4f5;
+		border-radius: 6px;
+		background: #f0f6fc;
+
+		a {
+			color: var(--sptp-ai-link);
+			font-weight: 500;
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	&__connector-icon {
+		display: flex;
+		flex-shrink: 0;
+		color: #3858e9;
+	}
+
+	&__connector-text {
+		flex: 1;
+		margin: 0;
+		color: var(--sptp-ai-text);
+		font-size: 13px;
+		line-height: 1.5;
+	}
+
+	&__connector-dismiss {
+		display: flex;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
+		width: 24px;
+		height: 24px;
+		padding: 0;
+		border: none;
+		border-radius: 4px;
+		background: none;
+		color: #50575e;
+		cursor: pointer;
+
+		&:hover {
+			background: rgba(0, 0, 0, 0.06);
+			color: var(--sptp-ai-text);
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--sptp-ai-link);
+			outline-offset: 1px;
+		}
+	}
+
+	&__label {
+		display: flex;
+		margin-bottom: 8px;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	&__input-row {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	/* wp-admin styles inputs by element + type, so keep both in the selector. */
+	input[type="text"]#{&}__input,
+	input[type="password"]#{&}__input {
+		flex: 1;
+		min-width: 0;
+		width: 100%;
+		max-width: none;
+		height: 44px;
+		margin: 0;
+		padding: 0 14px;
+		border: 1px solid var(--sptp-ai-border);
+		border-radius: 6px;
+		box-shadow: none;
+		color: var(--sptp-ai-text);
+		font-size: 14px;
+		line-height: 1.3;
+
+		&::placeholder {
+			color: #8c8f94;
+		}
+
+		&:focus {
+			border-color: var(--sptp-ai-accent);
+			box-shadow: none;
+			outline: none;
+		}
+
+		&.is-error {
+			border-color: var(--sptp-ai-danger);
+		}
+	}
+
+	&__key-locked {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		height: 44px;
+		padding: 0 10px 0 14px;
+		border: 1px solid var(--sptp-ai-border);
+		border-radius: 6px;
+		background: #fff;
+	}
+
+	&__key-masked {
+		flex: 1;
+		min-width: 0;
+		overflow: hidden;
+		color: var(--sptp-ai-text);
+		font-size: 14px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&__key-status {
+		flex-shrink: 0;
+		padding: 3px 10px;
+		border-radius: 999px;
+		background: var(--sptp-ai-success-soft);
+		color: var(--sptp-ai-accent-strong);
+		font-size: 12px;
+		font-weight: 600;
+		line-height: 1.3;
+
+		&::before {
+			background: currentColor;
+		}
+
+		&.is-invalid {
+			background: #fcf0f1;
+			color: var(--sptp-ai-danger);
+		}
+
+		&.is-unverified {
+			background: #fcf9e8;
+			color: #996800;
+		}
+
+		&.is-checking {
+			background: $sptp-bg;
+			color: #646970;
+		}
+	}
+
+	&__key-btn {
+		flex-shrink: 0;
+		height: 44px;
+		padding: 0 12px;
+		border: 1px solid var(--sptp-ai-border);
+		border-radius: 4px;
+		background: #fff;
+		color: var(--sptp-ai-link);
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1;
+		cursor: pointer;
+
+		&:hover {
+			border-color: var(--sptp-ai-link);
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--sptp-ai-link);
+			outline-offset: 2px;
+		}
+	}
+
+	&__message {
+		display: block;
+		margin-top: 8px;
+		color: #996800;
+		font-size: 13px;
+		line-height: 1.4;
+
+		&.is-invalid {
+			color: var(--sptp-ai-danger);
+		}
+	}
+
+	&__key-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		margin-top: 10px;
+	}
+
+	&__key-actions {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	&__key-link,
+	&__action {
+		color: var(--sptp-ai-link);
+		font-size: 13px;
+		font-weight: 500;
+		line-height: 1.3;
+		text-decoration: none;
+
+		&:hover {
+			color: var(--sptp-ai-link);
+			text-decoration: underline;
+		}
+	}
+
+	&__key-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+	}
+
+	&__action {
+		padding: 0;
+		border: none;
+		background: none;
+		font-family: inherit;
+		cursor: pointer;
+
+		&.is-danger {
+			color: var(--sptp-ai-danger);
+		}
+
+		&:disabled {
+			opacity: 0.5;
+			cursor: default;
+			text-decoration: none;
+		}
+
+		&:focus-visible {
+			border-radius: 2px;
+			outline: 2px solid currentColor;
+			outline-offset: 2px;
+		}
+	}
+}
+
+/* ---------- Module settings drawer ----------
+   Portaled to <body> like the changelog drawer, so it carries its own
+   box-sizing / typography. The gear on a module card opens it. */
+.sptp-module-card__settings {
+	display: block;
+	flex-shrink: 0;
+	margin-left: auto;
+	padding: 0;
+	border: 0;
+	background: none;
+	cursor: pointer;
+
+	img {
+		display: block;
+		width: 20px;
+		height: 20px;
+	}
+
+	&:hover:not(.is-disabled) img,
+	&:focus-visible:not(.is-disabled) img {
+		opacity: 0.7;
+	}
+
+	// Module is off — the gear stays visible but inert.
+	&.is-disabled {
+		cursor: not-allowed;
+
+		img {
+			opacity: 0.35;
+		}
+	}
+}
+
+.sptp-module-drawer {
+	position: fixed;
+	inset: 0;
+	z-index: 100100; // matches .sptp-changelog, above wp-admin's admin bar (99999)
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	&__backdrop {
+		position: absolute;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.5);
+		opacity: 0;
+		transition: opacity 0.3s cubic-bezier(0, 0, 0.2, 1);
+	}
+
+	&__panel {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 100%;
+		width: 636px;
+		max-width: 100%;
+		display: flex;
+		flex-direction: column;
+		background: #fff;
+		box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+		transform: translateX(100%);
+		transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+		color: $sptp-text;
+		font-size: 14px;
+		line-height: 1.6;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	&.is-open {
+		.sptp-module-drawer__backdrop {
+			opacity: 1;
+		}
+
+		.sptp-module-drawer__panel {
+			transform: translateX(0);
+		}
+	}
+
+	&__header {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 20px 32px;
+	}
+
+	&__icon {
+		flex-shrink: 0;
+		display: inline-flex;
+	}
+
+	&__title {
+		flex: 1;
+		margin: 0;
+		font-size: 18px;
+		font-weight: 600;
+		color: $sptp-title;
+	}
+
+	&__close {
+		flex-shrink: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		padding: 0;
+		background: transparent;
+		border: none;
+		border-radius: 4px;
+		color: $sptp-muted;
+		cursor: pointer;
+
+		&:hover,
+		&:focus {
+			background: $sptp-light-gray;
+			color: $sptp-title;
+		}
+	}
+
+	&__body {
+		flex: 1;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		padding: 24px 32px;
+	}
+
+	&__footer {
+		flex-shrink: 0;
+		display: flex;
+		justify-content: center;
+		gap: 12px;
+		padding: 16px 32px;
+		background: #fff;
+		box-shadow: 0 -4px 4px 0 rgba(0, 0, 0, 0.06);
+	}
+
+	&__btn {
+		flex: 0 0 auto;
+		min-width: 140px;
+		padding: 12px 20px;
+		border: 1px solid transparent;
+		border-radius: 4px;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 20px;
+		cursor: pointer;
+		transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+			opacity 0.2s ease;
+
+		&:disabled {
+			opacity: 0.55;
+			cursor: not-allowed;
+		}
+	}
+}
+
+@media (max-width: 600px) {
+	.sptp-module-drawer__panel {
+		width: 100%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sptp-module-drawer__backdrop,
+	.sptp-module-drawer__panel {
+		transition: none;
+	}
+}
+
+/* ---------- White Label Branding drawer (Figma 3327:23757) ----------
+   Grey header bar, a 318px label column beside the inputs, a Pro Features box. */
+.sptp-module-drawer.sptp-wl-drawer {
+	.sptp-module-drawer__panel {
+		width: 684px;
+	}
+
+	.sptp-module-drawer__header {
+		padding: 16px 32px;
+		background: #f0f0f0;
+		border-bottom: 1px solid $sptp-border;
+		gap: 8px;
+	}
+
+	.sptp-module-drawer__title {
+		color: $sptp-title-dark;
+		line-height: 20px;
+	}
+
+	.sptp-module-drawer__body {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		padding: 32px;
+	}
+
+	.sptp-module-drawer__footer {
+		box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.06);
+	}
+}
+
+.sptp-wl-drawer {
+	&__row {
+		display: flex;
+		align-items: flex-start;
+		gap: 24px;
+	}
+
+	&__row-text {
+		flex: 0 0 318px;
+		max-width: 318px;
+	}
+
+	&__row-title {
+		margin: 0 0 4px;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 20px;
+		color: $sptp-text;
+	}
+
+	&__row-desc {
+		margin: 0;
+		font-size: 13px;
+		line-height: 20px;
+		color: $sptp-muted;
+	}
+
+	&__row-control {
+		flex: 1;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	&__label-group {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	&__label {
+		margin: 0;
+		font-size: 13px;
+		line-height: 20px;
+		color: $sptp-text;
+	}
+
+	// One input, or a singular + plural pair sharing the row.
+	&__pair {
+		display: flex;
+		gap: 8px;
+	}
+
+	&__input {
+		flex: 1;
+		min-width: 0;
+		width: 100%;
+		height: 40px;
+		margin: 0;
+		padding: 11px 12px;
+		background: #fff;
+		border: 1px solid $sptp-border;
+		border-radius: 2px;
+		box-shadow: none;
+		font-size: 13px;
+		line-height: 16px;
+		color: $sptp-text;
+
+		&::placeholder {
+			color: $sptp-muted-border;
+		}
+
+		&:focus {
+			border-color: $sptp-secondary;
+			box-shadow: 0 0 0 1px $sptp-secondary;
+			outline: none;
+		}
+	}
+
+	// Pro Features box — green tint, as the other Pro teasers.
+	&__pro {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 12px;
+		padding: 16px;
+		background: #dff5e4;
+		border: 1px solid #159e2e;
+		border-radius: 8px;
+	}
+
+	&__pro-title {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		margin: 0;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 1;
+		color: #0e6b20;
+	}
+
+	&__pro-subtitle {
+		margin: 0;
+		font-size: 13px;
+		font-weight: 500;
+		line-height: 20px;
+		color: #1e1e1e;
+	}
+
+	&__pro-list {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size: 13px;
+		line-height: 20px;
+		color: #1e1e1e;
+
+		li {
+			margin: 0;
+
+			&::before {
+				content: '\2014\00a0';
+			}
+		}
+	}
+
+	// Same CTA as the editor's "Do more with Smart Team Pro" dialog.
+	&__pro-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		height: 48px;
+		padding: 0 24px;
+		border-radius: 6px;
+		background: #2b5f47;
+		box-shadow: 0 1px 2px rgba(43, 95, 71, 0.25);
+		box-sizing: border-box;
+		font-size: 14px;
+		font-weight: 600;
+		color: #fff;
+		text-decoration: none;
+		transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+
+		&:hover,
+		&:focus,
+		&:active,
+		&:visited {
+			color: #fff;
+			text-decoration: none;
+		}
+
+		&:hover,
+		&:focus-visible {
+			background: #234e3a;
+			box-shadow: 0 6px 16px rgba(43, 95, 71, 0.28);
+			transform: translateY(-1px);
+		}
+
+		&:focus-visible {
+			outline: 2px solid #2b5f47;
+			outline-offset: 2px;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			transition: none;
+		}
+	}
+
+	&__btn--save {
+		background: $sptp-secondary;
+		border-color: $sptp-secondary;
+		color: #fff;
+
+		&:hover:not(:disabled) {
+			background: $sptp-secondary-dark;
+			border-color: $sptp-secondary-dark;
+		}
+	}
+
+	&__btn--reset {
+		background: #fff;
+		border-color: $sptp-danger;
+		color: $sptp-danger;
+
+		&:hover:not(:disabled) {
+			background: #fdf1f1;
+		}
+	}
+}
+
+@media (max-width: 782px) {
+	.sptp-wl-drawer__row {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+	}
+
+	.sptp-wl-drawer__row-text {
+		flex-basis: auto;
+		max-width: none;
+	}
+}
+
+/* Settings → Accessibility: a text input in a settings row's control cell. */
+.sptp-settings-row__input {
+	width: 320px;
+	max-width: 100%;
+	height: 40px;
+	margin: 0;
+	padding: 11px 12px;
+	background: #fff;
+	border: 1px solid $sptp-border;
+	border-radius: 2px;
+	box-shadow: none;
+	font-size: 13px;
+	line-height: 16px;
+	color: $sptp-text;
+
+	&::placeholder {
+		color: $sptp-muted-border;
+	}
+
+	&:focus {
+		border-color: $sptp-secondary;
+		box-shadow: 0 0 0 1px $sptp-secondary;
+		outline: none;
+	}
+}
+
+/* ---------- Preloader settings drawer ----------
+   Rows inside the shared module drawer shell. Ported from Smart Team Pro. */
+.sptp-module-drawer.sptp-preloader-settings {
+	--sp-smart-team-primary-2-600: #{$sptp-primary};
+	--sp-smart-team-primary-2-100: #{$sptp-primary-100}; // ms/s dropdown hover tint
+
+	.sptp-module-drawer__footer {
+		justify-content: center;
+	}
+}
+
+.sptp-preloader-settings {
+	&__row {
+		padding: 20px 0;
+
+		&:first-child {
+			padding-top: 0;
+		}
+	}
+
+	// 14/20 semibold title over a 13/20 grey description.
+	&__row-title {
+		margin: 0 0 4px;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 20px;
+		color: #2f2f2f; // Gutenberg/Gray 800
+	}
+
+	&__row-desc {
+		margin: 0;
+		font-size: 13px;
+		line-height: 20px;
+		color: $sptp-muted;
+	}
+
+	&__row--inline {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+	}
+
+	&__row-text {
+		flex: 1;
+		min-width: 0;
+	}
+
+	// Slider + number input + unit box, 306px wide like the segmented control.
+	&__ranger {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		width: 306px;
+		flex-shrink: 0;
+	}
+
+	&__range {
+		flex: 1;
+		min-width: 0;
+		margin-bottom: 0;
+
+		.components-base-control,
+		.components-range-control {
+			margin-bottom: 0;
+		}
+
+		// WP's RangeControl root defaults to 40px (its __next40pxDefaultSize
+		// row height) — pin it to the 32px the slider track itself renders at
+		// so the thumb stays centered instead of sitting high in a tall row.
+		.components-range-control__root {
+			min-height: 32px;
+			height: 32px;
+		}
+
+		.components-range-control__wrapper {
+			margin-right: 0;
+		}
+
+		// The number input matches the design's 32px "Measurement" box —
+		// both the outer InputControl box and the inner <input> are pinned to
+		// the same 32px so its border sits level with the ms/s unit button.
+		.components-input-base {
+			margin-left: 16px;
+			min-height: 32px;
+			height: 32px;
+		}
+
+		.components-input-control__container {
+			height: 32px;
+		}
+
+		.components-input-control__backdrop {
+			height: 32px !important;
+		}
+
+		.components-input-control__container input {
+			width: 60px;
+			height: 32px;
+			padding-top: 0;
+			padding-bottom: 0;
+			font-size: 13px;
+			line-height: 32px;
+			border-radius: 2px;
+			box-sizing: border-box;
+		}
+	}
+
+	// Unit switcher (ms/s) reuses SPRangeControl's own `.sp-smart-team-units`
+	// component — the same hover-revealed dropdown WP Carousel Pro's drawer
+	// number fields use for px/em/%. Its CSS lives in
+	// apps/components/responsive/editor.scss (bundled in here because
+	// SPRangeControl always renders <Responsive/>'s side-effect import),
+	// keyed off --sp-smart-team-primary-2-100/-600 — only -600 is set on this
+	// drawer's root, so -100 (the hover tint) is added alongside it below.
+	.sp-smart-team-units {
+		flex-shrink: 0;
+		height: 32px; // matches .components-base-control__field (the number field's row)
+
+		// Fixed 32px square so "ms" and "s" fill the same box (the shared
+		// component sizes the box to its text).
+		span {
+			width: 32px;
+			height: 32px;
+			padding: 0;
+			font-size: 12px;
+			box-sizing: border-box;
+		}
+
+		.sp-smart-team-units-btn {
+			width: 32px;
+
+			button {
+				width: 32px;
+				height: 28px;
+				font-size: 12px;
+			}
+		}
+	}
+
+	&__segmented {
+		display: flex;
+		align-items: center;
+		gap: 0;
+		width: 306px;
+		height: 40px;
+		padding: 4px;
+		background: #fff;
+		border: 1px solid $sptp-border;
+		border-radius: 2px;
+		flex-shrink: 0;
+	}
+
+	&__segment {
+		flex: 1;
+		height: 32px;
+		padding: 6px;
+		background: #fff;
+		border: 1px solid #fff;
+		border-radius: 2px;
+		font-size: 13px;
+		color: $sptp-title-dark;
+		cursor: pointer;
+
+		&.is-selected {
+			background: $sptp-primary-50;
+			border-color: $sptp-primary-100;
+			color: $sptp-primary;
+		}
+	}
+
+	&__segment {
+		white-space: nowrap;
+	}
+
+	&__segment.is-pro {
+		color: $sptp-muted;
+		cursor: not-allowed;
+	}
+
+	&__pro-tag {
+		color: #4ab866;
+	}
+
+	&__divider {
+		margin: 12px 0;
+		border: 0;
+		border-top: 1px solid $sptp-border;
+	}
+
+	// Pro Features box — same green teaser as the White Label drawer's.
+	&__pro {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 12px;
+		margin-top: 20px;
+		padding: 16px;
+		background: #dff5e4;
+		border: 1px solid #159e2e;
+		border-radius: 8px;
+	}
+
+	&__pro-title {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		margin: 0;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 1;
+		color: #0e6b20;
+	}
+
+	&__pro-list {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size: 13px;
+		line-height: 20px;
+		color: #1e1e1e;
+
+		li {
+			margin: 0;
+
+			&::before {
+				content: '\2014\00a0';
+			}
+		}
+	}
+
+	// Same CTA as the editor's "Do more with Smart Team Pro" dialog.
+	&__pro-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		height: 48px;
+		padding: 0 24px;
+		border-radius: 6px;
+		background: #2b5f47;
+		box-shadow: 0 1px 2px rgba(43, 95, 71, 0.25);
+		box-sizing: border-box;
+		font-size: 14px;
+		font-weight: 600;
+		color: #fff;
+		text-decoration: none;
+		transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+
+		&:hover,
+		&:focus,
+		&:active,
+		&:visited {
+			color: #fff;
+			text-decoration: none;
+		}
+
+		&:hover,
+		&:focus-visible {
+			background: #234e3a;
+			box-shadow: 0 6px 16px rgba(43, 95, 71, 0.28);
+			transform: translateY(-1px);
+		}
+
+		&:focus-visible {
+			outline: 2px solid #2b5f47;
+			outline-offset: 2px;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			transition: none;
+		}
+	}
+
+	&__row--spinner-grid {
+		display: flex;
+		align-items: flex-start;
+		gap: 24px;
+	}
+
+	&__spinner-box {
+		flex: 1;
+		min-width: 0;
+		padding: 10px;
+		border: 1px solid $sptp-border;
+		border-radius: 6px;
+	}
+
+	&__spinner-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 10px;
+	}
+
+	&__spinner-cell {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		aspect-ratio: 1 / 1;
+		padding: 0;
+		overflow: hidden;
+		background: #fff;
+		border: 1px solid $sptp-border;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: border-color 0.15s ease, background-color 0.15s ease;
+
+		img {
+			// 54px is the design size; the cap lets it shrink with a narrow drawer.
+			width: 100%;
+			height: auto;
+			max-width: 54px;
+		}
+
+		&:hover {
+			border-color: $sptp-primary-100;
+		}
+
+		&.is-selected {
+			background: $sptp-primary-50;
+			border-color: $sptp-primary-100;
+		}
+	}
+
+	&__btn--secondary {
+		background: #fff;
+		border-color: $sptp-border;
+		color: $sptp-muted;
+
+		&:hover:not(:disabled) {
+			background: $sptp-light-gray;
+			color: $sptp-title;
+		}
+	}
+
+	&__btn--primary {
+		background: $sptp-primary;
+		border-color: $sptp-primary;
+		color: #fff;
+
+		&:hover:not(:disabled) {
+			background: $sptp-primary-dark;
+			border-color: $sptp-primary-dark;
+		}
+	}
+}

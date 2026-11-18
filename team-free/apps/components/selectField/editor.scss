@@ -1,0 +1,59 @@
+// select field modified css
+.sp-smart-team-pro-tab-panel {
+	.sp-smart-team-select-field {
+		&.sp-smart-team-d-flex {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.sp-smart-team-header {
+			display: flex;
+			align-items: center;
+
+			.sp-smart-team-select-component-title {
+				margin-right: 8px;
+				font-size: 13px;
+				font-weight: 400;
+				line-height: 20px;
+				text-align: left;
+			}
+		}
+		.sp-smart-team-component-title{
+			margin-bottom: 8px;
+		}
+	}
+
+	.components-input-control__backdrop {
+		border-color: #d7dade !important;
+	}
+}
+
+.sp-smart-team-select-field {
+	// Brand the WP focus ring instead of the default blue.
+	--wp-admin-theme-color: #2b5f47;
+	--wp-admin-theme-color-darker-10: #234e3a;
+	--wp-admin-theme-color-darker-20: #1c3d2d;
+
+	// Gap between the stacked label and the select input.
+	> .sp-smart-team-header > .sp-smart-team-component-title {
+		display: block;
+		margin-bottom: 8px;
+	}
+
+	// Match the light border used by the toggle group control.
+	.components-input-control__backdrop {
+		border-color: #d7dade !important;
+	}
+
+	select.components-select-control__input {
+		max-height: 40px !important;
+		min-height: 40px !important;
+		line-height: 1;
+		border-radius: 4px;
+	}
+
+	// .components-select-control__input {
+	//   text-transform: capitalize;
+	// }
+}

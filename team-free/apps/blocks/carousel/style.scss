@@ -1,0 +1,456 @@
+/**
+ * Carousel — block layout styles (editor + frontend).
+ *
+ * Only the swiper shell: track defaults, nav arrows, pagination, the
+ * grouped-effect (fade/cube/flip) multi-column slides, the spring gap
+ * variable and the Ken Burns zoom. All card styles live in
+ * ../shared/style.scss (the `.sp-smart-team-card` block); per-instance values
+ * come from dynamicCss / Styles/Carousel.php. The Figma defaults here are the
+ * fallbacks before any attribute is applied.
+ */
+
+.sp-smart-team-carousel {
+	position: relative;
+
+	&__empty {
+		margin: 0;
+		text-align: center;
+		color: #757575;
+	}
+
+	// A slide's height follows the tallest slide (align-items: stretch); the
+	// card fills its slide so card backgrounds/borders reach the slide edges.
+	.sp-smart-team-swiper-wrapper {
+		align-items: stretch;
+	}
+
+	// Adaptive Height — the wrapper is sized to the ACTIVE slide, so slides must
+	// keep their own height. Swiper's `.swiper-autoheight .swiper-wrapper
+	// { align-items: flex-start }` ties with the stretch rule above on
+	// specificity and loses on stylesheet order, which stretched every slide to
+	// the tallest one and left the height stuck.
+	.swiper-autoheight .sp-smart-team-swiper-wrapper {
+		align-items: flex-start;
+	}
+
+	&__slide {
+		display: flex;
+		flex-direction: column;
+		height: auto;
+		box-sizing: border-box;
+
+		> .sp-smart-team-card {
+			flex: 1 1 auto;
+		}
+	}
+
+	// Grouped effects (fade/cube/flip) — N cards travel as ONE slide, laid out
+	// on a grid. Columns/gap come from the dynamic CSS (editor/PHP) or the
+	// CSS variables the frontend runtime stamps while grouping.
+	.sp-smart-team-swiper-effect-group {
+		display: grid;
+		grid-template-columns: repeat(var(--sptp-carousel-effect-columns, 1), minmax(0, 1fr));
+		gap: var(--sptp-carousel-effect-gap, 0px);
+	}
+
+	.sp-smart-team-swiper-effect-group-item {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+
+		> .sp-smart-team-card {
+			flex: 1 1 auto;
+		}
+	}
+
+	// Flip paints the slide's backface — keep it opaque so the rotation
+	// doesn't reveal the cards behind.
+	.swiper-flip .swiper-slide {
+		background: #fff;
+		overflow: hidden;
+	}
+
+	// Cube: leave the slide and the default card unpainted so Swiper's floor
+	// shadow shows behind the card, as in WP Carousel / Real Testimonials.
+	// Swiper's effect-cube CSS hides the turned-away faces (backface-visibility).
+	.swiper-cube {
+		--sptp-card-default-bg: transparent;
+
+		.swiper-slide {
+			overflow: hidden;
+		}
+	}
+
+	// Ken Burns — a slow zoom on the active slide's photo over the plain
+	// slide transition.
+	.sp-smart-team-carousel-ken-burns .swiper-slide-active .sp-smart-team-card__image {
+		animation: sptp-ken-burns 7s ease-in-out both;
+	}
+}
+
+// Pre-init layout (frontend only — the server markup carries
+// data-swiper-settings, the editor's Swiper does not). Swiper is a footer
+// script and swiper.min.css prints in the footer on classic themes, so until
+// Swiper initializes nothing sizes the slides and the first card renders at
+// full width. Lay the row out with Swiper's own slide math from the
+// per-breakpoint vars the renderer stamps (Carousel::preinit_style_vars()).
+// Swiper adds .swiper-initialized before it measures, so this never fights
+// its inline sizes.
+.sp-smart-team-swiper[data-swiper-settings]:not(.swiper-initialized) {
+	--sptp-preinit-spv: var(--sptp-preinit-spv-m, 1);
+	--sptp-preinit-gap: var(--sptp-preinit-gap-m, 0px);
+	overflow: hidden;
+
+	@media (min-width: 768px) {
+		--sptp-preinit-spv: var(--sptp-preinit-spv-t, 1);
+		--sptp-preinit-gap: var(--sptp-preinit-gap-t, 0px);
+	}
+
+	@media (min-width: 1024px) {
+		--sptp-preinit-spv: var(--sptp-preinit-spv-d, 1);
+		--sptp-preinit-gap: var(--sptp-preinit-gap-d, 0px);
+	}
+
+	> .swiper-wrapper {
+		display: flex;
+	}
+
+	> .swiper-wrapper > .swiper-slide {
+		flex-shrink: 0;
+		width: calc(
+			(100% - (var(--sptp-preinit-spv) - 1) * var(--sptp-preinit-gap)) /
+				var(--sptp-preinit-spv)
+		);
+		margin-inline-end: var(--sptp-preinit-gap);
+	}
+}
+
+// A style-3 Special Tag straddles the card's top (or bottom) edge — half of it
+// sits OUTSIDE the card. In a carousel the swiper's overflow:hidden clips that
+// half, so give the swiper padding on the straddle side; the banner then sits
+// INSIDE the swiper's own (padding-box) clip region. Padding only — NOT a
+// negative margin pulling the swiper into the space above it, which relies on
+// every ancestor's overflow being visible (true on the front end, but the block
+// editor canvas clips at the block boundary, so the negative-margin version
+// cut the tag off in the editor). Added by the renderer per the tag position.
+.sp-smart-team-swiper--tag-straddle-top {
+	padding-top: 20px;
+}
+
+.sp-smart-team-swiper--tag-straddle-bottom {
+	padding-bottom: 20px;
+}
+
+// Carousel Direction: Right to Left reverses the SLIDE order + navigation via
+// the Swiper container's dir="rtl" (Swiper reads the DOM direction, not a JS
+// option). That dir would otherwise cascade `direction: rtl` into the slides
+// and flip each card's content alignment (align-items:flex-start → right edge,
+// the social/contact rows, etc.). Carousel direction is NOT content alignment,
+// so reset the cards back to LTR — Swiper still lays the slides out
+// right-to-left because it reads the container, not the card.
+.sp-smart-team-swiper[dir='rtl'] .sp-smart-team-card {
+	direction: ltr;
+}
+
+// Center style — centeredSlides puts the active slide in the middle; this
+// CSS gives it the emphasis: side slides fade + scale down while the active
+// one stays full size (port of testimonial-pro's center style).
+.sp-smart-team-carousel-style-center {
+	.sp-smart-team-swiper-slide {
+		opacity: 0.5;
+		transform: scale(0.9) !important;
+		transition:
+			transform 0.6s ease,
+			opacity 0.6s ease;
+
+		&.swiper-slide-active {
+			opacity: 1;
+			transform: scale(1) !important;
+		}
+	}
+}
+
+// Spring effect — the staggered trail comes from the per-slide transition
+// delays the progress handler sets inline; reset the creative effect's 3d
+// perspective so the translate-only transform stays flat (port of
+// testimonial-pro's spring style).
+.sp-smart-team-carousel-spring {
+	.swiper-3d .swiper-slide {
+		perspective: 1200px;
+	}
+
+	&.swiper-3d,
+	.swiper-3d {
+		perspective: none;
+	}
+
+	&.swiper-creative .swiper-slide {
+		overflow: unset !important;
+	}
+}
+
+@keyframes sptp-ken-burns {
+	from {
+		transform: scale(1);
+	}
+
+	to {
+		transform: scale(1.12);
+	}
+}
+
+/* --- Ticker (marquee) style ---------------------------------------------
+   Port of testimonial-pro's marquee: viewport › track › the same group twice
+   (the duplicate aria-hidden). The track is width:max-content and animates
+   translateX(-50%) — exactly one group width — in an infinite linear loop, so
+   the scroll is seamless. Item width comes from the columns/gap via
+   container-query units; duration + direction come from the dynamic CSS. */
+.sp-smart-team-marquee-viewport {
+	overflow: hidden;
+	width: 100%;
+	container-type: inline-size;
+}
+
+.sp-smart-team-marquee-track {
+	display: flex;
+	width: max-content;
+	animation-name: sptp-marquee-scroll;
+	animation-duration: 25000ms;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	will-change: transform;
+}
+
+.sp-smart-team-marquee--pause-hover:hover .sp-smart-team-marquee-track {
+	animation-play-state: paused;
+}
+
+.sp-smart-team-marquee-group {
+	display: flex;
+	align-items: stretch;
+}
+
+.sp-smart-team-marquee-item {
+	flex: 0 0 auto;
+	width: calc(
+		(100cqw - var(--sptp-marquee-cols, 3) * var(--sptp-marquee-col-gap, 24px)) /
+			var(--sptp-marquee-cols, 3)
+	);
+	margin-inline-end: var(--sptp-marquee-col-gap, 24px);
+	min-width: 0;
+	max-width: none;
+}
+
+// Vertical ticker — the track scrolls upward; the viewport needs a bound so
+// there is something to scroll within.
+.sp-smart-team-marquee--vertical {
+	max-height: 640px;
+
+	.sp-smart-team-marquee-track {
+		flex-direction: column;
+		width: auto;
+		height: max-content;
+		animation-name: sptp-marquee-scroll-vertical;
+	}
+
+	.sp-smart-team-marquee-group {
+		flex-direction: column;
+	}
+
+	.sp-smart-team-marquee-item {
+		width: auto;
+		margin-inline-end: 0;
+		margin-block-end: var(--sptp-marquee-col-gap, 24px);
+	}
+}
+
+@keyframes sptp-marquee-scroll {
+	0% {
+		transform: translateX(0);
+	}
+
+	100% {
+		transform: translateX(-50%);
+	}
+}
+
+@keyframes sptp-marquee-scroll-vertical {
+	0% {
+		transform: translateY(0);
+	}
+
+	100% {
+		transform: translateY(-50%);
+	}
+}
+
+/* --- Navigation arrows ------------------------------------------------------
+   Vertical Center floats the row over the carousel; the top/bottom positions
+   render it in the flow — before the swiper, or after the pagination — so it
+   never covers the cards or the dots. The placement is static per position
+   below (Offset X / Offset Y are Pro, so Free emits no per-instance offsets),
+   and justify-content aligns the arrow pair for the top/bottom variants. The
+   row is click-through (pointer-events) so only the round buttons swallow
+   clicks when it spans the carousel. */
+.sp-smart-team-swiper-nav-arrows {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	z-index: 10;
+	pointer-events: none;
+	transition: opacity 0.25s ease-in-out;
+}
+
+// The Color / Background Color pair is NOT set here — those are real attribute
+// defaults (white button + dark glyph, inverting to white-on-blue on hover; see
+// Types/Carousel/attributes.php). A stateful control must not fight a SCSS look:
+// picking "no color" has to actually clear it. Only the stateless metrics below
+// (padding / radius / the glyph box) live in CSS.
+.sp-smart-team-swiper-navigation {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 12px;
+	border-radius: 50%;
+	cursor: pointer;
+	pointer-events: auto;
+	transition:
+		background-color 0.2s ease-in-out,
+		color 0.2s ease-in-out,
+		opacity 0.2s ease-in-out;
+
+	svg {
+		display: block;
+		width: 16px;
+		height: 16px;
+	}
+
+	// The prev button points the arrow the other way. Rotate the GLYPH 180° —
+	// every arrow style is an inline <svg> (Carousel::nav_arrow_svg() ↔
+	// NAV_ARROW_ICONS), so rotating the svg flips all of them consistently,
+	// asymmetric ones (paper-plane, triangle) included.
+	//
+	// It used to rotate the whole BUTTON (testimonial-pro's .sp-real-nav-prev
+	// does): that also rotates everything painted on the button box, so a
+	// Box Shadow of `0 4px …` became `0 -4px …` on prev only — the two arrows
+	// carried their shadow on opposite sides. Anything else asymmetric on the
+	// button (a per-corner radius, uneven padding) flipped the same way. Keep the
+	// transform on the glyph.
+	&.sp-smart-team-nav-prev svg {
+		transform: rotate(180deg);
+	}
+
+	&.swiper-button-disabled {
+		opacity: 0.4;
+		cursor: default;
+	}
+}
+
+// Vertical Center — one arrow at each edge, vertically centered; the fixed
+// -24px left/right insets push the arrows just outside the slides.
+.sp-smart-team-nav-pos-vertical_center {
+	position: absolute;
+	top: 50%;
+	left: -24px;
+	right: -24px;
+	transform: translateY(-50%);
+}
+
+// Top / bottom rows — a fixed 20px gap to the carousel (Pro's default Offset Y
+// for these positions); justify-content aligns the arrow pair.
+.sp-smart-team-nav-pos-top_left,
+.sp-smart-team-nav-pos-top_center,
+.sp-smart-team-nav-pos-top_right {
+	margin-bottom: 20px;
+}
+
+.sp-smart-team-nav-pos-bottom_left,
+.sp-smart-team-nav-pos-bottom_center,
+.sp-smart-team-nav-pos-bottom_right {
+	margin-top: 20px;
+}
+
+.sp-smart-team-nav-pos-top_left,
+.sp-smart-team-nav-pos-bottom_left {
+	justify-content: flex-start;
+}
+
+.sp-smart-team-nav-pos-top_center,
+.sp-smart-team-nav-pos-bottom_center {
+	justify-content: center;
+}
+
+.sp-smart-team-nav-pos-top_right,
+.sp-smart-team-nav-pos-bottom_right {
+	justify-content: flex-end;
+}
+
+/* --- Pagination ---------------------------------------------------------- */
+.sp-smart-team-swiper-pagination {
+	// Swiper's OWN bullet gutter, zeroed at the source. Both engines ship
+	//   .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet
+	//     { margin: 0 var(--swiper-pagination-bullet-horizontal-gap, 4px) }
+	// which is (0,3,0) — the SAME specificity as our `margin: 0` reset below, so
+	// the winner came down to stylesheet ORDER, and that differs by context:
+	// webpack bundles `swiper/css/pagination` AFTER this file in the editor, while
+	// on the front end our `sptp-blocks-style` prints after the vendored
+	// `sptp-swiper` CSS. Result: the editor's dots sat 8px further apart than the
+	// frontend's for identical settings.
+	//
+	// Setting the variables sidesteps the tie entirely — Swiper's own rule
+	// resolves to `margin: 0` whichever stylesheet wins, in v8 (frontend) and v12
+	// (editor) alike, since both read these two vars. Spacing is then purely the
+	// flex `gap` below, which is what the Space Between Dots control drives.
+	--swiper-pagination-bullet-horizontal-gap: 0px;
+	--swiper-pagination-bullet-vertical-gap: 0px;
+
+	&.swiper-pagination {
+		// The dots live in the flow under the carousel (Figma), not floating
+		// over the slides like Swiper's default absolute pagination.
+		position: static;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		margin-top: 24px;
+
+		.swiper-pagination-bullet {
+			width: 12px;
+			height: 12px;
+			// Belt to the variables above: this loses the order tie half the
+			// time, so it is a fallback, not the mechanism.
+			margin: 0;
+			background: #d9eae0;
+			border-radius: 50%;
+			opacity: 1;
+			transition:
+				background-color 0.2s ease-in-out,
+				width 0.2s ease-in-out;
+		}
+
+		.swiper-pagination-bullet-active {
+			background: #2b5f47;
+		}
+	}
+
+	// Number — the index inside each bullet.
+	&.number .swiper-pagination-bullet {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: auto;
+		min-width: 28px;
+		height: 28px;
+		padding: 0 6px;
+		border-radius: 4px;
+		font-size: 13px;
+		line-height: 1;
+		color: #1e1e1e;
+
+		&.swiper-pagination-bullet-active {
+			color: #fff;
+		}
+	}
+}

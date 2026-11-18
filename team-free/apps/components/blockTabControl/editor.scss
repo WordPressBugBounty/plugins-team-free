@@ -1,0 +1,164 @@
+.sp-smart-team-pro-block-header {
+	padding: 0px 16px 16px;
+	background: #fff;
+
+	&__actions {
+		display: flex;
+		gap: 8px;
+	}
+
+	// Outline pair, as in wp-carousel's block sidebar.
+	&__action {
+		// Equal halves so the pair always shares one row in the 280px sidebar.
+		flex: 1 1 0;
+		min-width: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 7px 6px;
+		font-family: inherit;
+		font-size: 13px;
+		font-weight: 500;
+		line-height: 18px;
+		text-align: center;
+		text-decoration: none;
+		white-space: nowrap;
+		cursor: pointer;
+		user-select: none;
+		border-radius: 4px;
+		transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+
+		&:hover,
+		&:focus {
+			text-decoration: none;
+			box-shadow: none;
+			outline: none;
+		}
+
+		&:focus-visible {
+			box-shadow: 0 0 0 2px #fff, 0 0 0 3px currentColor;
+		}
+
+		// Alone (no Ready Patterns button) it keeps its natural width.
+		&--docs:only-child {
+			flex: 0 0 auto;
+			padding-left: 16px;
+			padding-right: 16px;
+		}
+
+		&--patterns {
+			color: var(--sp-smart-team-primary-2-600, #2b5f47);
+			background: #fff;
+			border: 1px solid var(--sp-smart-team-primary-2-600, #2b5f47);
+
+			&:hover,
+			&:focus {
+				color: var(--sp-smart-team-primary-2-600, #2b5f47);
+				background: var(--sp-smart-team-primary-2-50, #eaf0ed);
+			}
+		}
+
+		&--docs {
+			color: #1a5fcf;
+			background: #eef4fe;
+			border: 1px solid #bcd3f8;
+
+			&:hover,
+			&:focus {
+				color: #1a5fcf;
+				background: #e1ecfd;
+				border-color: #9dbef5;
+			}
+		}
+	}
+}
+
+// Canvas → inspector wiring: when a card element is clicked in the editor the
+// panel-body context opens its panel and stamps `sp-flash` here, briefly
+// outlining the opened panel so the eye lands on it (port of styble-pro).
+.sp-smart-team-block-panels {
+	.components-panel__body {
+		transition: box-shadow 0.6s ease;
+	}
+
+	&.sp-flash .components-panel__body.is-opened {
+		position: relative;
+
+		&::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			animation: sptpPanelFlash 1s forwards;
+			animation-delay: 1s;
+			pointer-events: none;
+		}
+	}
+}
+
+@keyframes sptpPanelFlash {
+	0% {
+		box-shadow: inset 0 0 0 2px var(--sp-smart-team-primary-2-600, #2b5f47);
+	}
+
+	100% {
+		box-shadow: inset 0 0 0 0 transparent;
+	}
+}
+
+.sp-smart-team-pro-tab-panel> {
+	.components-tab-panel__tabs {
+		display: flex;
+		margin-bottom: 16px;
+		position: relative;
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+
+	.components-tab-panel__tabs::after {
+		content: "";
+		position: absolute;
+		left: -15px;
+		bottom: 0;
+		width: 111%;
+		border-bottom: 2px solid #DDDDDD;
+		z-index: 1;
+	}
+
+	.components-tab-panel__tabs button {
+		flex: 1;
+		padding: 10px 0;
+		font-size: 14px;
+		font-weight: 500;
+		color: #555;
+		background: transparent;
+		border: 2px solid transparent;
+		border-bottom: none;
+
+		border-radius: 8px 8px 0 0;
+		justify-content: center;
+		box-sizing: border-box;
+	}
+
+	.components-tab-panel__tabs-item:focus {
+		box-shadow: none;
+		outline: none;
+	}
+
+	.components-tab-panel__tabs button.active-tab {
+		background: #fff;
+		color: #4649FF;
+		border: 2px solid #4649FF;
+		border-bottom: none;
+		z-index: 2;
+		justify-content: center;
+	}
+
+	.components-tab-panel__tabs button:not(.active-tab):hover {
+		color: #000;
+	}
+
+	.components-tab-panel__tab-content {
+		padding: 12px 0 0;
+		background: #fff;
+	}
+}

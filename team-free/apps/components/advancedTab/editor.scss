@@ -1,0 +1,53 @@
+.sp-smart-team-advanced-field {
+	margin-bottom: 16px;
+
+	// Normal-case 13px labels (like the reference) — TextControl puts our
+	// class on the base-control root itself, and the compound selector
+	// outranks the global capitalize rule (which would render "Class(Es)").
+	&.components-base-control .components-base-control__label,
+	.components-base-control.sp-smart-team-custom-css .components-base-control__label {
+		font-size: 13px;
+		font-weight: 400;
+		line-height: 20px;
+		text-transform: none;
+		color: #1e1e1e;
+	}
+
+	.components-base-control__help {
+		margin-top: 8px;
+		font-size: 12px;
+		color: #757575;
+	}
+
+	// Warning state — the help line flips to the warning copy in red.
+	&.is-invalid {
+		.components-base-control__help {
+			color: #cc1818;
+		}
+
+		.components-text-control__input {
+			border-color: #cc1818;
+		}
+	}
+}
+
+// Custom CSS field — normal-case 13px label + help note (matches the CSS
+// class/id fields above), the compound selector outranking the global
+// capitalize rule.
+.sp-smart-team-advanced-custom-css {
+	.components-base-control__label {
+		display: block;
+		margin-bottom: 8px;
+		font-size: 13px;
+		font-weight: 400;
+		line-height: 20px;
+		text-transform: none;
+		color: #1e1e1e;
+	}
+
+	.components-base-control__help {
+		margin: 8px 0 0;
+		font-size: 12px;
+		color: #757575;
+	}
+}

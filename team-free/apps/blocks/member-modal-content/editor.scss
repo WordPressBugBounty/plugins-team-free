@@ -1,0 +1,54 @@
+/**
+ * Member Modal Content — editor-only canvas presentation.
+ *
+ * On the frontend the shell is a fixed, hidden overlay the runtime opens. In
+ * the canvas that would cover the editor, so `is-editor` (stamped by edit.jsx,
+ * never by the renderer) un-fixes it: the dialog sits in the flow, always
+ * visible, centered on the template screen's dimmed backdrop — the same thing
+ * the visitor will see, minus the entrance animation.
+ */
+
+.sp-smart-team-member-modal.is-editor {
+	position: static;
+	inset: auto;
+	display: block;
+	visibility: visible;
+	opacity: 1;
+	padding: 0;
+	transition: none;
+
+	// The template editor screen supplies its own backdrop (DetailsTemplates::
+	// editor_canvas_css), so the block's overlay would only mute the design.
+	.sp-smart-team-member-modal__overlay {
+		display: none;
+	}
+
+	.sp-smart-team-member-modal__dialog {
+		height: auto;
+		max-height: none;
+		margin: 0 auto;
+		// No entrance animation while designing — it would replay on every
+		// attribute change and fight the block's own re-render.
+		animation: none !important;
+		transform: none !important;
+		transition: none;
+	}
+
+	.sp-smart-team-member-modal__content {
+		overflow: visible;
+	}
+
+	// The buttons deliberately keep their pointer events. `pointer-events: none`
+	// would make them inert — but it also stops them from ever matching
+	// `:hover`, so the Close/Navigation Button Style popovers' Hover state could
+	// not be previewed in the canvas at all. Clicking them is already harmless:
+	// they are `type="button"` (no default action) and edit.jsx preventDefaults
+	// the click, so a click just selects the block like anywhere else.
+
+	// Outside placements would otherwise hang over the canvas edge on a
+	// full-width dialog; the wrapper keeps them reachable visually.
+	&.sp-smart-team-member-modal--icon-outside-right .sp-smart-team-member-modal__close,
+	&.sp-smart-team-member-modal--icon-outside-left .sp-smart-team-member-modal__close {
+		color: #1e1e1e;
+	}
+}

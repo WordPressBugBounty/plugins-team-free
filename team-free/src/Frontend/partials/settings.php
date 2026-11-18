@@ -27,6 +27,7 @@ $sptp_link_rel_attributes = isset( $sptp_settings['link_rel_attributes'] ) ? $sp
 $css_load_in_head = apply_filters( 'spteam_free_style_load_in_header', true );
 // layout settings.
 $group_relation = isset( $layout['group_relation'] ) ? $layout['group_relation'] : '';
+$layout_preset  = isset( $layout['layout_preset'] ) ? $layout['layout_preset'] : 'grid';
 
 // General settings.
 if ( 'list' === $layout_preset ) {
@@ -43,6 +44,12 @@ if ( 'list' === $layout_preset ) {
 $responsive_classes = "sptp-col-lg-{$desktop} sptp-col-md-{$laptop} sptp-col-sm-{$tablet} sptp-col-xs-{$mobile}";
 
 $filter_member_number     = isset( $settings['total_member_display'] ) ? $settings['total_member_display'] : -1;
+$pagination_show_per_page = isset( $settings['pagination_fields']['pagination_show_per_page'] ) ? $settings['pagination_fields']['pagination_show_per_page'] : 10;
+$pagination_alignment     = isset( $settings['pagination_fields']['pagination_alignment'] ) ? $settings['pagination_fields']['pagination_alignment'] : 'center';
+// Shortcodes saved before pagination existed have no value and must keep showing every member.
+$pagination_universal     = isset( $settings['pagination_fields']['pagination_universal'] )
+	? (bool) intval( $settings['pagination_fields']['pagination_universal'] )
+	: false;
 $max_group_member_display = isset( $settings['max_group_member_display'] ) ? $settings['max_group_member_display'] : -1;
 $order_by                 = isset( $settings['order_by'] ) ? $settings['order_by'] : 'date';
 $sptp_order               = isset( $settings['order'] ) ? $settings['order'] : 'DESC';
@@ -50,7 +57,13 @@ $preloader                = isset( $settings['preloader_switch'] ) ? $settings['
 
 // get members of this layout.
 $filter_members = isset( $layout['filter_members'] ) ? $layout['filter_members'] : 'newest';
+
+/**
+ * Filter members query args.
+ */
 if ( ! empty( $filter_members ) ) {
+
+	// Get member ids.
 	$latest_posts = get_posts(
 		array(
 			'post_type'      => 'sptp_member',
@@ -62,17 +75,79 @@ if ( ! empty( $filter_members ) ) {
 	);
 
 	if ( 'exclude' === $filter_members && ! empty( $layout['filter_exclude'] ) ) {
-		$exclude_members = isset( $layout['filter_exclude'] ) ? $layout['filter_exclude'] : array();
-		// Remove excluded IDs from post__in before query.
-		$latest_posts = array_diff( $latest_posts, $exclude_members );
+		// Remove the excluded members before the query.
+		$latest_posts = array_values( array_diff( $latest_posts, array_map( 'absint', (array) $layout['filter_exclude'] ) ) );
 	}
 
+	// An empty post__in is ignored by WP_Query and would return every member.
+	if ( empty( $latest_posts ) ) {
+		$latest_posts = array( 0 );
+	}
+
+	// Get the current page number.
+	$sptp_paged = isset( $_GET[ 'generator_id_' . $generator_id ] ) ? absint( sanitize_text_field( wp_unslash( $_GET[ 'generator_id_' . $generator_id ] ) ) ) : 1;
+
+	// Define allowed operators.
+	$valid_tax_operators = array( 'in', 'not_in', 'exists', 'not_exists' );
+	$valid_tax_relations = array( 'AND', 'OR' );
+
+	// Get and sanitize department filter.
+	$filter_group_ids_raw   = $layout['sptp_accordion_department_fields']['filter_group'] ?? array();
+	$filter_group_ids       = array_filter( array_map( 'absint', (array) $filter_group_ids_raw ) );
+	$filter_group_operators = strtolower( $layout['sptp_accordion_department_fields']['group_relation'] ?? 'in' );
+	$filter_group_operators = in_array( $filter_group_operators, $valid_tax_operators, true ) ? $filter_group_operators : 'in';
+
+	// Get and sanitize designation filter.
+	$filter_designation_ids_raw   = $layout['sptp_accordion_designation_fields']['filter_designation'] ?? array();
+	$filter_designation_ids       = array_filter( array_map( 'absint', (array) $filter_designation_ids_raw ) );
+	$filter_designation_operators = strtolower( $layout['sptp_accordion_designation_fields']['designation_operators'] ?? 'in' );
+	$filter_designation_operators = in_array( $filter_designation_operators, $valid_tax_operators, true ) ? $filter_designation_operators : 'in';
+
+	// Sanitize term relation.
+	$term_relation = strtoupper( $layout['sptp_term_relation'] ?? 'AND' );
+	$term_relation = in_array( $term_relation, $valid_tax_relations, true ) ? $term_relation : 'AND';
+
+	// Build tax_query dynamically.
+	$tax_query_args = array();
+	if ( $filter_group_ids ) {
+		$tax_query_args[] = array(
+			'taxonomy' => 'sptp_group',
+			'field'    => 'term_id',
+			'terms'    => $filter_group_ids,
+			'operator' => $filter_group_operators,
+		);
+	}
+
+	if ( $filter_designation_ids ) {
+		$tax_query_args[] = array(
+			'taxonomy' => 'sptp_designation',
+			'field'    => 'term_id',
+			'terms'    => $filter_designation_ids,
+			'operator' => $filter_designation_operators,
+		);
+	}
+
+	// If any filters added, add relation.
+	if ( count( $tax_query_args ) > 1 ) {
+		$tax_query_args = array_merge( array( 'relation' => $term_relation ), $tax_query_args );
+	}
+
+	// Only the paged layouts split the members into pages; the others show all of them.
+	$sptp_paginate = $pagination_universal && in_array( $layout_preset, array( 'grid', 'list', 'filter' ), true );
+
+	// Main query args.
 	$sptp_newest_arg = array(
 		'post_type'      => 'sptp_member',
-		'posts_per_page' => ( '' === $filter_member_number ) ? 10000 : $filter_member_number,
+		'posts_per_page' => $sptp_paginate && absint( $pagination_show_per_page ) > 0 ? absint( $pagination_show_per_page ) : -1,
+		'paged'          => $sptp_paged,
 		'post__in'       => $latest_posts,
 		'orderby'        => 'post__in',
 	);
+
+	// Conditionally merge tax_query.
+	if ( ! empty( $tax_query_args ) && 'organization-chart' !== $layout_preset && 'newest' !== $filter_members ) {
+		$sptp_newest_arg['tax_query'] = $tax_query_args;
+	}
 
 	$filter_members_query = new WP_Query( $sptp_newest_arg );
 	$filter_members       = $filter_members_query->posts;
@@ -120,8 +195,14 @@ switch ( $position ) {
 	case 'top_img_bottom_content':
 		$position_class = '';
 		break;
+	case 'top_content_bottom_img':
+		$position_class = ' sptp-top-content';
+		break;
 	case 'left_img_right_content':
 		$position_class = ' sptp-list-item';
+		break;
+	case 'left_content_right_img':
+		$position_class = ' sptp-list-item sptp-left-content';
 		break;
 	default:
 		$position_class = '';
@@ -147,7 +228,14 @@ $show_member_bio = isset( $style_members['bio_switch'] ) ? $style_members['bio_s
 $biography_type  = isset( $settings['biography_type'] ) ? $settings['biography_type'] : 'short-bio';
 
 $show_member_social = isset( $style_members['social_switch'] ) ? $style_members['social_switch'] : false;
+$show_member_skill  = isset( $style_members['skill_switch'] ) ? $style_members['skill_switch'] : false;
 
+// The org chart node shows only Photo, Name and Position; its generator hides the other rows.
+if ( 'organization-chart' === $layout_preset ) {
+	$show_member_bio    = false;
+	$show_member_social = false;
+	$show_member_skill  = false;
+}
 
 $small_icon      = isset( $settings['icon_switch'] ) ? $settings['icon_switch'] : '';
 $social_settings = isset( $settings['social_settings'] ) ? $settings['social_settings'] : '';

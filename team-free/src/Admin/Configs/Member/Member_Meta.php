@@ -14,6 +14,7 @@
 namespace ShapedPlugin\WPTeam\Admin\Configs\Member;
 
 use ShapedPlugin\WPTeam\Admin\Framework\Classes\SPF_TEAM;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
@@ -52,14 +53,10 @@ class Member_Meta {
 						'content' => wp_sprintf( __( '%s DETAILS', 'team-free' ), strtoupper( $name ) ),
 					),
 					array(
-						'id'    => 'sptp_job_title',
-						'class' => 'sptp_job_title',
-						'type'  => 'text',
-						'title' => __( 'Position/Job Title', 'team-free' ),
-					),
-					array(
 						'id'         => 'sptp_job_degree',
 						'class'      => 'sptp_job_degree',
+						// Pro-only: disabled so Member_Meta_Save keeps Pro's value (CSS alone let Tab reach it).
+						'attributes' => array( 'disabled' => 'disabled' ),
 						'type'       => 'text',
 						'title'      => __( 'Degree (Pro)', 'team-free' ),
 						'title_info' => sprintf(
@@ -72,11 +69,11 @@ class Member_Meta {
 						),
 					),
 					array(
-						'id'     => 'sptp_short_bio',
-						'type'   => 'textarea',
-						'title'  => __( 'Short Bio', 'team-free' ),
-						'help'   => __( 'Member short bio is fine in 100 characters or less. Short & detail bio text fields are HTML supported.', 'team-free' ),
-						'height' => '125px',
+						'id'         => 'sptp_short_bio',
+						'type'       => 'textarea',
+						'title'      => __( 'Short Bio', 'team-free' ),
+						'title_info' => __( 'Member short bio is fine in 100 characters or less. Short & detail bio text fields are HTML supported.', 'team-free' ),
+						'height'     => '125px',
 					),
 					array(
 						'type'    => 'subheading',
@@ -163,13 +160,6 @@ class Member_Meta {
 						'title'      => __( 'Telephone (office)', 'team-free' ),
 					),
 					array(
-						'id'         => 'sptp_location',
-						'class'      => 'sptp_pro_only_field',
-						'attributes' => array( 'disabled' => 'disabled' ),
-						'type'       => 'text',
-						'title'      => __( 'Location', 'team-free' ),
-					),
-					array(
 						'id'         => 'sptp_website',
 						'class'      => 'sptp_pro_only_field',
 						'attributes' => array( 'disabled' => 'disabled' ),
@@ -189,6 +179,13 @@ class Member_Meta {
 						'attributes' => array( 'disabled' => 'disabled' ),
 						'class'      => 'sptp_custom_url sptp_pro_only_field',
 						'help'       => __( 'Check to make the each member area clickable for the detailed profile. This skips member modal or a single page.', 'team-free' ),
+					),
+					array(
+						'id'         => 'sptp_video_link',
+						'class'      => 'sptp-member-video-link sptp_pro_only_field',
+						'attributes' => array( 'disabled' => 'disabled' ),
+						'type'       => 'text',
+						'title'      => __( 'Video Link', 'team-free' ),
 					),
 					array(
 						'id'         => 'sptp_experience',
@@ -213,6 +210,58 @@ class Member_Meta {
 						'options'    => 'users',
 						'default'    => 'Select',
 						'class'      => 'spf-after sptp_pro_only_field',
+					),
+					array(
+						'id'           => 'sptp_resume_upload',
+						'type'         => 'upload',
+						'title'        => 'Resume',
+						'class'        => 'sptp_pro_only_field',
+						'button_icon'  => 'fa fa-paperclip',
+						'button_title' => __( 'Choose Resume', 'team-free' ),
+						'title_info'   => 'Upload your resume in PDF or DOC format.',
+					),
+					array(
+						'id'           => 'sptp_member_video',
+						'type'         => 'upload',
+						'title'        => 'Member Video',
+						'button_icon'  => 'fa fa-video-camera',
+						'class'        => 'sptp_pro_only_field',
+						'button_title' => __( 'Choose Video', 'team-free' ),
+						'title_info'   => 'Upload a video for this member. Supported formats are MP4, OGG, and WebM. You can also use a YouTube or Vimeo link.',
+					),
+					array(
+						'type'    => 'subheading',
+						'class'   => 'sptp_pro_heading',
+						'content' => wp_sprintf( '%s SKILLS', strtoupper( $name ) ),
+					),
+					array(
+						'id'           => 'sptp_skills',
+						'type'         => 'repeater',
+						'class'        => 'inline-repeater-skill sptp-repeater-skills',
+						'title'        => __( 'Skill Label', 'team-free' ),
+						'sort'         => true,
+						'clone'        => false,
+						'remove'       => true,
+						'button_title' => esc_html__( 'Add Skill', 'team-free' ),
+						'fields'       => array(
+							array(
+								'id'          => 'sptp_skill_name',
+								'type'        => 'text',
+								'placeholder' => __( 'e.g. Python', 'team-free' ),
+								'class'       => 'sptp-skill-name-repeater-text',
+							),
+							array(
+								'id'    => 'sptp_skill_percentage',
+								'type'  => 'spinner',
+								'unit'  => '%',
+								'class' => 'sptp-skill-percent-repeater-select',
+							),
+						),
+						'default'      => array(
+							array(
+								'sptp_skill_percentage' => 0,
+							),
+						),
 					),
 					array(
 						'type'    => 'subheading',
@@ -262,41 +311,6 @@ class Member_Meta {
 							array(),
 						),
 						'validate'     => 'spf_validate_social',
-					),
-					array(
-						'type'    => 'subheading',
-						'class'   => 'sptp_pro_heading',
-						'content' => wp_sprintf( '%s SKILLS (PRO)', strtoupper( $name ) ),
-					),
-					array(
-						'id'           => 'sptp_skills',
-						'attributes'   => array( 'disabled' => 'disabled' ),
-						'type'         => 'repeater',
-						'title'        => __( 'Skill Label', 'team-free' ),
-						'button_title' => esc_html__( 'Add Skill', 'team-free' ),
-						'class'        => 'inline-repeater-skill sptp_pro_only_field',
-						'sort'         => false,
-						'clone'        => false,
-						'remove'       => false,
-						'fields'       => array(
-							array(
-								'id'          => 'sptp_skill_name',
-								'type'        => 'text',
-								'attributes'  => array( 'disabled' => 'disabled' ),
-								'placeholder' => __( 'e.g. Python', 'team-free' ),
-								'class'       => 'sptp-repeater-text',
-							),
-							array(
-								'id'         => 'sptp_skill_percentage',
-								'type'       => 'spinner',
-								'attributes' => array( 'disabled' => 'disabled' ),
-								'unit'       => '%',
-								'class'      => 'sptp-repeater-select',
-							),
-						),
-						'default'      => array(
-							array(),
-						),
 					),
 					array(
 						'type'    => 'subheading',

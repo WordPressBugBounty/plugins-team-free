@@ -1,11 +1,59 @@
-/* Review notice style */
+/* Review men style */
+.sptp-taxonomies-admin-menu,
 #sp-wpt-review-notice {
   padding: 18px 15px 18px 0;
   background-color: #fff;
   border-radius: 5px;
-  margin: 20px 20px 0 0;
+  margin: 20px 20px 20px 0;
   box-shadow: 0 0 20px 0 rgba(36, 39, 50, .08);
   clear: both;
+}
+
+.sptp-taxonomies-admin-menu {
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    display: flex;
+    gap: 10px;
+}
+
+.sptp-taxonomies-admin-menu .count {
+    margin-left: 6px;
+    background: #2271b1;
+    color: #ffffff;
+    padding: 0 6px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.sptp-taxonomies-admin-menu .button-primary .count {
+    background: #ffffff;
+    color: #50575e;
+    font-weight: 500;
+}
+
+/* Taxonomy menu content */
+.sptp-taxonomies-admin-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    padding: 20px;
+    border-radius: 4px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.sptp-taxonomies-admin-content h2 {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.sptp-taxonomies-admin-content p {
+    margin: 1.5em 0;
+    font-size: 15px;
 }
 
 #sp-wpt-review-notice .sp-wpt-plugin-icon {
@@ -83,7 +131,7 @@ body.rtl #sp-wpt-review-notice .sp-wpt-plugin-icon {
 }
 
 .rtl #sp-wpt-review-notice {
-  margin: 20px 0 0 20px;
+  margin: 20px 0 20px 20px;
   padding: 18px 0 18px 15px;
 }
 
@@ -92,63 +140,3 @@ body.rtl #sp-wpt-review-notice .sp-wpt-plugin-icon {
   margin: 0 0 0 8px;
 }
 
-/* Admin offer banner */
-#shapedplugin-offer-banner {
-  padding: 0;
-  border: 0;
-  line-height: 0;
-  background: transparent;
-}
-
-#shapedplugin-offer-banner a:focus {
-  outline: 0;
-  box-shadow: none;
-}
-
-#shapedplugin-offer-banner .notice-dismiss:focus {
-  outline: 0;
-  box-shadow: none;
-}
-
-#shapedplugin-offer-banner button.shapedplugin-offer-banner-dismiss:before {
-  color: #fff;
-  font-size: 22px;
-}
-
-/* Upgrade to Pro button in the menu */
-#adminmenu #menu-posts-sptp_member li a.sptp-upgrade-btn-wrapper {
-    margin-top: -10px;
-}
-
-/* Base button */
-#adminmenu #menu-posts-sptp_member li a .sptp-upgrade-btn {
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    width: 136px;
-    padding: 6px 10px;
-    border-radius: 4px;
-    background: #11B916;
-    color: #ffffff;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-/* Hover state */
-#adminmenu #menu-posts-sptp_member li a .sptp-upgrade-btn:hover {
-    background: #00aa08;
-}
-
-/* Icon (FIXED) */
-#adminmenu #menu-posts-sptp_member li a .sptp-upgrade-btn::before {
-    content: "";
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    background-image: url("../img/premium-light.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-}

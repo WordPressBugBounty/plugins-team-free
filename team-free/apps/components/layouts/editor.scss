@@ -1,0 +1,208 @@
+.sp-smart-team-layout-picker {
+	p {
+		font-size: 13px;
+		line-height: 20px;
+		font-weight: 400;
+		margin-bottom: 8px;
+	}
+
+	.sp-smart-team-layouts {
+		display: grid;
+		gap: 8px;
+		text-align: center;
+		max-width: 620px;
+
+		// margin-top: 16px;
+		&.grid-1 {
+			grid-template-columns: 1;
+		}
+
+		&.grid-2 {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		&.grid-3 {
+			grid-template-columns: repeat(3, 1fr);
+		}
+
+		&.grid-4 {
+			grid-template-columns: repeat(4, 1fr);
+		}
+
+		&.grid-5 {
+			grid-template-columns: repeat(5, 1fr);
+		}
+
+		&.grid-6 {
+			grid-template-columns: repeat(6, 1fr);
+		}
+
+		.sp-smart-team-layout-card {
+			cursor: pointer;
+			position: relative;
+			// Grid items default to min-width auto — without this a wide icon
+			// could force its 1fr column wider than the panel.
+			min-width: 0;
+
+			.sp-smart-layout-img {
+				display: flex;
+
+				// The design thumbnails ship fixed width/height attributes
+				// (76×84). The 1fr columns are ~77px only at the default 280px
+				// sidebar — anything narrower (visible scrollbars, zoom) drops
+				// the columns below 76px and the fixed-size SVGs overflow past
+				// the panel's right padding. Scale them to the column instead;
+				// the viewBox keeps the aspect ratio.
+				svg {
+					width: 100%;
+					height: auto;
+				}
+			}
+
+			.sp-smart-team-layout-title {
+				font-size: 13px;
+				color: #1e1e1e;
+				font-weight: 400;
+				line-height: 16px;
+				text-align: center;
+				margin-top: 4px;
+			}
+
+			&.active .active-symbol {
+				position: absolute;
+				right: 5px;
+				top: 2px;
+			}
+
+			&.active svg path,
+			&.active svg rect:not(.sp-card) {
+				stroke-width: 1.6;
+			}
+		}
+	}
+}
+
+.sp-smart-team-panel-pb {
+	padding-bottom: 16px;
+}
+
+// Pro-locked preset (port of wp-carousel-free's `.wpcp-pro-locked`): the
+// preview dims to 60% and a crown chip (ProChip) sits in the top-right corner,
+// always visible. Hover changes nothing — the tile is inert.
+// The picker prefix outranks the base tile's `cursor: pointer` above.
+.sp-smart-team-layout-picker .sp-smart-team-layout-card.is-pro {
+	position: relative;
+	overflow: visible;
+	cursor: default;
+
+	.sp-smart-layout-img {
+		opacity: 0.6;
+	}
+}
+
+.sp-smart-team-layouts-slider {
+	&__viewport {
+		position: relative;
+
+		// Room for the tiles' hover lift + active border inside the clipped swiper.
+		.swiper {
+			padding: 2px;
+			margin: -2px;
+		}
+
+		// Swiper's `height: 100%` wrapper sizes to the 100%-width SVGs' intrinsic
+		// 300px width (~690px tall), pushing the 50% arrows below the tiles.
+		.swiper-wrapper {
+			height: auto;
+		}
+
+		&:hover .sp-smart-team-layouts-slider__nav:not(.swiper-button-disabled) {
+			opacity: 1;
+			pointer-events: auto;
+		}
+	}
+
+	&__nav {
+		position: absolute;
+		top: 50%;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 24px;
+		height: 24px;
+		padding: 0;
+		background: var(--sp-smart-team-primary-2-600);
+		border: none;
+		border-radius: 50%;
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+		color: #fff;
+		cursor: pointer;
+		opacity: 0;
+		pointer-events: none;
+		transform: translateY(-50%);
+		transition: opacity 0.15s ease-in-out;
+
+		// Centered on the slider edge — the panel's 16px gutter holds the outer half.
+		&.is-prev {
+			left: -12px;
+		}
+
+		&.is-next {
+			right: -12px;
+		}
+
+		&:hover {
+			background: var(--sp-smart-team-primary-2-700);
+		}
+
+		svg {
+			fill: currentColor;
+		}
+	}
+
+	&__pagination {
+		display: flex;
+		justify-content: center;
+		gap: 7px;
+		margin-top: 10px;
+
+		// Doubled class outranks the global `.swiper-pagination-bullet.swiper-pagination-bullet-active
+		// { background-color: #666 }` that Testimonial Pro / WP Carousel Pro load in the editor.
+		.swiper-pagination-bullet.swiper-pagination-bullet {
+			width: 8px;
+			height: 8px;
+			margin: 0 !important;
+			background: #ccc;
+			opacity: 1;
+
+			&.swiper-pagination-bullet-active {
+				background: var(--sp-smart-team-primary-2-600);
+			}
+		}
+	}
+}
+
+// Label row: title left, active item name right (WP Carousel Pro's
+// `wpcp-layout-picker-head` / `wpcp-layout-active-title`).
+.sp-smart-team-layout-picker__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	margin-bottom: 8px;
+
+	.sp-smart-team-component-title {
+		margin: 0;
+	}
+}
+
+// Nested under the picker so it beats `.sp-smart-team-layout-picker p` (400).
+.sp-smart-team-layout-picker .sp-smart-team-layout-picker__active-name {
+	margin: 0;
+	font-size: 13px;
+	line-height: 20px;
+	font-weight: 600;
+	color: var(--sp-smart-team-primary-2-600);
+	text-align: right;
+}

@@ -1,0 +1,127 @@
+.sp-smart-team-spacing.sp-box-shadow {
+	.sp-smart-team-spacing-right {
+		.sp-smart-team-spacing-highlight {
+			left: 61px;
+		}
+	}
+}
+
+.sp-smart-team-spacing.sp-box-shadow {
+	.sp-smart-team-spacing-right {
+		.sp-smart-team-spacing-highlight {
+			left: 61px;
+		}
+	}
+}
+
+
+/* Creating raw CSS styles to replace Tailwind classes */
+.sp-smart-team-shadow-selector-container {
+	width: 100%;
+	max-width: 32rem;
+	margin: 20px 0px;
+}
+
+.sp-smart-team-shadow-selector-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 15px;
+}
+
+.sp-smart-team-shadow-selector-title {
+	font-size: 13px;
+	font-weight: 400;
+	color: #374151;
+	margin: 0;
+}
+
+.sp-smart-team-shadow-selector-actions {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.sp-smart-team-action-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	background: transparent;
+	border: none;
+	padding: 0;
+	// The ACTIVE (filled) BorderIcon paints via `currentColor`, so this is the
+	// custom-shadow toggle's on-state colour — brand green, not the grey
+	// (#6b7280 / #374151 on hover) it used to inherit. The inactive icon and the
+	// reset glyph hard-code their own strokes, so nothing else here changes.
+	// Mirrors `.sp-preset-btn` in the spacing control.
+	color: var(--sp-smart-team-primary-2-600);
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.sp-smart-team-action-refresh {
+	border: none;
+}
+
+.sp-smart-team-action-button:hover {
+	background-color: #f9fafb;
+	color: var(--sp-smart-team-primary-2-700);
+}
+
+.sp-smart-team-shadow-options-grid {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 0.75rem;
+}
+
+.sp-smart-team-shadow-option {
+	position: relative;
+	width: 30px;
+	height: 30px;
+	background-color: white;
+	border: 1px solid #e5e7eb;
+	border-radius: 0.2rem;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.sp-smart-team-shadow-option:hover {
+	transform: scale(1.05);
+}
+
+.sp-smart-team-checkmark {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	width: 12px;
+	height: 12px;
+	background-color: #3b82f6;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+	.sp-smart-team-shadow-options-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.sp-smart-team-shadow-option {
+		width: 3rem;
+		height: 3rem;
+	}
+}
+
+.sp-smart-team-shadow-selector-container {
+	input[type="number"]::-webkit-inner-spin-button {
+		min-height: 33px;
+		margin-right: 0px !important;
+		cursor: pointer;
+	}
+}

@@ -41,6 +41,8 @@ class DB_Updater {
 		'2.2.15' => 'updates/update-2.2.15.php',
 		'3.0.0'  => 'updates/update-3.0.0.php',
 		'3.0.7'  => 'updates/update-3.0.7.php',
+		'3.0.9'  => 'updates/update-3.0.9.php',
+		'4.0.0'  => 'updates/update-4.0.0.php',
 	);
 
 	/**
@@ -120,6 +122,8 @@ class DB_Updater {
 					'updates/update-2.2.15.php',
 					'updates/update-3.0.0.php',
 					'updates/update-3.0.7.php',
+					'updates/update-3.0.9.php',
+					'updates/update-4.0.0.php',
 				);
 				if ( in_array( $path, $allowed_paths ) && file_exists( $plugin_dir . 'Admin/' . $path ) ) {
 					require_once $plugin_dir . 'Admin/' . $path;

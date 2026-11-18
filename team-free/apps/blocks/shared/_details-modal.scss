@@ -1,0 +1,170 @@
+/**
+ * Member Details — the FALLBACK Modal shell.
+ *
+ * The real shell is the `sptp/member-modal-content` block, which every details
+ * template is built around and which brings its own settings and styles. This
+ * one covers the two cases where no such block is in the rendered response:
+ * the loading state (shown before the ajax render arrives) and a template
+ * authored before the modal block existed — Pro's initMemberDetails() in
+ * blocks/assets/js/script.js wraps that bare output in the markup below.
+ *
+ * Structural only. Part of the shared `sptp-blocks-style` bundle (@use'd from
+ * shared/style.scss), so it ships with any Smart Team block on the page. The
+ * body scroll lock lives with the modal block, which owns both shells' lifecycle.
+ */
+
+.sp-smart-team-details {
+	position: fixed;
+	inset: 0;
+	z-index: 999999;
+	display: flex;
+	visibility: hidden;
+	opacity: 0;
+	transition:
+		opacity 0.3s ease,
+		visibility 0s linear 0.3s;
+
+	&.is-open {
+		visibility: visible;
+		opacity: 1;
+		transition:
+			opacity 0.3s ease,
+			visibility 0s;
+	}
+
+	&__backdrop {
+		position: absolute;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.6);
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	// Same reason as the modal block's shell: padding must stay inside the
+	// width cap, or the dialog overflows its parent by the padding.
+	&,
+	&__dialog,
+	&__body,
+	&__close {
+		box-sizing: border-box;
+	}
+
+	&__dialog {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		background: #fff;
+		box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+		transition:
+			opacity 0.3s ease,
+			transform 0.3s ease;
+	}
+
+	&__close {
+		position: absolute;
+		top: 12px;
+		right: 12px;
+		z-index: 2;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 32px;
+		padding: 0;
+		color: #1e1e1e;
+		cursor: pointer;
+		background: #fff;
+		border: 1px solid #dddddd;
+		border-radius: 50%;
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+		transition:
+			color 0.2s ease,
+			background-color 0.2s ease,
+			border-color 0.2s ease;
+
+		&:hover,
+		&:focus {
+			color: #ffffff;
+			background: #2b5f47;
+			border-color: #2b5f47;
+		}
+	}
+
+	&__body {
+		flex: 1 1 auto;
+		padding: 32px;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+	}
+
+	// Spinner while the template renders.
+	&__loading {
+		width: 32px;
+		height: 32px;
+		margin: 40px auto;
+		border: 2px solid #dddddd;
+		border-top-color: #2b5f47;
+		border-radius: 50%;
+		animation: sptp-details-spin 0.8s linear infinite;
+	}
+
+	&.is-open {
+		.sp-smart-team-details__backdrop {
+			opacity: 1;
+		}
+
+		.sp-smart-team-details__dialog {
+			opacity: 1;
+			transform: none;
+		}
+	}
+
+	/* ---------------------------------------------------------------- */
+	/* Modal — a centered sheet that scales in.                          */
+	/* ---------------------------------------------------------------- */
+	&--modal {
+		align-items: center;
+		justify-content: center;
+		padding: 24px;
+
+		.sp-smart-team-details__dialog {
+			width: 100%;
+			max-width: 720px;
+			max-height: 90vh;
+			border-radius: 8px;
+			opacity: 0;
+			transform: translateY(16px) scale(0.98);
+		}
+	}
+}
+
+@keyframes sptp-details-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media only screen and (max-width: 599px) {
+	.sp-smart-team-details--modal {
+		padding: 12px;
+
+		.sp-smart-team-details__dialog {
+			max-height: 94vh;
+		}
+	}
+
+	.sp-smart-team-details__body {
+		padding: 24px 20px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sp-smart-team-details__backdrop,
+	.sp-smart-team-details__dialog {
+		transition: none;
+	}
+
+	.sp-smart-team-details__loading {
+		animation: none;
+	}
+}

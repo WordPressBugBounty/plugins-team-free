@@ -1,0 +1,12 @@
+/**
+ * Member Designation — base styles (editor + frontend).
+ *
+ * Layout/reset only; all dynamic values (color, typography, alignment, margin)
+ * come from the dynamic CSS twins (dynamicCss.js ↔ Styles/Member_Designation.php).
+ */
+
+.sp-smart-team-member-designation {
+	.sp-smart-team-member-designation__text {
+		margin: 0;
+	}
+}

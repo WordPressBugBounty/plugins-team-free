@@ -106,12 +106,40 @@ class Frontend {
 	 * @return string
 	 */
 	public function get_custom_post_type_template( $single_template ) {
-		global $post;
-		if ( 'sptp_member' === $post->post_type ) {
+		if ( self::use_plugin_single_template() ) {
 			return Helper::sptp_locate_template( 'sptp-single.php' );
-			wp_reset_postdata();
+		}
+		if ( class_exists( '\\ShapedPlugin\\WPTeam\\Blocks\\Includes\\MemberTemplate' ) && \ShapedPlugin\WPTeam\Blocks\Includes\MemberTemplate::use_block_layout_on_classic_theme() ) {
+			return Helper::sptp_locate_template( 'sptp-single-blocks.php' );
 		}
 		return $single_template;
+	}
+
+	/**
+	 * Whether the plugin's own single-member template renders this member.
+	 *
+	 * False leaves WordPress alone — the page is rendered by a Site Editor
+	 * block template the user saved, or a theme's own `single-sptp_member`
+	 * template (the block layer decides, via Blocks\Includes\MemberTemplate).
+	 * The single-page CSS shares this decision, so the two never disagree.
+	 *
+	 * @param int|\WP_Post|null $post Member post. Defaults to the global post.
+	 * @return bool
+	 */
+	public static function use_plugin_single_template( $post = null ) {
+		$post = $post ? get_post( $post ) : ( $GLOBALS['post'] ?? null );
+
+		if ( ! $post instanceof \WP_Post || 'sptp_member' !== $post->post_type ) {
+			return false;
+		}
+
+		/**
+		 * Filter whether the plugin renders its own single-member template.
+		 *
+		 * @param bool     $use_plugin Whether to use the plugin template.
+		 * @param \WP_Post $post       The member being rendered.
+		 */
+		return (bool) apply_filters( 'sptp_use_plugin_single_template', true, $post );
 	}
 	/**
 	 * Single page css.
@@ -119,8 +147,8 @@ class Frontend {
 	 * @return void
 	 */
 	public function sp_team_free_single_css() {
-		global $post;
-		if ( is_object( $post ) && 'sptp_member' === $post->post_type ) {
+		// Legacy single-template CSS — skipped when the page is built from blocks.
+		if ( self::use_plugin_single_template() ) {
 			ob_start();
 			Helper::sp_team_free_single_css();
 			$single_member_css = ob_get_clean();
@@ -199,11 +227,12 @@ class Frontend {
 		}
 		global $post;
 		if ( is_object( $post ) && 'sptp_member' === $post->post_type ) {
-			$custom_style = trim( html_entity_decode( get_option( '_sptp_settings' )['custom_css'] ) );
+			$custom_style = trim( wp_strip_all_tags( html_entity_decode( (string) ( get_option( '_sptp_settings' )['custom_css'] ?? '' ) ) ) );
 			wp_enqueue_style( 'team-free-fontawesome' );
 			wp_enqueue_style( 'sptp-fontello-icon' );
 			wp_enqueue_style( SPT_PLUGIN_SLUG );
 			wp_add_inline_style( SPT_PLUGIN_SLUG, $custom_style );
+			wp_enqueue_script( SPT_PLUGIN_SLUG );
 		}
 	}
 
@@ -222,18 +251,26 @@ class Frontend {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		$sptp_settings    = get_option( '_sptp_settings' );
-		$sptp_fontawesome = isset( $sptp_settings['enqueue_fontawesome'] ) ? $sptp_settings['enqueue_fontawesome'] : true;
-		$sptp_swiper_css  = isset( $sptp_settings['enqueue_swiper'] ) ? $sptp_settings['enqueue_swiper'] : true;
-		$sptp_swiper_js   = isset( $sptp_settings['enqueue_swiper_js'] ) ? $sptp_settings['enqueue_swiper_js'] : true;
+		$sptp_settings      = get_option( '_sptp_settings' );
+		$sptp_fontawesome   = isset( $sptp_settings['enqueue_fontawesome'] ) ? $sptp_settings['enqueue_fontawesome'] : true;
+		$sptp_swiper_css    = isset( $sptp_settings['enqueue_swiper'] ) ? $sptp_settings['enqueue_swiper'] : true;
+		$enqueue_isotope_js = isset( $sptp_settings['enqueue_isotope_js'] ) ? $sptp_settings['enqueue_isotope_js'] : true;
+		$sptp_swiper_js     = isset( $sptp_settings['enqueue_swiper_js'] ) ? $sptp_settings['enqueue_swiper_js'] : true;
+
 		/**
 		 *  Register all the styles for the public-facing side of the site.
 		 */
 		if ( $sptp_fontawesome ) {
 			wp_register_style( 'team-free-fontawesome', SPT_PLUGIN_ROOT . 'src/Frontend/css/font-awesome.min.css', array(), SPT_PLUGIN_VERSION, 'all' );
 		}
+		// One Swiper file serves blocks and shortcodes: alias the block handle where
+		// AssetManager registered it, so a page holding both prints it once.
 		if ( $sptp_swiper_css ) {
-			wp_register_style( 'team-free-swiper', SPT_PLUGIN_ROOT . 'src/Frontend/css/swiper.min.css', array(), SPT_PLUGIN_VERSION, 'all' );
+			if ( wp_style_is( 'sptp-swiper', 'registered' ) ) {
+				wp_register_style( 'team-free-swiper', false, array( 'sptp-swiper' ), SPT_PLUGIN_VERSION );
+			} else {
+				wp_register_style( 'team-free-swiper', SPT_PLUGIN_ROOT . 'src/Frontend/css/swiper.min.css', array(), SPT_PLUGIN_VERSION, 'all' );
+			}
 		}
 		wp_register_style( 'public-rtl', SPT_PLUGIN_ROOT . 'src/Frontend/css/public-rtl.min.css', array(), SPT_PLUGIN_VERSION, 'all' );
 		wp_register_style( SPT_PLUGIN_SLUG, SPT_PLUGIN_ROOT . 'src/Frontend/css/public.min.css', array(), SPT_PLUGIN_VERSION, 'all' );
@@ -244,9 +281,20 @@ class Frontend {
 		/**
 		 * Register all the Scripts for the public-facing side of the site.
 		 */
-		if ( $sptp_swiper_js ) {
-			wp_register_script( 'team-free-swiper', SPT_PLUGIN_ROOT . 'src/Frontend/js/swiper.min.js', array(), SPT_PLUGIN_VERSION, true );
+		if ( $enqueue_isotope_js ) {
+			// Isotope 3.0.6 (GPLv3), bundled — WordPress.org forbids CDN scripts.
+			// The readable source ships beside it as isotope.pkgd.js.
+			wp_register_script( 'team-free-isotope', SPT_PLUGIN_ROOT . 'src/Frontend/js/isotope.pkgd.min.js', array( 'jquery' ), '3.0.6', true );
 		}
+
+		if ( $sptp_swiper_js ) {
+			if ( wp_script_is( 'sptp-swiper', 'registered' ) ) {
+				wp_register_script( 'team-free-swiper', false, array( 'sptp-swiper' ), SPT_PLUGIN_VERSION, true );
+			} else {
+				wp_register_script( 'team-free-swiper', SPT_PLUGIN_ROOT . 'src/Frontend/js/swiper.min.js', array(), SPT_PLUGIN_VERSION, true );
+			}
+		}
+
 		wp_register_script( SPT_PLUGIN_SLUG, SPT_PLUGIN_ROOT . 'src/Frontend/js/script.js', array( 'jquery' ), SPT_PLUGIN_VERSION, true );
 
 		wp_localize_script(
@@ -307,7 +355,7 @@ class Frontend {
 			$generator_id = $found_generator_id;
 			include 'partials/dynamic-style.php';
 		}
-		$custom_style = trim( html_entity_decode( get_option( '_sptp_settings' )['custom_css'] ) );
+		$custom_style = trim( wp_strip_all_tags( html_entity_decode( (string) ( get_option( '_sptp_settings' )['custom_css'] ?? '' ) ) ) );
 		// Custom css merge with dynamic style.
 		if ( ! empty( $custom_style ) ) {
 			$final_css .= $custom_style;

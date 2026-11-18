@@ -1,0 +1,26 @@
+/**
+ * Social Profile — base styles (editor + frontend).
+ *
+ * The icon-chip look comes from the globally-bundled shared card SCSS
+ * (apps/blocks/shared/style.scss, flat `.sp-smart-team-card__social*` classes);
+ * dynamic values come from the dynamic CSS twins. Only the empty-state note and
+ * a default centered layout are block-specific.
+ */
+
+.sp-smart-team-social-profile {
+	.sp-smart-team-card__social {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	&__empty {
+		margin: 0;
+		opacity: 0.6;
+		text-align: center;
+	}
+}

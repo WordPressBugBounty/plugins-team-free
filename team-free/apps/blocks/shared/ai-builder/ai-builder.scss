@@ -1,0 +1,473 @@
+$sptp-ai-brand: #2b5f47;
+$sptp-ai-brand-dark: #1f4634;
+$sptp-ai-brand-tint: #e8f0ec;
+$sptp-ai-brand-soft: #f1f7f4;
+$sptp-ai-brand-line: #c5dccf;
+$sptp-ai-text: #1e2939;
+$sptp-ai-muted: #6a7282;
+$sptp-ai-line: #e5e7eb;
+$sptp-ai-chip: #f3f4f6;
+
+@keyframes sptp-ai-bounce {
+	0%,
+	100% {
+		transform: translateY(2px);
+		opacity: 0.45;
+	}
+	50% {
+		transform: translateY(-2px);
+		opacity: 1;
+	}
+}
+
+/* Block-toolbar "Refine with AI" button — icon + label in brand color (WP Carousel Pro parity). */
+.sptp-ai-refine-toolbar-btn.components-button {
+	color: $sptp-ai-brand;
+	font-weight: 500;
+
+	&:hover:not(:disabled),
+	&:focus:not(:disabled) {
+		color: $sptp-ai-brand-dark;
+	}
+}
+
+/* Header-toolbar launcher — outlined, so it reads as a sibling of the solid
+   Patterns Library button rather than a second primary action. */
+.sptp-ai-builder-launcher-slot {
+	display: flex;
+	align-items: center;
+	margin-left: 8px;
+}
+
+.sptp-ai-builder-launcher {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	height: 36px;
+	padding: 0 12px;
+	border: 1px solid $sptp-ai-brand;
+	border-radius: 2px;
+	background: $sptp-ai-brand-tint;
+	color: $sptp-ai-brand;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1;
+	white-space: nowrap;
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		color 0.15s ease;
+}
+
+@keyframes sptp-ai-pop {
+	from {
+		opacity: 0;
+		transform: translateY(6px) scale(0.985);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+// Design: "Team Showcase Builder" (Claude Design) — the core Modal chrome is
+// replaced by the design's own header, body and footer bands.
+.sptp-ai-builder-modal {
+	width: 100%;
+	max-width: 680px;
+	border-radius: 12px;
+	box-shadow:
+		4px 4px 12px 2px rgba(0, 0, 0, 0.1),
+		inset 0 0 0 1px $sptp-ai-line;
+	overflow: hidden;
+	animation: sptp-ai-pop 160ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+
+	.components-modal__content {
+		margin-top: 0;
+		padding: 0;
+	}
+
+	&__header {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 22px 28px;
+		box-shadow: inset 0 -1px 0 0 $sptp-ai-line;
+
+		svg {
+			display: block;
+			flex: 0 0 auto;
+		}
+	}
+
+	&__title {
+		flex: 1;
+		min-width: 0;
+		margin: 0;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 1.3;
+		color: $sptp-ai-text;
+	}
+
+	&__close {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		padding: 0;
+		border: none;
+		border-radius: 8px;
+		background: transparent;
+		color: $sptp-ai-muted;
+		cursor: pointer;
+
+		svg {
+			fill: currentColor;
+		}
+
+		&:hover,
+		&:focus-visible {
+			background: $sptp-ai-chip;
+			color: $sptp-ai-text;
+		}
+	}
+
+	&__body {
+		padding: 28px;
+	}
+
+	&__notice {
+		margin: 0 0 16px;
+	}
+
+	&__connect,
+	&__fallback {
+		margin-bottom: 22px;
+		padding: 14px 18px;
+		border: 1px solid $sptp-ai-brand-line;
+		border-radius: 8px;
+		background: $sptp-ai-brand-soft;
+		color: $sptp-ai-text;
+		font-size: 14px;
+		line-height: 1.6;
+
+		strong {
+			font-weight: 600;
+		}
+
+		a {
+			color: $sptp-ai-brand;
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	&__fallback {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 20px;
+		padding: 12px 12px 12px 18px;
+	}
+
+	&__fallback-text {
+		margin: 0;
+	}
+
+	.sptp-ai-builder-modal__fallback-btn.components-button {
+		flex-shrink: 0;
+		height: 36px;
+		padding: 0 16px;
+		border-radius: 6px;
+		background: #111;
+		color: #fff;
+		font-size: 13px;
+		font-weight: 600;
+
+		&:hover:not(:disabled) {
+			background: #000;
+			color: #fff;
+		}
+	}
+
+	&__footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+		padding: 0 28px 28px;
+	}
+
+	&__provider,
+	&__actions {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	&__provider {
+		min-width: 0;
+		color: $sptp-ai-text;
+		font-size: 13px;
+	}
+
+	&__provider-sep {
+		color: $sptp-ai-muted;
+	}
+
+	// Borderless inline dropdowns; wp-admin's own arrow image stays as the chevron.
+	select.sptp-ai-inline-select {
+		field-sizing: content;
+		max-width: 240px;
+		min-height: 30px;
+		padding: 0 22px 0 4px;
+		border: none;
+		border-radius: 4px;
+		box-shadow: none;
+		background-color: transparent;
+		background-position: right 2px top 55%;
+		color: $sptp-ai-text;
+		font-family: inherit;
+		font-size: 13px;
+		line-height: 30px;
+		text-overflow: ellipsis;
+		cursor: pointer;
+
+		&:hover {
+			color: $sptp-ai-brand;
+		}
+
+		&:focus {
+			border: none;
+			outline: none;
+			box-shadow: 0 0 0 1.5px $sptp-ai-brand;
+		}
+
+		&:disabled {
+			opacity: 0.6;
+			cursor: default;
+		}
+	}
+
+	.sptp-ai-heading {
+		display: block;
+		margin-bottom: 12px;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.3;
+		color: $sptp-ai-text;
+	}
+
+	.sptp-ai-textarea-card {
+		padding: 16px 18px 12px;
+		border-radius: 8px;
+		background: #fff;
+		box-shadow: inset 0 0 0 1px $sptp-ai-line;
+
+		&:focus-within {
+			box-shadow: inset 0 0 0 1px $sptp-ai-brand;
+		}
+	}
+
+	.sptp-ai-textarea {
+		display: block;
+		box-sizing: border-box;
+		width: 100%;
+		min-height: 148px;
+		padding: 0;
+		border: none;
+		outline: none;
+		box-shadow: none;
+		resize: none;
+		background: transparent;
+		font-family: inherit;
+		font-size: 14px;
+		line-height: 1.55;
+		color: $sptp-ai-text;
+
+		&:focus,
+		&:focus-visible {
+			border: none;
+			outline: none;
+			box-shadow: none;
+		}
+
+		&::placeholder {
+			color: #bec4ce;
+		}
+	}
+
+	.sptp-ai-textarea-hint {
+		padding-top: 16px;
+		box-shadow: inset 0 1px 0 0 $sptp-ai-line;
+		font-size: 12px;
+		color: $sptp-ai-muted;
+	}
+
+	.sptp-ai-starters {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		min-width: 0;
+		margin-top: 14px;
+
+		&__label {
+			flex: 0 0 auto;
+			margin-right: 2px;
+			font-size: 12px;
+			color: $sptp-ai-muted;
+		}
+
+		&__rail {
+			display: flex;
+			flex: 1 1 auto;
+			align-items: center;
+			gap: 8px;
+			min-width: 0;
+			padding-bottom: 2px;
+			overflow-x: auto;
+			white-space: nowrap;
+			scroll-behavior: smooth;
+			scroll-snap-type: x mandatory;
+			scrollbar-width: none;
+			mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 56px), rgba(0, 0, 0, 0.15) 100%);
+
+			&::-webkit-scrollbar {
+				width: 0;
+				height: 0;
+			}
+		}
+
+		&__pill,
+		&__more {
+			flex: 0 0 auto;
+			height: 30px;
+			border: none;
+			border-radius: 999px;
+			background: $sptp-ai-chip;
+			cursor: pointer;
+			font-family: inherit;
+
+			&:hover,
+			&:focus-visible {
+				background: $sptp-ai-brand-tint;
+				color: $sptp-ai-brand;
+			}
+		}
+
+		&__pill {
+			padding: 0 14px;
+			scroll-snap-align: start;
+			font-size: 13px;
+			line-height: 1;
+			color: $sptp-ai-text;
+		}
+
+		&__more {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 30px;
+			padding: 0;
+			color: #364153;
+		}
+	}
+
+	.sptp-ai-stop-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		padding: 0;
+		border: none;
+		border-radius: 8px;
+		background: $sptp-ai-chip;
+		color: #364153;
+		cursor: pointer;
+
+		&:hover {
+			background: $sptp-ai-brand-tint;
+			color: $sptp-ai-brand;
+		}
+	}
+
+	// Two stacked spans (progress fill + label) inside one Button — the
+	// position/overflow here are load-bearing.
+	.sptp-ai-generate-btn {
+		position: relative;
+		display: flex;
+		align-items: center;
+		height: 44px;
+		padding: 0 20px;
+		overflow: hidden;
+		border-radius: 6px;
+		background: $sptp-ai-brand !important;
+		font-size: 13px;
+		font-weight: 600;
+		color: #fff !important;
+
+		&:hover:not(:disabled) {
+			background: $sptp-ai-brand-dark !important;
+		}
+
+		&:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+
+		// A request in flight stays fully opaque, as in the design.
+		&[aria-busy='true'],
+		&[aria-busy='true']:disabled {
+			opacity: 1;
+			background-image: none !important;
+			animation: none;
+			cursor: default;
+		}
+
+		&__fill {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			background: $sptp-ai-brand-dark;
+			transition: width 400ms cubic-bezier(0.2, 0.8, 0.3, 1);
+		}
+
+		&__label {
+			position: relative;
+			z-index: 1;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		&__dots {
+			display: inline-flex;
+			align-items: center;
+			gap: 3px;
+			height: 13px;
+
+			span {
+				width: 4px;
+				height: 4px;
+				border-radius: 999px;
+				background: #fff;
+				animation: sptp-ai-bounce 1s ease-in-out infinite;
+
+				&:nth-child(2) {
+					animation-delay: 0.15s;
+				}
+
+				&:nth-child(3) {
+					animation-delay: 0.3s;
+				}
+			}
+		}
+	}
+}

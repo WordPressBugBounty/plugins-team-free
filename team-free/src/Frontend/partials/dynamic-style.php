@@ -21,7 +21,11 @@ $css_name          = array();
 $css_profession    = array();
 $css_bio           = array();
 $css_social        = array();
-$layout_preset     = isset( $layout['layout_preset'] ) ? $layout['layout_preset'] : 'carousel';
+$css_skill         = array();
+
+// $skill_css_single = array();
+
+$layout_preset = isset( $layout['layout_preset'] ) ? $layout['layout_preset'] : 'carousel';
 
 $css_right_content = array();
 
@@ -82,6 +86,10 @@ if ( 'list' === $layout_preset ) {
 		'#sptp-' . $generator_id . ' .sptp-member.sptp-list-item:hover' => array(
 			'border-color' => $border_around_member_hover_color,
 		),
+		'#sptp-' . $generator_id . ' .sptp-member.sptp-list-item .image' => array(
+			'width'     => $list_layout_image_max_width . '%',
+			'max-width' => '100%',
+		),
 	);
 }
 
@@ -93,7 +101,7 @@ if ( 'list' === $layout_preset && 'left_img_right_content' === $position ) {
 	);
 }
 
-if ( $style_members['image_switch'] ) {
+if ( is_array( $style_members ) && $style_members['image_switch'] ) {
 	$css_avatar = array(
 		'#sptp-' . $generator_id . ' .sptp-member-avatar-img'  => array(
 			'border'           => $border,
@@ -142,16 +150,87 @@ if ( $show_member_bio ) {
 
 if ( $show_member_social ) {
 	$css_social = array(
-		'#sptp-' . $generator_id . ' .sptp-member-social' => array(
-			'text-align' => $social_position,
-		),
-		'#sptp-' . $generator_id . ' .sptp-member-social ul' => array(
-			'text-align' => $social_position,
-		),
 		'#sptp-' . $generator_id . ' .sptp-member-social li' => array(
 			'margin' => $social_margin_css,
 		),
 	);
+}
+
+/**
+ * Member skill style.
+ */
+$show_member_skill   = isset( $style_members['skill_switch'] ) ? $style_members['skill_switch'] : false;
+$skill_border_radius = isset( $settings['skill_settings']['skill_bar_radius']['border_radius'] ) ? $settings['skill_settings']['skill_bar_radius']['border_radius'] : 0;
+$skill_bar_height    = isset( $settings['skill_settings']['skill_bar_height']['all'] ) ? $settings['skill_settings']['skill_bar_height']['all'] : 4;
+
+$progress_bg_color = isset( $settings['skill_settings']['progressbar_color_group']['progress_bg_color'] ) ? $settings['skill_settings']['progressbar_color_group']['progress_bg_color'] : '#c9dfd1';
+$progress_color    = isset( $settings['skill_settings']['progressbar_color_group']['progress_color'] ) ? $settings['skill_settings']['progressbar_color_group']['progress_color'] : '#559173';
+
+$skill_percentage_text_color = isset( $settings['skill_settings']['skill_percentage_text_color'] ) ? $settings['skill_settings']['skill_percentage_text_color'] : '#ffffff';
+$tooltip_bg_color            = isset( $settings['skill_settings']['tooltip_bg_color'] ) ? $settings['skill_settings']['tooltip_bg_color'] : '#559173';
+
+$skill_percentage_text_visibility = isset( $settings['skill_settings']['skill_percentage_text_visibility'] ) ? $settings['skill_settings']['skill_percentage_text_visibility'] : 'visible';
+
+// Define selectors to avoid duplication.
+$tooltip_selector = sprintf(
+	'#sptp-%1$s .sptp-info .sptp-member-skill-progress .sptp-progress-container .sptp-progress-bar.sptp-tooltip .sptp-top, 
+	#sptp-%1$s .sptp-member .sptp-member-skill-progress .sptp-progress-container .sptp-progress-bar.sptp-tooltip .sptp-top',
+	$generator_id
+);
+
+$tooltip_hover_selector = sprintf(
+	'#sptp-%1$s .sptp-info .sptp-member-skill-progress .sptp-progress-container:hover .sptp-progress-bar.sptp-tooltip .sptp-top, 
+	#sptp-%1$s .sptp-member .sptp-member-skill-progress .sptp-progress-container:hover .sptp-progress-bar.sptp-tooltip .sptp-top',
+	$generator_id
+);
+
+// Base styles.
+if ( $show_member_skill ) {
+	$css_skill = array(
+		sprintf(
+			'#sptp-%1$s .sptp-info .sptp-member-skill-progress .sptp-progress-container .sptp-progress-bar,
+			 #sptp-%1$s .sptp-member .sptp-member-skill-progress .sptp-progress-container .sptp-progress-bar,
+			 #sptp-%1$s .sptp-info .sptp-member-skill-progress .sptp-progress-container,
+			 #sptp-%1$s .sptp-member .sptp-member-skill-progress .sptp-progress-container',
+			$generator_id
+		)                 => array(
+			'height'           => (int) $skill_bar_height . 'px',
+			'border-radius'    => (int) $skill_border_radius . 'px',
+			'background-color' => $progress_bg_color,
+		),
+		sprintf(
+			'#sptp-%1$s .sptp-info .sptp-member-skill-progress .sptp-progress-container .sptp-progress-bar,
+			 #sptp-%1$s .sptp-member .sptp-member-skill-progress .sptp-progress-container .sptp-progress-bar',
+			$generator_id
+		)                 => array(
+			'background-color' => $progress_color,
+		),
+		$tooltip_selector => array(
+			'color'            => $skill_percentage_text_color,
+			'background-color' => $tooltip_bg_color,
+			// visibility styles will be merged below.
+		),
+	);
+}
+
+// Set visibility behavior.
+switch ( $skill_percentage_text_visibility ) {
+	case 'on_hover':
+		$css_skill[ $tooltip_hover_selector ] = array(
+			'display' => 'inline-block',
+			'opacity' => 1,
+		);
+		break;
+
+	case 'hide':
+		$css_skill[ $tooltip_selector ]['display'] = 'none';
+		$css_skill[ $tooltip_selector ]['opacity'] = 1;
+		break;
+
+	default:
+		$css_skill[ $tooltip_selector ]['display'] = 'inline-block';
+		$css_skill[ $tooltip_selector ]['opacity'] = 1;
+		break;
 }
 
 $css = array(
@@ -182,7 +261,7 @@ $css = array(
 	),
 );
 
-$css = array_merge( $css_carousel, $css_grid, $css_list, $css_avatar, $css_section_title, $css_name, $css_profession, $css_bio, $css_social, $css_right_content, $css );
+$css = array_merge( $css_carousel, $css_grid, $css_list, $css_avatar, $css_section_title, $css_name, $css_profession, $css_bio, $css_social, $css_skill, $css_right_content, $css );
 foreach ( $css as $style => $style_array ) {
 	$final_css .= $style . '{';
 	foreach ( $style_array as $property => $value ) {
@@ -194,9 +273,9 @@ foreach ( $css as $style => $style_array ) {
 }
 if ( 'carousel' === $layout_preset ) {
 	$final_css .= "@media screen and (max-width: 480px) {
-	'#sptp-' . $generator_id . ' .sptp_nav_hide_on_mobile,
-	'#sptp-' . $generator_id . ' .sptp-pagination.sptp_pagination_hide_on_mobile {
-		display: none;
-	}
-}";
+		'#sptp-' . $generator_id . ' .sptp_nav_hide_on_mobile,
+		'#sptp-' . $generator_id . ' .sptp-pagination.sptp_pagination_hide_on_mobile {
+			display: none;
+		}
+	}";
 }

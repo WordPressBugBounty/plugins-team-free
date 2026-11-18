@@ -1,0 +1,80 @@
+.sp-smart-team-wh-control {
+	// Size container so the grid can stack when the panel gets too narrow for
+	// two full-label columns (see the @container rule below).
+	container-type: inline-size;
+
+	.sp-smart-team-wh-grid {
+		display: grid;
+		// minmax(0, 1fr): a bare 1fr's auto minimum lets the column with the
+		// wider head cluster (device + reset + unit) grow past its half and
+		// push the other input off the shared right edge.
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 12px;
+	}
+
+	// Too narrow for two columns with full labels — stack the fields instead
+	// of ellipsizing the labels.
+	@container (max-width: 219px) {
+		.sp-smart-team-wh-grid {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	.sp-smart-team-wh-field {
+		min-width: 0;
+	}
+
+	.sp-smart-team-wh-field__head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 2px;
+		margin-bottom: 6px;
+
+		.sp-smart-team-component-title {
+			margin: 0;
+			font-size: 13px;
+			font-weight: 400;
+			line-height: 20px;
+			color: #1e1e1e;
+			// The head must fit the half-width column — let the label give way
+			// (ellipsized) rather than the controls cluster poking past the
+			// column's right edge (the input line below).
+			flex: 0 1 auto;
+			min-width: 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
+	// Device switcher + reset + unit as one tight, right-aligned cluster.
+	.sp-smart-team-wh-field__controls {
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+		gap: 0;
+
+		// The shared device switcher ships a 10px left margin for the range
+		// control headers — dead space in this tight half-width cluster.
+		.sp-smart-team-responsive {
+			margin-left: 0;
+		}
+
+		.sp-smart-team-header-control-reset.components-button {
+			height: 20px;
+			min-width: 0;
+			padding: 0 2px;
+
+			svg {
+				width: 14px;
+				height: 14px;
+			}
+		}
+	}
+
+	// Brand the number input focus ring instead of WP's default blue.
+	--wp-admin-theme-color: #2b5f47;
+	--wp-admin-theme-color-darker-10: #234e3a;
+	--wp-admin-theme-color-darker-20: #1c3d2d;
+}

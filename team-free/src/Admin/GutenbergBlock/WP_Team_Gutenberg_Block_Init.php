@@ -53,6 +53,11 @@ if ( ! class_exists( 'WP_Team_Gutenberg_Block_Init' ) ) {
 			);
 			$version      = isset( $asset['version'] ) ? $asset['version'] : SPT_PLUGIN_VERSION;
 
+			// After sptp-blocks-editor so its inserter/canvas gate filters exist before this block registers.
+			if ( wp_script_is( 'sptp-blocks-editor', 'registered' ) ) {
+				$dependencies[] = 'sptp-blocks-editor';
+			}
+
 			wp_enqueue_script(
 				'team-free-shortcode-block',
 				plugins_url( '/GutenbergBlock/build/index.js', __DIR__ ),

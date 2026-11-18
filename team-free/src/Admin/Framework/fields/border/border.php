@@ -5,12 +5,13 @@
  * @link https://shapedplugin.com
  * @since 2.0.0
  *
- * @package team-free
- * @subpackage team-free/framework
+ * @package    Wp_Team_free
+ * @subpackage Wp_Team_free/Admin/Framework
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	die; } // Cannot access directly.
+	die;
+} // Cannot access directly.
 
 if ( ! class_exists( 'TEAMFW_Field_border' ) ) {
 	/**
@@ -21,7 +22,6 @@ if ( ! class_exists( 'TEAMFW_Field_border' ) ) {
 	 * @version 1.0.0
 	 */
 	class TEAMFW_Field_border extends TEAMFW_Fields {
-
 		/**
 		 * Field constructor.
 		 *
@@ -45,10 +45,10 @@ if ( ! class_exists( 'TEAMFW_Field_border' ) ) {
 			$args = wp_parse_args(
 				$this->field,
 				array(
-					'top_icon'           => '<i class="fa fa-long-arrow-alt-up"></i>',
-					'left_icon'          => '<i class="fa fa-long-arrow-alt-left"></i>',
-					'bottom_icon'        => '<i class="fa fa-long-arrow-alt-down"></i>',
-					'right_icon'         => '<i class="fa fa-long-arrow-alt-right"></i>',
+					'top_icon'           => '<i class="fa fa-long-arrow-up"></i>',
+					'left_icon'          => '<i class="fa fa-long-arrow-left"></i>',
+					'bottom_icon'        => '<i class="fa fa-long-arrow-down"></i>',
+					'right_icon'         => '<i class="fa fa-long-arrow-right"></i>',
 					'all_icon'           => '<i class="fa fa-arrows"></i>',
 					'top_placeholder'    => esc_html__( 'top', 'team-free' ),
 					'right_placeholder'  => esc_html__( 'right', 'team-free' ),
@@ -62,22 +62,23 @@ if ( ! class_exists( 'TEAMFW_Field_border' ) ) {
 					'all'                => false,
 					'color'              => true,
 					'hover_color'        => true,
-					'radius'             => false,
+					'border_radius'      => false,
+					'show_units'         => false,
 					'style'              => true,
 					'unit'               => 'px',
 				)
 			);
 
 			$default_value = array(
-				'top'         => '',
-				'right'       => '',
-				'bottom'      => '',
-				'left'        => '',
-				'color'       => '',
-				'hover_color' => '',
-				'style'       => 'solid',
-				'all'         => '',
-				'radius'      => '0',
+				'top'           => '',
+				'right'         => '',
+				'bottom'        => '',
+				'left'          => '',
+				'color'         => '',
+				'hover_color'   => '',
+				'border_radius' => '',
+				'style'         => 'solid',
+				'all'           => '',
 			);
 
 			$border_props = array(
@@ -98,7 +99,7 @@ if ( ! class_exists( 'TEAMFW_Field_border' ) ) {
 
 			echo wp_kses_post( $this->field_before() );
 
-			echo '<div class="spf--inputs" data-depend-id="' . esc_attr( $this->field['id'] ) . '">';
+			echo '<div class="spf--inputs">';
 
 			if ( ! empty( $args['all'] ) ) {
 
@@ -128,7 +129,6 @@ if ( ! class_exists( 'TEAMFW_Field_border' ) ) {
 				foreach ( $properties as $property ) {
 
 					$placeholder = ( ! empty( $args[ $property . '_placeholder' ] ) ) ? ' placeholder="' . esc_attr( $args[ $property . '_placeholder' ] ) . '"' : '';
-
 					echo '<div class="spf--input">';
 					echo ( ! empty( $args[ $property . '_icon' ] ) ) ? '<span class="spf--label spf--icon">' . wp_kses_post( $args[ $property . '_icon' ] ) . '</span>' : '';
 					echo '<input type="number" name="' . esc_attr( $this->field_name( '[' . $property . ']' ) ) . '" value="' . esc_attr( $value[ $property ] ) . '" class="spf-input-number spf--is-unit" step="any" />';
@@ -149,39 +149,55 @@ if ( ! class_exists( 'TEAMFW_Field_border' ) ) {
 				}
 				echo '</select>';
 				echo '</div>';
+				echo '</div>';
 			}
 
-			echo '</div>';
 			echo '</div>';
 
 			if ( ! empty( $args['color'] ) ) {
 				$default_color_attr = ( ! empty( $default_value['color'] ) ) ? ' data-default-color="' . esc_attr( $default_value['color'] ) . '"' : '';
 				echo '<div class="spf--color">';
-				echo '<div class="spf--title">' . esc_html__( 'Color', 'team-free' ) . '</div>';
 				echo '<div class="spf-field-color">';
+				echo '<div class="spf--title">' . esc_html__( 'Color', 'team-free' ) . '</div>';
 				echo '<input type="text" name="' . esc_attr( $this->field_name( '[color]' ) ) . '" value="' . esc_attr( $value['color'] ) . '" class="spf-color"' . wp_kses_post( $default_color_attr ) . ' />';
 				echo '</div>';
 				echo '</div>';
 			}
+
 			if ( ! empty( $args['hover_color'] ) ) {
 				$default_color_attr = ( ! empty( $default_value['hover_color'] ) ) ? ' data-default-color="' . esc_attr( $default_value['hover_color'] ) . '"' : '';
 				echo '<div class="spf--color">';
-				echo '<div class="spf--title">' . esc_html__( 'Hover', 'team-free' ) . '</div>';
 				echo '<div class="spf-field-color">';
+				echo '<div class="spf--title">' . esc_html__( 'Hover Color', 'team-free' ) . '</div>';
 				echo '<input type="text" name="' . esc_attr( $this->field_name( '[hover_color]' ) ) . '" value="' . esc_attr( $value['hover_color'] ) . '" class="spf-color"' . wp_kses_post( $default_color_attr ) . ' />';
 				echo '</div>';
 				echo '</div>';
 			}
-			if ( ! empty( $args['radius'] ) ) {
 
-				echo '<div class="spf--border">';
+			if ( ! empty( $args['border_radius'] ) ) {
+
+				$placeholder = ( ! empty( $args['all_placeholder'] ) ) ? $args['all_placeholder'] : '';
+				echo '<div class="spf--border border-radius">';
 				echo '<div class="spf--title">' . esc_html__( 'Radius', 'team-free' ) . '</div>';
 				echo '<div class="spf--input">';
 				echo ( ! empty( $args['all_icon'] ) ) ? '<span class="spf--label spf--icon">' . wp_kses_post( $args['all_icon'] ) . '</span>' : '';
-				echo '<input type="number" name="' . esc_attr( $this->field_name( '[radius]' ) ) . '" value="' . esc_attr( $value['radius'] ) . '" placeholder="Radius" class="spf-input-number spf--is-unit" step="any" />';
-				echo ( ! empty( $args['unit'] ) ) ? '<span class="spf--label spf--unit">' . esc_attr( $args['unit'] ) . '</span>' : '';
-				echo '</div>';
-				echo '</div>';
+				echo '<input type="number" name="' . esc_attr( $this->field_name( '[border_radius]' ) ) . '" value="' . esc_attr( $value['border_radius'] ) . '" placeholder="' . esc_attr( $placeholder ) . '" class="spf-input-number spf--is-unit" step="any" />';
+				// Same check as the spacing field: a unit picker only for 2+ units.
+				if ( ! empty( $args['show_units'] ) && ! empty( $args['units'] ) && is_array( $args['units'] ) && count( $args['units'] ) > 1 ) {
+					echo '<div class="spf--input spf--border-select">';
+					echo '<select name="' . esc_attr( $this->field_name( '[unit]' ) ) . '">';
+					$current_unit = isset( $value['unit'] ) ? $value['unit'] : $args['unit'];
+					foreach ( $args['units'] as $unit ) {
+						$selected = ( $current_unit === $unit ) ? ' selected' : '';
+						echo '<option value="' . esc_attr( $unit ) . '"' . esc_attr( $selected ) . '>' . esc_attr( $unit ) . '</option>';
+					}
+					echo '</select>';
+					echo '</div>';
+				} else {
+					echo ( ! empty( $args['unit'] ) ) ? '<span class="spf--label spf--unit">' . esc_attr( $args['unit'] ) . '</span>' : '';
+
+				}
+				echo '</div></div>';
 
 			}
 

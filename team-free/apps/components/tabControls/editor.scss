@@ -1,0 +1,116 @@
+.sp-smart-team-tab-panel {
+	.components-tab-panel__tabs-item:focus:not(:disabled) {
+		box-shadow: none;
+	}
+
+	.components-tab-panel__tabs {
+		justify-content: center;
+		padding: 0;
+		margin-bottom: 16px;
+	}
+
+	.components-tab-panel__tab-content {
+		padding: 0;
+		margin: 0;
+		border: none;
+		background: transparent;
+	}
+
+	.components-tab-panel__tabs>button {
+		padding: 0;
+	}
+
+	.components-tab-panel__tabs button {
+		color: #2f2f2f;
+		height: 40px;
+		font-size: 14px;
+		font-weight: 500;
+		width: 100%;
+		justify-content: center;
+		align-items: center;
+		border-bottom: 2px solid #ddd;
+		border-top: none;
+		border-left: none;
+		border-right: none;
+		// Match the active tab's positioning so both buttons take the same
+		// rounding path — with only the active tab positioned, browser zoom
+		// rounds the two differently and the inactive tab's content drifts
+		// up a few pixels.
+		position: relative;
+	}
+
+	// Brand-color tabs on hover (matches the panel-title hover behavior).
+	.components-tab-panel__tabs button:hover {
+		color: var(--sp-smart-team-primary-2-600);
+
+		span svg {
+			fill: var(--sp-smart-team-primary-2-600);
+		}
+	}
+
+	.components-tab-panel__tabs button.components-tab-panel__tabs-item:focus {
+		border-bottom: 2px solid var(--sp-smart-team-primary-2-600) !important;
+	}
+
+	.components-panel__body-title .components-button:focus:not(:disabled) {
+		border-bottom: 0 !important;
+	}
+
+	.sp-smart-team-general-tab .components-button:focus:not(:disabled) {
+		border-bottom: 2px solid var(--sp-smart-team-primary-2-600) !important;
+	}
+
+	.components-tab-panel__tabs button span {
+		display: flex;
+		align-items: center;
+
+		svg {
+			margin-right: 4px;
+			fill: #2f2f2f;
+			transition: 0.3s ease-in-out;
+		}
+
+		// Flex-center the icon wrapper's svg so it doesn't sit on a text
+		// baseline and drift against its label.
+		.sp-smart-team-block-icon {
+			display: flex;
+			align-items: center;
+		}
+	}
+
+	.components-tab-panel__tabs button.active-tab {
+		z-index: 2;
+		position: relative;
+		color: var(--sp-smart-team-primary-2-600);
+		border-bottom: 2px solid var(--sp-smart-team-primary-2-600) !important;
+
+		&:hover {
+			color: var(--sp-smart-team-primary-2-600);
+		}
+
+		span {
+			.sp-smart-team-block-icon {
+				svg {
+					fill: var(--sp-smart-team-primary-2-600);
+				}
+			}
+		}
+	}
+
+	.components-panel__body {
+		.components-panel__body-title {
+			.components-panel__body-toggle:focus {
+				box-shadow: none;
+			}
+		}
+	}
+}
+
+
+
+.sp-smart-team-tab-panel .components-tab-panel__tabs-item {
+	height: 41px !important;
+	// Was -12px (tabs almost touched the panel header) — leave a little gap.
+	margin-top: -10px;
+}
+

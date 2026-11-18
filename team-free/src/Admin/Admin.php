@@ -13,10 +13,11 @@
 namespace ShapedPlugin\WPTeam\Admin;
 
 use ShapedPlugin\WPTeam\Admin\Configs\Member\Member_Meta;
+use ShapedPlugin\WPTeam\Admin\Configs\Member\Member_Meta_Save;
+use ShapedPlugin\WPTeam\Admin\Configs\Generator\Generator_Meta_Save;
 use ShapedPlugin\WPTeam\Admin\Configs\Generator;
-use ShapedPlugin\WPTeam\Admin\Configs\Settings;
-use ShapedPlugin\WPTeam\Admin\Configs\Tools;
 use ShapedPlugin\WPTeam\Admin\DB_Updater;
+use ShapedPlugin\WPTeam\Admin\Dashboard\WhiteLabel;
 use ShapedPlugin\WPTeam\Admin\Preview\SPTP_Preview;
 use ShapedPlugin\WPTeam\Traits\Singleton;
 
@@ -66,14 +67,6 @@ class Admin {
 	 */
 	private $sptp_options;
 
-	/**
-	 * Rename member name.
-	 *
-	 * @since    2.0.0
-	 * @access   private
-	 * @var      string    $sptp_member_name
-	 */
-	private $sptp_member_name;
 
 	/**
 	 * Rename team name.
@@ -142,13 +135,12 @@ class Admin {
 		// Check for developer mode.
 		$this->min = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? '' : '.min';
 
-		$this->sptp_options              = get_option( '_sptp_settings' );
-		$this->sptp_member_singular_name = ( ! empty( $this->sptp_options['rename_member_singular'] ) ) ? $this->sptp_options['rename_member_singular'] : 'Member';
-		$this->sptp_member_plural_name   = ( ! empty( $this->sptp_options['rename_member_plural'] ) ) ? $this->sptp_options['rename_member_plural'] : 'Members';
-		$this->sptp_group_singular_name  = ( ! empty( $this->sptp_options['rename_group_singular'] ) ) ? $this->sptp_options['rename_group_singular'] : 'Department';
-		$this->sptp_group_plural_name    = ( ! empty( $this->sptp_options['rename_group_plural'] ) ) ? $this->sptp_options['rename_group_plural'] : 'Departments';
-		$this->sptp_team_name            = ( ! empty( $this->sptp_options['rename_team'] ) ) ? $this->sptp_options['rename_team'] : 'Teams';
+		$this->sptp_options             = get_option( '_sptp_settings' );
 		add_action( 'after_setup_theme', array( $this, 'initialize_metabox_configs' ) );
+		// A member save merges over the stored data, so Pro-only fields survive.
+		Member_Meta_Save::register();
+		// So does a classic Team Generator save (`_sptp_generator` + `_layout`).
+		Generator_Meta_Save::register();
 		// Database updater.
 		new DB_Updater();
 		new SPTP_Preview();
@@ -162,9 +154,16 @@ class Admin {
 	 * @return void
 	 */
 	public function initialize_metabox_configs() {
+		// Read here, not in the constructor: the label defaults are translated, and
+		// the textdomain must not load before `after_setup_theme`.
+		$labels                          = WhiteLabel::labels();
+		$this->sptp_member_singular_name = $labels['memberSingular'];
+		$this->sptp_member_plural_name   = $labels['memberPlural'];
+		$this->sptp_team_name            = $labels['teamLabel'];
+		$this->sptp_group_singular_name  = $labels['groupSingular'];
+		$this->sptp_group_plural_name    = $labels['groupPlural'];
+
 		Member_Meta::metaboxes( 'sptp_member', '_sptp_add_member', $this->sptp_member_singular_name );
-		Tools::metaboxes( '_sptp_tools' );
-		Settings::metaboxes( '_sptp_settings' );
 		Generator::preview_metabox( 'sptp_preview_display' );
 		Generator::layout_metaboxes( '_sptp_generator_layout' );
 		Generator::metaboxes( '_sptp_generator' );
@@ -233,6 +232,8 @@ class Admin {
 		if ( 'sptp_generator' === $current_post_type ) {
 			wp_enqueue_script( 'team-free-swiper' );
 			wp_enqueue_style( 'sptp_element_block_icon', SPT_PLUGIN_ROOT . 'src/Admin/css/fontello.css', array(), SPT_PLUGIN_VERSION, 'all' );
+			// The org-chart layout is previewed only on the shortcode generator screen.
+			wp_enqueue_script( 'team-pro-chart-admin', plugin_dir_url( __FILE__ ) . 'js/team-org-chart.min.js', array( 'jquery' ), $this->version, true );
 		}
 	}
 
@@ -255,7 +256,11 @@ class Admin {
 	public function sptp_member_post_type() {
 		$capability = apply_filters( 'sp_wp_team_ui_permission', 'manage_options' );
 		$show_ui    = current_user_can( $capability ) ? true : false;
-		$labels     = apply_filters(
+		// The block editor talks to the REST API, so REST is only switched on
+		// when the "New Member Editor" setting asks for it.
+		$settings         = get_option( '_sptp_settings' );
+		$use_block_editor = ! empty( $settings['sptp_gb_block'] );
+		$labels           = apply_filters(
 			'sp_wp_team_member_post_labels',
 			array(
 				/* translators: %s is replaced with 'member plural name' */
@@ -315,7 +320,9 @@ class Admin {
 				'labels'              => $labels,
 				'public'              => true,
 				'has_archive'         => false,
-				'capability_type'     => 'post',
+				// Own capabilities: `show_ui` does not stop XML-RPC or REST (Post_Type_Caps).
+				'capability_type'     => Post_Type_Caps::capability_type( 'sptp_member' ),
+				'map_meta_cap'        => true,
 				'supports'            => array( 'title', 'editor', 'thumbnail' ),
 				'rewrite'             => array(
 					'slug'       => 'team',
@@ -325,10 +332,69 @@ class Admin {
 				'menu_icon'           => $menu_icon,
 				'menu_position'       => 80,
 				'show_ui'             => $show_ui,
+				'show_in_rest'        => $use_block_editor,
 			)
 		);
 
 		register_post_type( 'sptp_member', $args );
+	}
+
+	/**
+	 * Rebuild the rewrite rules when the stored ones cannot route a member URL.
+	 *
+	 * WordPress saves its rewrite rules and only rebuilds them on a flush, so a
+	 * fresh install (or a site that last flushed under another member slug)
+	 * links members to `/team/<name>/` with no rule to match it: a 404. Runs on
+	 * `wp_loaded`, after every plugin has registered its post types, so the
+	 * flush never drops another plugin's rules. A short transient stops a
+	 * filtered permastruct that never yields the expected key from flushing on
+	 * every request.
+	 *
+	 * @return void
+	 */
+	public function maybe_flush_member_rewrite_rules() {
+		global $wp_rewrite;
+
+		if ( ! $wp_rewrite instanceof \WP_Rewrite || ! $wp_rewrite->using_permalinks() ) {
+			return;
+		}
+		$rules = get_option( 'rewrite_rules' );
+		if ( ! is_array( $rules ) || empty( $rules ) ) {
+			// Empty rules are rebuilt by core on the next request on their own.
+			return;
+		}
+		$post_type = get_post_type_object( 'sptp_member' );
+		if ( ! $post_type || empty( $post_type->rewrite['slug'] ) ) {
+			return;
+		}
+		$front = ! empty( $post_type->rewrite['with_front'] ) ? ltrim( $wp_rewrite->front, '/' ) : '';
+		$key   = $front . $post_type->rewrite['slug'] . '/([^/]+)(?:/([0-9]+))?/?$';
+		if ( isset( $rules[ $key ] ) || get_transient( 'sptp_member_rewrite_flushed' ) ) {
+			return;
+		}
+		set_transient( 'sptp_member_rewrite_flushed', 1, HOUR_IN_SECONDS );
+		flush_rewrite_rules( false );
+	}
+
+	/**
+	 * Open the member edit screen in the editor the "New Member Editor" setting selects.
+	 *
+	 * Core's default turns the block editor on for any REST-enabled post type
+	 * that supports `editor`, so the setting is checked here as well — a plugin
+	 * that enables REST on members must not flip how they are edited.
+	 *
+	 * @param bool   $use_block_editor Whether to use the block editor.
+	 * @param string $post_type        Post type being edited.
+	 * @return bool
+	 */
+	public function use_block_editor_for_member( $use_block_editor, $post_type ) {
+		if ( 'sptp_member' !== $post_type ) {
+			return $use_block_editor;
+		}
+
+		$settings = get_option( '_sptp_settings' );
+
+		return ! empty( $settings['sptp_gb_block'] );
 	}
 
 	/**
@@ -363,7 +429,10 @@ class Admin {
 			'sp_wp_team_post_type_args',
 			array(
 				'labels'              => $labels,
-				'capability_type'     => 'post',
+				'has_archive'         => false,
+				// Own capabilities: `show_ui` does not stop XML-RPC or REST (Post_Type_Caps).
+				'capability_type'     => Post_Type_Caps::capability_type( 'sptp_generator' ),
+				'map_meta_cap'        => true,
 				'supports'            => array( 'title' ),
 				'show_in_menu'        => 'edit.php?post_type=sptp_member',
 				'public'              => false,
@@ -371,8 +440,6 @@ class Admin {
 				'show_ui'             => $show_ui,
 				'exclude_from_search' => true,
 				'show_in_nav_menus'   => false,
-				'has_archive'         => false,
-				'rewrite'             => true,
 				'show_in_rest'        => true,
 			)
 		);
@@ -392,6 +459,8 @@ class Admin {
 			'title'    => __( 'Name', 'team-free' ),
 			'position' => __( 'Position', 'team-free' ),
 			'image'    => __( 'Image', 'team-free' ),
+			// Plain text after the image, as in Pro: not core's linked, filterable taxonomy column.
+			'group'    => $this->sptp_group_plural_name,
 		);
 	}
 
@@ -404,17 +473,24 @@ class Admin {
 	 */
 	public function get_member_columns( $column, $post_id ) {
 
+		if ( 'group' === $column ) {
+			$terms = wp_get_post_terms( $post_id, 'sptp_group', array( 'fields' => 'names' ) );
+			echo esc_html( is_wp_error( $terms ) ? '' : implode( ', ', $terms ) );
+			return;
+		}
+
 		$member_info = get_post_meta( $post_id, '_sptp_add_member', true );
+
 		if ( is_array( $member_info ) ) {
 			if ( has_post_thumbnail( $post_id ) ) {
 				$image_url = get_the_post_thumbnail_url( $post_id, 'thumbnail' );
 			} else {
-				$image_url = isset( $member_info['member_image_gallery'] ) ? wp_get_attachment_url( $member_info['member_image_gallery'] ) : '';
+				$image_url = ! empty( $member_info['member_image_gallery'] ) ? wp_get_attachment_url( $member_info['member_image_gallery'] ) : '';
 			}
-			$feature_image = '<img src="' . $image_url . '" class="list-image"/>';
+			$feature_image = $image_url ? '<img src="' . esc_url( $image_url ) . '" class="list-image"/>' : '';
 			switch ( $column ) {
 				case 'position':
-					echo isset( $member_info['sptp_job_title'] ) ? esc_html( $member_info['sptp_job_title'] ) : '';
+					echo esc_html( \ShapedPlugin\WPTeam\Admin\Taxonomies\Taxonomies::designation( $post_id, isset( $member_info['sptp_job_title'] ) ? $member_info['sptp_job_title'] : '' ) );
 					break;
 				case 'image':
 					echo wp_kses(
@@ -482,7 +558,8 @@ class Admin {
 	 */
 	public function member_name( $input ) {
 		if ( 'sptp_member' === get_post_type() ) {
-			return wp_sprintf( '%s Name', $this->sptp_member_name );
+			/* translators: %s: Singular member label (White Label, default "Member"). */
+			return wp_sprintf( __( '%s Name', 'team-free' ), $this->sptp_member_singular_name );
 		}
 		return $input;
 	}
@@ -506,28 +583,90 @@ class Admin {
 	 * @return string
 	 */
 	public function sptp_review_text( $text ) {
-		$screen = get_current_screen();
-		if ( is_object( $screen ) && ( 'sptp_member' === $screen->post_type || 'sptp_generator' === $screen->post_type ) ) {
-			$url  = 'https://wordpress.org/support/plugin/team-free/reviews/';
-			$text = sprintf( wp_kses_post( 'Enjoying <strong>Smart Team?</strong> Please rate us <span class="spwpteam-footer-text-star">★★★★★</span> <a href="%s" target="_blank">WordPress.org</a>. Your positive feedback will help us grow more. Thank you! 😊', 'team-free' ), esc_url( $url ) );
+		if ( ! $this->is_plugin_footer_screen() ) {
+			return $text;
 		}
 
-		return $text;
+		$social = array(
+			'linkedin'   => array( 'LinkedIn', 'https://www.linkedin.com/company/shapedplugin/' ),
+			'twitter'    => array( 'Twitter', 'https://twitter.com/shapedplugin' ),
+			'wordpress'  => array( 'WordPress', 'https://wordpress.org/plugins/team-free/' ),
+			'facebook'   => array( 'Facebook', 'https://www.facebook.com/shapedplugin' ),
+			'video-alt3' => array( 'YouTube', 'https://www.youtube.com/@ShapedPlugin' ),
+		);
+
+		$social_html = '';
+		foreach ( $social as $icon => $item ) {
+			$social_html .= sprintf(
+				'<a href="%1$s" target="_blank" rel="noopener noreferrer" aria-label="%2$s"><span class="dashicons dashicons-%3$s"></span></a>',
+				esc_url( $item[1] ),
+				esc_attr( $item[0] ),
+				esc_attr( $icon )
+			);
+		}
+
+		$stars = str_repeat( '<span class="dashicons dashicons-star-filled"></span>', 5 );
+
+		return sprintf(
+			'<div class="sptp-footer sptp-wp-footer">
+				<div class="sptp-footer__made">%1$s<span class="dashicons dashicons-heart sptp-footer__heart"></span>%2$s<a href="https://shapedplugin.com/about-us/" target="_blank" rel="noopener noreferrer">%3$s</a></div>
+				<div class="sptp-footer__social"><span>%4$s</span>%5$s</div>
+				<div class="sptp-footer__rate">%6$s<a href="%7$s" target="_blank" rel="noopener noreferrer">%8$s</a><span class="sptp-footer__stars">%9$s</span></div>
+			</div>',
+			esc_html__( 'Made with', 'team-free' ),
+			esc_html__( 'by the', 'team-free' ),
+			esc_html__( 'ShapedPlugin LLC Team', 'team-free' ),
+			esc_html__( 'Get Connected with', 'team-free' ),
+			$social_html, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
+			esc_html__( 'Enjoyed Smart Team?', 'team-free' ),
+			esc_url( 'https://wordpress.org/support/plugin/team-free/reviews/' ),
+			esc_html__( 'Rate us!', 'team-free' ),
+			$stars // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static markup.
+		);
 	}
 
 	/**
-	 * Bottom version notice.
+	 * Blank core's right-hand version text on the plugin screens — the footer above replaces it.
 	 *
 	 * @param string $text The version notice.
 	 * @return string
 	 */
 	public function sptp_version_text( $text ) {
-		$screen = get_current_screen();
-		if ( is_object( $screen ) && 'sptp_member' === $screen->post_type ) {
-			$text = 'Smart Team ' . $this->version;
-		}
+		return $this->is_plugin_footer_screen() ? '' : $text;
+	}
 
-		return $text;
+	/**
+	 * Print the footer styles on the plugin screens (the dashboard bundle is not loaded there).
+	 *
+	 * @return void
+	 */
+	public function sptp_footer_css() {
+		if ( ! $this->is_plugin_footer_screen() ) {
+			return;
+		}
+		echo '<style>#wpfooter #footer-left{float:none;width:100%}#wpfooter #footer-upgrade{display:none}'
+			. '.sptp-wp-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}'
+			. '.sptp-wp-footer>div{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:#6e6a69}'
+			. '.sptp-wp-footer a{color:#1e67d8;font-weight:500;text-decoration:none}'
+			. '.sptp-wp-footer .sptp-footer__heart{color:#e25563}'
+			. '.sptp-wp-footer .sptp-footer__social a{color:#757575;display:inline-flex}'
+			. '.sptp-wp-footer .sptp-footer__stars{display:inline-flex;color:#f0a020}'
+			. '.sptp-wp-footer .dashicons{font-size:16px;width:16px;height:16px}'
+			. '.sptp-wp-footer .sptp-footer__social .dashicons{font-size:18px;width:18px;height:18px}</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static CSS literal.
+	}
+
+	/**
+	 * Whether the current screen is one of the plugin's own list / edit / taxonomy / help screens.
+	 *
+	 * @return bool
+	 */
+	private function is_plugin_footer_screen() {
+		$screen = get_current_screen();
+		if ( ! is_object( $screen ) ) {
+			return false;
+		}
+		return in_array( $screen->post_type, array( 'sptp_member', 'sptp_generator' ), true )
+			|| 0 === strpos( (string) $screen->taxonomy, 'sptp_' );
 	}
 
 	/**
@@ -557,14 +696,14 @@ class Admin {
 	}
 
 	/**
-	 * Redirect to help page after activation.
+	 * Redirect to the Getting Started dashboard after activation.
 	 *
 	 * @param string $plugin_admin Path to the plugin file, relative to the plugin.
 	 * @return void
 	 */
 	public function redirect_to_help( $plugin_admin ) {
 		if ( SPT_PLUGIN_BASENAME === $plugin_admin && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && ! ( defined( 'WP_CLI' ) && WP_CLI ) ) {
-			exit( esc_url( wp_safe_redirect( admin_url( 'edit.php?post_type=sptp_member&page=team_help' ) ) ) );
+			exit( esc_url( wp_safe_redirect( admin_url( 'edit.php?post_type=sptp_member&page=sptp_dashboard' ) ) ) );
 		}
 	}
 }

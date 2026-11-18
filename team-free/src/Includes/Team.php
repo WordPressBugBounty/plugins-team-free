@@ -17,12 +17,20 @@
 namespace ShapedPlugin\WPTeam\Includes;
 
 use ShapedPlugin\WPTeam\Admin\Admin;
+use ShapedPlugin\WPTeam\Admin\Post_Type_Caps;
 use ShapedPlugin\WPTeam\Frontend\Frontend;
 use ShapedPlugin\WPTeam\Includes\Loader;
 use ShapedPlugin\WPTeam\Includes\WP_Team_i18n;
 use ShapedPlugin\WPTeam\Admin\Team_Import_Export;
+use ShapedPlugin\WPTeam\Admin\Taxonomies\Taxonomies;
 use ShapedPlugin\WPTeam\Admin\WP_Team_Gutenberg_Block;
 use ShapedPlugin\WPTeam\Admin\HelpPage\Help;
+use ShapedPlugin\WPTeam\Admin\Dashboard\Dashboard;
+use ShapedPlugin\WPTeam\Admin\Dashboard\Diagnostics;
+use ShapedPlugin\WPTeam\Admin\Dashboard\ManageAPI;
+use ShapedPlugin\WPTeam\Admin\Dashboard\Placements;
+use ShapedPlugin\WPTeam\Admin\Dashboard\SavedTemplates;
+use ShapedPlugin\WPTeam\Admin\PageBuilders\Manager as PageBuilderManager;
 use ShapedPlugin\WPTeam\Admin\Helper\Admin_Notices;
 use ShapedPlugin\WPTeam\Admin\Team_Element_Shortcode_Block;
 use ShapedPlugin\WPTeam\Admin\Team_Element_Shortcode_Block_Deprecated;
@@ -84,6 +92,7 @@ class Team {
 				add_filter( 'plugin_action_links_' . $active_plugin, array( $this, 'add_generator_links' ) );
 			}
 		}
+		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
 		add_theme_support( 'post-thumbnails' );
 	}
 
@@ -94,11 +103,53 @@ class Team {
 	 * @param string $links links probived by WordPress.
 	 */
 	public function add_generator_links( $links ) {
+		$create_url = $this->block_editor_is_available()
+			? admin_url( 'post-new.php?post_type=page&sptpblock_inserter=true' )
+			: admin_url( 'post-new.php?post_type=sptp_generator' );
+
 		$mylinks = array(
-			'<a href="' . admin_url( 'post-new.php?post_type=sptp_generator' ) . '">' . __( 'Create Team', 'team-free' ) . '</a>',
+			'<a href="' . esc_url( $create_url ) . '">' . esc_html__( 'Create Team', 'team-free' ) . '</a>',
 		);
-		$links[] = '<a href="https://getwpteam.com/pricing/?ref=1" style="color: #35b747; font-weight: 700;">' . __( 'Go Premium!', 'team-free' ) . '</a>';
+
+		$links['go_pro'] = '<a target="_blank" rel="noopener noreferrer" href="https://getwpteam.com/pricing/" style="color: #35b747; font-weight: 700;">' . esc_html__( 'Go Pro!', 'team-free' ) . '</a>';
 		return array_merge( $mylinks, $links );
+	}
+
+	/**
+	 * Whether a new page would open in the block editor with the Smart Team blocks registered.
+	 *
+	 * @since 4.0.0
+	 * @return bool
+	 */
+	private function block_editor_is_available() {
+		if ( ! file_exists( SPT_PLUGIN_PATH . 'dist/editor/index.asset.php' ) ) {
+			return false;
+		}
+
+		if ( ! function_exists( 'use_block_editor_for_post_type' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/post.php';
+		}
+
+		return use_block_editor_for_post_type( 'page' );
+	}
+
+	/**
+	 * Adds the Live Demo and Docs & Video Tutorials links to the plugin row meta.
+	 *
+	 * @since 4.0.0
+	 * @param array  $plugin_meta The plugin's row meta links.
+	 * @param string $plugin_file Plugin file path relative to the plugins directory.
+	 * @return array
+	 */
+	public function plugin_row_meta( $plugin_meta, $plugin_file ) {
+		if ( SPT_PLUGIN_BASENAME !== $plugin_file ) {
+			return $plugin_meta;
+		}
+
+		$plugin_meta['live_demo'] = '<a href="https://getwpteam.com/patterns/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Live Demo', 'team-free' ) . '</a>';
+		$plugin_meta['docs']      = '<a href="https://docs.getwpteam.com/guide/introduction" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Docs & Video Tutorials', 'team-free' ) . '</a>';
+
+		return $plugin_meta;
 	}
 
 	/**
@@ -128,14 +179,43 @@ class Team {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Admin( SPT_PLUGIN_SLUG, SPT_PLUGIN_VERSION );
+		$taxonomies   = new Taxonomies();
 		// Help Page.
 		Help::instance();
+		// React dashboard (Getting Started).
+		( new Dashboard() )->register();
+		// Opt-in diagnostic data: nothing is sent until an admin accepts.
+		( new Diagnostics() )->register();
+		( new ManageAPI() )->register();
+		// Dashboard placements table: dates widget saves (widgets carry no date of their own).
+		Placements::register_hooks();
+		// Saved Templates: hidden CPT + shortcode. Not is_admin()-gated — the shortcode runs on the front end.
+		( new SavedTemplates() )->register();
+		// Page builder integrations (Settings → Integrations): each renders a Saved Template.
+		PageBuilderManager::init();
 		$admin_notices = new Admin_Notices( SPT_PLUGIN_SLUG, SPT_PLUGIN_VERSION );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_print_scripts', $plugin_admin, 'enqueue_scripts' );
+
+		// Members and generators answer to their own capabilities, granted here.
+		( new Post_Type_Caps() )->register();
 		$this->loader->add_action( 'init', $plugin_admin, 'sptp_member_post_type' );
+		// A fresh install has no rule for /team/<name>/ until the rules are flushed.
+		$this->loader->add_action( 'wp_loaded', $plugin_admin, 'maybe_flush_member_rewrite_rules' );
+		$this->loader->add_filter( 'use_block_editor_for_post_type', $plugin_admin, 'use_block_editor_for_member', 10, 2 );
 		$this->loader->add_action( 'init', $plugin_admin, 'sptp_generator_post_type' );
+		// Department and Designation, as in Pro.
+		$this->loader->add_action( 'init', $taxonomies, 'register_taxonomies' );
+		// Their terms answer to their own capabilities too, granted here.
+		$this->loader->add_filter( 'user_has_cap', $taxonomies, 'grant_term_capabilities' );
+		$this->loader->add_action( 'admin_menu', $taxonomies, 'relabel_menu', 1000 );
+		$this->loader->add_action( 'admin_menu', $taxonomies, 'place_taxonomies_before_manage_team', 1000 );
+		$this->loader->add_action( 'admin_menu', $taxonomies, 'highlight_department_submenu' );
+		// Location / Language / Gender are Pro's: locked placeholder screens.
+		$this->loader->add_action( 'init', $taxonomies, 'register_placeholders' );
+		$this->loader->add_action( 'load-edit-tags.php', $taxonomies, 'lock_placeholder_screen' );
+		$this->loader->add_action( 'add_meta_boxes_sptp_member', $taxonomies, 'label_placeholder_boxes', 99 );
 		$this->loader->add_action( 'admin_head-post.php', $plugin_admin, 'hide_publishing_actions' );
 		$this->loader->add_action( 'admin_head-post-new.php', $plugin_admin, 'hide_publishing_actions' );
 		$this->loader->add_action( 'manage_sptp_member_posts_custom_column', $plugin_admin, 'get_member_columns', 10, 2 );
@@ -149,6 +229,7 @@ class Team {
 		$this->loader->add_filter( 'enter_title_here', $plugin_admin, 'member_name' );
 		$this->loader->add_filter( 'admin_footer_text', $plugin_admin, 'sptp_review_text', 10, 2 );
 		$this->loader->add_filter( 'update_footer', $plugin_admin, 'sptp_version_text', 11 );
+		$this->loader->add_action( 'admin_head', $plugin_admin, 'sptp_footer_css' );
 		$this->loader->add_filter( 'post_updated_messages', $plugin_admin, 'sptp_update', 10, 1 );
 
 		// Export import.
@@ -156,6 +237,9 @@ class Team {
 
 		$this->loader->add_action( 'wp_ajax_SPT_export_shortcodes', $import_export, 'export_shortcodes' );
 		$this->loader->add_action( 'wp_ajax_SPT_import_shortcodes', $import_export, 'import_shortcodes' );
+
+		// Taxonomies admin menu.
+		$this->loader->add_action( 'admin_notices', $admin_notices, 'taxonomies_admin_menu' );
 
 		// Review notice for the plugin.
 		$this->loader->add_action( 'admin_notices', $admin_notices, 'display_admin_review_notice' );

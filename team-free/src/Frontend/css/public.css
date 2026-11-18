@@ -5,10 +5,16 @@
 	line-height: inherit;
 	font-weight: 700;
 }
+
 .sptp_member img {
 	max-width: 100%;
 	height: auto;
 }
+
+.sptp-member-template-two .sptp-member-avatar-area img {
+	margin: auto;
+}
+
 .sp-team .sptp-section-title {
 	margin: 0;
 	padding: 0;
@@ -140,9 +146,11 @@
 	padding-bottom: 0;
 	text-align: center;
 }
-.sptp-single-post .sptp-member-name .sptp-member-name-title{
+
+.sptp-member-template-one .sptp-member-name .sptp-member-name-title {
 	text-align: left;
 }
+
 /* Avada theme conflict h2 font size */
 #wrapper .sptp-member .sptp-member-name .sptp-member-name-title {
 	font-size: 18px;
@@ -157,9 +165,13 @@
 	font-size: 15px;
 	line-height: 18px;
 	margin: 0;
-	text-align: left;
+	text-align: center;
 	margin-top: 4px;
 	margin-bottom: 0;
+}
+
+.sptp-member-template-one .sptp-member-profession .sptp-jop-title {
+	text-align: left;
 }
 
 .sptp-member .sptp-member-desc {
@@ -180,7 +192,7 @@
 	padding: 0;
 	padding-top: 10px;
 	list-style: none;
-	text-align: left;
+	text-align: center;
 }
 
 .sptp-member-social.circle a {
@@ -203,6 +215,10 @@
 	margin: 0;
 	list-style: none;
 	position: relative;
+}
+
+.sptp-single-post .sptp-member-social ul li {
+    margin: 0 0 5px;
 }
 
 .sptp-member-social ul li:hover {
@@ -397,6 +413,7 @@
 
 .sptp-member .content {
 	word-break: break-all;
+	text-align: center;
 }
 
 .sptp-member {
@@ -530,11 +547,178 @@
 	bottom: 18px;
 }
 
+/* Member skill progress */
+.sptp-info .sptp-member-skill-progress,
+.sptp-member .sptp-member-skill-progress {
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 24px;
+	width: 100%;
+}
+
+.sptp-info .sptp-member-skill-progress .sptp-progress-text,
+.sptp-member .sptp-member-skill-progress .sptp-progress-text {
+	text-align: left;
+	/* display: block; */
+}
+
+.sptp-info .sptp-member-skill-progress .sptp-progress-container,
+.sptp-member .sptp-member-skill-progress .sptp-progress-container {
+	width: 100%;
+	height: 4px;
+	background-color: #c9dfd1;
+}
+
+.sptp-info .sptp-member-skill-progress .sptp-progress-container .sptp-progress-bar,
+.sptp-member .sptp-member-skill-progress .sptp-progress-container .sptp-progress-bar {
+	height: 4px;
+	width: 0;
+	background-color: #559173;
+	position: relative;
+}
+
+.sptp-info .sptp-member-skill-progress .sptp-progress-container .sptp-progress-bar.sptp-tooltip .sptp-top,
+.sptp-member .sptp-member-skill-progress .sptp-progress-container .sptp-progress-bar.sptp-tooltip .sptp-top {
+	width: 38px;
+	top: -10px;
+	right: -17px;
+	-webkit-transform: translate(0, -100%);
+	transform: translate(0, -100%);
+	padding: 5px 7px;
+	color: #fff;
+	background-color: #3b993f;
+	font-weight: 400;
+	font-size: 10px;
+	line-height: 12px;
+	border-radius: 2px;
+	position: absolute;
+	z-index: 1;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	display: none;
+	opacity: 0;
+	-webkit-transition: all 0.33s;
+	transition: all 0.33s;
+}
+
+/**
+ * Member template one.
+ */
+.sptp-member-template-row-one {
+	display: flex;
+	gap: 30px;
+}
+
+.sptp-member-template-row-one-left {
+	max-width: 50%;
+}
+
+/* Fill the rest of the row so the 100%-wide skill bars span it. */
+.sptp-member-template-row-one-right {
+	flex: 1 1 0;
+	min-width: 0;
+}
+
+.sptp-member-details-section-title,
+.sptp-member-social-section-title,
+.sptp-member-skill-section-title {
+	display: block;
+	margin: 20px 0 10px 0;
+}
+
+.sptp-member-template-one .sptp-member-social ul {
+	text-align: left;
+}
+
+.sptp-member-template-two .sptp-member-social ul {
+	text-align: center;
+}
+
+/**
+ * Isotop filter.
+ */
+.sptp-isotope.sptp-row {
+	margin-left: -12px;
+	margin-right: -12px;
+}
+
+#sptp-isotope-filter-buttons {
+	text-align: center;
+}
+
+#sptp-isotope-filter-buttons button {
+    color: #5e5e5e;
+    border: 2px solid #bbb;
+    border-radius: 4px;
+    background-color: #fff;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 600;
+    margin: 0 4px 8px;
+    transition: all .2s;
+}
+
+#sptp-isotope-filter-buttons button:hover,
+#sptp-isotope-filter-buttons button.active {
+	border-color: #559173;
+    background-color: #559173;
+    color: #ffffff;
+}
+
+/**
+ * Pagination.
+ */
+.sptp-post-pagination {
+    text-align: center;
+    margin: 0;
+    padding: 0 12px;
+    margin-top: 38px;
+}
+
+.sptp-post-pagination .page-numbers {
+	background: #fff;
+	color: #5e5e5e;
+	border: 2px solid #bbb;
+	line-height: 38px;
+	font-size: 16px;
+	text-align: center;
+	display: inline-block;
+	padding: 0 15px;
+	margin-right: 4px;
+	margin-bottom: 4px;
+	text-decoration: none;
+	font-weight: 700;
+	border-radius: 3px;
+	-webkit-transition: all 0.33s;
+	transition: all 0.33s;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+}
+
+.sptp-post-pagination .ajax-page-numbers.current,
+.sptp-post-pagination .page-numbers.current {
+	cursor: auto;
+	color: #fff;
+	background: #559173;
+	border-color: #559173;
+}
+
+.sptp-post-pagination a.page-numbers:hover,
+.sptp-post-pagination ul li span.current,
+.sptp-post-pagination ul li span:hover {
+	color: #fff;
+	background: #559173;
+	border-color: #559173;
+}
+
 .sptp-hidden {
 	display: none;
 }
 
-.sptp-show {
+.sptp-show,
+.sptp-member .sptp-member-skill-progress .sptp-progress-container:hover .sptp-tooltip .sptp-top {
 	display: block;
 }
 
@@ -599,6 +783,11 @@
 	flex-direction: row;
 	margin-left: 0;
 	margin-bottom: 10px;
+	align-items: center;
+}
+
+.sptp-list-item.sptp-member.sptp-left-content {
+	flex-direction: row-reverse;
 }
 
 .sptp-list-item .sptp-member-avatar {
@@ -627,21 +816,24 @@
 	overflow: hidden;
 }
 
-.sptp-list-item .sptp-member-name .sptp-member-name-title {
-	text-align: left;
-}
-
 .sptp-list-item .sptp-member-desc,
+.sptp-list-item .sptp-member-social ul,
+.sptp-list-item .sptp-member-name .sptp-member-name-title,
 .sptp-list-item .sptp-member-profession .sptp-jop-title {
 	text-align: left;
 }
 
-.sptp-list-item .sptp-member-social ul {
-	text-align: left;
+.sptp-list-item.sptp-left-content .sptp-member-desc,
+.sptp-list-item.sptp-left-content .sptp-member-profession .sptp-jop-title,
+.sptp-list-item.sptp-left-content .sptp-member-name .sptp-member-name-title {
+	text-align: right;
 }
 
 .sptp-list-item .image {
 	max-width: 40%;
+	-webkit-box-flex: 0;
+	-ms-flex: 0 0 auto;
+	flex: 0 0 auto;
 	height: 100%;
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -655,7 +847,10 @@
 }
 
 .sptp-list-item .content {
-	width: 68%;
+	min-width: 0;
+	-webkit-box-flex: 1;
+	-ms-flex: 1 1 0%;
+	flex: 1 1 0%;
 }
 
 .sptp-list-item .content.no-image {
@@ -1033,4 +1228,211 @@
 .sptp-main-carousel .sptp-button-prev.top-left {
 	left: 3px;
 	right: auto;
+}
+
+/* Chart style */
+.sp-team-org-chart-container * {
+	margin: 0;
+	padding: 0;
+}
+
+.sp-team-org-chart-container .tree ul {
+	white-space: nowrap;
+}
+
+.sp-team-org-chart-container .tree button>img {
+	width: 20px;
+	height: 20px;
+}
+
+.sp-team-org-chart-container .tree button {
+	visibility: hidden;
+	opacity: 0;
+}
+
+.sp-team-org-chart-container .tree .remove_tree_node,
+.sp-team-org-chart-container .tree .edit_tree_node {
+	visibility: hidden;
+	opacity: 0;
+}
+
+.sp-team-member-tree-node {
+	position: relative;
+}
+
+.sp-team-member-tree-node>span>img {
+	max-width: 90px;
+	max-height: 90px;
+}
+
+#sp-team-member-tree {
+	text-align: center;
+}
+
+.sp-team-org-chart-container li>div {
+	text-decoration: none;
+	color: #666;
+	display: inline-block;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+.sp-team-org-chart-container .sptp-chart-single-item.sptp-member {
+	display: inline-block;
+}
+
+.sp-team-org-chart-container .tree ul {
+	padding-top: 20px;
+	padding-left: 0;
+	position: relative;
+}
+
+.sp-team-org-chart-container .tree li {
+	vertical-align: top;
+	display: inline-block;
+	text-align: center;
+	list-style-type: none;
+	position: relative;
+	padding: 20px 10px 0 10px;
+}
+
+.sp-team-org-chart-container .tree li::before,
+.sp-team-org-chart-container .tree li::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 50%;
+	border-top: 1px solid #ccc;
+	width: 50%;
+	height: 20px;
+}
+
+.sp-team-org-chart-container .tree li:after {
+	right: auto;
+	left: 50%;
+	border-left: 1px solid #ccc;
+}
+.rtl .sp-team-org-chart-container .tree li:after {
+	right: 50%;
+	left: auto;
+	border-left: none;
+	border-right: 1px solid #ccc;
+}
+.rtl .sp-team-org-chart-container .tree li::before {
+	right: auto;
+	left: 50%;
+	border-left: 1px solid #ccc;
+}
+.rtl .sp-team-org-chart-container .tree li:last-child::before {
+	border-right: none;
+	border-radius: 5px 0 0 0;
+}
+.rtl .sp-team-org-chart-container .tree li:first-child::after {
+	border-radius: 0 5px 0 0;
+}
+
+.sp-team-org-chart-container .tree li:only-child::after,
+.sp-team-org-chart-container .tree li:only-child::before {
+	display: none;
+}
+
+.sp-team-org-chart-container .tree li:only-child {
+	padding-top: 0;
+}
+
+.sp-team-org-chart-container .tree li:first-child::before,
+.sp-team-org-chart-container .tree li:last-child::after {
+	border: 0 none;
+}
+
+.sp-team-org-chart-container .tree li:last-child::before {
+	border-right: 1px solid #ccc;
+	border-radius: 0 5px 0 0;
+	-webkit-border-radius: 0 5px 0 0;
+	-moz-border-radius: 0 5px 0 0;
+}
+
+.sp-team-org-chart-container .tree li:first-child::after {
+	border-radius: 5px 0 0 0;
+	-webkit-border-radius: 5px 0 0 0;
+	-moz-border-radius: 5px 0 0 0;
+}
+
+.sp-team-org-chart-container .tree ul ul::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 50%;
+	border-left: 1px solid #ccc;
+	width: 0;
+	height: 20px;
+}
+
+.sp-team-org-chart-container .sptp-member-avatar-img img {
+	position: relative;
+	/* display: inline-block; */
+	min-width: 60px;
+	min-height: 60px;
+	margin: auto;
+}
+
+.sptp-organization-chart.sptp-chart {
+	overflow-x: auto;
+}
+
+.sp-team-org-chart-container #sp-team-member-tree {
+	padding-bottom: 30px;
+	margin-bottom: 10px;
+}
+
+.sp-team-pro .sptp-organization-chart .sptp-row {
+	justify-content: center;
+	min-width: max-content;
+}
+
+.sp-team-org-chart-container .tree .sptp-member-social ul,
+.sp-team-org-chart-container .tree .sptp-member-social li,
+.sp-team-org-chart-container .tree .sptp-member-social ul:after,
+.sp-team-org-chart-container .tree .sptp-member-social ul li:after,
+.sp-team-org-chart-container .tree .sptp-member-social ul li:before,
+.sp-team-org-chart-container .tree .sptp-member-social ul:before {
+    content: unset;
+    margin: 0;
+    padding: 0;
+}
+
+
+/**
+ * Team member caption.
+ */
+.sp-team.caption .sptp-member {
+    position: relative;
+}
+
+.sp-team.caption .sptp-member .content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.40);
+	color: #ffffff;
+    padding: 15px;
+}
+
+.sp-team.caption .sptp-member.middle .content {
+    top: 50%;
+	transform: translateY(-50%);
+}
+
+.sp-team.caption .sptp-member.bottom .content {
+    bottom: 0;
+}
+
+/* Swiper 12: the loop's blank filler slides, and the SVG it puts in arrows that carry their own icon. */
+.sptp-main-carousel .swiper-slide-blank {
+	visibility: hidden;
+}
+
+.sptp-main-carousel .swiper-navigation-icon {
+	display: none;
 }

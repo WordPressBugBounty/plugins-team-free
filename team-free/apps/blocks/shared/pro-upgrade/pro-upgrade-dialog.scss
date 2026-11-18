@@ -1,0 +1,324 @@
+// "Do more with Smart Team Pro" dialog (editor only) — port of
+// wp-carousel-free's pro-upgrade-dialog.scss. The CTA takes the plugin's
+// primary green (editor.scss tokens); the surfaces follow the Pro notice.
+$sp-smart-team-pro-upgrade-primary: var(--sp-smart-team-primary-2-600, #2b5f47);
+$sp-smart-team-pro-upgrade-primary-hover: var(--sp-smart-team-primary-2-700, #234e3a);
+$sp-smart-team-pro-upgrade-surface: #eaf8f0;
+$sp-smart-team-pro-upgrade-border: #dcefe4;
+$sp-smart-team-pro-upgrade-marker: #7cc9a0;
+$sp-smart-team-pro-upgrade-ink: #1e1e1e;
+$sp-smart-team-pro-upgrade-muted: #50575e;
+
+@keyframes sp-smart-team-pro-upgrade-lane {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes sp-smart-team-pro-upgrade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.sp-smart-team-pro-upgrade-overlay {
+  background: rgba(18, 26, 44, 0.4);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+.components-modal__frame.sp-smart-team-pro-upgrade {
+  width: 768px;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 48px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.06);
+  color: $sp-smart-team-pro-upgrade-ink;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  animation: sp-smart-team-pro-upgrade-in 0.36s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+
+  .components-modal__content {
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  @media (max-width: 600px) {
+    width: auto;
+    max-width: none;
+    border-radius: 0;
+  }
+}
+
+.sp-smart-team-pro-upgrade-visual {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  border-bottom: 1px solid $sp-smart-team-pro-upgrade-border;
+  background: linear-gradient(225deg, $sp-smart-team-pro-upgrade-surface 0%, #f7fcf9 60%, #fff 100%);
+}
+
+.sp-smart-team-pro-upgrade-lanes {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+}
+
+.sp-smart-team-pro-upgrade-lane {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  padding-left: 16px;
+  animation: sp-smart-team-pro-upgrade-lane 36s linear infinite;
+}
+
+// Typed selector so the editor's figure margins stay out.
+figure.sp-smart-team-pro-upgrade-card {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 196px;
+  margin: 0;
+
+  img {
+    display: block;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    margin: 0;
+  }
+
+  figcaption {
+    margin: 0;
+    color: $sp-smart-team-pro-upgrade-ink;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+  }
+}
+
+.sp-smart-team-pro-upgrade-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: $sp-smart-team-pro-upgrade-muted;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    color: $sp-smart-team-pro-upgrade-ink;
+    transform: rotate(90deg);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $sp-smart-team-pro-upgrade-primary;
+    outline-offset: 2px;
+  }
+}
+
+.sp-smart-team-pro-upgrade-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 26px 28px 24px;
+}
+
+.sp-smart-team-pro-upgrade-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+// Typed selectors so the editor's heading and paragraph rules cannot reclaim the spacing.
+h2.sp-smart-team-pro-upgrade-title {
+  margin: 0;
+  color: $sp-smart-team-pro-upgrade-ink;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+p.sp-smart-team-pro-upgrade-subtitle {
+  margin: 0;
+  color: $sp-smart-team-pro-upgrade-muted;
+  font-size: 15px;
+  line-height: 1.5;
+  text-wrap: pretty;
+
+  strong {
+    color: $sp-smart-team-pro-upgrade-ink;
+    font-weight: 600;
+  }
+}
+
+ul.sp-smart-team-pro-upgrade-features {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: $sp-smart-team-pro-upgrade-ink;
+    font-size: 15px;
+    line-height: 1.4;
+
+    &::before {
+      content: '';
+      flex: 0 0 auto;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: $sp-smart-team-pro-upgrade-marker;
+    }
+  }
+
+  @media (max-width: 420px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.sp-smart-team-pro-upgrade-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding-top: 4px;
+}
+
+.sp-smart-team-pro-upgrade-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 20px;
+  border: 1px solid $sp-smart-team-pro-upgrade-primary;
+  border-radius: 6px;
+  background: #fff;
+  color: $sp-smart-team-pro-upgrade-primary;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: transform 0.25s ease;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &:visited {
+    color: $sp-smart-team-pro-upgrade-primary;
+    text-decoration: none;
+  }
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-1px);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $sp-smart-team-pro-upgrade-primary;
+    outline-offset: 2px;
+  }
+}
+
+.sp-smart-team-pro-upgrade-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 6px;
+  background: $sp-smart-team-pro-upgrade-primary;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(43, 95, 71, 0.25);
+  box-sizing: border-box;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &:visited {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: $sp-smart-team-pro-upgrade-primary-hover;
+    box-shadow: 0 6px 16px rgba(43, 95, 71, 0.28);
+    transform: translateY(-1px);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $sp-smart-team-pro-upgrade-primary;
+    outline-offset: 2px;
+  }
+}
+
+.sp-smart-team-pro-upgrade-guarantee {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #646970;
+  font-size: 12.5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .components-modal__frame.sp-smart-team-pro-upgrade,
+  .sp-smart-team-pro-upgrade-lane {
+    animation: none;
+  }
+
+  .sp-smart-team-pro-upgrade-close,
+  .sp-smart-team-pro-upgrade-cta,
+  .sp-smart-team-pro-upgrade-demo {
+    transition: none;
+  }
+}

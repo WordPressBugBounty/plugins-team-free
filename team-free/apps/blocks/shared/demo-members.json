@@ -1,0 +1,675 @@
+[
+	{
+		"id": "demo-1",
+		"link": "#",
+		"name": "Robert Mitchell",
+		"role": "Chief Executive Officer",
+		"bio": "Robert sets the company vision and keeps every team pulling in the same direction.",
+		"description": "Robert has led product-driven teams for over fifteen years. He sets the company vision, champions a people-first culture and keeps every team pulling in the same direction.",
+		"avatar": "https://i.pravatar.cc/600?img=59",
+		"thumbnails": {},
+		"flip": "https://i.pravatar.cc/600?img=68",
+		"specialTag": "Founder",
+		"alt": "Robert Mitchell",
+		"email": "robert@example.com",
+		"mobile": "+1 (555) 010-2001",
+		"phone": "+1 (555) 010-1001",
+		"location": "San Francisco, USA",
+		"language": "English, Spanish",
+		"gender": "Male",
+		"website": "https://example.com",
+		"experience": "15 Years",
+		"skills": [
+			{
+				"name": "Leadership",
+				"percentage": "95"
+			},
+			{
+				"name": "Strategy",
+				"percentage": "90"
+			},
+			{
+				"name": "Communication",
+				"percentage": "85"
+			}
+		],
+		"custom": [],
+		"socials": [
+			{
+				"group": "facebook",
+				"link": "https://facebook.com",
+				"icon": "fa fa-facebook"
+			},
+			{
+				"group": "linkedin",
+				"link": "https://linkedin.com",
+				"icon": "fa fa-linkedin"
+			},
+			{
+				"group": "twitter",
+				"link": "https://twitter.com",
+				"icon": "icon-fontello sp-team-icon-x-twitter"
+			}
+		],
+		"groups": [
+			"Leadership"
+		]
+	},
+	{
+		"id": "demo-2",
+		"link": "#",
+		"name": "David Chen",
+		"role": "Chief Technology Officer",
+		"bio": "David turns ambitious product ideas into reliable, scalable software.",
+		"description": "David leads engineering across web and mobile. He turns ambitious product ideas into reliable, scalable software and mentors the next generation of developers.",
+		"avatar": "https://i.pravatar.cc/600?img=68",
+		"thumbnails": {},
+		"flip": "https://i.pravatar.cc/600?img=18",
+		"specialTag": "",
+		"alt": "David Chen",
+		"email": "david@example.com",
+		"mobile": "+1 (555) 010-2002",
+		"phone": "+1 (555) 010-1002",
+		"location": "Seattle, USA",
+		"language": "English, Mandarin",
+		"gender": "Male",
+		"website": "https://example.com",
+		"experience": "12 Years",
+		"skills": [
+			{
+				"name": "Architecture",
+				"percentage": "95"
+			},
+			{
+				"name": "JavaScript",
+				"percentage": "90"
+			},
+			{
+				"name": "DevOps",
+				"percentage": "80"
+			}
+		],
+		"custom": [],
+		"socials": [
+			{
+				"group": "linkedin",
+				"link": "https://linkedin.com",
+				"icon": "fa fa-linkedin"
+			},
+			{
+				"group": "github",
+				"link": "https://github.com",
+				"icon": "fa fa-github"
+			},
+			{
+				"group": "twitter",
+				"link": "https://twitter.com",
+				"icon": "icon-fontello sp-team-icon-x-twitter"
+			}
+		],
+		"groups": [
+			"Leadership",
+			"Engineering"
+		]
+	},
+	{
+		"id": "demo-3",
+		"link": "#",
+		"name": "Carlos Rodriguez",
+		"role": "Head of Design",
+		"bio": "Carlos shapes how our products look, feel and behave on every screen.",
+		"description": "Carlos leads the design team and shapes how our products look, feel and behave on every screen, from first sketch to the final pixel.",
+		"avatar": "https://i.pravatar.cc/600?img=18",
+		"thumbnails": {},
+		"flip": "https://i.pravatar.cc/600?img=54",
+		"specialTag": "",
+		"alt": "Carlos Rodriguez",
+		"email": "carlos@example.com",
+		"mobile": "+1 (555) 010-2003",
+		"phone": "+1 (555) 010-1003",
+		"location": "Austin, USA",
+		"language": "English, Spanish",
+		"gender": "Male",
+		"website": "https://example.com",
+		"experience": "10 Years",
+		"skills": [
+			{
+				"name": "UI Design",
+				"percentage": "95"
+			},
+			{
+				"name": "UX Research",
+				"percentage": "85"
+			},
+			{
+				"name": "Prototyping",
+				"percentage": "90"
+			}
+		],
+		"custom": [],
+		"socials": [
+			{
+				"group": "dribbble",
+				"link": "https://dribbble.com",
+				"icon": "fa fa-dribbble"
+			},
+			{
+				"group": "behance",
+				"link": "https://behance.net",
+				"icon": "fa fa-behance"
+			},
+			{
+				"group": "linkedin",
+				"link": "https://linkedin.com",
+				"icon": "fa fa-linkedin"
+			}
+		],
+		"groups": [
+			"Design"
+		]
+	},
+	{
+		"id": "demo-4",
+		"link": "#",
+		"name": "James Walker",
+		"role": "Marketing Manager",
+		"bio": "James tells our story and connects the product with the people who need it.",
+		"description": "James runs brand, content and growth campaigns. He tells our story and connects the product with the people who need it most.",
+		"avatar": "https://i.pravatar.cc/600?img=54",
+		"thumbnails": {},
+		"flip": "https://i.pravatar.cc/600?img=8",
+		"specialTag": "",
+		"alt": "James Walker",
+		"email": "james@example.com",
+		"mobile": "+1 (555) 010-2004",
+		"phone": "+1 (555) 010-1004",
+		"location": "New York, USA",
+		"language": "English",
+		"gender": "Male",
+		"website": "https://example.com",
+		"experience": "8 Years",
+		"skills": [
+			{
+				"name": "Branding",
+				"percentage": "90"
+			},
+			{
+				"name": "SEO",
+				"percentage": "85"
+			},
+			{
+				"name": "Copywriting",
+				"percentage": "80"
+			}
+		],
+		"custom": [],
+		"socials": [
+			{
+				"group": "facebook",
+				"link": "https://facebook.com",
+				"icon": "fa fa-facebook"
+			},
+			{
+				"group": "instagram",
+				"link": "https://instagram.com",
+				"icon": "fa fa-instagram"
+			},
+			{
+				"group": "twitter",
+				"link": "https://twitter.com",
+				"icon": "icon-fontello sp-team-icon-x-twitter"
+			}
+		],
+		"groups": [
+			"Marketing"
+		]
+	},
+	{
+		"id": "demo-5",
+		"link": "#",
+		"name": "Oliver Bennett",
+		"role": "Customer Success Lead",
+		"bio": "Oliver makes sure every customer gets real value from day one.",
+		"description": "Oliver leads onboarding and support. He makes sure every customer gets real value from day one and turns their feedback into product improvements.",
+		"avatar": "https://i.pravatar.cc/600?img=8",
+		"thumbnails": {},
+		"flip": "https://i.pravatar.cc/600?img=63",
+		"specialTag": "",
+		"alt": "Oliver Bennett",
+		"email": "oliver@example.com",
+		"mobile": "+44 20 7946 0005",
+		"phone": "+44 20 7946 0105",
+		"location": "London, UK",
+		"language": "English, French",
+		"gender": "Male",
+		"website": "https://example.com",
+		"experience": "7 Years",
+		"skills": [
+			{
+				"name": "Support",
+				"percentage": "95"
+			},
+			{
+				"name": "Onboarding",
+				"percentage": "90"
+			},
+			{
+				"name": "Training",
+				"percentage": "85"
+			}
+		],
+		"custom": [],
+		"socials": [
+			{
+				"group": "linkedin",
+				"link": "https://linkedin.com",
+				"icon": "fa fa-linkedin"
+			},
+			{
+				"group": "twitter",
+				"link": "https://twitter.com",
+				"icon": "icon-fontello sp-team-icon-x-twitter"
+			},
+			{
+				"group": "envelope",
+				"link": "mailto:oliver@example.com",
+				"icon": "fa fa-envelope"
+			}
+		],
+		"groups": [
+			"Support"
+		]
+	},
+	{
+		"id": "demo-6",
+		"link": "#",
+		"name": "Michael Turner",
+		"role": "Senior Developer",
+		"bio": "Michael builds the features our customers rely on every day.",
+		"description": "Michael is a full-stack developer who builds the features our customers rely on every day, with a sharp eye for performance and clean code.",
+		"avatar": "https://i.pravatar.cc/600?img=63",
+		"thumbnails": {},
+		"flip": "https://i.pravatar.cc/600?img=12",
+		"specialTag": "",
+		"alt": "Michael Turner",
+		"email": "michael@example.com",
+		"mobile": "+49 30 1234 5006",
+		"phone": "+49 30 1234 5106",
+		"location": "Berlin, Germany",
+		"language": "English, German",
+		"gender": "Male",
+		"website": "https://example.com",
+		"experience": "9 Years",
+		"skills": [
+			{
+				"name": "PHP",
+				"percentage": "95"
+			},
+			{
+				"name": "React",
+				"percentage": "90"
+			},
+			{
+				"name": "MySQL",
+				"percentage": "85"
+			}
+		],
+		"custom": [],
+		"socials": [
+			{
+				"group": "github",
+				"link": "https://github.com",
+				"icon": "fa fa-github"
+			},
+			{
+				"group": "linkedin",
+				"link": "https://linkedin.com",
+				"icon": "fa fa-linkedin"
+			},
+			{
+				"group": "stack-overflow",
+				"link": "https://stackoverflow.com",
+				"icon": "fa fa-stack-overflow"
+			}
+		],
+		"groups": [
+			"Engineering"
+		]
+	},
+	{
+		"id": "demo-7",
+		"link": "#",
+		"name": "Arjun Patel",
+		"role": "Product Manager",
+		"bio": "Arjun turns customer insight into a roadmap the whole team can rally behind.",
+		"description": "Arjun bridges design, engineering and sales. He runs discovery, prioritises the roadmap and makes sure every release solves a real customer problem.",
+		"avatar": "https://i.pravatar.cc/600?img=12",
+		"thumbnails": {},
+		"flip": "https://i.pravatar.cc/600?img=56",
+		"specialTag": "",
+		"alt": "Arjun Patel",
+		"email": "arjun@example.com",
+		"mobile": "+1 (555) 010-2007",
+		"phone": "+1 (555) 010-1007",
+		"location": "London, UK",
+		"language": "English, Hindi",
+		"gender": "Male",
+		"website": "https://example.com",
+		"experience": "9 Years",
+		"skills": [
+			{
+				"name": "Roadmapping",
+				"percentage": "92"
+			},
+			{
+				"name": "User Research",
+				"percentage": "88"
+			},
+			{
+				"name": "Analytics",
+				"percentage": "80"
+			}
+		],
+		"custom": [],
+		"socials": [
+			{
+				"group": "linkedin",
+				"link": "https://linkedin.com",
+				"icon": "fa fa-linkedin"
+			},
+			{
+				"group": "twitter",
+				"link": "https://twitter.com",
+				"icon": "icon-fontello sp-team-icon-x-twitter"
+			},
+			{
+				"group": "medium",
+				"link": "https://medium.com",
+				"icon": "fa fa-medium"
+			}
+		],
+		"groups": [
+			"Product"
+		]
+	},
+	{
+		"id": "demo-8",
+		"link": "#",
+		"name": "Daniel Kim",
+		"role": "UX Designer",
+		"bio": "Daniel designs flows that feel obvious the first time you use them.",
+		"description": "Daniel prototypes fast, tests early and sweats the details of every interaction, from onboarding to the smallest empty state.",
+		"avatar": "https://i.pravatar.cc/600?img=56",
+		"thumbnails": {},
+		"flip": "https://i.pravatar.cc/600?img=60",
+		"specialTag": "",
+		"alt": "Daniel Kim",
+		"email": "daniel@example.com",
+		"mobile": "+1 (555) 010-2008",
+		"phone": "+1 (555) 010-1008",
+		"location": "Seoul, South Korea",
+		"language": "Korean, English",
+		"gender": "Male",
+		"website": "https://example.com",
+		"experience": "6 Years",
+		"skills": [
+			{
+				"name": "Prototyping",
+				"percentage": "94"
+			},
+			{
+				"name": "Interaction Design",
+				"percentage": "90"
+			},
+			{
+				"name": "Figma",
+				"percentage": "88"
+			}
+		],
+		"custom": [],
+		"socials": [
+			{
+				"group": "dribbble",
+				"link": "https://dribbble.com",
+				"icon": "fa fa-dribbble"
+			},
+			{
+				"group": "behance",
+				"link": "https://behance.com",
+				"icon": "fa fa-behance"
+			},
+			{
+				"group": "instagram",
+				"link": "https://instagram.com",
+				"icon": "fa fa-instagram"
+			}
+		],
+		"groups": [
+			"Design"
+		]
+	},
+	{
+		"id": "demo-9",
+		"link": "#",
+		"name": "Henry Lee",
+		"role": "Content Strategist",
+		"bio": "Henry shapes the stories that explain what we build and why it matters.",
+		"description": "Henry owns the brand voice across the website, docs and campaigns, and partners with product to launch every feature with clear messaging.",
+		"avatar": "https://i.pravatar.cc/600?img=60",
+		"thumbnails": {},
+		"flip": "https://i.pravatar.cc/600?img=7",
+		"specialTag": "",
+		"alt": "Henry Lee",
+		"email": "henry@example.com",
+		"mobile": "+1 (555) 010-2009",
+		"phone": "+1 (555) 010-1009",
+		"location": "Toronto, Canada",
+		"language": "English, French",
+		"gender": "Male",
+		"website": "https://example.com",
+		"experience": "7 Years",
+		"skills": [
+			{
+				"name": "Copywriting",
+				"percentage": "95"
+			},
+			{
+				"name": "SEO",
+				"percentage": "85"
+			},
+			{
+				"name": "Storytelling",
+				"percentage": "90"
+			}
+		],
+		"custom": [],
+		"socials": [
+			{
+				"group": "twitter",
+				"link": "https://twitter.com",
+				"icon": "icon-fontello sp-team-icon-x-twitter"
+			},
+			{
+				"group": "linkedin",
+				"link": "https://linkedin.com",
+				"icon": "fa fa-linkedin"
+			},
+			{
+				"group": "instagram",
+				"link": "https://instagram.com",
+				"icon": "fa fa-instagram"
+			}
+		],
+		"groups": [
+			"Marketing"
+		]
+	},
+	{
+		"id": "demo-10",
+		"link": "#",
+		"name": "Marcus Johnson",
+		"role": "DevOps Engineer",
+		"bio": "Marcus keeps deployments boring, which is exactly how they should be.",
+		"description": "Marcus runs our cloud infrastructure, CI pipelines and monitoring, so the team can ship several times a day without worrying about uptime.",
+		"avatar": "https://i.pravatar.cc/600?img=7",
+		"thumbnails": {},
+		"flip": "https://i.pravatar.cc/600?img=13",
+		"specialTag": "",
+		"alt": "Marcus Johnson",
+		"email": "marcus@example.com",
+		"mobile": "+1 (555) 010-2010",
+		"phone": "+1 (555) 010-1010",
+		"location": "Austin, USA",
+		"language": "English",
+		"gender": "Male",
+		"website": "https://example.com",
+		"experience": "10 Years",
+		"skills": [
+			{
+				"name": "Kubernetes",
+				"percentage": "90"
+			},
+			{
+				"name": "AWS",
+				"percentage": "92"
+			},
+			{
+				"name": "Automation",
+				"percentage": "88"
+			}
+		],
+		"custom": [],
+		"socials": [
+			{
+				"group": "github",
+				"link": "https://github.com",
+				"icon": "fa fa-github"
+			},
+			{
+				"group": "linkedin",
+				"link": "https://linkedin.com",
+				"icon": "fa fa-linkedin"
+			},
+			{
+				"group": "twitter",
+				"link": "https://twitter.com",
+				"icon": "icon-fontello sp-team-icon-x-twitter"
+			}
+		],
+		"groups": [
+			"Engineering"
+		]
+	},
+	{
+		"id": "demo-11",
+		"link": "#",
+		"name": "Ahmed Rahman",
+		"role": "HR Manager",
+		"bio": "Ahmed builds the culture and processes that help our people do their best work.",
+		"description": "Ahmed leads hiring, onboarding and people development, and makes sure every new teammate feels at home from day one.",
+		"avatar": "https://i.pravatar.cc/600?img=13",
+		"thumbnails": {},
+		"flip": "https://i.pravatar.cc/600?img=53",
+		"specialTag": "",
+		"alt": "Ahmed Rahman",
+		"email": "ahmed@example.com",
+		"mobile": "+1 (555) 010-2011",
+		"phone": "+1 (555) 010-1011",
+		"location": "Dubai, UAE",
+		"language": "English, Arabic",
+		"gender": "Male",
+		"website": "https://example.com",
+		"experience": "11 Years",
+		"skills": [
+			{
+				"name": "Recruiting",
+				"percentage": "93"
+			},
+			{
+				"name": "Coaching",
+				"percentage": "88"
+			},
+			{
+				"name": "Culture",
+				"percentage": "91"
+			}
+		],
+		"custom": [],
+		"socials": [
+			{
+				"group": "linkedin",
+				"link": "https://linkedin.com",
+				"icon": "fa fa-linkedin"
+			},
+			{
+				"group": "facebook",
+				"link": "https://facebook.com",
+				"icon": "fa fa-facebook"
+			},
+			{
+				"group": "envelope",
+				"link": "https://envelope.com",
+				"icon": "fa fa-envelope"
+			}
+		],
+		"groups": [
+			"Operations"
+		]
+	},
+	{
+		"id": "demo-12",
+		"link": "#",
+		"name": "Lucas Martin",
+		"role": "Sales Director",
+		"bio": "Lucas helps growing teams find the plan that fits their goals.",
+		"description": "Lucas leads a global sales team and works closely with customers to turn first conversations into long-term partnerships.",
+		"avatar": "https://i.pravatar.cc/600?img=53",
+		"thumbnails": {},
+		"flip": "https://i.pravatar.cc/600?img=59",
+		"specialTag": "Top Performer",
+		"alt": "Lucas Martin",
+		"email": "lucas@example.com",
+		"mobile": "+1 (555) 010-2012",
+		"phone": "+1 (555) 010-1012",
+		"location": "Paris, France",
+		"language": "French, English",
+		"gender": "Male",
+		"website": "https://example.com",
+		"experience": "13 Years",
+		"skills": [
+			{
+				"name": "Negotiation",
+				"percentage": "94"
+			},
+			{
+				"name": "Partnerships",
+				"percentage": "89"
+			},
+			{
+				"name": "Forecasting",
+				"percentage": "84"
+			}
+		],
+		"custom": [],
+		"socials": [
+			{
+				"group": "linkedin",
+				"link": "https://linkedin.com",
+				"icon": "fa fa-linkedin"
+			},
+			{
+				"group": "twitter",
+				"link": "https://twitter.com",
+				"icon": "icon-fontello sp-team-icon-x-twitter"
+			},
+			{
+				"group": "facebook",
+				"link": "https://facebook.com",
+				"icon": "fa fa-facebook"
+			}
+		],
+		"groups": [
+			"Sales"
+		]
+	}
+]

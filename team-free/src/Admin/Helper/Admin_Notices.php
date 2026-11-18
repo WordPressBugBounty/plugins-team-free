@@ -12,6 +12,8 @@
 
 namespace ShapedPlugin\WPTeam\Admin\Helper;
 
+use ShapedPlugin\WPTeam\Admin\Taxonomies\Taxonomies;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -20,6 +22,74 @@ if ( ! defined( 'ABSPATH' ) ) {
  * The class for all admin notices on the backend.
  */
 class Admin_Notices {
+
+	/**
+	 * This mothod for taxonomies admin menu.
+	 *
+	 * @return void
+	 */
+	public function taxonomies_admin_menu() {
+
+		// Show only to Admins.
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		// Check if the user is on the post edit screen.
+		$screen           = get_current_screen();
+		$screen_post_type = $screen->post_type;
+		$screen_taxonomy  = $screen->taxonomy;
+
+		// Supported pages for the taxonomies admin menu.
+		$supported_pages = array(
+			'edit-sptp_group',
+			'edit-sptp_designation',
+			'edit-sptp_location',
+			'edit-sptp_language',
+			'edit-sptp_gender',
+		);
+
+		if ( 'sptp_member' === $screen_post_type && in_array( $screen->id, $supported_pages, true ) ) {
+			?>
+
+			<ul class="sptp-taxonomies-admin-menu">
+				<li>
+					<a class="button<?php echo ( 'sptp_group' === $screen_taxonomy ) ? esc_attr( ' button-primary' ) : ''; ?>" href="<?php echo esc_url( admin_url( 'edit-tags.php?taxonomy=sptp_group&post_type=sptp_member' ) ); ?>">
+						<?php echo esc_html( get_taxonomy( 'sptp_group' )->labels->name ); ?>
+						<?php
+						echo '<span class="count">';
+						echo esc_html(
+							wp_count_terms( 'sptp_group' )
+						);
+						echo '</span>';
+						?>
+					</a>
+				</li>
+				<li>
+					<a class="button<?php echo ( 'sptp_designation' === $screen_taxonomy ) ? esc_attr( ' button-primary' ) : ''; ?>" href="<?php echo esc_url( admin_url( 'edit-tags.php?taxonomy=sptp_designation&post_type=sptp_member' ) ); ?>">
+						<?php echo esc_html( get_taxonomy( 'sptp_designation' )->labels->name ); ?>
+						<?php
+						echo '<span class="count">';
+						echo esc_html(
+							wp_count_terms( 'sptp_designation' )
+						);
+						echo '</span>';
+						?>
+					</a>
+				</li>
+				<?php foreach ( Taxonomies::placeholder_names() as $placeholder => $placeholder_names ) { ?>
+					<li>
+						<a class="button<?php echo ( $placeholder === $screen_taxonomy ) ? esc_attr( ' button-primary' ) : ''; ?>" href="<?php echo esc_url( admin_url( 'edit-tags.php?taxonomy=' . $placeholder . '&post_type=sptp_member' ) ); ?>">
+							<?php echo esc_html( $placeholder_names[1] ); ?>
+						</a>
+					</li>
+				<?php } ?>
+			</ul>
+
+			<?php
+		}
+	}
+
 	/**
 	 * Display admin review notice.
 	 *

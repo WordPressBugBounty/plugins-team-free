@@ -36,7 +36,13 @@ $margin_between_member      = isset( $settings['style_margin_between_member']['t
 $margin_between_member_left = isset( $settings['style_margin_between_member']['left-right'] ) ? intval( $settings['style_margin_between_member']['left-right'] ) : 24;
 
 if ( 'list' === $layout_preset ) {
-	$position = 'left_img_right_content';
+	$position = isset( $layout['style_member_content_position_list'] ) ? $layout['style_member_content_position_list'] : '';
+	// A number: dynamic-style.php appends the `%` (a '40%' default printed `40%%`).
+	// Empty or 0 falls back to the slider default rather than hiding the image.
+	$list_layout_image_max_width = isset( $settings['list_layout_image_max_width'] ) ? (float) $settings['list_layout_image_max_width'] : 40;
+	if ( $list_layout_image_max_width <= 0 ) {
+		$list_layout_image_max_width = 40;
+	}
 } else {
 	$position = isset( $settings['style_member_content_position'] ) ? $settings['style_member_content_position'] : 'top_img_bottom_content';
 }

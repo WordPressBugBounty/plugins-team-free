@@ -1,24 +1,23 @@
-<?php return array (
-  'root' => 
-  array (
-    'pretty_version' => 'dev-master',
-    'version' => 'dev-master',
-    'aliases' => 
-    array (
+<?php return array(
+    'root' => array(
+        'name' => 'shamimwp/team-free',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'a56e4dd572b98d24e73657b65c60e6f55069a4f6',
+        'type' => 'wordpress-plugin',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => false,
     ),
-    'reference' => '5c158e46c7109563de60f2cd5043beb6652d9393',
-    'name' => 'shamimwp/team-free',
-  ),
-  'versions' => 
-  array (
-    'shamimwp/team-free' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '5c158e46c7109563de60f2cd5043beb6652d9393',
+    'versions' => array(
+        'shamimwp/team-free' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'a56e4dd572b98d24e73657b65c60e6f55069a4f6',
+            'type' => 'wordpress-plugin',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
     ),
-  ),
 );

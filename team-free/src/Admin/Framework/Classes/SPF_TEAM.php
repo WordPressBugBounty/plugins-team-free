@@ -378,6 +378,7 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 					'select',
 					'shortcode',
 					'slider',
+					'sortable',
 					'spacing',
 					'spinner',
 					'subheading',
@@ -386,6 +387,10 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 					'tabbed',
 					'textarea',
 					'typography',
+					'chart',
+					'group',
+					'accordion',
+					'upload',
 				)
 			);
 
@@ -491,6 +496,8 @@ if ( ! class_exists( 'SPF_TEAM' ) ) {
 						'typing_text'     => esc_html__( 'Please enter %s or more characters', 'team-free' ),
 						'searching_text'  => esc_html__( 'Searching...', 'team-free' ),
 						'no_results_text' => esc_html__( 'No results found.', 'team-free' ),
+						// Inserted with jQuery .text(), so it is not HTML-escaped here.
+						'skills_upgrade'  => __( 'Upgrade to Pro for more skills', 'team-free' ),
 					),
 				)
 			);

@@ -1,0 +1,412 @@
+.sp-smart-team-spacing {
+	&-part-2 {
+		display: flex;
+
+		label {
+			font-size: 11px;
+			display: inline-block;
+			color: #8c8f94;
+			margin-top: 4px;
+		}
+
+		input {
+			width: 100%;
+			padding: 0;
+			text-align: center;
+			border-radius: 0;
+			border-right: 0;
+			border-color: #ddd;
+
+			&:focus:not(:disabled) {
+				outline: none;
+				box-shadow: none;
+				border-color: #ddd;
+			}
+		}
+	}
+
+	&-all {
+		width: 140px;
+		height: 30px;
+
+		button {
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			border-radius: 0;
+			justify-content: center;
+			border: 1px solid #ddd;
+
+			&.active {
+				background-color: var(--sp-smart-team-primary-2-600);
+				border-color: transparent;
+			}
+
+			&:focus:not(:disabled) {
+				outline: none;
+				box-shadow: none;
+				border: 1px solid #ddd !important;
+			}
+		}
+	}
+
+	&-left.box input,
+	&-right.box input {
+		border-right: 1px solid #ddd;
+		margin-right: 0;
+	}
+}
+
+.sp-smart-team-tab-panel .sp-smart-team-component-mb {
+	margin-bottom: 16px;
+}
+
+.sp-smart-team-tab-panel .sp-smart-team-component-mb:last-child {
+	margin-bottom: 0px;
+}
+
+.sp-smart-team-spacing-part-2 {
+	display: flex;
+}
+
+.sp-smart-team-spacing-part-2 label {
+	font-size: 11px;
+	display: inline-block;
+	color: #8c8f94;
+	margin-top: 4px;
+}
+
+.sp-smart-team-spacing-part-2 input {
+	width: 100%;
+	padding: 0;
+	text-align: center;
+	border-radius: 0;
+	border-right: 0;
+	border-color: #ddd;
+}
+
+.sp-smart-team-spacing-part-2 input:focus:not(:disabled) {
+	outline: none;
+	box-shadow: none;
+	border-color: #ddd;
+}
+
+.sp-smart-team-spacing-all {
+	width: 140px;
+	height: 32px;
+}
+
+.sp-smart-team-spacing-all button {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	border-radius: 0;
+	justify-content: center;
+	border: 1px solid #ddd;
+}
+
+.sp-smart-team-spacing-all button:focus:not(:disabled) {
+	outline: none;
+	box-shadow: none;
+}
+
+.sp-smart-team-spacing-left.box input,
+.sp-smart-team-spacing-right.box input {
+	border-right: 1px solid #ddd;
+	margin-right: 0;
+}
+
+.sp-smart-team-header-control-left,
+.sp-smart-team-header-control-right {
+	display: flex;
+	align-items: center;
+}
+
+// .sp-smart-team-header-control-left label {
+//   margin-top: 8px;
+// }
+// RS
+.sp-smart-team-header-control-left {
+	margin-top: 0;
+}
+
+.sp-smart-team-header-control {
+	display: flex;
+	justify-content: space-between;
+}
+
+.sp-smart-team-header-control-reset.components-button:hover svg {
+	color: var(--sp-smart-team-primary-2-600);
+}
+
+// select control and input control custom css
+.location-weather-tab-panel {
+	.components-checkbox-control {
+		.components-base-control__field {
+			width: 100%;
+			display: flex;
+			flex-direction: row-reverse;
+			justify-content: space-between;
+
+			label {
+				font-size: 13px;
+				font-weight: 400;
+				text-transform: capitalize;
+				font-family: Inter, sans-serif;
+			}
+
+			span {
+				margin: 0;
+			}
+
+			span > input:checked {
+				background-color: var(--sp-smart-team-primary-2-600);
+				border-color: var(--sp-smart-team-primary-2-600);
+			}
+
+			span > input:focus {
+				border-color: var(--sp-smart-team-primary-2-600);
+			}
+		}
+	}
+
+	.components-input-control {
+		.components-input-base {
+			div > label {
+				font-size: 13px;
+				font-weight: 400 !important;
+				text-transform: capitalize;
+				font-family: Inter, sans-serif;
+				color: #1e1e1e;
+			}
+
+			div > input::after {
+				border-color: var(--sp-smart-team-primary-2-600);
+			}
+		}
+	}
+}
+
+.sp-smart-team-spacing:not(.border-radius) {
+	.sp-smart-team-spacing-wrapper {
+		position: relative;
+		display: inline-block;
+
+		.sp-smart-team-spacing-highlight {
+			position: absolute;
+			background-color: #333;
+		}
+	}
+
+	.sp-smart-team-spacing-top {
+		.sp-smart-team-spacing-highlight {
+			top: 0;
+			left: 52%;
+			width: 80%;
+			height: 2px;
+			transform: translateX(-50%);
+		}
+	}
+
+	.sp-smart-team-spacing-right {
+		.sp-smart-team-spacing-highlight {
+			top: 52%;
+			right: 0px;
+			width: 2px;
+			height: 80%;
+			transform: translateY(-50%);
+		}
+	}
+
+	.sp-smart-team-spacing-bottom {
+		.sp-smart-team-spacing-highlight {
+			bottom: 0;
+			height: 2px;
+			left: 52%;
+			width: 80%;
+			transform: translateX(-50%);
+		}
+	}
+
+	.sp-smart-team-spacing-left {
+		.sp-smart-team-spacing-highlight {
+			top: 52%;
+			height: 80%;
+			left: 1px;
+			width: 2px;
+			transform: translateY(-50%);
+		}
+	}
+}
+
+.sp-smart-team-spacing {
+	&.border-radius {
+		.sp-smart-team-spacing-wrapper {
+			position: relative;
+			display: inline-block;
+
+			.sp-smart-team-spacing-highlight {
+				position: absolute;
+				width: 8px;
+				height: 8px;
+				background-color: transparent;
+				border-color: #333;
+				border-style: solid;
+			}
+		}
+
+		.sp-smart-team-spacing-top {
+			.sp-smart-team-spacing-highlight {
+				top: 0px;
+				left: 0px;
+				border-width: 2px 0 0 2px;
+			}
+		}
+
+		.sp-smart-team-spacing-right {
+			.sp-smart-team-spacing-highlight {
+				right: 0px;
+				top: 0px;
+				border-width: 2px 2px 0 0;
+			}
+		}
+
+		.sp-smart-team-spacing-bottom {
+			.sp-smart-team-spacing-highlight {
+				border-width: 0 2px 2px 0;
+				bottom: 0px;
+				right: 0px;
+				left: unset;
+			}
+		}
+
+		.sp-smart-team-spacing-left {
+			.sp-smart-team-spacing-highlight {
+				border-width: 0 0 2px 2px;
+				bottom: 0px;
+				left: 2px;
+				right: 2px;
+			}
+		}
+	}
+}
+
+.sp-smart-team-spacing {
+	.sp-smart-team-spacing-wrapper {
+		input[type='number'] {
+			min-height: 32px !important;
+			height: 32px !important;
+			font-size: 14px !important;
+			line-height: 1.5rem;
+			border-right: 1px solid #ddd;
+		}
+	}
+}
+
+.sp-smart-team-spacing-range-control.sp-smart-team-range-control {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+
+	.sp-smart-range-control-ranger-row {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 16px;
+
+		.sp-smart-range-control {
+			display: flex;
+			align-items: center;
+		}
+
+		.sp-ranger {
+			display: block;
+			flex-grow: 1;
+		}
+
+		.sp-preset-btn {
+			width: 24px;
+		}
+
+		.components-range-control__wrapper {
+			margin-bottom: 0;
+		}
+
+		.components-input-control .components-input-control__container {
+			width: 54px;
+		}
+
+		.components-input-base,
+		.components-input-base input {
+			min-height: 30px;
+			height: 30px;
+			max-height: 30px;
+		}
+	}
+
+	// Unlinked mode stacks four rows; the parent's gap doesn't reach them.
+	.sp-smart-team-spacing-body {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	// Side Link Icon
+	.sp-link-side-icon {
+		width: 20px;
+		height: 20px;
+		border: 1px solid #8c8f94;
+		background-color: #ffffff;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 4px 3px;
+		border-radius: 2px;
+		box-sizing: border-box;
+		cursor: pointer;
+	}
+
+	.sp-link-btn {
+		.sp-link-side-icon {
+			margin-right: 4px;
+		}
+
+		&.active {
+			.sp-link-side-icon {
+				background-color: var(--sp-smart-team-primary-2-600);
+			}
+
+			svg path,
+			svg rect {
+				fill: #ffffff;
+			}
+		}
+	}
+
+	.components-range-control__wrapper {
+		.components-range-control__thumb-wrapper {
+			z-index: 1 !important;
+
+			// Recolor the slider thumb to the brand green (WP defaults it to the blue accent).
+			span,
+			span::before,
+			span::after {
+				background-color: var(--sp-smart-team-primary-2-600) !important;
+			}
+		}
+
+		.components-range-control__track {
+			background-color: var(--sp-smart-team-primary-2-600);
+		}
+	}
+}
+
+.sp-smart-range-control.sp-preset-btn {
+	color: var(--sp-smart-team-primary-2-600);
+
+	// The active (filled) icon fills via currentColor; pin it to the brand green
+	// so it never inherits the editor's blue accent.
+	svg {
+		color: var(--sp-smart-team-primary-2-600) !important;
+	}
+}

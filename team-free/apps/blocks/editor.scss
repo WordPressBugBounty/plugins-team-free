@@ -1,0 +1,190 @@
+:root {
+    /* Block editor design tokens — forest-green tint/shade scale around the #2B5F47 brand color.
+       Light steps (50/100) drive active backgrounds & borders; 600 is the brand accent (text/icons). */
+    --sp-smart-team-primary-2-50: #EAF0ED;
+    --sp-smart-team-primary-2-100: #D0DCD7;
+    --sp-smart-team-primary-2-200: #AEC2B9;
+    --sp-smart-team-primary-2-300: #8AA79A;
+    --sp-smart-team-primary-2-400: #668C7B;
+    --sp-smart-team-primary-2-500: #497561;
+    --sp-smart-team-primary-2-600: #2B5F47;
+    --sp-smart-team-primary-2-700: #234E3A;
+    --sp-smart-team-primary-2-800: #1C3D2D;
+    --sp-smart-team-primary-2-900: #132B20;
+    /* Box-shadow preset tokens (--sp-smart-team-shadow-*) live in the block's
+       style.scss so they resolve on the frontend too; that stylesheet is also
+       loaded in the editor, so they remain available here. */
+}
+
+.sp-smart-team-child-panel-body .components-panel__body-toggle.components-button {
+
+    &:focus,
+    &:focus-visible,
+    &:focus:not(:disabled) {
+        outline: none;
+        box-shadow: none;
+    }
+}
+
+
+
+// Hide the core Advanced panel ONLY while a Smart Team block is selected (they
+// ship their own Advanced Settings) — scoped via the inspector wrapper every
+// sptp block renders. Unscoped, this removed Advanced from EVERY block's
+// inspector (paragraphs, headings, …).
+.block-editor-block-inspector:has(.sp-smart-team-block-panels) .components-panel__body.block-editor-block-inspector__advanced {
+    display: none;
+}
+
+.block-editor-block-inspector:has(.sp-smart-team-block-panels) .block-editor-block-card {
+    padding: 16px 16px 8px;
+}
+
+.sp-smart-team-spacing-body .components-range-control__thumb-wrapper span {
+    background-color: #2B5F47;
+}
+
+.sp-smart-team-child-panel-body .components-button:hover {
+    color: #2B5F47;
+}
+
+.block-editor-block-inspector .sp-smart-team-component-mb {
+    margin-bottom: 16px;
+}
+
+.block-editor-block-inspector .sp-smart-team-component-mb:last-child {
+    margin-bottom: 0;
+}
+
+// The shared Popover (apps/components/popover) renders in a portal outside the
+// block inspector, so the inspector-scoped spacing above doesn't reach it —
+// give controls inside the popover the same rhythm.
+.sp-smart-team-popover__content-visible .sp-smart-team-component-mb {
+    margin-bottom: 16px;
+}
+
+.sp-smart-team-popover__content-visible .sp-smart-team-component-mb:last-child {
+    margin-bottom: 0;
+}
+
+
+// Active (opened) panel body — highlight the title so the open panel is
+// obvious (neutral gray, as in WP Carousel Free). Scoped to our inspector
+// wrapper so core blocks' panels keep the stock look.
+.sp-smart-team-block-panels .components-panel__body.is-opened>.components-panel__body-title {
+    margin: -16px -16px 10px;
+    background-color: #f0f0f0;
+}
+
+// Stand-in drawn in place of a block that is switched off — either by its
+// Modules-page feature or by its Parent/Child Blocks toggle (withCanvasGate in
+// inserterVisibility.js). Editor-only — the front end never renders the block
+// at all, `Block_Visibility` short-circuits it.
+.sptp-module-off-notice {
+	padding: 12px 16px;
+	border: 1px dashed #cbd5e1;
+	border-radius: 6px;
+	background: #f8fafc;
+	color: #64748b;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+/* Canvas stand-in for a block switched off under Smart Team → Blocks. */
+.sptp-block-off-notice {
+	padding: 16px 20px;
+	border: 1px dashed #949494;
+	border-radius: 4px;
+	background: #f6f7f7;
+	color: #50575e;
+	font-size: 13px;
+	line-height: 1.5;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px 16px;
+}
+
+// Theme editor styles arrive scoped to the canvas (`.editor-styles-wrapper a`,
+// `… a:hover`), which outranks a single class — so the link carries the wrapper
+// and the notice in its selector, and resets what themes put on links.
+.sptp-block-off-notice a.sptp-block-off-notice__link,
+.editor-styles-wrapper .sptp-block-off-notice a.sptp-block-off-notice__link {
+	flex-shrink: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	box-shadow: none;
+	font-family: inherit;
+	font-size: inherit;
+	font-style: normal;
+	font-weight: 600;
+	line-height: inherit;
+	letter-spacing: normal;
+	text-transform: none;
+	color: var(--wp-admin-theme-color, #2271b1);
+	text-decoration: none;
+
+	&:visited {
+		color: var(--wp-admin-theme-color, #2271b1);
+	}
+
+	&:hover,
+	&:focus,
+	&:active {
+		background: none;
+		box-shadow: none;
+		color: var(--wp-admin-theme-color-darker-10, #135e96);
+		text-decoration: none;
+	}
+}
+
+/* Banner above a layout block's preview while it shows the bundled demo
+   members (useMembers → isDemoMembers). Editor-only. */
+.sp-smart-team-demo-notice {
+	margin-bottom: 12px;
+	padding: 14px 18px;
+	border: 1px solid var(--sp-smart-team-primary-2-100, #D0DCD7);
+	border-radius: 4px;
+	background-color: var(--sp-smart-team-primary-2-50, #EAF0ED);
+	color: #1e1e1e;
+	font-size: 14px;
+	line-height: 1.5;
+
+	a {
+		color: var(--sp-smart-team-primary-2-600, #2B5F47);
+		font-weight: 600;
+	}
+}
+
+/* ── Pro blocks in the inserter ─────────────────────────────────────────── */
+
+// Port of wp-carousel-free's inserter crown: a 20px crown chip in the top-right
+// corner of every Pro block's tile (Pro_Gate::PRO_INSERTER_BLOCKS). The icon
+// carries the marker class (inserterVisibility.js), as core adds no per-block
+// class to the tile. ::before, because core paints its hover highlight on
+// ::after. Same tokens as ProChip (apps/components/proChip/editor.scss).
+.block-editor-block-types-list__item:has(.sp-smart-team-pro-block-icon) {
+	position: relative;
+
+	&::before {
+		content: "";
+		position: absolute;
+		z-index: 1;
+		top: 4px;
+		right: 4px;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		box-shadow: inset 0 0 0 1px #b5e0c0;
+		background: #e3f5e8 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='%234ab866' stroke-width='1.185' d='M10.384 5.882c.18.329.478.572.842.648.322.068.652-.007.922-.203l.112-.092 1.396-1.279 1.159-1.062-.81 6.437H2.124l-.812-6.437 2.556 2.341c.288.264.666.373 1.035.295.364-.076.662-.32.841-.648l2.32-4.254 2.32 4.254Z'/%3E%3Cpath fill='%234ab866' d='M13.851 14.873H2.274c-.373 0-.674-.369-.674-.824V12.24h12.925v1.81c0 .454-.301.823-.674.823Z'/%3E%3C/svg%3E")
+			center / 12px no-repeat;
+	}
+}
+
+// The marker span must not change the icon's own box.
+.sp-smart-team-pro-block-icon {
+	display: contents;
+}

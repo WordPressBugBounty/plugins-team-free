@@ -1,0 +1,419 @@
+/**
+ * Member Modal Content — the Member Details modal shell.
+ *
+ * Structural only: per-instance values (width, padding, background, border,
+ * radius, shadow, overlay tint, close-icon size/color) come from the dynamic
+ * CSS twins (dynamicCss.js ↔ Styles/Member_Modal_Content.php). Part of the
+ * shared `sptp-blocks-style` bundle, so it loads in the editor AND the
+ * frontend; `editor.scss` only re-poses the shell for the canvas.
+ *
+ * Pro's frontend modal runtime (Free ships none)
+ * injects this markup and toggles `is-open`.
+ */
+
+.sp-smart-team-member-modal {
+	// Close-icon offset — the dynamic CSS overrides this per device, and each
+	// `--icon-{position}` modifier below decides which edges it applies to.
+	--sptp-modal-close-offset: 18px;
+
+	position: fixed;
+	inset: 0;
+	z-index: 999999;
+	display: flex;
+	visibility: hidden;
+	opacity: 0;
+	transition:
+		opacity 0.3s ease,
+		visibility 0s linear 0.3s;
+
+	// NOT inheritable, and not guaranteed by the theme inside the editor canvas.
+	// Without it `width: 900px; max-width: 100%` caps only the CONTENT box, so
+	// the dialog's padding lands OUTSIDE the cap and the whole card overflows
+	// its parent by the padding — the Width control would size the content, not
+	// the box. Declared on every part this shell owns; user content inside
+	// keeps whatever the theme gives it.
+	&,
+	&__dialog,
+	&__content,
+	&__close,
+	&__nav {
+		box-sizing: border-box;
+	}
+
+	&.is-open {
+		visibility: visible;
+		opacity: 1;
+		transition:
+			opacity 0.3s ease,
+			visibility 0s;
+	}
+
+	&__overlay {
+		position: absolute;
+		inset: 0;
+		background-color: rgba(0, 0, 0, 0.7);
+	}
+
+	// Background Overlay off — the element stays (Close when Click Outside
+	// needs a target) but paints nothing.
+	&--no-overlay &__overlay {
+		background-color: transparent;
+	}
+
+	&__dialog {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		width: 900px;
+		max-width: 100%;
+		max-height: 90vh;
+		background: #ffffff;
+		border-radius: 8px;
+		// Outside close-icon placements sit beyond this box, so the box itself
+		// must never clip — the CONTENT below is the scroll container.
+		overflow: visible;
+	}
+
+	&__content {
+		flex: 1 1 auto;
+		min-height: 0;
+		// The padding belongs to the SCROLL CONTAINER, not the dialog. A
+		// scrollbar renders at its container's padding-box edge, so padding on
+		// the dialog would inset the scrollbar by that much and leave it
+		// floating in the whitespace; here the content box spans the dialog
+		// edge to edge and the scrollbar lands flush against it, with the
+		// padding scrolling inside. The default 18px close-icon offset clears a
+		// ~15px scrollbar, so the ✕ still sits beside it, not on it.
+		padding: 32px;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+
+		// Block themes add root side padding to every `.has-global-padding`
+		// group; inside the modal that double-pads the columns' inner groups.
+		.has-global-padding {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+
+	/* ------------------------------------------------------------------ */
+	/* Close icon — a 1em glyph, so font-size (Icon Size) drives it.        */
+	/* ------------------------------------------------------------------ */
+	&__close {
+		position: absolute;
+		z-index: 3;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		font-size: 24px;
+		line-height: 1;
+		color: #1e1e1e;
+		cursor: pointer;
+		background: transparent;
+		border: 0;
+		transition: color 0.2s ease;
+
+		&:hover {
+			color: #2b5f47;
+		}
+	}
+
+	&--icon-inside-right &__close {
+		top: var(--sptp-modal-close-offset);
+		right: var(--sptp-modal-close-offset);
+	}
+
+	&--icon-inside-left &__close {
+		top: var(--sptp-modal-close-offset);
+		left: var(--sptp-modal-close-offset);
+	}
+
+	// Outside placements hang off the dialog; the offset becomes the gap.
+	&--icon-outside-right &__close {
+		top: 0;
+		left: 100%;
+		margin-left: var(--sptp-modal-close-offset);
+		color: #ffffff;
+	}
+
+	&--icon-outside-left &__close {
+		top: 0;
+		right: 100%;
+		margin-right: var(--sptp-modal-close-offset);
+		color: #ffffff;
+	}
+
+	/* ------------------------------------------------------------------ */
+	/* Prev / next member navigation — the Carousel block's arrow model:    */
+	/* an absolutely-positioned ROW whose placement the dynamic CSS drives  */
+	/* through left/right + top-or-bottom, and whose alignment comes from   */
+	/* the `--{position}` modifier below.                                   */
+	/* ------------------------------------------------------------------ */
+	&__nav-arrows {
+		position: absolute;
+		z-index: 3;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		gap: 10px;
+		// The row spans the dialog; only the buttons should take clicks.
+		pointer-events: none;
+	}
+
+	&__nav {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		// A MINIMUM, not a fixed size: the Padding control then grows the button
+		// past it instead of just squeezing the glyph inward (border-box). At the
+		// defaults 24px glyph + 2×8px padding lands on exactly 40px.
+		min-width: 40px;
+		min-height: 40px;
+		padding: 8px;
+		color: #1e1e1e;
+		cursor: pointer;
+		background: #ffffff;
+		border: 1px solid #dddddd;
+		border-radius: 50%;
+		pointer-events: auto;
+		transition:
+			color 0.2s ease,
+			background-color 0.2s ease,
+			border-color 0.2s ease;
+
+		&:hover {
+			color: #ffffff;
+			background: #2b5f47;
+			border-color: #2b5f47;
+		}
+
+		&[disabled] {
+			opacity: 0.4;
+			cursor: default;
+			pointer-events: none;
+		}
+
+		// Both arrows share one glyph; the prev is rotated a full 180° (not
+		// mirrored) so the asymmetric styles flip consistently too.
+		&--prev svg {
+			transform: rotate(180deg);
+		}
+	}
+
+	// Vertical center — the row hugs nothing and each button pins to an edge
+	// via the left/right offsets; the translate re-centers it on its own height.
+	&__nav-arrows--vertical_center {
+		width: auto;
+		transform: translateY(-50%);
+	}
+
+	// Top / bottom rows — the modifier aligns the pair, the dynamic CSS
+	// supplies the top-or-bottom + left/right offsets.
+	&__nav-arrows--top_left,
+	&__nav-arrows--bottom_left {
+		justify-content: flex-start;
+	}
+
+	&__nav-arrows--top_center,
+	&__nav-arrows--bottom_center {
+		justify-content: center;
+	}
+
+	&__nav-arrows--top_right,
+	&__nav-arrows--bottom_right {
+		justify-content: flex-end;
+	}
+
+	/* ------------------------------------------------------------------ */
+	/* Popup — centered sheet with an entrance animation.                  */
+	/* ------------------------------------------------------------------ */
+	&--popup {
+		align-items: center;
+		justify-content: center;
+		padding: 24px;
+	}
+
+	&--popup.is-open &__dialog {
+		animation-duration: 0.35s;
+		animation-timing-function: ease;
+		animation-fill-mode: both;
+	}
+
+	&--anim-fade-in.is-open &__dialog {
+		animation-name: sptp-modal-fade-in;
+	}
+	&--anim-zoom-in.is-open &__dialog {
+		animation-name: sptp-modal-zoom-in;
+	}
+	&--anim-zoom-out.is-open &__dialog {
+		animation-name: sptp-modal-zoom-out;
+	}
+	&--anim-slide-up.is-open &__dialog {
+		animation-name: sptp-modal-slide-up;
+	}
+	&--anim-slide-down.is-open &__dialog {
+		animation-name: sptp-modal-slide-down;
+	}
+	&--anim-slide-left.is-open &__dialog {
+		animation-name: sptp-modal-slide-left;
+	}
+	&--anim-slide-right.is-open &__dialog {
+		animation-name: sptp-modal-slide-right;
+	}
+	&--anim-flip.is-open &__dialog {
+		animation-name: sptp-modal-flip;
+	}
+	&--anim-rotate.is-open &__dialog {
+		animation-name: sptp-modal-rotate;
+	}
+	&--anim-none.is-open &__dialog {
+		animation-name: none;
+	}
+
+	/* ------------------------------------------------------------------ */
+	/* Slide In — a full-height panel entering from one side.              */
+	/* ------------------------------------------------------------------ */
+	&--slide-in {
+		align-items: stretch;
+
+		.sp-smart-team-member-modal__dialog {
+			max-height: none;
+			height: 100%;
+			border-radius: 0;
+			transition: transform 0.35s ease;
+		}
+	}
+
+	&--slide-in.sp-smart-team-member-modal--side-right {
+		justify-content: flex-end;
+
+		.sp-smart-team-member-modal__dialog {
+			transform: translateX(100%);
+		}
+	}
+
+	&--slide-in.sp-smart-team-member-modal--side-left {
+		justify-content: flex-start;
+
+		.sp-smart-team-member-modal__dialog {
+			transform: translateX(-100%);
+		}
+	}
+
+	&--slide-in.is-open &__dialog {
+		transform: translateX(0);
+	}
+}
+
+// Body scroll lock while a modal is open (set by the runtime).
+body.sp-smart-team-modal-open {
+	overflow: hidden;
+}
+
+@keyframes sptp-modal-fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes sptp-modal-zoom-in {
+	from {
+		opacity: 0;
+		transform: scale(0.8);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes sptp-modal-zoom-out {
+	from {
+		opacity: 0;
+		transform: scale(1.15);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes sptp-modal-slide-up {
+	from {
+		opacity: 0;
+		transform: translateY(60px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes sptp-modal-slide-down {
+	from {
+		opacity: 0;
+		transform: translateY(-60px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes sptp-modal-slide-left {
+	from {
+		opacity: 0;
+		transform: translateX(60px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes sptp-modal-slide-right {
+	from {
+		opacity: 0;
+		transform: translateX(-60px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes sptp-modal-flip {
+	from {
+		opacity: 0;
+		transform: perspective(1200px) rotateX(-45deg);
+	}
+	to {
+		opacity: 1;
+		transform: perspective(1200px) rotateX(0);
+	}
+}
+
+@keyframes sptp-modal-rotate {
+	from {
+		opacity: 0;
+		transform: rotate(-6deg) scale(0.9);
+	}
+	to {
+		opacity: 1;
+		transform: rotate(0) scale(1);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sp-smart-team-member-modal--popup.is-open .sp-smart-team-member-modal__dialog,
+	.sp-smart-team-member-modal--slide-in .sp-smart-team-member-modal__dialog {
+		animation: none;
+		transition: none;
+	}
+}

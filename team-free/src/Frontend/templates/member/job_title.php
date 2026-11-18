@@ -15,6 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="sptp-member-profession">
 	<?php do_action( 'sp_team_before_member_job_title' ); ?>
-		<h4 class="sptp-jop-title"><?php echo esc_html( $member_info['sptp_job_title'] ); ?></h4>
+		<h4 class="sptp-jop-title"><?php echo esc_html( $member_job_title ); ?></h4>
 	<?php do_action( 'sp_team_after_member_job_title' ); ?>
 </div>

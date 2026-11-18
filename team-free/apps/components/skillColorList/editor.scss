@@ -1,0 +1,47 @@
+/* SkillColorList — Multi Color Skill Bar rows. The row box itself comes from
+   the sortable-list styles in dnd-select.scss; this styles the per-row
+   actions (remove + settings popover) and the Add New button. */
+.sp-smart-team-skill-colors {
+	&__actions {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		margin-left: auto;
+		flex-shrink: 0;
+
+		// The settings-icon popover sits inline on the row (toggleOnly mode).
+		.sp-smart-team-popover-component {
+			display: flex;
+		}
+	}
+
+	&__remove {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 24px;
+		height: 24px;
+		padding: 0;
+		border: none;
+		background: transparent;
+		border-radius: 2px;
+		font-size: 16px;
+		line-height: 1;
+		color: #757575;
+		cursor: pointer;
+
+		&:hover {
+			background: var(--sp-smart-team-primary-2-600);
+			color: #fff;
+		}
+	}
+
+	&__add.components-button {
+		margin-top: 4px;
+	}
+
+	&__popover {
+		min-width: 260px;
+		padding-bottom: 16px;
+	}
+}

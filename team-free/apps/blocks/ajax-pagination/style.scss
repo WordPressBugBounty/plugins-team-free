@@ -1,0 +1,149 @@
+/**
+ * Ajax Pagination — shared block styles (editor + frontend).
+ *
+ * Structural defaults, ported from testimonial-pro's pagination look; the
+ * per-instance dynamic CSS (dynamicCss.js / Styles/Ajax_Pagination.php)
+ * overrides colors, spacing and typography. Numbered buttons are built by the
+ * frontend runtime (blocks/assets/js/script.js), so every state here must
+ * style runtime-inserted items too.
+ */
+
+.sp-smart-team-ajax-pagination {
+	// Alignment (responsive) comes from the dynamic CSS as justify-content;
+	// the attribute default is center (paginationAlignment).
+	&__wrapper {
+		display: flex;
+		margin-top: 32px;
+	}
+
+	&__buttons {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	// The default text colour sits behind `__wrapper` so a theme's own link rule
+	// (the editor's `.editor-styles-wrapper a`, a theme `.entry-content a`) can't
+	// recolour the buttons. The hover / current / disabled rules below outrank it
+	// by coming later at the same specificity, and the Color control's
+	// `#blockId …` rule outranks all of them.
+	&__wrapper &__item {
+		color: #1e1e1e;
+	}
+
+	&__item {
+		display: inline-flex;
+		align-items: center;
+		gap: 2px;
+		padding: 15px 24px;
+		color: #1e1e1e;
+		font-size: 14px;
+		line-height: 1.3;
+		text-decoration: none;
+		border: 1px solid #3d3d3d;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+			border-color 0.3s ease-in-out;
+
+		&:hover,
+		&.is-current {
+			color: #fff;
+			background-color: #2b5f47;
+			border-color: #2b5f47;
+			text-decoration: none;
+		}
+
+		// No focus ring after a mouse click (theme/editor a:focus outlines);
+		// keyboard tabbing keeps its :focus-visible ring for accessibility.
+		&:focus {
+			text-decoration: none;
+		}
+
+		&:focus:not(:focus-visible) {
+			outline: none;
+			box-shadow: none;
+		}
+
+		// Prev on page 1 / Next on the last page (state toggled by the runtime).
+		&.is-disabled {
+			pointer-events: none;
+			opacity: 0.5;
+		}
+	}
+
+	// Themes underline content links by descendant (Astra's
+	// `.ast-single-post .entry-content a` is 0,2,1), outranking the single-class
+	// reset above; no !important so the Typography decoration still applies.
+	& &__wrapper a#{&}__item {
+		&,
+		&:hover,
+		&:focus {
+			text-decoration: none;
+		}
+	}
+
+	// The "…" collapse marker between windowed page links (Number of links
+	// control) — inert text, not a button. pointer-events kills hover/click;
+	// !important beats the ID-scoped dynamic CSS that paints real items.
+	&__dots {
+		pointer-events: none;
+		background: transparent !important;
+		border-color: transparent !important;
+	}
+
+	// Size the chevron box to exactly one text line so icon-only prev/next
+	// buttons stay the same height as the numbered buttons (1lh = the real
+	// line box; the em value is the fallback for the base 1.3 line-height).
+	// The SVG itself tracks the item font size (its 10px width/height
+	// attributes are just the pre-CSS fallback), so the icon always matches
+	// the number size, including custom typography.
+	&__prev-icon,
+	&__next-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 1.3em;
+		height: 1lh;
+
+		svg {
+			width: 1em;
+			height: 1em;
+		}
+	}
+
+	&__prev-icon {
+		transform: rotate(180deg);
+	}
+
+	// Load More end state — unhidden by the runtime when no pages remain.
+	&__ending {
+		color: #757575;
+	}
+
+	// Infinite Scroll trigger — 1px so the observer has a box to intersect.
+	&__sentinel {
+		display: block;
+		width: 100%;
+		height: 1px;
+	}
+
+	&__spinner {
+		display: none;
+		width: 24px;
+		height: 24px;
+		border: 2px solid #dcdcde;
+		border-top-color: #2b5f47;
+		border-radius: 50%;
+		animation: sp-smart-team-preloader-spin 0.8s linear infinite;
+	}
+
+	&__wrapper.is-loading &__spinner {
+		display: block;
+	}
+
+	&__wrapper.is-loading &__item {
+		pointer-events: none;
+		opacity: 0.6;
+	}
+}

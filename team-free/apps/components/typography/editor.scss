@@ -1,0 +1,451 @@
+.sp-smart-team-typography {
+	.sp-smart-team-typography-trigger {
+		// Match the colour rows: 24px row, icon flush with the right edge.
+		min-height: 24px;
+
+		.components-button {
+			color: #ffffff;
+			width: 24px;
+			min-width: 24px;
+			height: 24px;
+			padding: 0;
+			margin: 0;
+
+			&.active {
+				svg {
+					border-radius: 4px;
+					fill: var(--sp-smart-team-primary-2-600);
+
+					rect {
+						stroke: var(--sp-smart-team-primary-2-600);
+					}
+
+					path {
+						stroke: #fff;
+					}
+				}
+			}
+		}
+
+		p {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.sp-smart-team-typography-fonts {
+	width: 360px;
+	padding: 0px 20px 10px;
+	position: relative;
+
+	.sp-smart-team-toggle-button-group {
+		border-color: #d7dade;
+
+		&::before {
+			background: var(--sp-smart-team-primary-2-600);
+		}
+	}
+
+	#font-picker {
+		width: 100%;
+		margin-bottom: 15px;
+		box-shadow: 0px 0px 3px rgb(0 0 0 / 20%);
+	}
+
+	.sp-smart-team-typography-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 10px;
+		border-radius: 6px 6px 0px 0px;
+		padding: 12px 0;
+		margin-right: -20px;
+		margin-left: -20px;
+		box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+		position: sticky;
+		top: 0;
+		left: 0;
+		background-color: #f2f2f2;
+		z-index: 999;
+
+		h4 {
+			font-size: 13px;
+			font-weight: 500;
+			color: #2f2f2f;
+			margin: 0 16px;
+		}
+
+		.components-button {
+			color: #fff;
+			margin-right: 16px;
+		}
+	}
+
+	div[id^="font-picker"] .dropdown-button,
+	div[id^="font-picker"] .dropdown-button:hover,
+	div[id^="font-picker"] ul,
+	div[id^="font-picker"] .dropdown-button:focus {
+		background: #fff;
+	}
+
+	div[id^="font-picker"] ul li button:hover,
+	div[id^="font-picker"] ul li button:focus,
+	div[id^="font-picker"] ul li button.active-font {
+		background: #f3f3f3;
+	}
+
+	.css-19bb58m {
+		margin: 0;
+		padding: 0;
+	}
+
+	.css-t3ipsp-control:hover,
+	.css-t3ipsp-control {
+		box-shadow: none;
+		border-color: #ccc;
+	}
+
+	.css-tr4s17-option {
+		background-color: #f0f0f0;
+		color: #2f2f2f;
+	}
+
+	.sp-smart-team-typography-family {
+		width: 50%;
+	}
+
+	.sp-smart-team-typography-fields>.sp-smart-team-select-field {
+		width: 50%;
+
+		.css-t3ipsp-control {
+			min-height: 32px;
+			height: 32px;
+		}
+	}
+
+	.sp-smart-team-select-field {
+		&>div:nth-of-type(2) {
+			margin-top: 8px;
+		}
+
+		.sp-smart-team-select-react {
+			margin-top: 8px;
+		}
+
+
+		.css-t3ipsp-control,
+		.css-13cymwt-control,
+		.components-select-control__input {
+			min-height: 32px !important;
+			height: 32px !important;
+			align-content: center;
+		}
+	}
+
+	.components-input-control__backdrop {
+		border-color: #ccc !important;
+	}
+
+	.components-select-control__input {
+		height: 32px !important;
+		min-height: 32px;
+	}
+
+	input[type="text"]:focus {
+		box-shadow: none;
+		outline: none;
+	}
+
+	.css-1u9des2-indicatorSeparator {
+		display: none;
+	}
+
+	.components-range-control__thumb-wrapper span {
+		background-color: var(--sp-smart-team-primary-2-600);
+	}
+
+	.components-range-control__thumb-wrapper span::after,
+	.components-range-control__thumb-wrapper span::before {
+		background-color: var(--sp-smart-team-primary-2-600);
+	}
+
+	.sp-smart-team-toggle-button-group {
+		border-color: #d7dade;
+
+		&-list {
+			display: flex;
+			width: 100%;
+
+			button.active {
+
+				// color: #fff;
+				svg {
+					fill: #fff;
+
+					path {
+						stroke: #fff;
+					}
+				}
+			}
+
+			button.active+div div {
+				background: var(--sp-smart-team-primary-2-600);
+			}
+		}
+
+		&:focus-within {
+			box-shadow: none;
+			border-color: #d7dade;
+		}
+
+		&:hover {
+			border-color: #d7dade;
+		}
+
+		button {
+			svg {
+				fill: #777;
+			}
+		}
+	}
+}
+
+.components-popover__content:has(.sp-smart-team-typography-fonts) {
+	box-shadow: -4px 4px 12px 2px rgba(0, 0, 0, 0.1);
+	border: 1px solid #dddddd;
+	border-radius: 6px;
+}
+
+.sp-smart-team-typography-multiple-button-group button:not(:last-child) span {
+	border-right: 1px solid #ddd;
+	width: 100%;
+	height: 70%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.sp-smart-team-typography-multiple-button-group button.active:not(:last-child) span {
+	border-right-color: var(--sp-smart-team-primary-2-600);
+}
+
+.sp-smart-team-typography-multiple-button-group button:has(+ button.active) span {
+	border-right-color: transparent;
+}
+
+.sp-smart-team-typography-fields {
+	display: flex;
+	// justify-content: space-between;
+	gap: 8px;
+
+	.css-1nmdiq5-menu {
+		width: 200px;
+		z-index: 999;
+	}
+}
+
+.sp-smart-team-typography-fields .sp-smart-team-select-field {
+	flex-direction: column;
+}
+
+.sp-smart-team-typography-fields {
+	flex-direction: row;
+
+	.css-1u9des2-indicatorSeparator {
+		display: none;
+	}
+}
+
+.sp-smart-team-typography-fonts {
+	// The popover portals outside .block-editor-block-inspector, so the
+	// inspector-scoped `.sp-smart-team-component-mb` margins don't apply here.
+	// Give the stacked sections their own consistent vertical rhythm.
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+
+	.sp-smart-team-typography-line-height-picker,
+	.sp-smart-team-typography-letter-spacing-picker {
+		// flex + min-width:0 so the two columns share the row (gap-aware) and can
+		// shrink to fit narrow panels; the input fills its column instead of
+		// forcing a fixed 156px that overflows and collides with the sibling.
+		flex: 1;
+		min-width: 0;
+
+		.sp-smart-team-header-control-right input.components-input-control__input {
+			min-width: 0;
+			width: 100%;
+		}
+	}
+}
+
+.sp-smart-team-typography-font-size-presets {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+
+	button.components-button {
+		border-radius: 4px;
+		// transition: 0.3s;
+		padding: 1px;
+		height: 26px;
+
+		&:focus:not(:disabled) {
+			box-shadow: none;
+		}
+
+		svg {
+			fill: none;
+		}
+	}
+
+	&.active button.components-button:focus,
+	&.active button.components-button {
+		box-shadow: none;
+
+		// outline: 2px solid var(--sp-smart-team-primary-2-600) !important;
+		// padding: 1px;
+		svg {
+			fill: var(--sp-smart-team-primary-2-600);
+
+			rect {
+				stroke: var(--sp-smart-team-primary-2-600);
+			}
+		}
+	}
+
+	&.active {
+
+		.components-base-control,
+		.components-base-control__field {
+			margin-bottom: 0 !important;
+		}
+
+		.components-input-control .components-input-base {
+			min-height: 32px;
+			height: 32px;
+
+			input::-webkit-inner-spin-button {
+				min-height: 33px;
+				margin-right: -11px;
+				cursor: pointer;
+			}
+		}
+	}
+
+	.components-base-control {
+		flex: 1;
+
+		.components-range-control__wrapper {
+			flex: auto;
+		}
+	}
+}
+
+.sp-smart-team-typography-multiple-button-group {
+	width: 100%;
+
+	.sp-smart-team-component-title {
+		margin-bottom: 0;
+	}
+
+	.components-toggle-group-control::before {
+		background: var(--sp-smart-team-primary-2-600) !important;
+	}
+
+	.components-toggle-group-control-option-base[aria-checked="true"] svg {
+		fill: currentColor;
+		outline: none;
+
+		path {
+			fill: #fff;
+		}
+	}
+
+	.components-toggle-group-control-option-base[aria-checked="false"] {
+		background: #fff;
+	}
+}
+
+.sp-d-flex {
+	display: flex;
+}
+
+.sp-justify-between {
+	justify-content: space-between;
+}
+
+.sp-gap-8px {
+	gap: 8px;
+}
+
+.sp-smart-team-typography-multiple-button-group {
+	.sp-smart-team-button-group-list {
+		align-items: center;
+		border: 1px solid #ddd;
+		border-radius: 2px;
+		display: flex;
+		gap: 2px;
+		height: 40px;
+		padding: 4px 3px;
+		width: 100%;
+
+		button {
+			background-color: #fff;
+			box-shadow: none;
+			color: #2f2f2f;
+			justify-content: center;
+			padding: 0;
+			position: relative;
+			width: 100%;
+			width: calc(100% - 4px);
+
+			&.active {
+				background-color: var(--sp-smart-team-primary-2-50);
+				border-radius: 2px;
+				color: var(--sp-smart-team-primary-2-600);
+				height: 100%;
+				border: 1px solid var(--sp-smart-team-primary-2-100) !important;
+
+				span {
+					border-right: none;
+				}
+
+				svg path {
+					fill: var(--sp-smart-team-primary-2-600);
+				}
+			}
+		}
+	}
+}
+
+.sp-smart-team-typography-word-spacing-latter-spacing-wrapper {
+	input[type="number"].components-input-control__input {
+		text-align: center;
+		min-height: 32px;
+		height: 32px;
+		font-size: 14px;
+	}
+
+	.sp-smart-team-component-title {
+		margin-bottom: 0;
+	}
+}
+.sp-smart-team-typography-fonts {
+	.sp-smart-team-header-control {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.sp-smart-team-units > span {
+		box-sizing: border-box;
+		min-width: 24px;
+		height: 20px;
+		padding: 0 4px;
+		line-height: 1;
+		align-items: center;
+		justify-content: center;
+	}
+}

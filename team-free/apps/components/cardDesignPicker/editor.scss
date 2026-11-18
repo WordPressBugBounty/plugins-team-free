@@ -1,0 +1,215 @@
+/* CardDesignPicker — first-insert "Choose Card Design" placeholder
+   (port of testimonial-pro's beforeStart card). Shown by layout
+   blocks while their `cardDesign` attribute is empty. */
+.sp-smart-team-before-start {
+	// Wide enough for the 676px design row (below) plus the 42px padding and 1.5px
+	// border on each side: 676 + 84 + 3 = 763. Generous by design so the row
+	// still fits six whichever box-sizing model the canvas applies.
+	max-width: 764px;
+	margin: 24px auto;
+	padding: 42px;
+	border: 1.5px solid #d8dadb;
+	border-radius: 8px;
+	background-color: #fff;
+	text-align: center;
+
+	&__header {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		align-items: center;
+	}
+
+	&__title {
+		margin: 0;
+		font-weight: 500;
+		font-size: 20px;
+		line-height: 20px;
+		color: #2f2f2f;
+	}
+
+	&__subtitle {
+		margin: 0;
+		font-weight: 400;
+		font-size: 13px;
+		line-height: 20px;
+		color: #757575;
+	}
+
+	&__designs {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		gap: 12px;
+		// SIX tiles per row. A tile is a 100×100 SVG inside a button that adds a
+		// 1px border per side (see &__design), so each cell measures 102px — NOT
+		// 100. Six of them: 6 × 102 + 5 × 12 gaps = 672px, plus a few px of
+		// slack for sub-pixel rounding in the canvas iframe (a 7th tile would
+		// need another 114px, so the slack can't admit one).
+		// Leftovers wrap and stay centered — the 11 grid designs read 6 + 5, and
+		// the 3D Carousel's five 100×100 overlay tiles all fit on one row.
+		max-width: 676px;
+		margin: 20px auto 0;
+	}
+
+	&__design {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		background: #fff;
+		border: 1px solid #98b0bf;
+		border-radius: 4px;
+		overflow: hidden;
+		cursor: pointer;
+		transition: all 0.15s ease-in-out;
+
+		svg {
+			display: block;
+		}
+
+		// The icon's border rect (`.sp-card`) recolors on hover — testimonial-pro's
+		// `.sp-real-icon-set` lift + stroke effect.
+		.sp-card {
+			transition: all 0.15s ease-in-out;
+		}
+
+		&:hover:not(.is-pro) {
+			transform: translateY(-2px);
+			border-color: var(--sp-smart-team-primary-2-600);
+
+			.sp-card {
+				stroke: var(--sp-smart-team-primary-2-600);
+			}
+		}
+
+		// Pro-locked design (wp-carousel-free's locked wizard card): dimmed at
+		// rest, with a corner crown (ProChip) and the "Available in Smart Team
+		// Pro" tooltip. The tile's own hover treatment stays off.
+		&.is-pro {
+			cursor: default;
+
+			> svg {
+				opacity: 0.6;
+			}
+		}
+	}
+
+	// "OR" label centered on a 480px rule between the presets and the buttons.
+	&__or {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		max-width: 480px;
+		margin: 20px auto 0;
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 0;
+			right: 0;
+			height: 1px;
+			background: #d9d9d9;
+		}
+
+		span {
+			position: relative;
+			padding: 0 6px;
+			background: #fff;
+			color: #757575;
+			font-size: 10px;
+			line-height: 20px;
+		}
+	}
+
+	&__actions {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		margin-top: 20px;
+	}
+
+	&__patterns {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 44px;
+		padding: 0 18px;
+		background: #2b5f47;
+		border: 1px solid #2b5f47;
+		color: #fff !important;
+		border-radius: 6px;
+		font-family: Inter, sans-serif;
+		font-weight: 500;
+		font-size: 13px;
+		line-height: 13px;
+		text-decoration: none;
+		cursor: pointer;
+		transition: all 0.4s ease-in-out;
+
+		&:hover {
+			background: #234c39;
+			border-color: #234c39;
+			color: #fff !important;
+		}
+
+		&:focus {
+			box-shadow: none;
+			outline: none;
+		}
+	}
+
+	&__ai {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		height: 44px;
+		padding: 0 18px;
+		background: linear-gradient(90deg, rgba(157, 131, 247, 0.08), rgba(109, 79, 216, 0.08));
+		border: 1px solid #9d83f7;
+		border-radius: 6px;
+		color: #6d4fd8;
+		font-family: Inter, sans-serif;
+		font-weight: 500;
+		font-size: 13px;
+		line-height: 13px;
+		cursor: pointer;
+		transition: all 0.4s ease-in-out;
+
+		svg {
+			flex-shrink: 0;
+		}
+
+		&:hover {
+			background: linear-gradient(90deg, rgba(157, 131, 247, 0.16), rgba(109, 79, 216, 0.16));
+			border-color: #6d4fd8;
+		}
+
+		&:focus {
+			box-shadow: none;
+			outline: none;
+		}
+	}
+
+	&__skip {
+		padding: 16px 18px;
+		background: #fff;
+		border: none;
+		border-radius: 2px;
+		color: #757575;
+		font-family: Inter, sans-serif;
+		font-weight: 500;
+		font-size: 14px;
+		line-height: normal;
+		cursor: pointer;
+
+		&:hover {
+			color: #2f2f2f;
+		}
+	}
+}

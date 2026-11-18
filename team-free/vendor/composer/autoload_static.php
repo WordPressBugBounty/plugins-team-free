@@ -4,17 +4,26 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitf433bfe77a05aba6323742df5014a373
+class ComposerStaticInit62e239b8d5d1c1f30983da1a32f8f0e9
 {
+    public static $files = array (
+        '305ff2e059c159276f5d4bc65be13719' => __DIR__ . '/../..' . '/blocks/functions.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
-        'S' => 
+        'S' =>
         array (
+            'ShapedPlugin\\WPTeam\\Blocks\\' => 27,
             'ShapedPlugin\\WPTeam\\' => 20,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'ShapedPlugin\\WPTeam\\' => 
+        'ShapedPlugin\\WPTeam\\Blocks\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/blocks',
+        ),
+        'ShapedPlugin\\WPTeam\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
@@ -27,9 +36,9 @@ class ComposerStaticInitf433bfe77a05aba6323742df5014a373
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf433bfe77a05aba6323742df5014a373::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf433bfe77a05aba6323742df5014a373::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitf433bfe77a05aba6323742df5014a373::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit62e239b8d5d1c1f30983da1a32f8f0e9::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit62e239b8d5d1c1f30983da1a32f8f0e9::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit62e239b8d5d1c1f30983da1a32f8f0e9::$classMap;
 
         }, null, ClassLoader::class);
     }

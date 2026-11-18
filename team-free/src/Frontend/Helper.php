@@ -12,6 +12,8 @@
 
 namespace ShapedPlugin\WPTeam\Frontend;
 
+use ShapedPlugin\WPTeam\Admin\Dashboard\DashboardHelper;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -55,7 +57,8 @@ class Helper {
 	 * @return void
 	 */
 	public static function member_job_title( $member_info, $show_member_position, $member_id ) {
-		if ( ( ! empty( $member_info['sptp_job_title'] ) ) && ( $show_member_position ) ) {
+		$member_job_title = \ShapedPlugin\WPTeam\Admin\Taxonomies\Taxonomies::designation( $member_id, isset( $member_info['sptp_job_title'] ) ? $member_info['sptp_job_title'] : '' );
+		if ( ( '' !== $member_job_title ) && ( $show_member_position ) ) {
 			$cache_key   = 'sptp_member_job_title' . $member_id . SPT_PLUGIN_VERSION;
 			$cached_data = self::sptp_get_transient( $cache_key );
 			if ( false !== $cached_data ) {
@@ -123,7 +126,9 @@ class Helper {
 	 */
 	public static function member_social( $member_info, $show_member_social, $social_icon_shape, $sptp_no_follow, $member_id ) {
 		if ( isset( $member_info['sptp_member_social'] ) && ! empty( $member_info['sptp_member_social'][0]['social_group'] ) && ( $show_member_social ) ) {
-			$cache_key   = 'sptp_member_social' . $member_id . $social_icon_shape . SPT_PLUGIN_VERSION;
+			// The key carries every input that changes the markup: icon shape and
+			// the nofollow flag, else one cached version would serve both.
+			$cache_key   = 'sptp_member_social' . $member_id . $social_icon_shape . ( $sptp_no_follow ? '_nf' : '' ) . SPT_PLUGIN_VERSION;
 			$cached_data = self::sptp_get_transient( $cache_key );
 			if ( false !== $cached_data ) {
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -140,6 +145,29 @@ class Helper {
 	}
 
 	/**
+	 * Member skill-bar.
+	 *
+	 * @param  mixed $member_info member information.
+	 * @param  mixed $show_member_skill show/hide skill-bar.
+	 * @param  mixed $member_id item id.
+	 * @return void
+	 */
+	public static function member_skill( $member_info, $show_member_skill, $member_id ) {
+		if ( isset( $member_info['sptp_skills'] ) && ! empty( $member_info['sptp_skills'][0]['sptp_skill_name'] ) && ( $show_member_skill ) ) {
+			$cache_key   = 'sptp_member_skill' . $member_id . SPT_PLUGIN_VERSION;
+			$cached_data = self::sptp_get_transient( $cache_key );
+			if ( ! $cached_data ) {
+				ob_start();
+				include self::sptp_locate_template( 'member/skill.php' );
+				$cached_data = apply_filters( 'sptp_member_skill', ob_get_clean() );
+				self::sptp_set_transient( $cache_key, $cached_data );
+			}
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $cached_data;
+		}
+	}
+
+	/**
 	 * Member description.
 	 *
 	 * @param  mixed  $member_info member information.
@@ -151,9 +179,20 @@ class Helper {
 	public static function member_description( $member_info, $show_member_bio, $member, $biography_type ) {
 
 		if ( $show_member_bio ) {
-			$cache_key = 'sptp_member_description' . $member->ID . SPT_PLUGIN_VERSION;
+			// One cached text per bio type (Short / Full / Any is a per-shortcode
+			// setting), so a Short grid and a Full one on the same site never
+			// serve each other's text.
+			$cache_key = 'sptp_member_description' . $member->ID . '_' . sanitize_key( (string) $biography_type ) . SPT_PLUGIN_VERSION;
 
-			$cached_data = self::sptp_get_transient( $cache_key );
+			// A password-protected body stays behind the password, as core's
+			// the_content() does: only the short bio shows, and nothing is read
+			// from or written to the cache, so a cached full body never leaks.
+			$is_protected = post_password_required( $member );
+			if ( $is_protected ) {
+				$biography_type = 'short-bio';
+			}
+
+			$cached_data = $is_protected ? false : self::sptp_get_transient( $cache_key );
 
 			if ( ! $cached_data ) {
 				$short_bio = isset( $member_info['sptp_short_bio'] ) ? $member_info['sptp_short_bio'] : '';
@@ -170,7 +209,9 @@ class Helper {
 						$cached_data = empty( $short_bio ) ? $full_bio : $short_bio;
 						break;
 				}
-				self::sptp_set_transient( $cache_key, $cached_data );
+				if ( ! $is_protected ) {
+					self::sptp_set_transient( $cache_key, $cached_data );
+				}
 			}
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			$description  = $cached_data;
@@ -181,6 +222,68 @@ class Helper {
 			$member_description = apply_filters( 'spteam_member_description', ob_get_clean() );
 			echo wp_kses_post( $member_description );
 		}
+	}
+
+	/**
+	 * Renders a hierarchical team member tree node in HTML.
+	 *
+	 * Recursively generates an organizational chart node, including member details and nested children.
+	 *
+	 * @param array  $node                   Node data with at least 'id' and optional 'children'.
+	 * @param array  $filter_members       Array of team members, each an object with member details.
+	 * @param string $generator_id           shortcode id for the current chart.
+	 * @param array  $layout         Layout meta field data.
+	 * @param array  $settings               Configuration settings for chart rendering.
+	 * @param array  $sptp_settings               Configuration settings for global options.
+	 * @param int    $rendered_count         Members rendered so far in this chart, shared by the recursive calls.
+	 * @return void
+	 */
+	public static function render_tree_node( $node, $filter_members, $generator_id, $layout, $settings, $sptp_settings, &$rendered_count = 0 ) {
+
+		if ( $rendered_count >= 9 ) {
+			return;
+		}
+
+		include 'partials/settings.php';
+		$selected_id = isset( $node['id'] ) ? (int) $node['id'] : 0;
+		$children    = ! empty( $node['children'] ) && is_array( $node['children'] ) ? $node['children'] : array();
+
+		$member = $selected_id ? get_post( $selected_id ) : null;
+		// A chart keeps the IDs it was saved with: a member drafted, made
+		// private or trashed since then must drop out, as from the grid query.
+		$has_member = $member && 'sptp_member' === $member->post_type && ( is_post_publicly_viewable( $member ) || current_user_can( 'read_post', $member->ID ) );
+
+		// A node saved without a member would render an empty box: lift its children to this level instead.
+		if ( ! $has_member ) {
+			foreach ( $children as $child ) {
+				self::render_tree_node( $child, $filter_members, $generator_id, $layout, $settings, $sptp_settings, $rendered_count );
+			}
+			return;
+		}
+
+		echo '<li>';
+		echo '<div class="sp-team-member-tree-node">';
+		echo '<div class="sp-team-pro-item" data-member="' . esc_attr( $member->ID ) . '">';
+		include self::sptp_locate_template( 'member.php' );
+		echo '</div>';
+		echo '</div>';
+
+		// Count only a member actually rendered: the Free cap is 9 members per chart.
+		++$rendered_count;
+		if ( $rendered_count >= 9 ) {
+			echo '</li>';
+			return;
+		}
+
+		ob_start();
+		foreach ( $children as $child ) {
+			self::render_tree_node( $child, $filter_members, $generator_id, $layout, $settings, $sptp_settings, $rendered_count );
+		}
+		$children_html = ob_get_clean();
+		if ( '' !== trim( $children_html ) ) {
+			echo '<ul>' . $children_html . '</ul>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by the recursive render.
+		}
+		echo '</li>';
 	}
 
 	/**
@@ -263,7 +366,7 @@ class Helper {
 		$image_on_off  = isset( $settings['image_on_off'] ) ? $settings['image_on_off'] : '';
 		$cache_key     = 'sptp_member_image' . $member->ID . $generator_id . $layout_preset . SPT_PLUGIN_VERSION;
 		$cached_data   = self::sptp_get_transient( $cache_key );
-		if ( ! empty( $member_image_attr['src'] ) && ( $style_members['image_switch'] ) && $image_on_off ) {
+		if ( ! empty( $member_image_attr['src'] ) && ( is_array( $style_members ) && $style_members['image_switch'] ) && $image_on_off ) {
 			if ( false !== $cached_data && ! is_multisite() ) {
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo $cached_data;
@@ -402,6 +505,27 @@ class Helper {
 	}
 
 	/**
+	 * Get comma-separated designation names for a member post.
+	 *
+	 * @param int $post_id Post ID of the sptp_member.
+	 * @return string Comma-separated term names or empty string.
+	 */
+	public static function get_designation_names( $post_id ) {
+		$taxonomy = 'sptp_designation';
+
+		// Get terms.
+		$terms = wp_get_post_terms( $post_id, $taxonomy );
+
+		if ( is_wp_error( $terms ) || empty( $terms ) ) {
+			return '';
+		}
+
+		// Extract term names and join with comma.
+		$term_names = wp_list_pluck( $terms, 'name' );
+		return implode( ', ', $term_names );
+	}
+
+	/**
 	 * Member Image attrs
 	 *
 	 * @param  mixed $member member object.
@@ -451,7 +575,7 @@ class Helper {
 	 */
 	public static function sp_team_free_single_css() {
 		?>
-		<style> .sptp-single-post{ max-width: 1000px; margin: auto; padding: 20px; } .sptp-list-style{ display: -ms-flexbox; display: -webkit-box; display: flex; -ms-flex-align: start; -webkit-box-align: start; align-items: flex-start; margin: 15px auto; } .sptp-list-style .sptp-member-avatar-area { margin-right: 25px; max-width: 400px; } .sptp-list-style .sptp-info { -ms-flex: 1; -webkit-box-flex: 1; flex: 1; }  @media only screen and (max-width: 767px) { .sptp-list-style{ display: block; } .sptp-list-style .sptp-member-avatar-area { margin-bottom: 20px; margin-right: 0px; } } </style>
+		<style> .sptp-single-post{ max-width: 1000px; margin: auto; padding: 20px; } .sptp-list-style{ display: -ms-flexbox; display: -webkit-box; display: flex; -ms-flex-align: start; -webkit-box-align: start; align-items: flex-start; margin: 15px auto; } .sptp-list-style .sptp-member-avatar-area { margin-right: 25px; max-width: 400px; } .sptp-list-style .sptp-info { -ms-flex: 1; -webkit-box-flex: 1; flex: 1; }  /* Skill bars — Pro's single page defaults. */ .sptp-single-post .sptp-member-skill-bar-fields{ text-align: left; } .sptp-single-post .sptp-member-skill-progress{ padding-top: 6px; margin-top: 6px; margin-bottom: 12px; } .sptp-single-post .sptp-member-skill-progress .sptp-progress-text{ display: block; text-align: left; font-size: 13px; line-height: 24px; letter-spacing: 0; text-transform: none; } .sptp-single-post .sptp-member-skill-progress .sptp-progress-container .sptp-progress-bar.sptp-tooltip .sptp-top{ z-index: 99999999; } .sptp-single-post .sptp-member-skill-progress .sptp-progress-container .sptp-progress-bar.sptp-tooltip .sptp-top:before, .sptp-single-post .sptp-member-skill-progress .sptp-progress-container .sptp-progress-bar.sptp-tooltip .sptp-top:after{ top: 100%; left: 50%; border: solid transparent; content: ""; height: 0; position: absolute; pointer-events: none; } .sptp-single-post .sptp-member-skill-progress .sptp-progress-container .sptp-progress-bar.sptp-tooltip .sptp-top:before{ border-color: transparent; border-top-color: transparent; border-width: 8px; margin-left: -8px; } .sptp-single-post .sptp-member-skill-progress .sptp-progress-container .sptp-progress-bar.sptp-tooltip .sptp-top:after{ border-color: transparent; border-top-color: #559173; border-width: 6px; margin-left: -6px; } @media only screen and (max-width: 767px) { .sptp-list-style{ display: block; } .sptp-list-style .sptp-member-avatar-area { margin-bottom: 20px; margin-right: 0px; } } </style>
 		<?php
 	}
 
@@ -479,17 +603,26 @@ class Helper {
 					}
 					include self::sptp_locate_template( 'carousel.php' );
 					break;
-				case 'grid':
-					include self::sptp_locate_template( 'grid.php' );
-					break;
 				case 'list':
 					include self::sptp_locate_template( 'list.php' );
 					break;
+				case 'filter':
+					include self::sptp_locate_template( 'isotope.php' );
+					break;
+				case 'organization-chart':
+					include self::sptp_locate_template( 'org-chart.php' );
+					break;
+				case 'grid':
 				default:
-					return false;
+					// A layout Free does not know (a Pro one) renders as the grid, never blank.
+					include self::sptp_locate_template( 'grid.php' );
 			}
 		}
+		if ( 'filter' === $layout_preset ) {
+			wp_enqueue_script( 'team-free-isotope' );
+		}
 		wp_enqueue_script( SPT_PLUGIN_SLUG );
-		wp_add_inline_script( SPT_PLUGIN_SLUG, $sptp_custom_js );
+		// Same strip as on save: a stored `</script` must not close the inline tag.
+		wp_add_inline_script( SPT_PLUGIN_SLUG, DashboardHelper::sanitize_custom_code( $sptp_custom_js ) );
 	}
 }

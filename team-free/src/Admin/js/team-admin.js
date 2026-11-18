@@ -4,7 +4,7 @@ jQuery(document).ready(function ($) {
     "display",
     "none"
   );
-  $('.sptp_filter_members').find("option:nth-of-type(3), option:nth-of-type(4)").attr('disabled', 'disabled');
+  $('.sptp_filter_members').find("option:nth-of-type(4)").attr('disabled', 'disabled');
 
   $(`.sptp_image_grayscale option,
     .sptp-inline-repeater-social option,
@@ -83,6 +83,16 @@ jQuery(document).ready(function ($) {
       lastSelectedOption = $(this).val();
     }
   });
+
+  // The org chart shows only Photo, Name and Position (as in Pro): the other
+  // Member Meta Fields rows hide through their field dependency; hide the
+  // drag & drop upgrade note with them.
+  function sptpToggleOrgChartMemberInfo() {
+    var isOrgChart = 'organization-chart' === $('input[name="_sptp_generator_layout[layout_preset]"]:checked').val();
+    $('.sptp_style_generator_list > .spf-fieldset > .spf-desc-text').toggle(!isOrgChart);
+  }
+  sptpToggleOrgChartMemberInfo();
+  $('input[name="_sptp_generator_layout[layout_preset]"]').on('change', sptpToggleOrgChartMemberInfo);
 
   // Revert the selection to the last valid activated option that was selected before if the disabled/pro option is chosen.
   $('#publishing-action').on('click', '#publish', function (e) {

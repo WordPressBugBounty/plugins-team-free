@@ -46,7 +46,7 @@ if ( ! class_exists( 'TEAMFW_Field_shortcode' ) ) {
 			if ( empty( $post_id ) ) {
 				return 'Post ID not found.';
 			}
-			echo ( ! empty( $post_id ) ) ? '<div class="sptp-scode-wrap"><p>To display the Team, copy and paste this shortcode into your post, page, custom post, or block editor. <a href="https://getwpteam.com/docs/how-to-show-the-team-on-my-homepage-or-header-php-or-other-php-files/" target="_blank">Learn how</a> to include it in your template file.</p><span class="sptp-shortcode-selectable">[wpteam id="' . esc_attr( $post_id ) . '"]</span></div><div class="sptp-after-copy-text"><i class="fa fa-check-circle"></i> Shortcode Copied to Clipboard! </div>' : '';
+			echo ( ! empty( $post_id ) ) ? '<div class="sptp-scode-wrap"><p>To display the Team, copy and paste this shortcode into your post, page, custom post, or block editor. <a href="https://docs.getwpteam.com/guide/classic/manage-teams#place-the-team-on-your-site" target="_blank">Learn how</a> to include it in your template file.</p><span class="sptp-shortcode-selectable">[wpteam id="' . esc_attr( $post_id ) . '"]</span></div><div class="sptp-after-copy-text"><i class="fa fa-check-circle"></i> Shortcode Copied to Clipboard! </div>' : '';
 		}
 	}
 }

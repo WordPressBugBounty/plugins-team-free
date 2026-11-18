@@ -1,0 +1,111 @@
+// Multiple select (react-select) — styled to match the plugin's controls.
+// Targets the stable `classNamePrefix="sp-smart-team-select"` classes rather
+// than react-select's hashed emotion classes (which change between versions).
+.sp-smart-team-multi-select {
+	&.d-flex {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.sp-smart-team-component-title {
+		margin-bottom: 8px;
+	}
+
+	.sp-smart-team-select__control {
+		min-height: 26px;
+		border-color: #ccc;
+		box-shadow: none;
+
+		&:hover {
+			border-color: #ccc;
+		}
+
+		&--is-focused {
+			border-color: var(--sp-smart-team-primary-2-600);
+			box-shadow: none;
+		}
+	}
+
+	.sp-smart-team-select__value-container {
+		padding: 0 6px;
+	}
+
+	.sp-smart-team-select__placeholder,
+	.sp-smart-team-select__single-value {
+		font-size: 13px;
+	}
+
+	.sp-smart-team-select__input-container {
+		margin: 0;
+		padding: 0;
+	}
+
+	.sp-smart-team-select__indicator {
+		padding: 2px;
+	}
+
+	// Selected chips — "Posts ✕", "Pages ✕".
+	.sp-smart-team-select__multi-value {
+		border: 1px solid #ccc;
+		border-radius: 2px;
+		background-color: #f1f1f1;
+		overflow: hidden;
+	}
+
+	.sp-smart-team-select__multi-value__label {
+		font-size: 13px;
+		color: #1e1e1e;
+	}
+
+	.sp-smart-team-select__multi-value__remove {
+		cursor: pointer;
+
+		&:hover {
+			background-color: var(--sp-smart-team-primary-2-600);
+			color: #fff;
+
+			svg {
+				fill: #fff;
+			}
+		}
+	}
+
+	// Keep the open menu above the controls that follow it in the panel.
+	.sp-smart-team-select__menu {
+		z-index: 100;
+	}
+
+	// Dropdown options.
+	.sp-smart-team-select__option {
+		font-size: 13px;
+		background-color: transparent;
+		color: #1e1e1e;
+		cursor: pointer;
+
+		&--is-focused {
+			background-color: #f0f0f0;
+		}
+
+		&--is-selected {
+			background-color: var(--sp-smart-team-primary-2-600);
+			color: #fff;
+		}
+	}
+
+	.sp-smart-team-basic-multi-select input:focus {
+		box-shadow: none;
+	}
+}
+
+// Pro-locked (isPro): greyed label like `Toggle isPro`, inert select.
+.sp-smart-team-multi-select.is-pro {
+	.sp-smart-team-component-title {
+		color: #757575;
+	}
+
+	.sp-smart-team-select__control {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+}

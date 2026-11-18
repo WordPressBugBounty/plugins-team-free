@@ -1,0 +1,12 @@
+/**
+ * Member Name — base styles (editor + frontend).
+ *
+ * Layout/reset only; all dynamic values (color, typography, alignment, margin)
+ * come from the dynamic CSS twins (dynamicCss.js ↔ Styles/Member_Name.php).
+ */
+
+.sp-smart-team-member-name {
+	.sp-smart-team-member-name__text {
+		margin: 0;
+	}
+}

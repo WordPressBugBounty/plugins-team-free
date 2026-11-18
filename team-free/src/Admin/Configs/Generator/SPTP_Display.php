@@ -78,23 +78,20 @@ class SPTP_Display {
 												'option_name' => __( 'Top', 'team-free' ),
 											),
 											'left_img_right_content' => array(
-												'image'    => SPT_PLUGIN_ROOT . 'src/Admin/img/member-style/left.svg',
+												'image' => SPT_PLUGIN_ROOT . 'src/Admin/img/member-style/left.svg',
 												'option_name' => __( 'Right', 'team-free' ),
-												'pro_only' => true,
 											),
 											'left_content_right_img' => array(
-												'image'    => SPT_PLUGIN_ROOT . 'src/Admin/img/member-style/right.svg',
+												'image' => SPT_PLUGIN_ROOT . 'src/Admin/img/member-style/right.svg',
 												'option_name' => __( 'Left', 'team-free' ),
-												'pro_only' => true,
+											),
+											'caption'      => array(
+												'image' => SPT_PLUGIN_ROOT . 'src/Admin/img/member-style/caption.svg',
+												'option_name' => __( 'Caption', 'team-free' ),
 											),
 											'content_over_image' => array(
 												'image'    => SPT_PLUGIN_ROOT . 'src/Admin/img/member-style/overlay.svg',
 												'option_name' => __( 'Overlay', 'team-free' ),
-												'pro_only' => true,
-											),
-											'caption'      => array(
-												'image'    => SPT_PLUGIN_ROOT . 'src/Admin/img/member-style/caption.svg',
-												'option_name' => __( 'Caption', 'team-free' ),
 												'pro_only' => true,
 											),
 											'diagonal'     => array(
@@ -110,6 +107,39 @@ class SPTP_Display {
 										),
 										'default'    => 'top_img_bottom_content',
 										'subtitle'   => __( 'Select a position or layout for member content and image.', 'team-free' ),
+									),
+									array(
+										'id'         => 'overlay_content_position',
+										'class'      => 'overlay_content_position hide-active-sign ',
+										'type'       => 'image_select',
+										'title'      => __( 'Overlay Info Position', 'team-free' ),
+										'subtitle'   => __( 'Choose a position for the member info.', 'team-free' ),
+										'multiple'   => false,
+										'options'    => array(
+											'bottom' => array(
+												'image' => SPT_PLUGIN_ROOT . 'src/Admin/img/overlay-content-position/caption_bottom.svg',
+												'option_name' => __( 'Bottom', 'team-free' ),
+											),
+											'top'    => array(
+												'image' => SPT_PLUGIN_ROOT . 'src/Admin/img/overlay-content-position/caption_top.svg',
+												'option_name' => __( 'Top', 'team-free' ),
+											),
+											'middle' => array(
+												'image' => SPT_PLUGIN_ROOT . 'src/Admin/img/overlay-content-position/caption_middle.svg',
+												'option_name' => __( 'Middle', 'team-free' ),
+											),
+										),
+										'default'    => array( 'bottom' ),
+										'dependency' => array( 'style_member_content_position|layout_preset', 'any|not-any', 'content_over_image,caption|mosaic,table,list,thumbnail-pager,organization-chart', true ),
+									),
+									array(
+										'id'         => 'make_member_card_style',
+										'type'       => 'checkbox',
+										'class'      => 'sptp-make-member-card-style',
+										'title'      => __( 'Make it Card Style', 'team-free' ),
+										'subtitle'   => __( 'Make member item card style.', 'team-free' ),
+										'default'    => false,
+										'dependency' => array( 'style_member_content_position', 'any', 'caption,top_img_bottom_content,top_content_bottom_img,left_img_right_content,left_content_right_img', true ),
 									),
 									array(
 										'id'         => 'item_padding',
@@ -165,7 +195,7 @@ class SPTP_Display {
 										'fields' => array(
 											array(
 												'id'       => 'border_around_member',
-												'class'    => 'sptp_border_around',
+												'class'    => 'sptp-member-border-around',
 												'type'     => 'border',
 												'title'    => __( 'Border', 'team-free' ),
 												'subtitle' => __( 'Set border for the member.', 'team-free' ),
@@ -282,6 +312,7 @@ class SPTP_Display {
 											),
 											array(
 												'id'       => 'bio_switch',
+												'dependency' => array( 'layout_preset', '!=', 'organization-chart', true ),
 												'class'    => 'sptp_bio_switch',
 												'type'     => 'switcher',
 												'title'    => __( 'Short Bio', 'team-free' ),
@@ -292,6 +323,7 @@ class SPTP_Display {
 											),
 											array(
 												'id'       => 'social_switch',
+												'dependency' => array( 'layout_preset', '!=', 'organization-chart', true ),
 												'type'     => 'switcher',
 												'title'    => __( 'Social Profiles', 'team-free' ),
 												'text_on'  => __( 'Show', 'team-free' ),
@@ -301,6 +333,7 @@ class SPTP_Display {
 											),
 											array(
 												'id'       => 'email_switch',
+												'dependency' => array( 'layout_preset', '!=', 'organization-chart', true ),
 												'class'    => 'sptp_member_meta_info_pro sptp_pro_only_field',
 												'type'     => 'switcher',
 												'title'    => __( 'Email Address', 'team-free' ),
@@ -312,6 +345,7 @@ class SPTP_Display {
 											),
 											array(
 												'id'       => 'mobile_switch',
+												'dependency' => array( 'layout_preset', '!=', 'organization-chart', true ),
 												'class'    => 'sptp_member_meta_info_pro sptp_pro_only_field',
 												'type'     => 'switcher',
 												'title'    => __( 'Mobile (personal)', 'team-free' ),
@@ -323,6 +357,7 @@ class SPTP_Display {
 											),
 											array(
 												'id'       => 'phone_switch',
+												'dependency' => array( 'layout_preset', '!=', 'organization-chart', true ),
 												'class'    => 'sptp_member_meta_info_pro sptp_pro_only_field',
 												'type'     => 'switcher',
 												'title'    => __( 'Phone (business)', 'team-free' ),
@@ -334,6 +369,7 @@ class SPTP_Display {
 											),
 											array(
 												'id'       => 'location_switch',
+												'dependency' => array( 'layout_preset', '!=', 'organization-chart', true ),
 												'class'    => 'sptp_member_meta_info_pro sptp_pro_only_field',
 												'type'     => 'switcher',
 												'title'    => __( 'Location', 'team-free' ),
@@ -345,6 +381,7 @@ class SPTP_Display {
 											),
 											array(
 												'id'       => 'website_switch',
+												'dependency' => array( 'layout_preset', '!=', 'organization-chart', true ),
 												'class'    => 'sptp_member_meta_info_pro sptp_pro_only_field',
 												'type'     => 'switcher',
 												'title'    => __( 'Website', 'team-free' ),
@@ -356,6 +393,7 @@ class SPTP_Display {
 											),
 											array(
 												'id'       => 'experience_switch',
+												'dependency' => array( 'layout_preset', '!=', 'organization-chart', true ),
 												'class'    => 'sptp_member_experience sptp_pro_only_field',
 												'type'     => 'switcher',
 												'title'    => __( 'Year of Experience ', 'team-free' ),
@@ -367,6 +405,7 @@ class SPTP_Display {
 											),
 											array(
 												'id'       => 'extra_fields_switch',
+												'dependency' => array( 'layout_preset', '!=', 'organization-chart', true ),
 												'class'    => 'sptp_member_experience sptp_pro_only_field',
 												'type'     => 'switcher',
 												'title'    => __( 'Additional Custom Fields', 'team-free' ),
@@ -377,7 +416,7 @@ class SPTP_Display {
 											),
 											array(
 												'id'       => 'skill_switch',
-												'class'    => 'sptp_member_meta_info_pro sptp_pro_only_field',
+												'dependency' => array( 'layout_preset', '!=', 'organization-chart', true ),
 												'type'     => 'switcher',
 												'title'    => __( 'Skill Bars', 'team-free' ),
 												'text_on'  => __( 'Show', 'team-free' ),
@@ -519,12 +558,11 @@ class SPTP_Display {
 										),
 									),
 									array(
-										'id'       => 'skill_settings',
-										'type'     => 'fieldset',
-										'title'    => __( 'Skill Bars Settings', 'team-free' ),
-										'class'    => 'sptp-custom-fields sptp_social_settings sptp_skill_settings',
-										'only_pro' => true,
-										'fields'   => array(
+										'id'     => 'skill_settings',
+										'type'   => 'fieldset',
+										'title'  => __( 'Skill Bars Settings', 'team-free' ),
+										'class'  => 'sptp-custom-fields sptp_social_settings sptp_skill_settings',
+										'fields' => array(
 											array(
 												'id'       => 'skill_bar_style',
 												'class'    => 'skill_bar_style hide-active-sign',
@@ -539,13 +577,14 @@ class SPTP_Display {
 													'style-2'  => array(
 														'image' => SPT_PLUGIN_ROOT . 'src/Admin/img/skills-bar/style-2.svg',
 														'option_name'     => __( 'style 2', 'team-free' ),
+														'pro_only' => true,
 													),
 													'style-3'  => array(
 														'image' => SPT_PLUGIN_ROOT . 'src/Admin/img/skills-bar/style-3.svg',
 														'option_name'     => __( 'Style 3(Animation)', 'team-free' ),
+														'pro_only' => true,
 													),
 												),
-												'only_pro' => true,
 												'default'  => 'style-1',
 											),
 											array(
@@ -557,7 +596,6 @@ class SPTP_Display {
 												'style'    => false,
 												'color'    => false,
 												'all'      => true,
-												'only_pro' => true,
 												'units'    => array( 'px' ),
 												'default'  => array(
 													'all' => '6',
@@ -567,12 +605,31 @@ class SPTP_Display {
 												),
 											),
 											array(
+												'id'       => 'skill_bar_radius',
+												'class'    => 'skill_bar_radius',
+												'type'     => 'border',
+												'title'    => __( 'Radius', 'team-free' ),
+												'subtitle' => __( 'Set radius for the skill bar.', 'team-free' ),
+												'top'      => false,
+												'left'     => false,
+												'bottom'   => false,
+												'right'    => false,
+												'color'    => false,
+												'hover_color' => false,
+												'style'    => false,
+												'border_radius' => true,
+												'default'  => array(
+													'border_radius' => 0,
+													'unit' => 'px',
+												),
+												'dependency' => array( 'skill_bar_style', '!=', 'style-3' ),
+											),
+											array(
 												'id'       => 'skill_bar_color_type',
 												'class'    => 'skill_bar_color_type',
 												'type'     => 'button_set',
 												'title'    => __( 'Skill Bar Color Type', 'team-free' ),
 												'subtitle' => __( 'Set a color type for the skill bar.', 'team-free' ),
-												'only_pro' => true,
 												'options'  => array(
 													'global_color' => __( 'Global', 'team-free' ),
 													'multiple_color' => __( 'Multiple Color', 'team-free' ),
@@ -583,7 +640,6 @@ class SPTP_Display {
 												'id'       => 'progressbar_color_group',
 												'type'     => 'color_group',
 												'title'    => __( 'Progress Bar Color', 'team-free' ),
-												'only_pro' => true,
 												'options'  => array(
 													'progress_color' => __( 'Progress Bar', 'team-free' ),
 													'progress_bg_color' => __( 'Background', 'team-free' ),
@@ -596,12 +652,40 @@ class SPTP_Display {
 												'dependency' => array( 'skill_bar_color_type', '==', 'global_color', true ),
 											),
 											array(
+												'id'      => 'sptp_skill_bar_multi_color',
+												'type'    => 'repeater',
+												'title'   => ' ',
+												'dependency' => array( 'skill_bar_color_type', '!=', 'global_color', true ),
+												'class'   => 'inline-repeater-social sptp_skill_bar_multi_color',
+												'button_title' => '<i class= "fa fa-plus"></i> ' . esc_html__( 'Add', 'team-free' ),
+												'sort'    => true,
+												'clone'   => false,
+												'remove'  => true,
+												'fields'  => array(
+													array(
+														'id'       => 'multiple_progressbar_color_group',
+														'type'     => 'color_group',
+														'title'    => 'Skill',
+														'options'  => array(
+															'progress_color' => __( 'Progress Bar', 'team-free' ),
+															'progress_bg_color' => __( 'Background', 'team-free' ),
+														),
+														'default'  => array(
+															'progress_color' => '#559173',
+															'progress_bg_color' => '#c9dfd1',
+														),
+													),
+												),
+												'default' => array(
+													array(),
+												),
+											),
+											array(
 												'id'       => 'skill_percentage_text_visibility',
 												'class'    => 'skill_bar_color_type',
 												'type'     => 'button_set',
 												'title'    => __( 'Percentage Text', 'team-free' ),
 												'subtitle' => __( 'Set a percentage text visibility status for the skill bar.', 'team-free' ),
-												'only_pro' => true,
 												'options'  => array(
 													'visible' => __( 'Always Visible', 'team-free' ),
 													'on_hover' => __( 'On hover', 'team-free' ),
@@ -614,7 +698,6 @@ class SPTP_Display {
 												'type'     => 'color',
 												'title'    => __( 'Percentage Text Color ', 'team-free' ),
 												'subtitle' => __( 'Set color for the skill percentage text.', 'team-free' ),
-												'only_pro' => true,
 												'default'  => '#fff',
 											),
 											array(
@@ -623,7 +706,6 @@ class SPTP_Display {
 												'title'    => __( 'Tooltip Background Color ', 'team-free' ),
 												'subtitle' => __( 'Set background color for the tooltip.', 'team-free' ),
 												'default'  => '#559173',
-												'only_pro' => true,
 												'dependency' => array( 'skill_bar_style', '==', 'style-1' ),
 											),
 										),
@@ -636,7 +718,7 @@ class SPTP_Display {
 										'id'       => 'spacial_tag_settings',
 										'type'     => 'fieldset',
 										'title'    => __( 'Spacial Tag Settings', 'team-free' ),
-										'class'    => 'sptp-custom-fields  sptp_skill_settings sptp_social_settings',
+										'class'    => 'sptp-custom-fields sptp_social_settings',
 										'only_pro' => true,
 										'fields'   => array(
 											array(
@@ -817,6 +899,19 @@ class SPTP_Display {
 										),
 										'default'    => 'sptp-square',
 										'dependency' => array( 'image_on_off', '==', 'true' ),
+									),
+									array(
+										'id'         => 'list_layout_image_max_width',
+										'type'       => 'slider',
+										'class'      => 'sptp-list-layout-image-max-width',
+										'title'      => __( 'Image Max Width', 'team-free' ),
+										'subtitle'   => __( 'Set image max width for list layout.', 'team-free' ),
+										'unit'       => __( '%', 'team-free' ),
+										'step'       => 1,
+										'min'        => 10,
+										'max'        => 90,
+										'default'    => 40,
+										'dependency' => array( 'layout_preset', '==', 'list', true ),
 									),
 									array(
 										'id'       => 'border',

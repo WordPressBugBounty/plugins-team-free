@@ -1,0 +1,131 @@
+.components-popover__content:has(.sp-smart-team-popover__content-visible) {
+	.sp-smart-team-popover__content-visible {
+		width: 360px;
+		box-shadow: 4px 4px 12px 2px rgba(0, 0, 0, 0.10);
+		position: relative;
+
+		&-label {
+			position: sticky;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 999;
+			padding: 12px 20px;
+			background: #FFFFFF;
+			box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.10);
+
+			h4 {
+				padding: 0;
+				margin: 0;
+				font-size: 13px;
+				font-weight: 500;
+				line-height: 20px;
+				color: #2F2F2F;
+			}
+		}
+
+		&-content {
+			// The popover keeps its natural height (resize={false} stops WP's
+			// below-anchor clamp that cut the bottom rows); on short viewports
+			// this cap + scroll keeps every row reachable.
+			max-height: min(70vh, 640px);
+			overflow-y: auto;
+			// Symmetric bottom padding — the last row's margin-bottom doesn't
+			// reliably count inside a scroll container, so pad explicitly and
+			// drop that margin to avoid a double gap when everything fits.
+			padding: 16px 20px;
+
+			> :last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		.sp-smart-team-toggle .components-flex {
+			flex-direction: row-reverse;
+		}
+	}
+}
+
+// Base toggle row — the label centers vertically against the icon button, and
+// the native <button> chrome (UA border/background) is stripped so only the
+// icon's own square shows, wherever the popover is used.
+.sp-smart-team-popover-toggle-wrapper {
+	display: flex;
+	align-items: center;
+	// Label left, toggle icon pinned to the row's right edge — don't rely on
+	// context styles for this (the Content Box row sat outside the tab panels
+	// and its icon hugged the label).
+	justify-content: space-between;
+}
+
+.sp-smart-team-popover-toggle-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	outline: none;
+	background: transparent;
+	padding: 0;
+	margin: 0;
+	line-height: 0;
+	cursor: pointer;
+}
+
+// Pro-locked row (Figma node 678:280583) — the label greys out like a
+// Pro-locked Toggle, the icon dims to 60% and is inert; the "(Pro)" tag is a
+// plain marker.
+.sp-smart-team-popover-component.is-pro {
+	.sp-smart-team-component-title {
+		color: #757575;
+	}
+
+	.sp-smart-team-popover-toggle-button {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+}
+
+.sp-smart-team-pro-tab-panel {
+	.sp-smart-team-popover-toggle-button {
+		height: 26px;
+		border: none;
+		outline: none;
+		background: transparent;
+		outline: 2px solid transparent;
+		border-radius: 4px;
+		padding: 1px;
+		margin: 0;
+
+		&.active {
+			svg {
+				fill: var(--sp-smart-team-primary-2-500);
+
+				path {
+					fill: #fff;
+				}
+
+				rect:nth-child(2) {
+					stroke: var(--sp-smart-team-primary-2-500);
+				}
+			}
+		}
+	}
+
+	.sp-smart-team-link-settings {
+		.sp-smart-team-component-mb {
+			margin-bottom: 0;
+		}
+
+		.sp-smart-team-popover-toggle-wrapper {
+			align-items: end;
+		}
+
+		.sp-smart-team-popover-toggle-button {
+			margin: 5px 0;
+		}
+
+		.sp-smart-team-component-title {
+			width: 85%;
+		}
+	}
+}

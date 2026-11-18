@@ -1,0 +1,166 @@
+.sp-smart-team-toggle-button-group-wrapper {
+	.sp-smart-team-header {
+		display: flex;
+		align-items: center;
+		margin-bottom: 8px;
+
+		.sp-smart-team-component-title {
+			margin: 0;
+			font-size: 13px;
+			line-height: 20px;
+			color: #2f2f2f;
+		}
+	}
+}
+
+.sp-smart-team-toggle-button-group {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	box-sizing: border-box;
+	width: 100%;
+	height: 40px;
+	padding: 4px 3px;
+	background: #fff;
+	border: 1px solid #ddd;
+	border-radius: 2px;
+
+	// Sliding highlight — runs from the old button to the newly selected one.
+	.sp-smart-team-toggle-button-indicator {
+		position: absolute;
+		top: 4px;
+		left: 3px;
+		z-index: 0;
+		box-sizing: border-box;
+		width: calc((100% - 6px - (var(--total-buttons) - 1) * 2px) / var(--total-buttons));
+		height: calc(100% - 8px);
+		background-color: var(--sp-smart-team-primary-2-50);
+		border: 1px solid var(--sp-smart-team-primary-2-100);
+		border-radius: 2px;
+		transform: translateX(calc(var(--active-index) * (100% + 2px)));
+		transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+		pointer-events: none;
+	}
+
+	.sp-smart-team-toggle-button {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex: 1 1 0;
+		align-items: center;
+		justify-content: center;
+		min-width: 0;
+		height: 100%;
+		margin: 0;
+		padding: 0 3px;
+		background: transparent;
+		border: none;
+		border-radius: 2px;
+		box-shadow: none;
+		outline: none;
+		cursor: pointer;
+		font-size: 13px;
+		line-height: 20px;
+		color: #1e1e1e;
+
+		svg {
+			fill: #777;
+		}
+
+		&:focus-visible {
+			box-shadow: inset 0 0 0 1px var(--sp-smart-team-primary-2-600);
+		}
+
+		&:disabled {
+			cursor: not-allowed;
+			opacity: 0.5;
+		}
+
+		&.active {
+			color: var(--sp-smart-team-primary-2-600);
+			cursor: default;
+
+			svg {
+				fill: var(--sp-smart-team-primary-2-600);
+
+				path {
+					fill: var(--sp-smart-team-primary-2-600);
+				}
+			}
+		}
+	}
+
+	.sp-smart-team-toggle-button-content {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	// Dividers sit between inactive neighbours only, hidden on either side of the highlight.
+	&.sp-has-divider .sp-smart-team-toggle-button {
+		&:not(:last-child) .sp-smart-team-toggle-button-content {
+			border-right: 1px solid #ddd;
+		}
+
+		&.active .sp-smart-team-toggle-button-content,
+		&:has(+ .sp-smart-team-toggle-button.active) .sp-smart-team-toggle-button-content {
+			border-right-color: transparent;
+		}
+	}
+
+	&.is-disabled {
+		opacity: 0.6;
+	}
+
+	&.sp-svg-rotate-90 svg {
+		transform: rotate(90deg);
+	}
+
+	&.sp-svg-rotate-90-reverse svg {
+		transform: rotate(-90deg);
+	}
+
+	&.sp-svg-rotate-270 svg {
+		transform: rotate(270deg);
+	}
+}
+
+// Smart Team's control labels only — unscoped, this restyled every block's labels.
+:is(.sp-smart-team-block-panels, .sp-smart-team-popover__content-visible, .sp-smart-team-popup-content) .components-base-control {
+	.components-base-control__label {
+		font-size: 13px;
+		font-weight: 400;
+		line-height: 20px;
+		text-transform: capitalize;
+		color: #1e1e1e;
+		margin-top: -4px;
+		margin-bottom: 9px;
+	}
+}
+
+// Pro-locked option (Real Testimonials Free `sp-real-bg-pro`) — muted label at
+// full opacity (a disabled option is otherwise faded), no hover state,
+// not-allowed cursor, green "(Pro)" tag inline after the label (Figma 678:279676).
+.sp-smart-team-toggle-button-group .sp-smart-team-toggle-button.is-pro {
+	color: #757575;
+	cursor: not-allowed;
+	opacity: 1;
+
+	.sp-smart-team-toggle-button-content {
+		font-size: 13px;
+		font-weight: 400;
+		line-height: 20px;
+	}
+
+	.sp-smart-team-pro-tag {
+		color: #11a10c;
+		font-size: 13px;
+		font-weight: 400;
+		margin-left: 4px;
+	}
+}

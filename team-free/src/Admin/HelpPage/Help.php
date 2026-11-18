@@ -18,6 +18,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Help {
 
 	/**
+	 * Pricing page the sidebar "Upgrade to Pro" row links to.
+	 *
+	 * @var string
+	 */
+	const UPGRADE_URL = 'https://getwpteam.com/pricing/?ref=1';
+
+	/**
 	 * Single instance of the class
 	 *
 	 * @var null
@@ -63,6 +70,7 @@ class Help {
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'help_admin_menu' ), 80 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_menu_assets' ) );
 
         $page   = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';// @codingStandardsIgnoreLine
 		if ( 'team_help' !== $page ) {
@@ -104,46 +112,54 @@ class Help {
 	 * @return void
 	 */
 	public function help_admin_menu() {
-		add_submenu_page(
-			'edit.php?post_type=sptp_member',
-			__( 'Smart Team', 'team-free' ),
-			__( 'Recommended', 'team-free' ),
-			'manage_options',
-			'edit.php?post_type=sptp_member&page=team_help#recommended'
-		);
-		add_submenu_page(
-			'edit.php?post_type=sptp_member',
-			__( 'Smart Team', 'team-free' ),
-			__( 'Lite vs Pro', 'team-free' ),
-			'manage_options',
-			'edit.php?post_type=sptp_member&page=team_help#lite-to-pro'
-		);
-		add_submenu_page(
-			'edit.php?post_type=sptp_member',
-			__( 'Team Help', 'team-free' ),
-			__( 'Get Help', 'team-free' ),
-			'manage_options',
-			'team_help',
-			array(
-				$this,
-				'help_page_callback',
-			)
-		);
-
-		// Upgrade to Pro (external redirect).
+		// Recommended, Lite vs Pro and Get Help no longer have sidebar entries:
+		// Lite vs Pro now lives in the React dashboard.
+		// A URL as the slug with no callback: WordPress prints the href verbatim,
+		// so the status bar shows the pricing page on hover (as in WP Carousel Free).
 		add_submenu_page(
 			'edit.php?post_type=sptp_member',
 			__( 'Upgrade to Pro', 'team-free' ),
-			'<a class="sptp-upgrade-btn-wrapper" href="https://getwpteam.com/pricing/?ref=1" target="_blank">
-        		<span class="sptp-upgrade-btn">
-					 Upgrade to Pro
-        		</span>
-    		</a>',
+			'<span class="sptp-menu-upgrade"><span class="sptp-menu-upgrade-icon" aria-hidden="true"></span>' . esc_html__( 'Upgrade to Pro', 'team-free' ) . '</span>',
 			'manage_options',
-			'team_help', // Same slug as the Get Help page to hide it from the menu.
-			'__return_null',
+			self::UPGRADE_URL,
+			'',
 			99
 		);
+	}
+
+	/**
+	 * Styles and new-tab script for the Upgrade to Pro menu row, attached to
+	 * src-less handles. Every selector is this plugin's own class or its own
+	 * upgrade href, so nothing else in wp-admin is touched. The menu renders
+	 * on every admin screen, so they load everywhere.
+	 *
+	 * @return void
+	 */
+	public function enqueue_menu_assets() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		// The browser decodes the rendered href, so the selector matches the raw URL.
+		$upgrade_href = str_replace( array( '"', '\\' ), '', esc_url_raw( self::UPGRADE_URL ) );
+		$link         = '#adminmenu .wp-submenu li > a[href="' . $upgrade_href . '"]';
+
+		$css = $link . '{display:block;box-sizing:border-box;margin:6px;padding:8px 20px;background:#1d8958;border-radius:4px}'
+			. $link . ':hover,' . $link . ':focus{background:#176d46;border-radius:4px;box-shadow:none;color:#fff}'
+			. $link . ':focus-visible{outline:2px solid #fff;outline-offset:-2px}'
+			. '#adminmenu .sptp-menu-upgrade{display:flex;align-items:center;justify-content:center;gap:6px;color:#fff;font-size:13px;font-weight:600;line-height:20px;white-space:nowrap}'
+			. '#adminmenu .sptp-menu-upgrade-icon{flex:0 0 auto;width:14px;height:17px;background:url(' . esc_url( SPT_PLUGIN_ROOT . 'src/Admin/img/icon-crown.svg' ) . ') no-repeat center / contain}';
+
+		wp_register_style( 'sptp-admin-menu', false, array(), SPT_PLUGIN_VERSION );
+		wp_enqueue_style( 'sptp-admin-menu' );
+		wp_add_inline_style( 'sptp-admin-menu', $css );
+
+		// WordPress has no way to set an attribute on a submenu anchor.
+		$js = '(function(){var u=' . wp_json_encode( esc_url_raw( self::UPGRADE_URL ) ) . ',l=document.querySelectorAll("#adminmenu .wp-submenu a");for(var i=0;i<l.length;i++){if(l[i].getAttribute("href")===u){l[i].target="_blank";l[i].rel="noopener noreferrer";}}})();';
+
+		wp_register_script( 'sptp-admin-menu', false, array(), SPT_PLUGIN_VERSION, true );
+		wp_enqueue_script( 'sptp-admin-menu' );
+		wp_add_inline_script( 'sptp-admin-menu', $js );
 	}
 
 	/**
@@ -425,8 +441,8 @@ class Help {
 					<div class="spwpteam-container">
 						<div class="spwpteam-header-nav-menu">
 							<ul>
-								<li><a class="active" data-id="get-start-tab"  href="<?php echo esc_url( home_url( '' ) . '/wp-admin/edit.php?post_type=sptp_member&page=team_help#get-start' ); ?>"><i class="spwpteam-icon-play"></i> Get Started</a></li>
-								<li><a href="<?php echo esc_url( home_url( '' ) . '/wp-admin/edit.php?post_type=sptp_member&page=team_help#recommended' ); ?>" data-id="recommended-tab"><i class="spwpteam-icon-recommended"></i> Recommended</a></li>
+								<li><a href="<?php echo esc_url( admin_url( 'edit.php?post_type=sptp_member&page=sptp_dashboard' ) ); ?>"><i class="spwpteam-icon-play"></i> Get Started</a></li>
+								<li><a class="active" href="<?php echo esc_url( admin_url( 'edit.php?post_type=sptp_member&page=team_help#recommended' ) ); ?>" data-id="recommended-tab"><i class="spwpteam-icon-recommended"></i> Recommended</a></li>
 								<li><a href="<?php echo esc_url( home_url( '' ) . '/wp-admin/edit.php?post_type=sptp_member&page=team_help#lite-to-pro' ); ?>" data-id="lite-to-pro-tab"><i class="spwpteam-icon-lite-to-pro-icon"></i> Lite Vs Pro</a></li>
 								<li><a href="<?php echo esc_url( home_url( '' ) . '/wp-admin/edit.php?post_type=sptp_member&page=team_help#about-us' ); ?>" data-id="about-us-tab"><i class="spwpteam-icon-info-circled-alt"></i> About Us</a></li>
 							</ul>
@@ -435,47 +451,6 @@ class Help {
 				</div>
 			</section>
 			<!-- Header section end -->
-
-			<!-- Start Page -->
-			<section class="spwpteam__help start-page" id="get-start-tab">
-				<div class="spwpteam-container">
-					<div class="spwpteam-start-page-wrap">
-						<div class="spwpteam-video-area">
-							<h2 class='spwpteam-section-title'>Welcome to Smart Team!</h2>
-							<span class='spwpteam-normal-paragraph'>Thank you for installing Smart Team! This video will help you get started with the plugin. Enjoy!</span>
-							<iframe width="724" height="405" src="https://www.youtube.com/embed/E1PwdV-czeU?si=35rPQTqFmEEbKrbn" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
-							<ul>
-								<li><a class='spwpteam-medium-btn' href="<?php echo esc_url( home_url( '/' ) . 'wp-admin/post-new.php?post_type=sptp_generator' ); ?>">Create a Team</a></li>
-								<li><a target="_blank" class='spwpteam-medium-btn' href="https://getwpteam.com/wp-team-lite-version-demo/">Live Demo</a></li>
-								<li><a target="_blank" class='spwpteam-medium-btn arrow-btn' href="https://getwpteam.com/">Explore Smart Team <i class="spwpteam-icon-button-arrow-icon"></i></a></li>
-							</ul>
-						</div>
-						<div class="spwpteam-start-page-sidebar">
-							<div class="spwpteam-start-page-sidebar-info-box">
-								<div class="spwpteam-info-box-title">
-									<h4><i class="spwpteam-icon-doc-icon"></i> Documentation</h4>
-								</div>
-								<span class='spwpteam-normal-paragraph'>Explore Smart Team plugin capabilities in our enriched documentation.</span>
-								<a target="_blank" class='spwpteam-small-btn' href="https://getwpteam.com/docs/">Browse Now</a>
-							</div>
-							<div class="spwpteam-start-page-sidebar-info-box">
-								<div class="spwpteam-info-box-title">
-									<h4><i class="spwpteam-icon-support"></i> Technical Support</h4>
-								</div>
-								<span class='spwpteam-normal-paragraph'>For personalized assistance, reach out to our skilled support team for prompt help.</span>
-								<a target="_blank" class='spwpteam-small-btn' href="https://shapedplugin.com/create-new-ticket/">Ask Now</a>
-							</div>
-							<div class="spwpteam-start-page-sidebar-info-box">
-								<div class="spwpteam-info-box-title">
-									<h4><i class="spwpteam-icon-team-icon"></i> Join The Community</h4>
-								</div>
-								<span class='spwpteam-normal-paragraph'>Join the official ShapedPlugin community to share your experiences, thoughts, and ideas.</span>
-								<a target="_blank" class='spwpteam-small-btn' href="https://community.shapedplugin.com/portal/">Join Now</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
 
 			<!-- Lite To Pro Page -->
 			<section class="spwpteam__help lite-to-pro-page" id="lite-to-pro-tab">

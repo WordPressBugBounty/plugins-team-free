@@ -1,0 +1,1621 @@
+/**
+ * Shared member-card styles (Figma: Smart Team / Card_01 … Card_11).
+ *
+ * Structural, instance-agnostic styles for the shared `.sp-smart-team-card`
+ * markup every layout block (grid, carousel, …) renders — the twin of
+ * MemberLayoutBlock::render_card() / MemberCard.jsx. Per-instance values
+ * (colors, image radius, social colors, background, border, spacing, shadow)
+ * are emitted by the shared cardDynamicCss / CardCss.php. Imported ONCE from
+ * apps/blocks/index.js; the per-design variants live at the bottom keyed by
+ * the `--card-N` modifier the card root carries.
+ */
+
+// Member Details → Modal shell. @use'd here (not imported from
+// index.js) so it compiles into the shared style-index.css that both the
+// editor and the frontend load.
+@use 'details-modal';
+
+[class*='sp-smart-team-'] :focus:not(:focus-visible) {
+	outline: none;
+}
+
+ul[class*='sp-smart-team-'],
+ol[class*='sp-smart-team-'] {
+	list-style: none !important;
+	margin: 0 !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+:root {
+	/* Box-shadow preset tokens — slugs mirror shadowDefaultList in
+	   apps/components/boxShadow/shadowPresets.js. A selected preset resolves via
+	   var(--sp-smart-team-shadow-<slug>) in both the editor and the frontend
+	   (this stylesheet is the shared sptp-blocks-style handle loaded in both). */
+	--sp-smart-team-shadow-subtle-1dp: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
+	--sp-smart-team-shadow-light-2dp: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
+	--sp-smart-team-shadow-medium-4dp: 0 4px 6px 0 rgba(0, 0, 0, 0.16);
+	--sp-smart-team-shadow-strong-8dp: 0 8px 18px 0 rgba(0, 0, 0, 0.18);
+	--sp-smart-team-shadow-deep-12dp: 0 12px 17px 0 rgba(0, 0, 0, 0.2);
+	--sp-smart-team-shadow-sharp-4dp: 4px 4px 0 0 rgba(0, 0, 0, 0.25);
+}
+
+// Per-network brand colors for social icons (mirrors the classic [wpteam]
+// .sptp-{network} palette). Each member social link carries a `.sptp-{group}`
+// class, so these color the icon background by network.
+$sptp-social-brand: (
+	'twitter': #000,
+	'sp-team-icon-x-twitter': #000,
+	'facebook': #3b5999,
+	'instagram': #e4405f,
+	'pinterest': #bd081c,
+	'linkedin': #0077b5,
+	'skype': #00aff0,
+	'dropbox': #007ee5,
+	'wordpress': #21759b,
+	'vimeo': #1ab7ea,
+	'slideshare': #0077b5,
+	'vk': #4c75a3,
+	'tumblr': #34465d,
+	'yahoo': #410093,
+	'gplus': #dd4b39,
+	'youtube': #cd201f,
+	'stumbleupon': #eb4924,
+	'reddit-alien': #ff5700,
+	'quora': #b92b27,
+	'yelp': #af0606,
+	'weibo': #df2029,
+	'producthunt': #da552f,
+	'hackernews': #ff6600,
+	'soundcloud': #ff3300,
+	'blogger': #f57d00,
+	'whatsapp': #25d366,
+	'wechat': #09b83e,
+	'line': #00c300,
+	'medium': #02b875,
+	'vine': #00b489,
+	'slack': #3aaf85,
+	'paypal': #3495d7,
+	'weixin': #35aa45,
+	'deribble': #ea4c89,
+	'flicker': #ff0084,
+	'foursquare': #f94877,
+	'behance': #131418,
+	'snapchat': #fffc00,
+	'github': #c9510c,
+	'bitbucket': #205081,
+	'stack-overflow': #f48024,
+	'codepen': #76daff,
+	'codecademy': #204056,
+	'bookbub': #f44336,
+	'goodreads': #553b08,
+	'meetup': #e0393e,
+	'telegram': #0088cc,
+);
+
+.sp-smart-team-card {
+
+	& {
+		display: flex;
+		flex-direction: column;
+		// The cube effect sets this to transparent so its floor shadow shows
+		// through (WP Carousel / Real Testimonials); a Card Background set in
+		// the sidebar is printed by the dynamic CSS and still wins.
+		background: var(--sptp-card-default-bg, #fff);
+		text-align: center;
+		overflow: hidden;
+		// Ease the card-box hover (Card Content → Style: bg/border/shadow) and the
+		// Hover Effect transform below.
+		transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease,
+			box-shadow 0.3s ease;
+	}
+
+	// Member Details (Open As: Single Page) — the Make Clickable links.
+	// The name link inherits the name's styling untouched.
+	&__name-link {
+		color: inherit;
+		text-decoration: none;
+
+		&:hover {
+			color: inherit;
+		}
+	}
+
+	// The image link wraps __image-wrap, which sizes itself 100%×100% against
+	// its parent — the anchor must keep that chain intact.
+	&__image-link {
+		display: block;
+		width: 100%;
+		height: 100%;
+		border-radius: inherit;
+	}
+
+	// Full Card — a stretched invisible overlay covering the card (frontend
+	// only; the editor skips it so canvas clicks keep opening panels).
+	&__card-link {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+	}
+
+	&--linkable {
+		position: relative;
+
+		// Real links/buttons inside the card (social icons, read more, website
+		// rows) stay clickable above the overlay.
+		:is(a, button):not(.sp-smart-team-card__card-link) {
+			position: relative;
+			z-index: 2;
+		}
+	}
+
+	// All elements live in __content and render in the sortable Member
+	// Information order. The avatar bleeds to the card edges via align-self +
+	// negative margins, so it stays full-width wherever it sits in the order.
+	&__content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		--sptp-content-gap: 16px;
+		padding: 20px 20px 24px;
+		// Ease the card-box hover background on the designs where the cardBg
+		// dynamic CSS targets this box instead of the item (card-3…card-6).
+		transition: background-color 0.3s ease;
+	}
+
+	// Elements are spaced by their own bottom margin, not a flex gap, so each
+	// element's Margin control owns the spacing below it. Three classes (0,3,0)
+	// outrank the per-element `margin: 0` resets; the ul reset is !important.
+	& &__content> :not(:last-child) {
+		margin-bottom: var(--sptp-content-gap);
+	}
+
+	& &__content>ul:not(:last-child) {
+		margin-bottom: var(--sptp-content-gap) !important;
+	}
+
+	// The avatar box positions the photo + special tag. Clipping lives on the
+	// inner __image-wrap (mirrors the classic .sptp-overflow-h), NOT here, so the
+	// style-3 special tag can straddle the photo's top edge (Figma) while zoom /
+	// shine effects still clip to the photo.
+	&__avatar {
+		position: relative;
+		align-self: stretch;
+		margin-left: -20px;
+		margin-right: -20px;
+		border-radius: 4px;
+		background: #d9d9d9;
+
+		// Wrap-qualified so it outranks builder resets like Elementor's `.elementor img { height: auto }`.
+		.sp-smart-team-card__image-wrap img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			// Base transition so Image Hover Effects + Image Filter animate smoothly.
+			transition: transform 0.45s ease, filter 0.45s ease, opacity 0.45s ease;
+		}
+	}
+
+	&__image-wrap {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		border-radius: inherit;
+		overflow: hidden;
+	}
+
+	// Aspect Ratio (Member Image → Settings). The card renderers emit no class
+	// for "Original", so the base avatar carries no ratio of its own.
+	&__avatar--ratio-1-1 {
+		aspect-ratio: 1 / 1;
+	}
+
+	&__avatar--ratio-4-3 {
+		aspect-ratio: 4 / 3;
+	}
+
+	&__avatar--ratio-3-4 {
+		aspect-ratio: 3 / 4;
+	}
+
+	&__avatar--ratio-3-2 {
+		aspect-ratio: 3 / 2;
+	}
+
+	// Offered by the standalone Member Image block (not the card panel).
+	&__avatar--ratio-2-3 {
+		aspect-ratio: 2 / 3;
+	}
+
+	&__avatar--ratio-16-9 {
+		aspect-ratio: 16 / 9;
+	}
+
+	&__avatar--ratio-9-16 {
+		aspect-ratio: 9 / 16;
+	}
+
+	// Fixed ratios take the photo out of flow (WP Carousel Pro's aspect-rsp
+	// pattern): an in-flow photo's natural height feeds the ratio box's
+	// min-height:auto and stretches it past the chosen ratio.
+	&__avatar--ratio-1-1,
+	&__avatar--ratio-4-3,
+	&__avatar--ratio-3-4,
+	&__avatar--ratio-3-2,
+	&__avatar--ratio-2-3,
+	&__avatar--ratio-16-9,
+	&__avatar--ratio-9-16 {
+		.sp-smart-team-card__image-wrap {
+			position: absolute;
+			inset: 0;
+		}
+	}
+
+	&__avatar--ratio-original {
+		aspect-ratio: auto;
+
+		.sp-smart-team-card__image-wrap img {
+			height: auto;
+		}
+	}
+
+	// "Custom" (Member Image block) — no ratio, so the Width/Height control
+	// alone sizes the box; the photo keeps filling it (height:100% resolves to
+	// auto while the box height is indefinite).
+	&__avatar--ratio-custom {
+		aspect-ratio: auto;
+	}
+
+	// Image Hover Effects (Member Image → Style) — animate the photo on hover.
+	// Only Zoom In / Zoom Out ship in Free; every other effect is Pro
+	// (Pro_Gate::FREE_IMAGE_HOVER_EFFECTS) and renders as none.
+	&__avatar--effect-zoom-in:hover .sp-smart-team-card__image {
+		transform: scale(1.12);
+	}
+
+	&__avatar--effect-zoom-out .sp-smart-team-card__image {
+		transform: scale(1.12);
+	}
+
+	&__avatar--effect-zoom-out:hover .sp-smart-team-card__image {
+		transform: scale(1);
+	}
+
+	// Pull the avatar up to the top edge only when it's the first element.
+	&__content>&__avatar:first-child {
+		margin-top: -20px;
+		border-radius: 0;
+	}
+
+	&__name {
+		margin: 0;
+		font-size: 20px;
+		font-weight: 500;
+		line-height: 1.4;
+		color: #1e1e1e;
+	}
+
+	&__role {
+		margin: 0;
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 1.4;
+		color: #757575;
+	}
+
+	&__bio {
+		margin: 0;
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 1.6;
+		color: #757575;
+	}
+
+	&__custom {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size: 14px;
+		// The list reset at the top of this file deliberately leaves line-height
+		// alone, so this one has to hold off the theme's content-area rule
+		// itself (Divi forces 26px on `.entry-content ul`).
+		line-height: 1.5 !important;
+		color: #757575;
+
+		li {
+			margin: 0;
+		}
+	}
+
+	// A single contact/meta row (email, mobile, phone, location, website,
+	// experience) — and, via the shared class, each custom-info item. The icon
+	// chip + value sit on one row; the gap, colors and typography come from the
+	// Additional Information panel via dynamicCss. Each row is an independent
+	// flow item so it can be reordered.
+	&__detail {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		font-size: 14px;
+		line-height: 1.5;
+		color: #757575;
+
+		a {
+			color: inherit;
+			text-decoration: none;
+
+			&:hover,
+			&:focus {
+				text-decoration: none;
+			}
+		}
+	}
+
+	// Icon chip preceding a contact / custom value (Additional Information).
+	// Background, border-radius and icon size/color come from dynamicCss.
+	// Language/gender are inline SVGs (Figma 1842-63021) instead of font
+	// glyphs — 1em box + currentColor so the same font-size/color rules
+	// (`__meta-icon :is(i, svg)`) drive them.
+	&__meta-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		line-height: 0;
+
+		i,
+		svg {
+			font-size: 16px;
+		}
+
+		// The fontello stylesheet (`sp_team_fontello`) puts `margin-left: .2em;
+		// margin-right: .2em` on every `[class^="sp-team-icon-"]:before` glyph — fine
+		// for inline text, but here the glyph sits in a centred chip, so those
+		// margins shifted it off-centre and made the Stacked / Framed circle read as
+		// an oval. Zeroed on the pseudo-element itself: `.chip i::before` (0,1,2)
+		// outranks fontello's `[class^=…]:before` (0,1,1) whatever order the two
+		// stylesheets print in.
+		i::before {
+			margin-left: 0;
+			margin-right: 0;
+		}
+
+		svg {
+			width: 1em;
+			height: 1em;
+			fill: currentColor;
+		}
+	}
+
+
+	/* Skills — progress bars (Skills panel). Mirrors the classic [wpteam]
+	   shortcode: a name label above a track › fill, with the percentage as a
+	   tooltip inside the fill. The three styles differ ONLY in CSS (below).
+	   Colors/height/radius/margin come from dynamicCss; values here are the
+	   defaults used before any attribute is applied. */
+	&__skills {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		width: 100%;
+
+		// Display style: button — render each skill as a chip instead of a bar.
+		&--button {
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: 8px;
+		}
+
+		// Percentage visibility (applies to every progress-bar style).
+		&--percent-hide .sp-smart-team-card__skill-percentage {
+			display: none;
+		}
+
+		&--percent-hover .sp-smart-team-card__skill-percentage {
+			opacity: 0;
+			transition: opacity 0.3s ease;
+		}
+
+		&--percent-hover .sp-smart-team-card__skill-track:hover .sp-smart-team-card__skill-percentage,
+		&--percent-hover .sp-smart-team-card__skill-name:hover+.sp-smart-team-card__skill-track .sp-smart-team-card__skill-percentage {
+			opacity: 1;
+		}
+
+		// ---- Style 1 (default) — the percentage is a tooltip bubble anchored to
+		// the end of the fill (the base bubble styling on &__skill-percentage).
+		&--style-1 .sp-smart-team-card__skill-fill {
+			position: relative;
+		}
+
+		// ---- Style 2 — the percentage is plain text at the top-right above the
+		// bar (no bubble / no caret), anchored to the right end of the track.
+		&--style-2 {
+			.sp-smart-team-card__skill-percentage {
+				top: -4px;
+				right: 0;
+				min-width: 0;
+				padding: 0;
+				background: transparent;
+				color: #1e1e1e;
+				font-size: 13px;
+				font-weight: 600;
+				line-height: 1.4;
+				text-align: right;
+
+				&::after,
+				&::before {
+					display: none;
+				}
+			}
+		}
+
+		// ---- Style 3 — the percentage sits inside a tall striped bar and the
+		// name rides as a colored block over the bar's left edge. The whole
+		// skill clips to the bar radius so BOTH ends round (the name block on the
+		// left and the track on the right); the radius itself comes from dynamicCss.
+		&--style-3 {
+			.sp-smart-team-card__skill {
+				position: relative;
+				overflow: hidden;
+			}
+
+			.sp-smart-team-card__skill-name {
+				position: absolute;
+				left: 0;
+				top: 0;
+				z-index: 2;
+				display: flex;
+				align-items: center;
+				width: fit-content;
+				height: 100%;
+				padding: 0 15px;
+				background: #559173;
+				color: #fff;
+			}
+
+			.sp-smart-team-card__skill-fill {
+				background-image: linear-gradient(135deg,
+						rgba(255, 255, 255, 0.08) 25%,
+						transparent 25%,
+						transparent 50%,
+						rgba(255, 255, 255, 0.08) 50%,
+						rgba(255, 255, 255, 0.08) 75%,
+						transparent 75%,
+						transparent);
+				background-size: 40px 40px;
+				animation: sptp-skill-stripes 7s linear infinite;
+			}
+
+			.sp-smart-team-card__skill-percentage {
+				top: 50%;
+				right: 8px;
+				bottom: 0;
+				left: auto;
+				transform: translateY(-50%);
+				display: flex;
+				align-items: center;
+				min-width: 0;
+				padding: 0;
+				background: transparent;
+				color: #fff;
+				font-size: 13px;
+				font-weight: 700;
+				line-height: 1.2;
+
+				&::after,
+				&::before {
+					display: none;
+				}
+			}
+		}
+	}
+
+	@keyframes sptp-skill-stripes {
+		from {
+			background-position: 0 0;
+		}
+
+		to {
+			background-position: -80px 0;
+		}
+	}
+
+	&__skill {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		width: 100%;
+	}
+
+	// Button display style — each skill renders as a pill chip showing only the
+	// name. No background initially; the border comes from the Button border
+	// control (default solid #dcdcdc) so setting it to "none" removes it.
+	&__skill--chip {
+		flex-direction: row;
+		align-items: center;
+		width: auto;
+		padding: 6px 18px;
+		background: transparent;
+		border-radius: 999px;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.4;
+		color: #1e1e1e;
+
+		.sp-smart-team-card__skill-name {
+			font: inherit;
+			color: inherit;
+		}
+	}
+
+	&__skill-name {
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.5;
+		text-align: left;
+		color: #1e1e1e;
+	}
+
+	&__skill-track {
+		position: relative;
+		width: 100%;
+		height: 8px;
+		background: #c9dfd1;
+		border-radius: 999px;
+	}
+
+	&__skill-fill {
+		height: 100%;
+		// The bar's target width — set as an inline custom property by both
+		// renderers, so a page with no JS (or one whose script failed) still paints
+		// full bars, and so the reveal gate below can override `width` at all (an
+		// inline `width` could not be beaten by a stylesheet rule).
+		width: var(--sptp-skill-width, 0);
+		// Classic parity: the legacy shortcode animates the bar to its target over
+		// 1s. Harmless when nothing changes the width.
+		transition: width 1s ease;
+		background: #559173;
+		// Matches the track's default pill; dynamicCss overrides per the bar
+		// radius control (and forces 0 in style-3, where .skill does the rounding).
+		border-radius: 999px;
+	}
+
+	// Progress-bar reveal — the bar grows 0 → target when the list scrolls into
+	// view (classic parity: the legacy CSS starts at `width: 0` and jQuery animates
+	// it to `data-title`). `--animate` is stamped by the PHP renderers ONLY, right
+	// where they enqueue the runtime that adds `is-visible`, so bars can never be
+	// left stuck at 0 on a page without the script, and the editor canvas (no
+	// runtime, no gate class) shows them full. `initSkillBars()` in script.js does
+	// the observing, including for ajax-injected cards and modal templates.
+	&__skills--animate:not(.is-visible) &__skill-fill {
+		width: 0;
+	}
+
+	// Percentage — styled as the style-1 tooltip bubble by default (a green
+	// pill above the fill end with a downward caret). Styles 2 & 3 override
+	// this to plain text via the modifiers above.
+	&__skill-percentage {
+		position: absolute;
+		top: -10px;
+		right: -17px;
+		transform: translate(0, -100%);
+		z-index: 1;
+		min-width: 38px;
+		padding: 5px 7px;
+		background: #3b993f;
+		color: #fff;
+		border-radius: 2px;
+		font-size: 10px;
+		font-weight: 400;
+		line-height: 12px;
+		text-align: center;
+		white-space: nowrap;
+
+		// Downward caret under the bubble.
+		&::after {
+			content: '';
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			margin-left: -6px;
+			border: 6px solid transparent;
+			border-top-color: #3b993f;
+		}
+	}
+
+	// Social icons — follows the classic [wpteam] model: brand-colored icon per
+	// network with a shape (style-1 icon-only / style-2 square / style-3 circle /
+	// style-4 rounded). Size/gap come from dynamicCss; custom colors (Style tab)
+	// override the brand defaults. The `.sptp-{network}` class carries the brand.
+	&__social {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		li {
+			margin: 0;
+		}
+
+		// `li a` (0,1,2) outranks Astra's editor `.editor-styles-wrapper a` (0,1,1).
+		li a {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			// Include any border in the fixed icon area so a hover border draws
+			// inside the box instead of growing it (prevents card layout shift).
+			box-sizing: border-box;
+			width: 30px;
+			height: 30px;
+			font-size: 13px;
+			line-height: 1;
+			color: #fff;
+			background-color: #333; // fallback for networks without a brand color
+			border-radius: 50%; // circle is the base shape
+			text-decoration: none;
+			transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease,
+				box-shadow 0.15s ease;
+		}
+
+		// Per-network brand background colors (classic palette).
+		@each $name, $color in $sptp-social-brand {
+			.sptp-#{$name} {
+				background-color: $color;
+			}
+		}
+
+		// Shapes (mirror the classic social-icon shapes).
+		&--style-2 li a {
+			border-radius: 0; // square
+		}
+
+		&--style-3 li a {
+			border-radius: 50%; // circle
+		}
+
+		&--style-4 li a {
+			border-radius: 5px; // rounded
+		}
+
+		// Style 1 — icon only: transparent background, brand-colored glyph. The
+		// per-network rule below matches the brand selector's specificity and is
+		// declared later, so it strips the brand background and recolors the glyph.
+		&--style-1 li a {
+			background-color: transparent;
+			color: #1e1e1e;
+		}
+
+		@each $name, $color in $sptp-social-brand {
+			&--style-1 .sptp-#{$name} {
+				background-color: transparent;
+				color: $color;
+			}
+		}
+	}
+
+	// On-photo social flyout (card-6's "+" reveal, card-8's static row) — a
+	// wrapper nested inside __avatar, pinned to a photo corner per the Icon
+	// Position control; the inset comes from the Offset control via
+	// --sptp-social-flyout-offset (emitted per instance/device by the dynamic
+	// CSS). Bottom-right is the base; the corner modifiers mirror it. Top
+	// corners flip the column so card-6's toggle leads and its icons drop DOWN
+	// from it (designs with a horizontal flyout override the direction).
+	&__social-flyout {
+		position: absolute;
+		right: var(--sptp-social-flyout-offset, 20px);
+		bottom: var(--sptp-social-flyout-offset, 20px);
+		z-index: 2;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+	}
+
+	&__social-flyout--top-left,
+	&__social-flyout--top-right {
+		top: var(--sptp-social-flyout-offset, 20px);
+		bottom: auto;
+		flex-direction: column-reverse;
+	}
+
+	&__social-flyout--top-left,
+	&__social-flyout--bottom-left {
+		left: var(--sptp-social-flyout-offset, 20px);
+		right: auto;
+	}
+
+	&__read-more {
+		display: flex;
+		justify-content: center;
+	}
+
+	// Wrapper-scoped (0,2,0) so the theme's link color can't win — Astra's
+	// editor `.editor-styles-wrapper a` is 0,1,1; design overrides tie and come later.
+	&__read-more &__read-more-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		box-sizing: border-box;
+		min-width: 121px;
+		height: 48px;
+		padding: 0 20px;
+		background: #1e5138;
+		color: #fff;
+		font-size: 15px;
+		font-weight: 500;
+		line-height: 1.2;
+		text-decoration: none;
+		// Reserve a border box in the resting state so a hover-only border doesn't
+		// grow the button (and the card/grid row) — border draws inside via border-box.
+		border: 1px solid transparent;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease,
+			box-shadow 0.2s ease, opacity 0.2s ease;
+
+		&:hover,
+		&:focus {
+			opacity: 0.9;
+			color: #fff;
+			text-decoration: none;
+		}
+
+		i {
+			font-size: inherit;
+			line-height: 1;
+		}
+	}
+}
+
+/**
+ * Card Design variants (Display Settings → Select Card Design).
+ *
+ * The `--card-N` modifier mirrors the picker value. card-1 is the Figma default
+ * (vertical, centered) — the base styles above; further designs land here as
+ * their Figma specs are implemented.
+ */
+
+/* card-2 (Figma Card_02) — horizontal split card: text content on the left,
+   square photo on the right, each half the card width. The photo renders as a
+   sibling of __content (see Grid.php / edit.jsx), and picking the design also
+   swaps the still-at-default alignment/columns/social-size controls in
+   GeneralTab.jsx so the inspector reflects the design. */
+.sp-smart-team-card--card-2 {
+
+	// The photo-to-text gap (Figma: 24px) lives on the card row so it applies
+	// to either photo side; the Image To Content Gap control overrides it.
+	&.sp-smart-team-card {
+		flex-direction: row;
+		align-items: center;
+		gap: 24px;
+		text-align: left;
+	}
+
+	// Left column — all text elements. Figma: 18px gap; the card box itself
+	// stays flush (cardPadding adds more).
+	.sp-smart-team-card__content {
+		flex: 1;
+		min-width: 0;
+		align-items: flex-start;
+		--sptp-content-gap: 18px;
+		padding: 0;
+	}
+
+	// Right column — the photo. Cancels the vertical design's full-bleed
+	// stretch + negative margins; flex: 1 splits the card 50/50 and the Aspect
+	// Ratio class (default 1:1) sizes the height.
+	.sp-smart-team-card__avatar {
+		flex: 1;
+		min-width: 0;
+		align-self: auto;
+		margin: 0;
+	}
+
+	// Name and role read as one group (Figma: 4px apart) — the name's
+	// bottom margin, so the Name Margin control replaces it.
+	.sp-smart-team-card__name:has(+ .sp-smart-team-card__role) {
+		margin-bottom: 4px;
+	}
+
+	// Figma Card_02 body sizes (the name keeps the 20px base).
+	.sp-smart-team-card__role,
+	.sp-smart-team-card__bio {
+		font-size: 15px;
+	}
+
+	// The social row sits slightly apart from the element above (Figma: 8px).
+	// !important for the same reason as the list reset at the top of this file:
+	// Divi's `#left-area ul` sets the padding SHORTHAND, and an ID selector
+	// cannot be outranked by any class-based rule of ours.
+	.sp-smart-team-card__social {
+		padding-top: 8px !important;
+	}
+
+	// Image Position: Left (Display Settings) — flip the split: photo on the
+	// left, text on the right. The row gap keeps the photo-to-text spacing.
+	&.sp-smart-team-card--image-left {
+		&.sp-smart-team-card {
+			flex-direction: row-reverse;
+		}
+	}
+}
+
+/* card-3 (Figma Card_03) — overlap card: a full-width square photo on top, and
+   a narrower white content box (Figma: 24px inset each side) that overlaps the
+   photo's bottom by 40px with a drop shadow. The photo renders as a sibling
+   before __content (see Grid.php / edit.jsx); picking the design also swaps the
+   still-at-default social-size controls in GeneralTab.jsx (38px outlined
+   circles, like card-2). */
+.sp-smart-team-card--card-3 {
+
+	// The visible "card" is the overlapping content box, not the item — clear
+	// the item's white fill so nothing paints behind the photo's sides, and
+	// stop clipping so the content box's drop shadow can show.
+	&.sp-smart-team-card {
+		background: transparent;
+		overflow: visible;
+	}
+
+	// Top photo — a direct child of the item; cancel the in-content full-bleed
+	// negative margins. The Aspect Ratio class (default 1:1) sizes the height.
+	.sp-smart-team-card__avatar {
+		margin: 0;
+	}
+
+	// The white content box (Figma "Content"): 24px inset each side, pulled up
+	// 40px over the photo, 24px padding, 20px element gap, 4px radius, drop
+	// shadow. position + z-index keep it painting above the photo. border-box
+	// so the width includes the padding — themes without a global box-sizing
+	// reset would otherwise grow the box back to full card width. The width,
+	// pull-up and centering here are only class-level fallbacks — the Display
+	// Settings → Content Box popup (contentBoxWidth/Offset/Alignment, default
+	// 85%/40px/center) always emits ID-prefixed dynamic CSS over them, as does
+	// the Card Elements → Style background (cardBg), which targets this box
+	// (not the item) on card-3.
+	.sp-smart-team-card__content {
+		position: relative;
+		z-index: 1;
+		box-sizing: border-box;
+		align-self: center;
+		width: calc(100% - 48px);
+		margin-top: -40px;
+		padding: 24px;
+		--sptp-content-gap: 20px;
+		background: #fff;
+		border-radius: 4px;
+		box-shadow: 0 4px 2px rgba(0, 0, 0, 0.08);
+	}
+
+	// Name and role read as one group (Figma: 4px apart) — the name's
+	// bottom margin, so the Name Margin control replaces it.
+	.sp-smart-team-card__name:has(+ .sp-smart-team-card__role) {
+		margin-bottom: 4px;
+	}
+
+}
+
+/* card-4 (Figma Card_04) — photo-over-panel card: a rounded photo (73% of
+   the card width, centered) floating over the top edge of a flat mint panel
+   that holds the text + outlined social icons. The photo renders as a sibling
+   before __content (see Grid.php / edit.jsx); picking the design also swaps
+   the still-at-default photo width/radius and social-size controls in
+   GeneralTab.jsx (73% photo with 5px corners, 38px outlined circles). */
+.sp-smart-team-card--card-4 {
+
+	// The visible "card" is the tinted panel — clear the item's white fill so
+	// nothing paints behind the photo's sides, and stop clipping the photo.
+	&.sp-smart-team-card {
+		background: transparent;
+		overflow: visible;
+	}
+
+	// The floating photo — centered, narrower than the card. Width (73%) and
+	// the 5px radius also arrive per instance via the picker's imageSize /
+	// imageBorderRadius swap; these are the class-level fallbacks. z-index
+	// keeps the photo painting over the panel's top edge.
+	.sp-smart-team-card__avatar {
+		z-index: 1;
+		align-self: center;
+		width: 73%;
+		margin: 0;
+		border-radius: 5px;
+	}
+
+	// The tinted panel. The photo overlaps its top by 42% of its own height
+	// (Figma: 100px of a 237px photo on a 325px card = 31% of the card width).
+	// Both the pull-up margin and the padding-top that clears the photo resolve
+	// against the parent WIDTH, so the framing holds at any column count; the
+	// text starts 10px below the photo.
+	.sp-smart-team-card__content {
+		margin-top: -31%;
+		padding: calc(31% + 10px) 24px 24px;
+		background: #f0f8f5;
+		border-radius: 8px;
+	}
+
+	// Name and role read as one group (Figma: 4px apart) — the name's
+	// bottom margin, so the Name Margin control replaces it.
+	.sp-smart-team-card__name:has(+ .sp-smart-team-card__role) {
+		margin-bottom: 4px;
+	}
+
+}
+
+/* card-5 (Figma Card_05) — horizontal photo-over-panel card: a rounded photo
+   (46% of the card width) on the left, vertically centered, overlapping the
+   left edge of a flat mint panel that holds the left-aligned text + outlined
+   social icons. The photo renders as a sibling before __content (see Grid.php /
+   edit.jsx); picking the design also swaps the still-at-default photo
+   width/radius, alignment/columns and social-size controls in GeneralTab.jsx
+   (46% rounded photo, left text, 2 columns, 38px outlined circles). */
+.sp-smart-team-card--card-5 {
+
+	// Horizontal split; the visible "card" is the tinted panel — clear the
+	// item's white fill so nothing paints behind the circle, and stop clipping.
+	&.sp-smart-team-card {
+		flex-direction: row;
+		align-items: center;
+		background: transparent;
+		overflow: visible;
+		text-align: left;
+	}
+
+	// The left photo — width (46%) and the 5px radius also arrive per
+	// instance via the picker's imageSize / imageBorderRadius swap; these are
+	// the class-level fallbacks. z-index keeps the photo painting over the
+	// panel's left edge.
+	.sp-smart-team-card__avatar {
+		z-index: 1;
+		flex-shrink: 0;
+		align-self: center;
+		width: 46%;
+		margin: 0;
+		border-radius: 5px;
+	}
+
+	// The tinted panel. The photo overlaps its left edge by 27% of the card
+	// width (Figma: 114px of a 421px card); the padding-left mirrors the same
+	// 27% plus the photo-to-text gap (Image To Content Gap → the
+	// --sptp-image-content-gap var, 12px Figma default) so the text column
+	// always clears the circle's widest point, whatever the panel height. Both
+	// percentages resolve against the card width, so the framing holds at any
+	// column count.
+	.sp-smart-team-card__content {
+		flex: 1;
+		min-width: 0;
+		align-items: flex-start;
+		margin-left: -27%;
+		padding: 24px 24px 24px calc(27% + var(--sptp-image-content-gap, 12px));
+		--sptp-content-gap: 16px;
+		background: #f0f8f5;
+		border-radius: 8px;
+	}
+
+	// Name and role read as one group (Figma: 4px apart) — the name's
+	// bottom margin, so the Name Margin control replaces it.
+	.sp-smart-team-card__name:has(+ .sp-smart-team-card__role) {
+		margin-bottom: 4px;
+	}
+
+	// Figma Card_05 body sizes (the name keeps the 20px base).
+	.sp-smart-team-card__role,
+	.sp-smart-team-card__bio {
+		font-size: 15px;
+	}
+
+	// Image Position: Right — mirror the split: photo on the right, the panel
+	// overlapped on its right edge, text clearance flipped to the right side.
+	&.sp-smart-team-card--image-right {
+		&.sp-smart-team-card {
+			flex-direction: row-reverse;
+		}
+
+		.sp-smart-team-card__content {
+			margin-left: 0;
+			margin-right: -27%;
+			padding: 24px calc(27% + var(--sptp-image-content-gap, 12px)) 24px 24px;
+		}
+	}
+}
+
+/* card-6 (Figma Card_06) — minimal photo card: flush square photo with the
+   name/role left-aligned below it (no panel), and the social icons living ON
+   the photo. A "+" chip sits at the photo's bottom-right (rendered only when
+   the member has socials — it signals they exist); hovering the card flips it
+   to "×" and the icon stack rises above it with a staggered animation. Markup:
+   the .__social-flyout wrapper nests inside .__avatar (Grid.php / edit.jsx). */
+.sp-smart-team-card--card-6 {
+
+	// No card box — the photo and text sit directly on the page background.
+	&.sp-smart-team-card {
+		background: transparent;
+	}
+
+	.sp-smart-team-card__content {
+		padding: 0;
+		--sptp-content-gap: 20px;
+	}
+
+	// Flush photo — cancel the full-bleed negative margins and the
+	// first-child pull-up (both sized for the base 20px content padding).
+	.sp-smart-team-card__avatar,
+	.sp-smart-team-card__content>.sp-smart-team-card__avatar:first-child {
+		margin-top: 0;
+		margin-right: 0;
+		margin-left: 0;
+	}
+
+	// Name and role read as one group (Figma: 6px apart) — the name's
+	// bottom margin, so the Name Margin control replaces it.
+	.sp-smart-team-card__name:has(+ .sp-smart-team-card__role) {
+		margin-bottom: 6px;
+	}
+
+	// Figma Card_06 name weight (bolder than the 500 base).
+	.sp-smart-team-card__name {
+		font-weight: 700;
+	}
+
+	// The icon stack — vertical, white chips with dark glyphs. The chip SHAPE
+	// still comes from the Icon Style presets (square/circle/rounded), so only
+	// fill/color/shadow are forced here (Custom Styling, which overrides them
+	// in Pro, is Pro-only — Free emits no CSS for it). Each icon starts collapsed (sunk
+	// toward the toggle and invisible)…
+	.sp-smart-team-card__social {
+		flex-direction: column;
+		align-items: center;
+
+		li {
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(12px);
+			transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+		}
+
+		a {
+			background-color: #fff;
+			color: #1e1e1e;
+			box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+		}
+	}
+
+	// Icon Style 1 (icon only) keeps its chipless look inside the flyout.
+	.sp-smart-team-card__social--style-1 a {
+		background-color: transparent;
+		box-shadow: none;
+	}
+
+	// Top corners: the icons hang below the toggle, so they sink UP toward it
+	// while hidden (mirrors the bottom corners' downward sink).
+	.sp-smart-team-card__social-flyout--top-left .sp-smart-team-card__social li,
+	.sp-smart-team-card__social-flyout--top-right .sp-smart-team-card__social li {
+		transform: translateY(-12px);
+	}
+
+	// …and rises into place on card hover, staggered so the icons nearest the
+	// toggle appear first (nth-last-child for bottom corners, where the last
+	// icon sits next to the toggle). Delays only apply while hovered, so the
+	// stack hides immediately and in unison on mouse-out.
+	&.sp-smart-team-card:hover .sp-smart-team-card__social li {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+
+		@for $i from 1 through 8 {
+			&:nth-last-child(#{$i}) {
+				transition-delay: #{0.05 * $i}s;
+			}
+		}
+	}
+
+	// Top corners stagger nearest-first too — there the FIRST icon sits next
+	// to the toggle (the flyout column is reversed).
+	&.sp-smart-team-card:hover .sp-smart-team-card__social-flyout--top-left .sp-smart-team-card__social li,
+	&.sp-smart-team-card:hover .sp-smart-team-card__social-flyout--top-right .sp-smart-team-card__social li {
+		@for $i from 1 through 8 {
+			&:nth-child(#{$i}) {
+				transition-delay: #{0.05 * $i}s;
+			}
+		}
+	}
+
+	// The "+" chip — same footprint as the icons; the glyph is two CSS bars so
+	// no icon font is needed. Card hover spins the BARS 45° into an "×" (the
+	// chip itself stays a square).
+	.sp-smart-team-card__social-toggle {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 38px;
+		height: 38px;
+		background: #fff;
+		border-radius: 4px;
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+
+		&::before,
+		&::after {
+			content: '';
+			position: absolute;
+			background: #1e1e1e;
+			transition: transform 0.3s ease;
+		}
+
+		&::before {
+			width: 14px;
+			height: 2px;
+		}
+
+		&::after {
+			width: 2px;
+			height: 14px;
+		}
+	}
+
+	&.sp-smart-team-card:hover .sp-smart-team-card__social-toggle {
+
+		&::before,
+		&::after {
+			transform: rotate(45deg);
+		}
+	}
+
+	// The toggle chip follows the Icon Style shape preset — it sits right
+	// after the styled <ul> in the flyout, so an adjacent-sibling selector
+	// keeps the two in lock-step (its size follows Icon Area Size via the
+	// dynamic CSS).
+	.sp-smart-team-card__social--style-2+.sp-smart-team-card__social-toggle {
+		border-radius: 0;
+	}
+
+	.sp-smart-team-card__social--style-3+.sp-smart-team-card__social-toggle {
+		border-radius: 50%;
+	}
+
+	.sp-smart-team-card__social--style-4+.sp-smart-team-card__social-toggle {
+		border-radius: 5px;
+	}
+}
+
+/* card-9 (Figma Card_09) — profile split card on a light panel: a left __side
+   column holds the circular photo with the name/role centered under it; the
+   right __content column holds the bio, the contact rows and the outlined
+   social chips. The side elements render in a dedicated wrapper before
+   __content (Grid.php / edit.jsx) and are always visible; picking the design
+   also swaps padding/radius/columns/contact-row toggles in GeneralTab.jsx. */
+.sp-smart-team-card--card-9 {
+
+	// Horizontal split on the tinted panel (the panel IS the item — padding
+	// comes from the cardPadding swap, radius from cardBorderRadius).
+	&.sp-smart-team-card {
+		flex-direction: row;
+		align-items: flex-start;
+		gap: 24px;
+		background: #f0f4fb;
+		border-radius: 8px;
+		text-align: left;
+	}
+
+	// Left column — photo with name/role centered under it (Figma: the column
+	// is ~30% of the card and its content is centered independently of the
+	// right column's alignment).
+	.sp-smart-team-card__side {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		flex: 0 0 30%;
+		min-width: 0;
+		gap: 14px;
+		text-align: center;
+	}
+
+	// The circular photo fills the side column (radius comes from the
+	// imageBorderRadius swap → 50%); cancel the in-content full-bleed margins.
+	.sp-smart-team-card__side .sp-smart-team-card__avatar {
+		align-self: stretch;
+		margin: 0;
+	}
+
+	.sp-smart-team-card__side .sp-smart-team-card__name {
+		font-weight: 700;
+	}
+
+	// Name and role read as one group (Figma: 4px apart) — pull the role up
+	// against the 14px column gap when it directly follows the name.
+	.sp-smart-team-card__side .sp-smart-team-card__name+.sp-smart-team-card__role {
+		margin-top: -10px;
+	}
+
+	// Right column — bio, contact rows, social. Figma Card_09 body sizes.
+	.sp-smart-team-card__content {
+		flex: 1;
+		min-width: 0;
+		padding: 0;
+		--sptp-content-gap: 14px;
+	}
+
+	.sp-smart-team-card__role,
+	.sp-smart-team-card__bio,
+	.sp-smart-team-card__detail {
+		font-size: 14px;
+	}
+
+	// Image Area Position: Right (Display Settings) — flip the split: the
+	// __side column (photo + name/role) moves to the card's right edge. The
+	// row gap keeps the side-to-content spacing (the Image Area Gap control
+	// overrides it via dynamic CSS).
+	&.sp-smart-team-card--image-right {
+		&.sp-smart-team-card {
+			flex-direction: row-reverse;
+		}
+	}
+}
+
+/* card-8 (Figma Card_08) — captioned photo card: a flush portrait photo with
+   the social chips pinned to its top-left (the shared __social-flyout, static
+   horizontal row — no "+" toggle) and a name/role caption overlaid at its
+   bottom-left (white name box + tinted role chip). Below the photo: bio,
+   contact rows, skill bars and an underlined Read More text link, all
+   left-aligned with no card box. Picking the design toggles the contact rows,
+   skills and Read More on and swaps the photo/social defaults (GeneralTab.jsx). */
+.sp-smart-team-card--card-8 {
+
+	// No card box — photo and text sit directly on the page background.
+	&.sp-smart-team-card {
+		background: transparent;
+	}
+
+	.sp-smart-team-card__content {
+		padding: 0;
+		--sptp-content-gap: 14px;
+	}
+
+	// Flush photo — cancel the full-bleed negative margins and the
+	// first-child pull-up (both sized for the base 20px content padding).
+	.sp-smart-team-card__avatar,
+	.sp-smart-team-card__content>.sp-smart-team-card__avatar:first-child {
+		margin-top: 0;
+		margin-right: 0;
+		margin-left: 0;
+	}
+
+	// The static social row on the photo — horizontal (overrides the shared
+	// flyout's column layout); the chips keep the base card-1 brand look.
+	.sp-smart-team-card__social-flyout {
+		flex-direction: row;
+	}
+
+	// The name/role caption straddling the photo's bottom-left (Figma: flush
+	// left, 20px above the photo bottom; white name box over a tinted role chip).
+	.sp-smart-team-card__image-caption {
+		position: absolute;
+		left: 0;
+		bottom: 20px;
+		z-index: 2;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.sp-smart-team-card__image-caption .sp-smart-team-card__name {
+		margin: 0;
+		padding: 10px 18px;
+		background: #fff;
+		font-weight: 700;
+	}
+
+	.sp-smart-team-card__image-caption .sp-smart-team-card__role {
+		margin: 0;
+		padding: 6px 14px;
+		background: #d9eae0;
+		font-size: 13px;
+	}
+
+	// Read More as a plain underlined text link (Figma), not a button. The
+	// empty-by-default readMore style attributes leave these class values in
+	// charge until the user customizes.
+	.sp-smart-team-card__read-more {
+		justify-content: flex-start;
+	}
+
+	.sp-smart-team-card__read-more-btn {
+		min-width: 0;
+		height: auto;
+		padding: 0;
+		background: transparent;
+		border: none;
+		border-radius: 0;
+		color: #1e1e1e;
+		font-weight: 700;
+		--sptp-link-decoration: underline;
+
+		&:hover,
+		&:focus {
+			color: #1e1e1e;
+		}
+	}
+}
+
+/* card-10 (Figma Card_10) — bordered header card: a thin-bordered white card
+   whose __side wrapper becomes a header row (small circular photo left, name
+   over role beside it) closed by a divider; below it the bio, then a footer
+   row with an outlined "Read More →" button on the left and outlined circular
+   social icons on the right. The footer needs no extra markup — __content
+   wraps as a row where every element takes a full line except the read-more
+   button and the social list, which share the last line. Picking the design
+   swaps padding/radius/photo size and turns the Read More button on. */
+.sp-smart-team-card--card-10 {
+
+	// The card box — thin border (cardBorder default "none" emits nothing, so
+	// this holds until the user customizes); radius/padding come from the
+	// cardBorderRadius/cardPadding swaps, with class fallbacks here.
+	&.sp-smart-team-card {
+		border: 1px solid #e9e9e9;
+		border-radius: 4px;
+		text-align: left;
+	}
+
+	// Header — the photo spans both text rows; align-content centers the
+	// name/role pair against a taller photo. The divider closes the header.
+	.sp-smart-team-card__side {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-content: center;
+		align-items: center;
+		column-gap: 18px;
+		row-gap: 4px;
+		padding-bottom: 20px;
+		margin-bottom: 20px;
+		border-bottom: 1px solid #e9e9e9;
+		text-align: left;
+	}
+
+	.sp-smart-team-card__side .sp-smart-team-card__avatar {
+		grid-row: 1 / span 2;
+		margin: 0;
+	}
+
+	.sp-smart-team-card__side .sp-smart-team-card__name {
+		font-weight: 700;
+		align-self: end;
+	}
+
+	.sp-smart-team-card__side .sp-smart-team-card__role {
+		align-self: start;
+	}
+
+	// Body — a wrapping row where each element fills its own line…
+	.sp-smart-team-card__content {
+		flex-direction: row;
+		flex-wrap: wrap;
+		column-gap: 12px;
+		--sptp-content-gap: 20px;
+		padding: 0;
+		// `order` moves the footer pair last whatever the DOM order, so :last-child
+		// is not the visual last — every element keeps its margin and this cancels it.
+		margin-bottom: calc(-1 * var(--sptp-content-gap));
+
+		>* {
+			width: 100%;
+			margin-bottom: var(--sptp-content-gap);
+		}
+
+		>ul {
+			margin-bottom: var(--sptp-content-gap) !important;
+		}
+	}
+
+	// …except the footer pair: Read More hugs the left, social hugs the right,
+	// sharing the LAST line (the order values move both after every other
+	// element and put the button first, whatever the sortable DOM order).
+	// align-self beats the container's align-items so the two center against
+	// each other regardless of the Alignment control.
+	.sp-smart-team-card__read-more {
+		order: 1;
+		width: auto;
+		margin-right: auto;
+		align-self: center;
+		justify-content: flex-start;
+	}
+
+	.sp-smart-team-card__social {
+		order: 2;
+		width: auto;
+		align-self: center;
+	}
+
+	// "Read More →" as an outlined chip (Figma). The empty-by-default readMore
+	// style attributes leave these class values in charge until customized.
+	.sp-smart-team-card__read-more-btn {
+		min-width: 0;
+		height: auto;
+		padding: 9px 18px;
+		background: transparent;
+		border: 1px solid #ddd;
+		border-radius: 6px;
+		color: #1e1e1e;
+		font-size: 14px;
+
+		&::after {
+			content: '\2192';
+			margin-left: 8px;
+		}
+
+		&:hover,
+		&:focus {
+			color: #1e1e1e;
+		}
+	}
+
+}
+
+/* card-11 (Figma Card_11) — split-header card: a thin-bordered white card
+   where the circular photo (top-left) and the icon-only social glyphs
+   (top-right) share the first line, "name | role" share the second with a
+   vertical divider, and the bio fills the rest. Pure CSS over the standard
+   sortable flow — __content wraps as a row (card-10's technique) with flex
+   order pinning the photo + social to the header line whatever the DOM order.
+   Picking the design swaps padding/radius/photo size and the icon-only
+   social style (GeneralTab.jsx). */
+.sp-smart-team-card--card-11 {
+
+	// The card box — thin border (cardBorder default "none" emits nothing, so
+	// this holds until customized); radius/padding come from the swaps.
+	&.sp-smart-team-card {
+		border: 1px solid #e9e9e9;
+		border-radius: 8px;
+		text-align: left;
+	}
+
+	// A wrapping row where each element fills its own line…
+	.sp-smart-team-card__content {
+		flex-direction: row;
+		flex-wrap: wrap;
+		--sptp-content-gap: 20px;
+		padding: 0;
+		// Same as card-10: `order` pins the header pair first, so :last-child is
+		// not the visual last — every element keeps its margin and this cancels it.
+		margin-bottom: calc(-1 * var(--sptp-content-gap));
+
+		>* {
+			width: 100%;
+			margin-bottom: var(--sptp-content-gap);
+		}
+
+		>ul {
+			margin-bottom: var(--sptp-content-gap) !important;
+		}
+
+		// A zero-height full-width break between the header pair (order -3/-2)
+		// and the flow (order 0) — without it the auto-width name would ride up
+		// onto the header line.
+		&::before {
+			content: '';
+			order: -1;
+			width: 100%;
+			height: 0;
+		}
+	}
+
+	// …except the header pair (photo left, social right — the order values pin
+	// them to the first line) and the name/role pair below. The photo keeps
+	// its swapped 80px width via the ID-prefixed dynamic CSS; align-self
+	// beats the container's align-items from the Alignment control.
+	.sp-smart-team-card__avatar,
+	.sp-smart-team-card__content>.sp-smart-team-card__avatar:first-child {
+		order: -3;
+		align-self: center;
+		margin: 0 auto var(--sptp-content-gap) 0;
+		border-radius: 999px;
+	}
+
+	.sp-smart-team-card__social {
+		order: -2;
+		width: auto;
+		align-self: center;
+	}
+
+	// "Name | Role" on one line, split by a vertical divider. A long name
+	// simply wraps the role onto its own (divider-less-looking) line.
+	.sp-smart-team-card__name {
+		width: auto;
+		font-weight: 700;
+	}
+
+	.sp-smart-team-card__name+.sp-smart-team-card__role {
+		width: auto;
+		margin-left: 14px;
+		padding-left: 14px;
+		border-left: 1px solid #dcdcdc;
+	}
+}
+
+// Theme content-area link rules (Astra's `.ast-single-post .entry-content a`
+// underline is 0,2,1) outrank the single-class resets above; `[href]` lifts
+// these to 0,3,x. A design that wants an underline sets the variable.
+.sp-smart-team-card {
+
+	.sp-smart-team-card__detail a[href],
+	.sp-smart-team-card__social a[href],
+	.sp-smart-team-card__name-link[href],
+	.sp-smart-team-card__card-link[href],
+	.sp-smart-team-card__image-link[href],
+	.sp-smart-team-card__read-more-btn[href] {
+		text-decoration: var(--sptp-link-decoration, none);
+	}
+
+	.sp-smart-team-card__detail a[href],
+	.sp-smart-team-card__name-link[href] {
+		color: inherit;
+	}
+}
+
+.sp-smart-team-swiper {
+	position: relative;
+}
+
+// Preloader (Dashboard → Modules → Preloader). WP Carousel style: each member
+// card waits under its own spinner or skeleton shimmer until the minimum
+// loading time has passed. Pure CSS — the reveal is an animation delayed by
+// `--sptp-preloader-delay` (set inline from the setting), so ajax-appended
+// cards and no-JS visitors get the card too.
+.sp-smart-team-card--preloading {
+	position: relative;
+	min-height: 120px;
+
+	> *:not(.sp-smart-team-card__loader) {
+		opacity: 0;
+		animation: sp-smart-team-preloader-reveal 0.6s ease-out var(--sptp-preloader-delay, 300ms) forwards;
+	}
+
+	> .sp-smart-team-card__loader {
+		position: absolute;
+		inset: 0;
+		z-index: 5;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: inherit;
+		pointer-events: none;
+		animation: sp-smart-team-preloader-hide 0.6s ease-out var(--sptp-preloader-delay, 300ms) forwards;
+	}
+
+	// The SVG is used as a mask so its shapes (and their opacity steps) take the
+	// plugin's primary colour instead of the file's black.
+	.sp-smart-team-card__spinner {
+		width: 54px;
+		max-width: 60%;
+		aspect-ratio: 1 / 1;
+		background-color: var(--sptp-primary, #2b5f47);
+		-webkit-mask: var(--sptp-spinner-icon) center / contain no-repeat;
+		mask: var(--sptp-spinner-icon) center / contain no-repeat;
+		animation: sp-smart-team-preloader-spin 1s linear infinite;
+	}
+}
+
+@keyframes sp-smart-team-preloader-reveal {
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes sp-smart-team-preloader-hide {
+	to {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+@keyframes sp-smart-team-preloader-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}

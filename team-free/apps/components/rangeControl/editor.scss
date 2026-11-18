@@ -1,0 +1,132 @@
+.sp-smart-team-range-control {
+	// Brand the WP focus ring (input border, etc.) instead of the default blue.
+	--wp-admin-theme-color: #2b5f47;
+	--wp-admin-theme-color-darker-10: #234e3a;
+	--wp-admin-theme-color-darker-20: #1c3d2d;
+
+	.components-range-control__thumb-wrapper span {
+		background-color: var(--sp-smart-team-primary-2-600);
+	}
+
+	.components-range-control__thumb-wrapper span::after,
+	.components-range-control__thumb-wrapper span::before {
+		background-color: var(--sp-smart-team-primary-2-600);
+	}
+}
+
+.sp-smart-team-header-control-left,
+.sp-smart-team-header-control-right {
+	display: flex;
+	align-items: center;
+}
+
+.sp-smart-team-range-control__unit-badge {
+	margin-left: auto;
+	padding: 2px 8px;
+	border: 1px solid #c3c4c7;
+	border-radius: 2px;
+	font-size: 11px;
+	font-weight: 500;
+	line-height: 1.4;
+	color: #50575e;
+	background: #fff;
+}
+
+.sp-smart-team-header-control {
+	display: flex;
+	justify-content: space-between;
+	height: 22px;
+	margin-bottom: 8px;
+}
+
+.sp-smart-team-header-control-reset.components-button {
+	color: #8c8f94;
+}
+
+.sp-smart-team-header-control-reset.components-button:focus {
+	box-shadow: none;
+}
+
+.sp-smart-team-header-control-reset.components-button:hover svg {
+	color: var(--sp-smart-team-primary-2-600);
+}
+
+.sp-smart-team-header-control-reset.components-button::after {
+	border: 0;
+}
+
+.sp-smart-team-ranger-length .sp-smart-team-units span,
+.sp-smart-team-ranger-length .sp-smart-team-units button {
+	width: 38px !important;
+}
+
+// .sp-smart-team-ranger-length .sp-smart-team-units span,
+// .sp-smart-team-ranger-length .sp-smart-team-units button {
+//   width: 38px;
+// }
+
+
+.sp-smart-team-range-control {
+
+	.components-range-control {
+		.components-input-control {
+			.components-input-control__container {
+				input {
+					text-align: center;
+					font-size: 14px;
+				}
+			}
+		}
+	}
+}
+
+body.rtl {
+	.sp-smart-team-range-control {
+		.components-range-control {
+			.components-input-control {
+				margin-left: 0 !important;
+				margin-right: 16px;
+			}
+		}
+	}
+}
+
+.sp-smart-team-range-control {
+	&.sp-negative-space {
+		margin-top: -4px;
+	}
+
+	.components-input-base {
+		min-height: 32px;
+		height: 32px;
+
+		input {
+			max-height: 32px;
+		}
+
+		input::-webkit-inner-spin-button {
+			min-height: 32px;
+			margin-right: -11px !important;
+			cursor: pointer;
+		}
+	}
+
+	.components-range-control__root {
+		min-height: auto;
+	}
+
+	.components-base-control {
+
+		.components-range-control,
+		.components-base-control__field {
+			margin-bottom: 0 !important;
+		}
+	}
+}
+
+// Pro-locked slider (isPro): the whole control dimmed to 30% and inert (Figma
+// node 744:20763).
+.sp-smart-team-range-control.is-pro {
+	opacity: 0.3;
+	pointer-events: none;
+}

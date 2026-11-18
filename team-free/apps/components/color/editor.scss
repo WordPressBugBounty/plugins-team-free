@@ -1,0 +1,223 @@
+/* Color controls. */
+.sp-smart-team-color-picker {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 24px;
+
+	.sp-smart-team-component-title {
+		margin-bottom: 0 !important;
+		font-weight: 400;
+	}
+
+	.sp-smart-team-color-picker-right-area {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+	}
+
+	p {
+		margin-bottom: 0;
+	}
+
+	.components-dropdown,
+	button.components-button {
+		padding: 0;
+		height: 30px;
+
+		:focus:not(:disabled) {
+			box-shadow: none;
+			outline: none;
+		}
+
+		span.component-color-indicator {
+			width: 24px;
+			height: 24px;
+		}
+	}
+
+	&-palette {
+		display: flex;
+		// margin-left: 15px;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-bottom: 8px;
+		margin-top: 4px;
+
+		li {
+			border-radius: 100%;
+			height: 28px;
+			width: 28px;
+			margin: 0;
+
+			button {
+				width: 100%;
+				padding: 0;
+
+				&:focus:not(:disabled) {
+					box-shadow: none;
+					outline: none;
+				}
+			}
+		}
+	}
+}
+
+.sp-smart-team-color-picker-palette li {
+	box-shadow: 0 0 2px #000;
+
+	&.active {
+		outline-offset: 2px;
+		outline: 2px solid #aaa;
+	}
+}
+
+.sp-default-color-pallet.sp-default-theme-color {
+	margin-top: 1.3rem;
+}
+
+.sp-default-color-pallet-header {
+	margin-top: 8px;
+	align-items: center;
+}
+
+.sp-default-smart-color {
+	margin: 0;
+}
+
+.sp-smart-team-color-picker-right-area {
+	.sp-color-picker-btn+span {
+		display: none;
+	}
+}
+
+.sp-smart-team-picker-pallet-wrapper {
+	width: 320px;
+	padding: 16px;
+	position: relative;
+
+	.components-color-picker {
+		width: 100% !important;
+
+		.react-colorful {
+			width: 100% !important;
+
+			.react-colorful__hue,
+			.react-colorful__alpha,
+			.react-colorful__saturation {
+				width: 100% !important;
+			}
+
+			.react-colorful__saturation {
+				height: 120px !important;
+			}
+
+			.react-colorful__saturation {
+				.react-colorful__interactive {
+					width: calc(100% - 8px);
+					margin-left: calc(4px);
+				}
+			}
+
+			.react-colorful__alpha {
+				.react-colorful__pointer.react-colorful__alpha-pointer {
+					box-shadow: rgba(0, 0, 0, 0.60) 0px 0px 4px 0px;
+				}
+			}
+
+			.react-colorful__hue {
+				.react-colorful__pointer.react-colorful__hue-pointer {
+					box-shadow: rgba(0, 0, 0, 0.60) 0px 0px 4px 0px;
+				}
+			}
+		}
+	}
+
+	.components-color-picker>div:last-child {
+		position: relative;
+
+		.components-input-control__backdrop,
+		.components-select-control__input {
+			border: 1px solid #ddd;
+		}
+
+		&>.components-flex:first-child {
+			padding-left: 8px;
+			padding-right: 0;
+		}
+
+		&>.components-flex:last-child:not(:has(.components-flex.components-h-stack)) {
+			padding: 0;
+			margin-top: -32px;
+			margin-left: 74px;
+			width: 175px;
+
+			.components-base-control__field>.components-input-base {
+				height: 32px;
+
+				.components-input-control__container {
+					width: 175px;
+				}
+			}
+		}
+
+		&>.components-flex:last-child:has(.components-flex.components-h-stack) {
+			padding: 0;
+			flex-direction: row;
+			width: 184px;
+			margin-top: -32px;
+			margin-left: 69px;
+			column-gap: 4px;
+
+			.components-flex.components-h-stack {
+				flex-direction: row-reverse;
+				width: 42px;
+
+				.components-base-control {
+					height: 32px;
+
+					// &.components-range-control {
+					//   .components-range-control__track,
+					//   .components-range-control__thumb-wrapper span {
+					//     background-color: #f05d31;
+					//   }
+					// }
+					.components-truncate.components-text {
+						color: var(--sp-smart-team-primary-2-600);
+						// position: absolute;
+						// top: 36px;
+					}
+
+					.components-input-control__prefix {
+						position: absolute;
+						top: 32px;
+						left: 50%;
+						transform: translateX(-50%);
+
+						.components-input-control-prefix-wrapper {
+							padding-inline-start: 0;
+						}
+					}
+
+					.components-range-control__thumb-wrapper span::before {
+						background-color: var(--sp-smart-team-primary-2-600);
+					}
+				}
+
+				.components-base-control__field>.components-input-base {
+					height: 32px;
+				}
+
+				.components-range-control {
+					display: none;
+				}
+
+				.components-input-control__container input {
+					padding: 0;
+					text-align: center;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,137 @@
+/**
+ * Grid — editor-only styles.
+ *
+ * Tweaks that should apply only inside the block editor canvas / inspector.
+ * Shared visual layout lives in style.scss; inspector chrome shared across all
+ * blocks lives in apps/blocks/editor.scss.
+ */
+
+.sp-smart-team-grid {
+	&__loading {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		padding: 40px 0;
+		color: #757575;
+	}
+}
+
+// Card links are inert in the canvas (a click opens the matching inspector
+// panel instead of navigating), so the focus ring a real link gets after a
+// click is just noise here. Frontend keyboard focus styles are untouched.
+// (Shared card classes — applies to every member layout block's preview.)
+.sp-smart-team-card {
+	&__detail a:focus,
+	&__read-more-btn:focus,
+	&__social a:focus {
+		outline: none;
+		box-shadow: none;
+	}
+}
+
+/* Display Settings → Content Box popover (card-3). The shared popover content
+   pads 16px 20px 0 — consumers supply their own bottom spacing; the
+   control-to-control rhythm comes from the
+   popover-scoped component-mb rule in apps/blocks/editor.scss. */
+.sp-smart-team-content-box-popover {
+	padding-bottom: 16px;
+}
+
+/* Sub-section heading inside a Style tab (e.g. Member Name / Position / Short Bio). */
+.sp-smart-team-style-section-title {
+	margin: 0 0 12px;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 20px;
+	color: #1e1e1e;
+}
+
+/* "Configure … Template" link box (Member Details panel). */
+/* Member Details → "Configure Single Page Template ↗" note (Figma 728:44033). */
+.sp-smart-team-configure-template {
+	margin-bottom: 16px;
+	padding: 8px 12px;
+	background: rgba(225, 244, 246, 0.5);
+	border-left: 1px solid #167496;
+
+	a {
+		color: #1a74e4;
+		font-size: 13px;
+		font-weight: 400;
+		line-height: 20px;
+		text-decoration: none;
+	}
+}
+
+/* Image Masking "Choose Style" grid (Member Image → Settings) — bordered
+   panel around the shared Layouts shape grid (per the Figma design). */
+.sp-smart-team-mask-picker {
+	.sp-smart-team-layouts {
+		padding: 8px;
+		border: 1px solid #e0e0e0;
+		border-radius: 4px;
+	}
+
+	.sp-smart-team-mask-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		aspect-ratio: 1 / 1;
+		box-sizing: border-box;
+		padding: 8px;
+		background: #fff;
+		border: 1px solid #e0e0e0;
+		border-radius: 4px;
+		transition: border-color 0.15s ease, background-color 0.15s ease;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+			display: block;
+		}
+
+		&:hover {
+			border-color: #2b5f47;
+		}
+
+		// Active shape — brand border + light green fill (Figma).
+		&.active {
+			border-color: #2b5f47;
+			background: #dcefe4;
+		}
+	}
+
+	// Pro-locked shape: the frame stays put on hover — a colour shift reads
+	// as "selectable" (wp-carousel-free's locked Arrow Style tile).
+	.is-pro .sp-smart-team-mask-icon:hover {
+		border-color: #e0e0e0;
+	}
+}
+
+/* Display Settings → Select Grid Style: 118×79 tiles, two up with the third
+   below (Figma "Layout Style" 3073:154320). */
+.sp-smart-team-grid-style-picker {
+	.sp-smart-team-layouts.grid-2 {
+		gap: 10px;
+	}
+
+	.sp-smart-team-layouts .sp-smart-team-layout-card {
+		&.active svg > rect:not(.sp-card) {
+			stroke-width: 1.5;
+		}
+
+		&.active .active-symbol {
+			top: 4.5px;
+			right: 4.5px;
+			line-height: 0;
+
+			svg {
+				width: 14px;
+				height: 14px;
+			}
+		}
+	}
+}

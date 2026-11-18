@@ -1,0 +1,14 @@
+/**
+ * Member Skills — base styles (editor + frontend).
+ *
+ * The skill bar / chip look comes from the globally-bundled shared card SCSS
+ * (apps/blocks/shared/style.scss, flat `.sp-smart-team-card__skill*` classes);
+ * dynamic values come from the dynamic CSS twins. Nothing block-specific needed.
+ */
+
+.sp-smart-team-member-skills {
+	&__empty {
+		margin: 0;
+		opacity: 0.6;
+	}
+}

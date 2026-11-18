@@ -1,0 +1,1066 @@
+/* Ready Patterns Library — editor-only modal chrome */
+
+.sptp-ready-patterns-backdrop {
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	display: flex;
+	align-items: stretch;
+	justify-content: center;
+	padding: 32px;
+	background: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(20px);
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+}
+
+.sptp-ready-patterns-modal {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-width: 1840px;
+	max-height: 100%;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+	overflow: hidden;
+}
+
+.sptp-ready-patterns-header {
+	display: flex;
+	align-items: stretch;
+	justify-content: space-between;
+	padding: 0 24px;
+	background: #edf6f5;
+	border-bottom: 1px solid #d6e9e7;
+}
+
+.sptp-ready-patterns-brand {
+	display: flex;
+	flex: 1 0 0;
+	align-items: center;
+	gap: 10px;
+	padding: 21px 0;
+}
+
+.sptp-ready-patterns-title {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 600;
+	color: #2f2f2f;
+}
+
+.sptp-ready-patterns-header-actions {
+	display: flex;
+	flex: 1 0 0;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.sptp-ready-patterns-close {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border: 0;
+	border-radius: 6px;
+	background: transparent;
+	color: #334155;
+	cursor: pointer;
+
+	&:hover {
+		background: rgba(25, 148, 158, 0.1);
+		color: #1e293b;
+	}
+}
+
+.sptp-ready-patterns-body {
+	display: flex;
+	flex: 1;
+	min-height: 0;
+}
+
+.sptp-ready-patterns-sidebar {
+	width: 260px;
+	flex-shrink: 0;
+	padding: 20px 16px;
+	border-right: 1px solid #e2e8f0;
+	overflow-y: auto;
+}
+
+.sptp-ready-patterns-sidebar-heading {
+	margin: 0 0 10px;
+	font-size: 14px;
+	font-weight: 700;
+	color: #1e293b;
+}
+
+.sptp-ready-patterns-tier {
+	display: flex;
+	gap: 4px;
+	padding: 5px;
+	margin-bottom: 16px;
+	background: #fff;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.sptp-ready-patterns-tier-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	flex: 1;
+	padding: 8px 6px;
+	border: 0;
+	border-radius: 7px;
+	background: transparent;
+	font-size: 12px;
+	font-weight: 600;
+	color: #64748b;
+	cursor: pointer;
+
+	&.is-active {
+		background: #2b5f47;
+		color: #fff;
+
+		.sptp-ready-patterns-tier-count {
+			color: rgba(255, 255, 255, 0.85);
+		}
+	}
+}
+
+.sptp-ready-patterns-tier-count {
+	font-size: 11px;
+	font-weight: 500;
+	color: #94a3b8;
+
+	&::before {
+		content: '(';
+	}
+
+	&::after {
+		content: ')';
+	}
+}
+
+.sptp-ready-patterns-search {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 4px 12px;
+	margin-bottom: 16px;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	color: #94a3b8;
+
+	.sptp-ready-patterns-search-input {
+		border: none;
+		padding: 0;
+		min-height: 36px;
+
+		&:focus {
+			outline: none;
+			box-shadow: none;
+		}
+	}
+}
+
+.sptp-ready-patterns-search-input {
+	flex: 1;
+	border: 0;
+	outline: none;
+	font-size: 13px;
+	background: transparent;
+	color: #1e293b;
+}
+
+.sptp-ready-patterns-categories {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin-bottom: 20px;
+}
+
+.sptp-ready-patterns-category {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	width: 100%;
+	padding: 9px 12px;
+	border: 0;
+	border-radius: 8px;
+	background: transparent;
+	font-size: 13px;
+	color: #334155;
+	text-align: left;
+	cursor: pointer;
+
+	&.is-active {
+		background: #e0f7f8;
+		color: #2b5f47;
+		font-weight: 600;
+	}
+}
+
+.sptp-ready-patterns-category-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	flex-shrink: 0;
+
+	// Block icons ship at 24px, so without this they overflow the box downwards
+	// and the row reads as bottom-heavy.
+	svg {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.sptp-ready-patterns-badge {
+	margin-left: auto;
+	min-width: 22px;
+	padding: 0px 6px;
+	border-radius: 999px;
+	background: #f1f5f9;
+	font-size: 11px;
+	font-weight: 600;
+	color: #64748b;
+	text-align: center;
+	line-height: 20px;
+
+	.is-active & {
+		background: #2b5f47;
+		color: #fff;
+	}
+}
+
+.sptp-ready-patterns-main {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-width: 0;
+	padding: 20px 24px;
+	overflow-y: auto;
+}
+
+.sptp-ready-patterns-toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+.sptp-ready-patterns-sort {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	height: 36px;
+	padding: 6px 8px 6px 12px;
+	box-sizing: border-box;
+	border: 1px solid #e0e0e0;
+	border-radius: 3px;
+	background: #fff;
+
+	&:hover {
+		border-color: #c6c6c6;
+	}
+}
+
+.sptp-ready-patterns-sort-label {
+	font-size: 14px;
+	font-weight: 500;
+	color: #2f2f2f;
+}
+
+.sptp-ready-patterns-sort-chevron {
+	display: inline-flex;
+	color: #2f2f2f;
+}
+
+.sptp-ready-patterns-sort-select {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.sptp-ready-patterns-toolbar-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.sptp-ready-patterns-density {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.sptp-ready-patterns-density-btn,
+.sptp-ready-patterns-favorites-btn,
+.sptp-ready-patterns-refresh-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	background: #fff;
+	color: #757575;
+	cursor: pointer;
+
+	&:hover {
+		border-color: #2b5f47;
+		color: #2b5f47;
+	}
+}
+
+.sptp-ready-patterns-density-btn.is-active {
+	border-color: transparent;
+	background: #2b5f47;
+	color: #fff;
+
+	&:hover {
+		border-color: transparent;
+		background: #2b5f47;
+		color: #fff;
+	}
+}
+
+.sptp-ready-patterns-favorites-btn {
+	position: relative;
+	overflow: visible;
+
+	&.is-active {
+		border-color: #2b5f47;
+		color: #2b5f47;
+	}
+}
+
+.sptp-ready-patterns-favorites-count {
+	position: absolute;
+	top: -6px;
+	right: -6px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 16px;
+	height: 16px;
+	padding: 0 3px;
+	border-radius: 16px;
+	background: #2b5f47;
+	color: #fff;
+	font-size: 10px;
+	font-weight: 600;
+	line-height: 1;
+}
+
+.sptp-ready-patterns-refresh-btn {
+	&:disabled {
+		cursor: default;
+	}
+
+	&.is-refreshing svg {
+		animation: sptp-ready-patterns-spin 1s linear infinite;
+	}
+}
+
+@keyframes sptp-ready-patterns-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.sptp-ready-patterns-grid {
+	display: grid;
+	gap: 24px;
+
+	&.cols-2 {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	&.cols-3 {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+.sptp-ready-patterns-card {
+	overflow: hidden;
+	background: #fff;
+}
+
+.sptp-ready-patterns-card-thumb {
+	position: relative;
+	// Fixed 3:2 box (the thumbnail standard) so a card owns its final height
+	// before the image decodes — no in-modal layout shift.
+	aspect-ratio: 3 / 2;
+	padding: 20px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	background: #f8fafc;
+	overflow: hidden;
+
+	img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 4px;
+	}
+
+	.sptp-ready-patterns-card-thumb-placeholder {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+		border-radius: 4px;
+		background: #eef4f4;
+
+		svg {
+			width: 56px;
+			height: auto;
+			opacity: 0.45;
+		}
+	}
+
+	&::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		margin: 20px;
+		border-radius: 4px;
+		background: rgba(15, 23, 42, 0.55);
+		opacity: 0;
+		transition: opacity 0.2s ease;
+		pointer-events: none;
+	}
+
+	&:hover::after,
+	&:focus-within::after {
+		opacity: 1;
+	}
+
+	&:hover .sptp-ready-patterns-preview-link,
+	.sptp-ready-patterns-preview-link:focus-visible {
+		opacity: 1;
+	}
+}
+
+.sptp-ready-patterns-preview-link {
+	position: absolute;
+	inset: 20px;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: none;
+	white-space: nowrap;
+	opacity: 0;
+
+	&:hover,
+	&:focus {
+		color: #fff;
+	}
+}
+
+.sptp-ready-patterns-card-body {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 14px 0 0;
+}
+
+.sptp-ready-patterns-card-title {
+	// Basis must be `auto`, not 0 — a zero-basis title only gets leftover free
+	// space, so any sibling that claims its content width first starves it down
+	// to a bare ellipsis.
+	flex: 1 1 auto;
+	min-width: 0;
+	margin: 0;
+	font-size: 16px;
+	font-weight: 600;
+	color: #2f2f2f;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.sptp-ready-patterns-favorite-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	border: 1px solid #f0f0f0;
+	border-radius: 50%;
+	background: #fff;
+	box-shadow: 1px 1px 5px 1px rgba(76, 189, 246, 0.1);
+	color: #757575;
+	cursor: pointer;
+
+	&:hover {
+		color: #2b5f47;
+		border-color: #2b5f47;
+	}
+
+	&.is-favorite {
+		color: #2b5f47;
+	}
+}
+
+.sptp-ready-patterns-insert-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	gap: 6px;
+	height: 32px;
+	padding: 4px 12px;
+	border: 0;
+	border-radius: 4px;
+	background: #2b5f47;
+	color: #fff;
+	font-size: 15px;
+	font-weight: 500;
+	cursor: pointer;
+
+	&:hover:not(:disabled) {
+		background: #163a2d;
+	}
+
+	&:disabled {
+		cursor: default;
+		opacity: 0.6;
+	}
+
+	&.is-busy {
+		opacity: 0.8;
+
+		svg {
+			animation: sptp-ready-patterns-spin 1s linear infinite;
+		}
+	}
+}
+
+.sptp-ready-patterns-card.is-skeleton .sptp-ready-patterns-card-thumb {
+	background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+	background-size: 200% 100%;
+	animation: sptp-ready-patterns-shimmer 1.2s infinite;
+}
+
+.sptp-ready-patterns-skeleton-line {
+	height: 14px;
+	flex: 2;
+	border-radius: 4px;
+	background: #e2e8f0;
+}
+
+.sptp-ready-patterns-skeleton-btn {
+	height: 32px;
+	flex: 1;
+	border-radius: 6px;
+	background: #e2e8f0;
+}
+
+/* Header-toolbar launcher button (lives outside the modal). */
+.sptp-ready-patterns-launcher-slot {
+	display: flex;
+	align-items: center;
+	margin-left: 8px;
+}
+
+.sptp-ready-patterns-launcher {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	height: 36px;
+	padding: 0 12px;
+	border: 0;
+	border-radius: 2px;
+	background: #2b5f47;
+	color: #fff;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+
+	&:hover {
+		background: #163a2d;
+		color: #fff;
+	}
+}
+
+@keyframes sptp-ready-patterns-shimmer {
+	0% {
+		background-position: 200% 0;
+	}
+
+	100% {
+		background-position: -200% 0;
+	}
+}
+
+.sptp-ready-patterns-state {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	min-height: 240px;
+	color: #64748b;
+	text-align: center;
+}
+
+.sptp-ready-patterns-error {
+	padding: 24px;
+	text-align: center;
+}
+
+/* Active filter chips, tag facet, and card metadata. */
+/* Pinned to the top of the scrolling sidebar so the removable chips stay
+   reachable while browsing long facet lists. The negative offset and inline
+   margins let it cover the sidebar padding instead of leaving a gap that
+   scrolling content shows through. */
+.sptp-ready-patterns-active-filters {
+	position: sticky;
+	top: -20px;
+	z-index: 2;
+	margin: 0 -16px 16px;
+	padding: 12px 16px;
+	background: #fff;
+	border-bottom: 1px solid #e2e8f0;
+}
+
+.sptp-ready-patterns-active-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 0 0 8px;
+	padding: 0;
+	list-style: none;
+}
+
+.sptp-ready-patterns-active-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 3px 9px;
+	border: 1px solid #d6e9e7;
+	border-radius: 12px;
+	background: #f4fbfa;
+	color: #14666d;
+	font-size: 12px;
+	line-height: 1.6;
+	cursor: pointer;
+
+	&:hover {
+		border-color: #2b5f47;
+	}
+}
+
+.sptp-ready-patterns-clear-filters {
+	padding: 0;
+	border: 0;
+	background: none;
+	color: #2b5f47;
+	font-size: 12px;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+// A pattern authored on a dark background reads as a rendering failure on a
+// light card, so it declares itself and gets a dark surface.
+.sptp-ready-patterns-card.is-dark .sptp-ready-patterns-card-thumb {
+	border-color: #1e293b;
+	background: #0f172a;
+}
+
+/* Preview drawer. */
+.sptp-ready-patterns-drawer-backdrop {
+	position: absolute;
+	inset: 0;
+	z-index: 5;
+	display: flex;
+	align-items: stretch;
+	justify-content: flex-end;
+	background: rgba(15, 23, 42, 0.45);
+}
+
+.sptp-ready-patterns-drawer {
+	display: flex;
+	flex-direction: column;
+	width: min(1320px, 100%);
+	background: #fff;
+	box-shadow: -12px 0 32px rgba(0, 0, 0, 0.18);
+}
+
+/* Fixed 72px bar tinted 5% brand over white, separated from the stage by a soft
+   shadow rather than a rule — the active width tab breaks through that shadow. */
+.sptp-ready-patterns-drawer-header {
+	position: relative;
+	z-index: 1;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	height: 72px;
+	padding: 0 32px;
+	background: #f4fafa;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+
+	// Larger primary Insert than the card variant it shares a class with.
+	.sptp-ready-patterns-insert-btn {
+		height: 44px;
+		padding: 0 36px;
+		font-weight: 600;
+	}
+}
+
+/* Balanced against the right-hand group so the width tabs stay centred. */
+.sptp-ready-patterns-drawer-title {
+	flex: 1 1 0;
+	min-width: 0;
+	margin: 0;
+	font-size: 18px;
+	font-weight: 600;
+	line-height: 20px;
+	color: #2f2f2f;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* Bottom-aligned so the tabs meet the header's lower edge. */
+.sptp-ready-patterns-drawer-devices {
+	align-self: flex-end;
+	display: flex;
+}
+
+/* Insert and close, balanced against the left group so the devices stay centred. */
+.sptp-ready-patterns-drawer-header-right {
+	display: flex;
+	align-items: center;
+	flex: 1 1 0;
+	justify-content: flex-end;
+	gap: 40px;
+}
+
+/* Icon-only width switcher drawn as browser tabs: the selected width is the only
+   outlined chip, and its white fill runs past the header's lower edge to hide the
+   header shadow underneath, so the tab reads as open into the stage below. */
+.sptp-ready-patterns-drawer-device {
+	position: relative;
+	box-sizing: border-box;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 56px;
+	height: 48px;
+	padding: 0;
+	border: 1px solid transparent;
+	border-bottom: 0;
+	border-radius: 4px 4px 0 0;
+	background: transparent;
+	color: #1e1e1e;
+	cursor: pointer;
+	transition:
+		color 0.15s ease,
+		background 0.15s ease,
+		border-color 0.15s ease;
+
+	&:hover:not(.is-active) {
+		color: #2b5f47;
+	}
+
+	&.is-active {
+		border-color: #2b5f47;
+		background: #fff;
+		color: #2b5f47;
+
+		// Masks the header shadow across the tab's inner width.
+		&::after {
+			content: '';
+			position: absolute;
+			left: 1px;
+			right: 1px;
+			bottom: -6px;
+			height: 6px;
+			background: #fff;
+		}
+	}
+}
+
+.sptp-ready-patterns-drawer-close {
+	box-sizing: border-box;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background: #fff;
+	color: #2f2f2f;
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		border-color 0.15s ease;
+
+	&:hover {
+		background: #f1f5f9;
+		border-color: #b3b3b3;
+	}
+}
+
+.sptp-ready-patterns-drawer-body {
+	display: flex;
+	flex: 1;
+	min-height: 0;
+	padding: 32px;
+	background: #fff;
+}
+
+/* Unframed: the pattern preview is the only thing in the box, edge to edge. */
+.sptp-ready-patterns-drawer-stage {
+	position: relative;
+	flex: 1;
+	min-width: 0;
+	min-height: 0;
+	background: #fff;
+	overflow: hidden;
+}
+
+.sptp-ready-patterns-drawer-frame {
+	display: block;
+	border: 0;
+	// Fixed-width frame scaled with a CSS transform to the measured stage box —
+	// the drawer observes the stage and sets width, height and scale from it.
+	transform-origin: top left;
+	margin: auto;
+	opacity: 1;
+	transition: opacity 0.2s ease;
+
+	// Dimmed while the framed demo page is still loading.
+	&.is-loading {
+		opacity: 0.7;
+	}
+}
+
+/* Preloader shown over the stage until the preview iframe fires `load`. */
+.sptp-ready-patterns-drawer-loader {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	background: rgba(255, 255, 255, 0.7);
+	pointer-events: none;
+}
+
+.sptp-ready-patterns-drawer-loader-spinner {
+	width: 32px;
+	height: 32px;
+	border: 3px solid #e2e8f0;
+	border-top-color: #2b5f47;
+	border-radius: 50%;
+	animation: sptp-ready-patterns-spin 0.8s linear infinite;
+}
+
+.sptp-ready-patterns-drawer-loader-text {
+	font-size: 13px;
+	color: #64748b;
+}
+
+.sptp-ready-patterns-drawer-thumb {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	padding: 20px;
+	color: #64748b;
+
+	img {
+		max-width: 100%;
+		max-height: 100%;
+		object-fit: contain;
+	}
+}
+
+/* Pattern stepper, pinned under the stage. The 32px inline padding lines the
+   count up with the stage's left edge, which the body's own padding sets. */
+.sptp-ready-patterns-drawer-footer {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 18px 32px;
+	background: #fbfcfd;
+	border-top: 1px solid #eff1f5;
+}
+
+.sptp-ready-patterns-drawer-footer-count {
+	font-size: 16px;
+	line-height: 24px;
+	color: #3c4a58;
+}
+
+.sptp-ready-patterns-drawer-footer-nav {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+}
+
+.sptp-ready-patterns-drawer-page {
+	box-sizing: border-box;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	height: 36px;
+	padding: 0 16px;
+	border: 1px solid #2b5f47;
+	border-radius: 4px;
+	background: #fff;
+	color: #2b5f47;
+	font-size: 14px;
+	font-weight: 400;
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		border-color 0.15s ease,
+		color 0.15s ease;
+
+	&:hover:not(:disabled) {
+		background: #edf6f5;
+		border-color: #163a2d;
+		color: #163a2d;
+	}
+
+	// Greyed outright rather than dimmed, so a dead end never reads as a faded accent.
+	&:disabled {
+		border-color: #c1cad7;
+		color: #c1cad7;
+		cursor: not-allowed;
+	}
+}
+
+/*
+ * Pro pattern lock (Free only) — Real Testimonials Free's treatment, value for
+ * value: a small green crown "Pro" tag in the card footer where Insert sits,
+ * and a solid green "Upgrade to Pro" button in the drawer header, both linking
+ * to pricing.
+ */
+.sptp-ready-patterns-pro-btn {
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+	gap: 6px;
+	padding: 4px 10px;
+	border-radius: 4px;
+	background: #e8f7ee;
+	color: #12a150;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.3px;
+	text-transform: uppercase;
+	text-decoration: none;
+	box-shadow: none;
+
+	svg {
+		width: 14px;
+		height: 14px;
+	}
+
+	&:hover,
+	&:focus {
+		background: #d7f0e2;
+		color: #0e8442;
+		text-decoration: none;
+		box-shadow: none;
+	}
+
+	&:focus-visible {
+		outline: 2px solid #12a150;
+		outline-offset: 1px;
+	}
+}
+
+/* Pro pattern: replaces Insert in the drawer header, same footprint as the
+   enlarged drawer Insert so the header row keeps one shape. */
+.sptp-ready-patterns-upgrade-btn {
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+	gap: 6px;
+	height: 44px;
+	padding: 0 36px;
+	border: 0;
+	border-radius: 4px;
+	background: #12a150;
+	color: #fff;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1;
+	text-decoration: none;
+	box-shadow: none;
+	cursor: pointer;
+
+	svg {
+		width: 16px;
+		height: 16px;
+	}
+
+	&:hover,
+	&:focus {
+		background: #0e8442;
+		color: #fff;
+		text-decoration: none;
+		box-shadow: none;
+	}
+
+	&:focus-visible {
+		outline: 2px solid #0e8442;
+		outline-offset: 1px;
+	}
+}
+
+/* Keyboard focus is visible on every control in the library. */
+.sptp-ready-patterns-modal {
+
+	button:focus-visible,
+	a:focus-visible,
+	select:focus-visible,
+	input:focus-visible {
+		outline: 2px solid #2b5f47;
+		outline-offset: 1px;
+	}
+}
